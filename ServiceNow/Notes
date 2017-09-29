@@ -1,0 +1,39 @@
+
+
+This can be used in different sections of the actions test to simulate expected order details.  
+
+
+Chrome version 2.23 -- 8/22/16 (approx.)
+
+
+		// ///////////////// DEBUG /////////////////////
+		//CreateOrderDetailsExpectedObject();
+		//orderDetailsObjectExpected.externalOrderId = "147006303270254287bafb5d849927f9";
+		//orderDetailsObjectExpected.orderType = "Deactivate Service";
+		//orderDetailsObjectExpected.orderId = "8722541";	
+		//orderDetailsObjectExpected.status = "In Fulfillment";		
+		// /////////////////// TEMP ////////////////////////
+		//fullServiceNumber = "+1 (222) 222-4444"; // <<=============== may need this in some places.
+		//serviceNumber = "2222224444"; // <<=============== may need this in some places.
+		
+		
+******************************************************************************************************************		
+							ACTIONS NOTES		
+******************************************************************************************************************
+
+***  Deactivate done - may have to revisit last verification of order details - wait for status to show correct
+				  FURURE - maybe also check oder details page at end.  
+
+*** Going to suspend action:
+
+1) Had to add new method for wait for page load of Provide Additional Info into Provide Additional Info page object.   
+
+2) trying to find selected date in calendar - the list output shows all text in calendar picker -- ProvideAdditionalInfoPage.EnterMissingInfoSuspend()
+		
+		List<WebElement> webList = driver.findElements(By.xpath("(//table)[2]"));
+		for(WebElement ele : webList){DebugTimeout(0, ele.getText());System.out.println(ele.isSelected()); // this doesn't show but once.}
+		
+		Where to put date stuff?? -- VerifyAdditionalInformationSuspend
+
+
+
