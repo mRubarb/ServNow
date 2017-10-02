@@ -33,6 +33,9 @@ public class TC0001NewActivation extends BaseClass
 	@Test
 	public static void tc0001NewActivation() throws Exception
 	{
+	
+		// **** This is to verify the merge . *****
+		
 		
 		// WaitForElementClickable(By.xpath("//div[text()='Service Automation']"), MainTimeout , "Failed wait in step 1."); // this waits for an item in the top window.
 	
