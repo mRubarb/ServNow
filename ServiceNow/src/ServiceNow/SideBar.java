@@ -55,5 +55,14 @@ public class SideBar extends BaseClass
 		WebElement myDevicesBtn = driver.findElement(By.xpath(".//*[@id='d41a5bcf0fa74200e5680cbce1050edf']"));
 		Actions actions = new Actions(driver);
 		actions.moveToElement(myDevicesBtn).click().perform();
+	}
+	
+	// jnupp
+	// click settings selection when in admin mode.
+	public static void clickAdminSettings() throws Exception 
+	{
+		WebElement settingsBtn = driver.findElement(By.xpath(".//*[@id='ae4b53030fe74200e5680cbce1050e1f']"));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(settingsBtn).click().perform();
 	}	
 }

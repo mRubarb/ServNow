@@ -39,6 +39,34 @@ public class CommonTestSteps extends BaseClass
 		WaitForNonAdminMainPageLoad();
 	}	
 	
+	public static void LoginAdmin() throws Exception  // jnupp
+	{
+		userLoginMode = UserLoginMode.Admin; // setup login for admin user.
+		setUpDriver(DriverSetup.ServiceNow);
+
+		// Log into ServiceNow as test user.
+		Frames.switchToGsftMainFrame();
+		LoginPage.Login();
+		
+		// this waits for main page (page after login) to load.
+		Frames.switchToGsftMainFrame();
+		WaitForAdminMainPageLoad();
+	}
+	
+	public static void LoginAdminBrowserOpen() throws Exception  // jnupp
+	{
+
+		userLoginMode = UserLoginMode.Admin; // setup login for limited user.
+		
+		// Log into ServiceNow as test user.
+		Frames.switchToGsftMainFrame();
+		LoginPage.Login();
+		
+		// this waits for main page (page after login) to load.
+		Frames.switchToGsftMainFrame();
+		WaitForAdminMainPageLoad();
+	}
+	
 	public static void Logout() throws Exception
 	{
 		Frames.switchToDefaultFrame();
@@ -67,6 +95,14 @@ public class CommonTestSteps extends BaseClass
 		SideBar.clickAllMyOrders();
 		Frames.switchToGsftMainFrame();
 		MyOrdersPage.WaitForPageToLoad();
+	}
+
+	public static void GoToAdminSettings() throws Exception // jnupp
+	{
+		// select side bar 'all my orders'.
+		Frames.switchToGsftNavFrame();
+		SideBar.clickAdminSettings();
+		Frames.switchToGsftMainFrame();
 	}
 	
 	public static void LoginApprover() throws Exception
