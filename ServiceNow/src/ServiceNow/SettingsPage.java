@@ -12,21 +12,6 @@ public class SettingsPage extends BaseClass
 	public static int numCheckboxesToCheck = 4;
 	public static boolean hadToCheckBox = false;
 	
-	
-	public static void MoveToBottomOfPage() throws Exception // jnupp
-	{
-		WebElement ele = driver.findElement(By.cssSelector(".container-fluid>button"));
-		new Actions(driver).moveToElement(ele).perform();
-		WaitForElementClickable(By.cssSelector(".container-fluid>button"), ShortTimeout, "");
-	}
-
-	public static void SavePage() throws Exception
-	{
-		driver.findElement(By.cssSelector(".container-fluid>button")).click();		
-		Thread.sleep(1000); // wait for clicked element to go disabled. 
-		WaitForElementClickable(By.cssSelector(".container-fluid>button"), MediumTimeout, "");
-	}
-	
 	// set check boxes for features 10. 11. 12, and 13 true and save
 	public static void SetCheckboxesTrue() throws Exception
 	{
@@ -60,4 +45,32 @@ public class SettingsPage extends BaseClass
 		driver.findElement(By.cssSelector("tbody>tr:nth-of-type(" + checkboxCounterInit + ")>td>input:nth-of-type(1)")).click();
 		SavePage();
 	}
+
+	public static void SelectFeature11() throws Exception
+	{
+		MoveToBottomOfPage();
+		WaitForElementClickable(By.cssSelector("tbody>tr:nth-of-type(" + (checkboxCounterInit + 2) + ")>td>input:nth-of-type(1)"), MediumTimeout, "");
+		driver.findElement(By.cssSelector("tbody>tr:nth-of-type(" + (checkboxCounterInit + 2) + ")>td>input:nth-of-type(1)")).click();
+		SavePage();
+	}
+	
+	
+
+	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 															HELPERS
+	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static void MoveToBottomOfPage() throws Exception // jnupp
+	{
+		WebElement ele = driver.findElement(By.cssSelector(".container-fluid>button"));
+		new Actions(driver).moveToElement(ele).perform();
+		WaitForElementClickable(By.cssSelector(".container-fluid>button"), ShortTimeout, "");
+	}
+
+	public static void SavePage() throws Exception
+	{
+		driver.findElement(By.cssSelector(".container-fluid>button")).click();		
+		Thread.sleep(1000); // wait for clicked element to go disabled. 
+		WaitForElementClickable(By.cssSelector(".container-fluid>button"), MediumTimeout, "");
+	}	
 }

@@ -548,7 +548,20 @@ public class BaseClass
 		    return true;
 		}	
 		
-		// ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(by)).apply(driver);
+
+		public static boolean WaitForElementClickableBoolean(By by, int waitTime)
+		{
+		    try
+		    {
+		    	WebDriverWait wait = new WebDriverWait(driver, waitTime);
+		    	wait.until(ExpectedConditions.elementToBeClickable(by));
+		    }
+		    catch (WebDriverException e)
+		    {
+		        return false;
+		    }
+		    return true;
+		}	
 		
 		
 		public static boolean WaitForElementVisible(By by, int timeOut) throws Exception 
