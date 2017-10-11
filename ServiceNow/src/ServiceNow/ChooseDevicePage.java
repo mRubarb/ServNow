@@ -385,6 +385,15 @@ public class ChooseDevicePage extends BaseClass
 		
 	}
 
-	
-
+	public static void SelectFirstDevice() throws Exception 
+	{
+		// WaitForElementClickable(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout, "");
+		if(!WaitForElementClickableBoolean(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout))
+		{
+			Assert.fail("No device found in device list in method 'SelectFirstDevice()'");
+		}
+		
+		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[1]")).click();
+		WaitForElementVisible(By.cssSelector(".tg-float--left"), MediumTimeout);
+	}
 }

@@ -54,7 +54,13 @@ public class SettingsPage extends BaseClass
 		SavePage();
 	}
 	
-	
+	public static void SelectFeature12() throws Exception
+	{
+		MoveToBottomOfPage();
+		WaitForElementClickable(By.cssSelector("tbody>tr:nth-of-type(" + (checkboxCounterInit + 2) + ")>td>input:nth-of-type(1)"), MediumTimeout, "");
+		driver.findElement(By.cssSelector("tbody>tr:nth-of-type(" + (checkboxCounterInit + 4) + ")>td>input:nth-of-type(1)")).click();
+		SavePage();
+	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 															HELPERS

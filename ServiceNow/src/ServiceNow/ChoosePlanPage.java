@@ -410,7 +410,23 @@ public class ChoosePlanPage extends BaseClass
 		
 	}
 	
-	
+	// this is for features test.  
+	static public void SelectFirstPlan()
+	{
+		if(!WaitForElementClickableBoolean(By.xpath("//button[text()='Add to Cart']"), MediumTimeout))
+		{
+			Assert.fail("No plan found in plan list in method 'SelectFirstPlan()'");			
+		}
+		
+		driver.findElement(By.xpath("//button[text()='Add to Cart']")).click();
+		
+		WaitForElementClickable(By.xpath("//button[text()='Remove from Cart']"), MediumTimeout, "");
+		
+		
+		
+		// 
+		// return true;
+	}
 	
 	public static WebElement backButton() {
 		element = driver.findElement(By.xpath("//div[@id='_create_order_page_content_']/div[4]/button[2]"));

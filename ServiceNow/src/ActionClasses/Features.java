@@ -1,5 +1,6 @@
 package ActionClasses;
 
+import java.nio.file.ProviderNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -7,11 +8,15 @@ import org.testng.Assert;
 
 import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.BaseClass;
+import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
+import ServiceNow.ChoosePlanPage;
+import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
 import ServiceNow.HomePage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.OrderNewServicePage;
+import ServiceNow.ProvideAdditionalInfoPage;
 import ServiceNow.SettingsPage;
 import ServiceNow.SideBar;
 
@@ -26,7 +31,7 @@ public class Features extends BaseClass
 	}
 	
 	
-	public static int numberExpectedAddToCartButtons = 9;
+	public static int numberExpectedAddToCartButtons = 0;
 	public static String featureTenExpectedText = "Select a device below to add to your shopping cart.";
 		
 	public static void RunFeature10(checkBoxState state) throws Exception
@@ -61,6 +66,34 @@ public class Features extends BaseClass
 		
 		VerifyRadioButtonAndText(state); // verify.
 	}
+	
+	// this goes through create order to the shipping info page and then verifies expected result.
+	public static void RunFeature12(checkBoxState state) throws Exception
+	{
+		Frames.switchToGsftNavFrame();
+		SideBar.clickHomeButton();
+		Frames.switchToGsftMainFrame();
+		HomePage.WaitForPageToLoad();
+		HomePage.clickCreateAnOrderButton();
+		OrderNewServicePage.selectCountryFromDropDown();
+		OrderNewServicePage.fillPostalCodeTextBox("02451");
+		OrderNewServicePage.clickNextButtonSelectRegion(); // move to device select page.
+		ChooseDevicePage.SelectFirstDevice(); // this waits for first device and clicks it if found else error.
+		ChooseDevicePage.clickNextButton();
+		ChoosePlanPage.SelectFirstPlan(); // this waits for first plan and clicks it if found else error.
+		ChoosePlanPage.clickNextButton();
+		ChoosePlanPage.clickNextButton(); // this gets to accessories page.		
+		ChooseAccessoriesPage.clickNextBtn();
+		ProvideAdditionalInfoPage.WaitForPageToLoad();
+		ProvideAdditionalInfoPage.EnterMissingInfoFeatures();
+		ProvideAdditionalInfoPage.clickNextBtn();
+		EnterShippingInfoPage.WaitForPageLoad();
+		
+		VerifyFeature12(state);
+	}
+	
+	
+	
 	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 														HELPERS
@@ -130,6 +163,45 @@ public class Features extends BaseClass
 			CommonTestSteps.LoginAdminBrowserOpen();
 			CommonTestSteps.GoToAdminSettings();
 			SettingsPage.SetCheckboxesTrue();			
+		}
+	}
+	
+	
+	public static void VerifyFeature12(checkBoxState state) throws Exception
+	{
+		// check that expedite check-box can be clicked and the text message is correct.
+		if(state.equals(checkBoxState.checked))
+		{
+			if(!WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label>input"), ShortTimeout))
+			{
+				Assert.fail("Checkbox for expediting order is not present in 'VerifyFeature12' method.");
+			}
+			
+			// ShowText("Text: " + driver.findElement(By.cssSelector(".tg-space--half--bottom.ng-scope>label")).getText()); // DEBUG
+			
+			// verify correct text message.
+			String expected = " Please expedite this order. (Additional charges may apply.)";
+			Assert.assertEquals(driver.findElement(By.cssSelector(".tg-space--half--bottom.ng-scope>label")).getText(), expected);
+			ShowText("Verify feature 12 checked test passed.");
+		}
+		else
+		{
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS); // this keeps the MiniTimeout wait below to 3 seconds.
+			
+			// check there is no expedite check-box to be clicked and the text message is not there.  
+			if(WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label>input"), ShortTimeout)) // no check-box.
+			{
+				Assert.fail("Checkbox for expediting order should not be present in 'VerifyFeature12' method.");
+			}
+			
+			if(WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label"), MiniTimeout)) // no text message.
+			{
+				Assert.fail("Text for expediting order should not be present in 'VerifyFeature12' method.");
+			}
+			
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // back to original.
+			
+			ShowText("Verify feature 12 un-checked test passed.");
 		}
 	}
 	

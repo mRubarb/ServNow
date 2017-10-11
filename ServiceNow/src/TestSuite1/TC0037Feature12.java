@@ -11,7 +11,7 @@ import ServiceNow.BaseClass;
 import ServiceNow.SettingsPage;
 import ActionClasses.Features;
 
-public class TC0036Feature11 extends BaseClass 
+public class TC0037Feature12 extends BaseClass 
 {
 	static boolean testPassed = false;
 	
@@ -24,7 +24,7 @@ public class TC0036Feature11 extends BaseClass
 	}
 
 	@Test
-	public static void tc0036Feature11()throws Exception
+	public static void tc0037Feature12()throws Exception
 	{
 		// login as admin user.
 		CommonTestSteps.LoginAdmin();
@@ -35,26 +35,28 @@ public class TC0036Feature11 extends BaseClass
 		CommonTestSteps.Logout(); 
 
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
-		// run test for feature 11 checked. 
-		Features.RunFeature11(Features.checkBoxState.checked);
+		// run test for feature 12 checked. 
+		Features.RunFeature12(Features.checkBoxState.checked);
+		
 		CommonTestSteps.Logout();
 		
-		// uncheck feature 11 check-box.
+		// uncheck feature 12 check-box.
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
-		SettingsPage.SelectFeature11();
+		SettingsPage.SelectFeature12();
 		CommonTestSteps.Logout();
 		
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
 		
-		// run test for feature 11 not checked.
-		Features.RunFeature11(Features.checkBoxState.notChecked);
+		// run test for feature 12 not checked.
+		Features.RunFeature12(Features.checkBoxState.notChecked);
+		
 		CommonTestSteps.Logout();
 
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
 		SettingsPage.SetCheckboxesTrue();
-		
+
 		testPassed =  true;
 	}
 	
