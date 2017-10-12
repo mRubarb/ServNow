@@ -234,11 +234,6 @@ public class ProvideAdditionalInfoPage extends BaseClass
 	}		
 	
 	
-	public static String GetCostTotal() throws InterruptedException
-	{
-		return driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
-	}
-	
 	// this populates additional information when doing order accessories action.   
 	public static void EnterMissingInfoOrderAccessories() throws InterruptedException
 	{
@@ -279,6 +274,11 @@ public class ProvideAdditionalInfoPage extends BaseClass
 	
 	}		
 	
+	
+	public static String GetCostTotal() throws InterruptedException
+	{
+		return driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
+	}
 	
 	
 	

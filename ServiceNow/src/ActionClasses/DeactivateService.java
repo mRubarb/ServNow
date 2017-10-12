@@ -33,7 +33,7 @@ public class DeactivateService extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
-		VerifyOrderPage.VerifyAdditionalInformationDeactivate();
+		VerifyOrderPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationDeactivate();  // **** TEST *****
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		

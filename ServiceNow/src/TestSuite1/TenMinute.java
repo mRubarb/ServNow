@@ -1,7 +1,5 @@
 package TestSuite1;
 
-import javax.swing.JOptionPane;
-
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -9,13 +7,10 @@ import org.testng.annotations.Test;
 
 import ActionClasses.DeactivateService;
 import ActionsBaseClasses.CommonTestSteps;
+import ServiceNow.Approvals;
 import ServiceNow.BaseClass;
 import ServiceNow.Frames;
-import ServiceNow.HomePage;
-import ServiceNow.LoginPage;
-import ServiceNow.MyOrdersPage;
 import ServiceNow.SideBar;
-import ServiceNow.Approvals;
 
 public class TenMinute extends BaseClass 
 {

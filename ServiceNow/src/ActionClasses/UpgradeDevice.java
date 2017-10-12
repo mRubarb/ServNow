@@ -36,7 +36,7 @@ public class UpgradeDevice extends ActionsBase
 		ChooseDevicePage.WaitForPageToLoadUpgradeDevice();
 		ChooseDevicePage.SetupForDeviceSelection();
 		VerifyPageTitle(upgradeDevice);
-		// this selects the device specified in the DeviceInfoActions class and stores its index in DeviceInfoActions class.
+	
 		ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
 		ChooseDevicePage.clickNextButton();
 		
@@ -50,15 +50,11 @@ public class UpgradeDevice extends ActionsBase
 		ChoosePlanPage.selectFirstLastOptionalFeature();
 		ChoosePlanPage.clickNextButton();
 
-		//ChooseAccessoriesPage.WaitForPageToOpenThreeItems();
-		// line above replaced by following line: 
-		
+				
 		VerifyPageTitle(upgradeDevice);
 		ChooseAccessoriesPage.loadAvailableAccessoriesIntoExpectedList();
-		// added to replace commented line above
-		ChooseAccessoriesPage.addAccessoryToCart_Upgrade(); // <--
-		//ChooseAccessoriesPage.MakeDesiredSelectionsUpgradeDeviceActionAndStoreCosts(); // this stores cost and cost monthly into AccessoriesDetailsExpected
-		//ChooseAccessoriesPage.clickNextBtn();
+		ChooseAccessoriesPage.addAccessoryToCart_Upgrade(); 
+		
 
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
 		VerifyPageTitle(upgradeDevice);		
@@ -72,7 +68,7 @@ public class UpgradeDevice extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
-		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice(); // additional info section
+		VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
 		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
 		VerifyOrderPage.VerifyPlanInfoUpgradeDevice(); // plan section
 		

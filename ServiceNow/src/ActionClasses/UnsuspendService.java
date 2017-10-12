@@ -33,7 +33,7 @@ public class UnsuspendService extends ActionsBase
 
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(unsuspendActionTitle);		
-		VerifyOrderPage.VerifyAdditionalInformationUnsuspend();
+		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformationUnsuspend();
 
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();

@@ -101,7 +101,7 @@ public class PortNumber extends ActionsBase
 		VerifyOrderPage.verifySelectedDeviceDetailsPortNumber();  	
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails(); 
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.VerifyAdditionalInformation();		
+		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformation();		
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		BaseClass.stepComplete("TC:0001", "TS:30");

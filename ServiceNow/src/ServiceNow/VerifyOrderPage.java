@@ -37,7 +37,6 @@ public class VerifyOrderPage extends BaseClass
 	
 	public static void WaitForPageToLoad() throws Exception
 	{
-		// //span[text()='Cancel service as employee is no longer with the company']
 		WaitForElementClickable(By.xpath("(//button[text()='Back'])[1]"), ExtremeTimeout, "Page open for VerifyOrderPage.WaitForPageToLoad() failed looking for button.");		
 		WaitForElementClickable(By.xpath("(//button[text()='Back'])[2]"), MainTimeout, "Page open for VerifyOrderPage.WaitForPageToLoad() failed looking for button.");		
 	}
@@ -335,60 +334,8 @@ public class VerifyOrderPage extends BaseClass
 			
 		}
 		
-		
-		/*for(int x = 0; x < allPlanItems.length; x ++)
-		{
-			switch(x)
-			{
-				case 0:
-				{
-					Assert.assertEquals(allPlanItems[x],planInfoActions.planSelectedName,errorMessage);
-					break;
-				}
-				case 1:
-				{
-					//tempString = allDeviceItems[x].split(" ")[1] + " " + allDeviceItems[x].split(" ")[2]; // store the vendor parts of the string array.  
-					Assert.assertEquals(allPlanItems[x],"Price " + planInfoActions.PlanTextCost(),errorMessage); 					
-					break;
-				}
-				case 2:
-				{
-					Assert.assertEquals(allPlanItems[x], "Included Features",errorMessage); // verify cost part of string array.
-					break;
-				}	
-				case 3:
-				{
-					Assert.assertEquals(allPlanItems[x], "Base Package",errorMessage); // verify cost part of string array.
-					break;
-				}	
-				case 4:
-				{
-					Assert.assertEquals(allPlanItems[x], "Optional Features",errorMessage); // verify cost part of string array.
-					break;
-				}				
-				case 5:
-				{
-					Assert.assertEquals(allPlanItems[x], optionalFeaturesList.get(0).completeName,errorMessage); // verify cost part of string array.
-					break;
-				}							
-				case 6:
-				{
-					Assert.assertEquals(allPlanItems[x], optionalFeaturesList.get(optionalFeaturesList.size() - 1).completeName,errorMessage); // verify cost part of string array.
-					break;
-				}										
-			}
-		}*/
-		
-		/*// list of items returned
-		Nationwide for Business Talk Share Plan
-		Price $38.69
-		Included Features
-		Base Package
-		Optional Features
-		Unlimited Push to Talk - $300.00 (Monthly)
-		1000 Messages - $10.00 (Monthly)
-		*/
 	}
+	
 	
 	public static void verifyAccessoriesDetails()  
 	{
@@ -526,6 +473,9 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[1].replace("Price ", "") , DevicePortNumber.selectedDevicePrice,  errMessage); // price
 	}
 	
+	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
+	/*
 	public static void VerifyAdditionalInformation() throws Exception
 	{
 		String errorMessage = "Wrong information found in test for additional information in VerifyOrderPge.VerifyAdditionalInformation.";
@@ -559,11 +509,12 @@ public class VerifyOrderPage extends BaseClass
 			
 		}
 		
-	}
+	}*/
 
-	
+
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/3/17 -- Ana
 	// this verification is called when processing a deactivate. 
-	public static void VerifyAdditionalInformationDeactivate() throws Exception
+	/*public static void VerifyAdditionalInformationDeactivate() throws Exception
 	{
 		String errorMessage = "Failure in checking additional information for Deactivate Service action in DeactivateService.VerifyAdditionalInformationDeactivate.";		
 		
@@ -572,9 +523,12 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(GetAdditionalInfoDeactivate()[2], serviceNumber, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoDeactivate()[3], reasonAction, errorMessage);
 
-	}
+	}*/
 	
+	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing an update action. 
+	/*
 	public static void VerifyAdditionalInformationUpdateFeature() throws Exception
 	{
 		errMessage = "Fail in VerifyOrderPage.VerifyAdditionalInformationUpdateFeature";
@@ -583,52 +537,138 @@ public class VerifyOrderPage extends BaseClass
 		VerifyAdditionalInformationCommon(strArray, errMessage);
 
 		// css= #verify_properties > div:nth-child(2) table tbody tr:nth-of-type(1) // gets one element of additional info in verify orders page.
-	}
+	}*/
 	
 	
-	// this verification is called when processing a Swap Device. 
-	public static void VerifyAdditionalInformationSwapDevice() throws Exception
+	// this verification is called when processing a Swap Device. -- making it generic --- 10/3/17 Ana
+	public static void verifyAdditionalInformationBlock() throws Exception
 	{
 		String errorMessage = "Failure in checking additional information for Swap Device action in SwapDevice.VerifyAdditionalInformationSwapDevice.";		
 
 		HashMap<String, String> additionalInfoMap = getAdditionalInformationData();
+			
 		
+		if (additionalInfoMap.containsKey("Contact Phone Number")) {
 			
-		for (int i = 0; i < additionalInfoMap.size(); i++) {
+			System.out.println(" Key: " + additionalInfoMap.get("Contact Phone Number"));
+			Assert.assertEquals(additionalInfoMap.get("Contact Phone Number"), contactNumber, errorMessage);
 			
-			if (additionalInfoMap.containsKey("Contact Phone Number")) {
-				
-				Assert.assertEquals(additionalInfoMap.get("Contact Phone Number"), contactNumber, errorMessage);
-				
-			} else if (additionalInfoMap.containsKey("Ext")) {
-				
-				Assert.assertEquals(additionalInfoMap.get("Ext"), extension, errorMessage);
-				
-			} else if (additionalInfoMap.containsKey("Additional Instructions")) {
-				
-				Assert.assertEquals(additionalInfoMap.get("Additional Instructions"), additionalInstructions, errorMessage);
-				
-			} else if (additionalInfoMap.containsKey("Service Number")) {
-				
-				Assert.assertEquals(additionalInfoMap.get("Service Number"), serviceNumber, errorMessage);
-				
-			} else if (additionalInfoMap.containsKey("Authorization Code")) {
-				
-				Assert.assertEquals(additionalInfoMap.get("Authorization Code"), IdentifyDevices.authorizationCode, errorMessage);
-				
-			} else if (additionalInfoMap.containsKey("Preferred Area Code")) {
-				
-				Assert.assertEquals(additionalInfoMap.get("Preferred Area Code"), preferredAreaCode, errorMessage);
-				
-			}
-	
-		}
+		} if (additionalInfoMap.containsKey("Ext")) {
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Ext"));
+			Assert.assertEquals(additionalInfoMap.get("Ext"), extension, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Additional Instructions")) {
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Additional Instructions"));
+			Assert.assertEquals(additionalInfoMap.get("Additional Instructions"), additionalInstructions, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Service Number")) {
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Service Number"));
+			Assert.assertEquals(additionalInfoMap.get("Service Number"), serviceNumber, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Authorization Code")) {
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Authorization Code"));
+			Assert.assertEquals(additionalInfoMap.get("Authorization Code"), IdentifyDevices.authorizationCode, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Preferred Area Code")) {
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Preferred Area Code"));
+			Assert.assertEquals(additionalInfoMap.get("Preferred Area Code"), preferredAreaCode, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Reason") && approvalActionType.equals(ApprovalActionType.deactivate)) {  // for Deactivate 
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Reason"));
+			Assert.assertEquals(additionalInfoMap.get("Reason"), reasonAction, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Reason") && approvalActionType.equals(ApprovalActionType.newActivation)) {  // for New activation 
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Reason"));
+			Assert.assertEquals(additionalInfoMap.get("Reason"), reasonAddDeviceAndService, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Reason") && approvalActionType.equals(ApprovalActionType.upgradeDevice)) {  // for Upgrade Device 
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Reason"));
+			Assert.assertEquals(additionalInfoMap.get("Reason"), UpgradeDevice.reasonUpgradeDevice, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Business Unit")) {  // for New activation 
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Business Unit"));
+			Assert.assertEquals(additionalInfoMap.get("Business Unit"), businessUnit, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Preferred Suspension Date")) {  // for Suspend
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Preferred Suspension Date"));
+			Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(additionalInfoMap.get("Preferred Suspension Date")), errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Hold Service")) {  // for Suspend 
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Hold Service"));
+			//Assert.assertEquals(additionalInfoMap.get("Hold Service"), limitedUserPulldownSelection, errorMessage); // <-- UNCOMMENT WHEN SFD 112978 IS FIXED
+			
+		} if (additionalInfoMap.containsKey("Preferred Unsuspend Date")) {  // for Unsuspend
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Preferred Unsuspend Date"));
+			Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(additionalInfoMap.get("Preferred Unsuspend Date")), errorMessage);
+			
+		} if (additionalInfoMap.containsKey("User")) {  // for Unsuspend
+			
+			System.out.println(" Key: " + additionalInfoMap.get("User"));
+			Assert.assertEquals(additionalInfoMap.get("User"), userLimitedFullNameExtended, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Carrier Account Number")) {  // for Port Number
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Carrier Account Number"));
+			Assert.assertEquals(additionalInfoMap.get("Carrier Account Number"), PlanInfoActions.carrierAccountNumber, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Name on Invoice")) {  // for Port Number
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Name on Invoice"));
+			Assert.assertEquals(additionalInfoMap.get("Name on Invoice"), userLimitedShorterName, errorMessage);
+			
+		} if (additionalInfoMap.containsKey("Current Carrier")) {  // for Port Number
+			
+			System.out.println(" Key: " + additionalInfoMap.get("Current Carrier"));
+			Assert.assertEquals(additionalInfoMap.get("Current Carrier"), DeviceInfoActions.currentVendorPortNumber, errorMessage);
+			
+		} 
+		
 		
 	}	
 	
 	
+	
+	// 9/22/17 Ana - Adding **GENERIC** method to obtain Additional Information into a HashMap
+	public static HashMap<String, String> getAdditionalInformationData() {
+		
+		HashMap<String, String> additionalInfoMap = new HashMap<>();
+		
+		List<WebElement> listAdditionalInfoRows = driver.findElements(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr"));
+		
+		for (int i = 1; i < listAdditionalInfoRows.size(); i++) {
+			
+			System.out.println("Row: " + listAdditionalInfoRows.get(i-1).getText());
+			
+			String label = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr[" + i + "]/td[1]")).getText();  //row.getText().split(":")[0].trim();
+			String value = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr[" + i + "]/td[2]")).getText();   //row.getText().split(":")[1].trim();
+			
+			additionalInfoMap.put(label, value);
+			System.out.println("Label: " + label + ", value: " + value);
+			
+		}
+		
+		return additionalInfoMap;
+		
+	}
+		
+	
+	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing a suspend.
 	// NOTE: 'Hold Service' has defect DE# 107772.
+	/*
 	public static void VerifyAdditionalInformationSuspend() throws Exception
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationSuspend.";
@@ -640,12 +680,13 @@ public class VerifyOrderPage extends BaseClass
 		String holdServiceFound = driver.findElement(By.xpath("//td/label[text()='Hold Service']/../following-sibling::td/span")).getText(); 
 		// Assert.assertEquals(holdServiceFound, limitedUserPulldownSelection, errMessage); // <-- UNCOMMENT WHEN SFD 112978 IS FIXED
 		
-	}
+	}*/
 	
 	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing a suspend.
 	// NOTE: 'Hold Service' has defect DE# 107772.
-	public static void VerifyAdditionalInformationUnsuspend() throws Exception
+	/*public static void VerifyAdditionalInformationUnsuspend() throws Exception
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationSuspend.";
      
@@ -654,8 +695,11 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(GetAdditionalInfoUnsuspend()[2], serviceNumber, errMessage);
 		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(GetAdditionalInfoSuspend()[3]));	
 		Assert.assertEquals(GetAdditionalInfoUnsuspend()[4], userLimitedFullNameExtended, errMessage);
-	}	
+	}*/	
 	
+	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/3/17 -- Ana
+	/*
 	public static void VerifyAdditionalInformationOderAccessories() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
@@ -663,8 +707,10 @@ public class VerifyOrderPage extends BaseClass
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 
 		VerifyAdditionalInformationCommon(strArray, errMessage);
-	}
+	}*/
 
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
+	/*
 	public static void VerifyAdditionalInformationUpgradeDevice() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
@@ -672,8 +718,11 @@ public class VerifyOrderPage extends BaseClass
 		
 		VerifyAdditionalInformationCommon(strArray, errMessage);
 		Assert.assertEquals(strArray[4].replace("Reason ", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);		
-	}
+	} */
 	
+	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
+	/*
 	public static void VerifyAdditionalInformationPortNumber() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationPortNumber.";		
@@ -686,17 +735,18 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[4].replace("Additional Instructions ", ""), additionalInstructions, errMessage);		
 		Assert.assertEquals(strArray[5].replace("Current Carrier ", ""), DeviceInfoActions.currentVendorPortNumber, errMessage);
 		Assert.assertEquals(strArray[6].replace("Service Number ", ""), serviceNumber, errMessage);
-	}
+	}*/
 	
 	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// can be used by other methods for common sections. 
-	public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
+	/*public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
 	{
 		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
 		Assert.assertEquals(strArray[1].replace("Ext ", ""), extension, errMessage);		
 		Assert.assertEquals(strArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
 		Assert.assertEquals(strArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
-	}
+	}*/
 	
 	public static void VerifyShippingInformation() throws Exception
 	{
@@ -812,6 +862,7 @@ public class VerifyOrderPage extends BaseClass
 							 strArray[4].replace("Hold Service ","")};
 	}
 	
+	
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
 	public static String [] GetAdditionalInfoUnsuspend()
 	{
@@ -821,18 +872,20 @@ public class VerifyOrderPage extends BaseClass
 							 strArray[4].replace("User ","")};
 	}	
 	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoDeactivate()
+	/*public static String [] GetAdditionalInfoDeactivate()
 	{
 		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
 		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
 				              strArray[1].replace("Additional Instructions ", ""),
 							  strArray[2].replace("Service Number ", ""), 
 							  strArray[3].replace("Reason ", "")};
-	}
+	}*/
 	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] getAdditionalInfoSwapDevice()
+	/*public static String [] getAdditionalInfoSwapDevice()
 	{
 		strArray = driver.findElement(By.xpath("(//tbody)[3]")).getText().split("\n");
 		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
@@ -840,32 +893,9 @@ public class VerifyOrderPage extends BaseClass
 							  strArray[2].replace("Additional Instructions ", ""),
 							  strArray[3].replace("Preferred Area Code ", ""),							  
 							  strArray[4].replace("Service Number ", "") }; // removed 9/16 -- ** Uncommented since it's present - 9/15/17 - Ana 
-	}	
+	}*/	
 	
 	
-	// 9/22/17 Ana - Adding generic method to obtain Additional Information into a HashMap
-	
-	public static HashMap<String, String> getAdditionalInformationData() {
-		
-		HashMap<String, String> additionalInfoMap = new HashMap<>();
-		
-		List<WebElement> listAdditionalInfoRows = driver.findElements(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr"));
-		
-		for (int i = 1; i < listAdditionalInfoRows.size(); i++) {
-			
-			System.out.println("Row: " + listAdditionalInfoRows.get(i-1).getText());
-			
-			String label = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr[" + i + "]/td[1]")).getText();  //row.getText().split(":")[0].trim();
-			String value = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr[" + i + "]/td[2]")).getText();   //row.getText().split(":")[1].trim();
-			
-			additionalInfoMap.put(label, value);
-			System.out.println("Label: " + label + ", value: " + value);
-			
-		}
-		
-		return additionalInfoMap;
-		
-	}
 	
 	
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
@@ -890,15 +920,16 @@ public class VerifyOrderPage extends BaseClass
 							  strArray[3].replace("Serial Number ", "")};
 	}		
 	
+	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoOrderAccessories()
+	/*public static String [] GetAdditionalInfoOrderAccessories()
 	{
  
 		strArray = driver.findElement(By.xpath("(//tbody)[2]")).getText().split("\n");
 		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
 				              strArray[1].replace("Additional Instructions ", ""),
 							  strArray[2].replace("Service Number ", "")}; 
-	}	
+	}*/	
 	
 	
 }
