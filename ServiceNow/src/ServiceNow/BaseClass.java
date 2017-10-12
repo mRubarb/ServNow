@@ -168,9 +168,13 @@ public class BaseClass
 	//public static String chooseActionsPullDownServices  = "//select[@ng-model='device.selectedAction']"; // // this is the pull down on 'my devices' page.  	
 	
 	public static int indexMyDevices = 2;
+	public static int indexMyServices = 3;
 	
 	// Number '2' indicates the second device listed 
 	public static String chooseActionsPullDownServices  = "//div/div[" + indexMyDevices + "]/div/select[@ng-model='device.selectedAction']"; // // this is the pull down on 'my devices' page.
+	
+	public static String chooseActionsPullDownServicesPage  = "(//select)[" + indexMyServices +"]";
+	
 	
 	
 	// these are for accessing current project folder.

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByCssSelector;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -270,6 +271,14 @@ public class ChooseDevicePage extends BaseClass
 		WaitForElementPresent(By.cssSelector(".timing_span > a"), MainTimeout); // some text at the bottom of the page.		
 	}			
 	
+	public static void WaitForPageToLoadUpgradeService() throws Exception
+	{
+		errMessage = "Failed wait in ChooseDevicePage.WaitForPageToLoadUpgradeDevice";		
+		
+		// wait for next button at bottom of page and wait for button #3.
+		WaitForElementClickable(By.xpath("(//div/button[text()='Next'])[2]"), ExtremeTimeout, "Failed in wait for Device Page to load"); //
+		WaitForElementClickable(By.cssSelector("#existing-manufacturer"), ExtremeTimeout, "Failed in wait for Device Page to load"); //
+	}	
 	
 	// *** Methods commented out since they are not used *** 
 			/*

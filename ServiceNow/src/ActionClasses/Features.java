@@ -4,6 +4,8 @@ import java.nio.file.ProviderNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import ActionsBaseClasses.CommonTestSteps;
@@ -11,10 +13,12 @@ import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.DevicePage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
 import ServiceNow.HomePage;
 import ServiceNow.MyDevicesPage;
+import ServiceNow.MyServicesPage;
 import ServiceNow.OrderNewServicePage;
 import ServiceNow.ProvideAdditionalInfoPage;
 import ServiceNow.SettingsPage;
@@ -92,13 +96,81 @@ public class Features extends BaseClass
 		VerifyFeature12(state);
 	}
 	
-	
+	// this goes through create order to the shipping info page and then verifies expected result.
+	public static void RunFeature13(checkBoxState state) throws Exception
+	{
+		Frames.switchToGsftNavFrame();
+		SideBar.clickMyServicesBtn();
+		Frames.switchToGsftMainFrame();
+		MyServicesPage.WaitForPageToLoad();
+		MyServicesPage.SelectUpgradeServiceAction();
+		ChooseDevicePage.WaitForPageToLoadUpgradeService();
+		VerifyDeviceExistsInUpgradeService(); // make sue a device is shown in Upgrade Service page. 
+		ChooseDevicePage.clickNextButton();
+		ChoosePlanPage.WaitForPageToLoadNoPlanSelected();
+		
+		
+		
+		/*
+		SideBar.clickHomeButton();
+		Frames.switchToGsftMainFrame();
+		HomePage.WaitForPageToLoad();
+		HomePage.clickCreateAnOrderButton();
+		OrderNewServicePage.selectCountryFromDropDown();
+		OrderNewServicePage.fillPostalCodeTextBox("02451");
+		OrderNewServicePage.clickNextButtonSelectRegion(); // move to device select page.
+		ChooseDevicePage.SelectFirstDevice(); // this waits for first device and clicks it if found else error.
+		ChooseDevicePage.clickNextButton();
+		ChoosePlanPage.SelectFirstPlan(); // this waits for first plan and clicks it if found else error.
+		ChoosePlanPage.clickNextButton();
+		ChoosePlanPage.clickNextButton(); // this gets to accessories page.		
+		ChooseAccessoriesPage.clickNextBtn();
+		ProvideAdditionalInfoPage.WaitForPageToLoad();
+		ProvideAdditionalInfoPage.EnterMissingInfoFeatures();
+		ProvideAdditionalInfoPage.clickNextBtn();
+		EnterShippingInfoPage.WaitForPageLoad();
+		*/
+		
+		// VerifyFeature12(state);
+	}
 	
 	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 														HELPERS
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	// this verifies a device exists in the Choose a Device Page for Upgrade Service. It's assumed the page is already open.
+	public static void VerifyDeviceExistsInUpgradeService() throws Exception
+	{
+ 
+		String errMessageInstructions = " field in 'Features.VerifyDeviceExistsInUpgradeService' method is empty. Need to select a proper value for 'indexMyServices' in the Base Class "
+									   + " that will select a service that has an associated device when 'MyServicesPage.SelectUpgradeServiceAction()' is called in this test.";
+
+		
+		ShowText(driver.findElement(By.cssSelector("#existing-manufacturer")).getAttribute("label"));
+		
+		
+		// verify manufacturer
+		Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-manufacturer"))).getFirstSelectedOption().getText().equals("")
+						   ,"Maunufacturer" + errMessageInstructions);
+		
+		// verify model
+		Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-model"))).getFirstSelectedOption().getText().equals("")
+				   ,"Model" + errMessageInstructions);
+		
+		// verify serial number
+		Assert.assertFalse(driver.findElement(By.cssSelector("#existing-serial-number")).getAttribute("value").equals("")
+				   ,"Serial Number" + errMessageInstructions);
+		
+		// verify serial number type 
+		Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-serial-number-type"))).getFirstSelectedOption().getText().equals("")
+				   ,"Maunufacturer" + errMessageInstructions);
+		
+
+		
+		
+	}	
+	
 	public static void CleanUpFailedTest() throws Exception
 	{
 		ShowText("Running Clean Up method beccause complete test has not been run.");
@@ -166,7 +238,8 @@ public class Features extends BaseClass
 		}
 	}
 	
-	
+
+	// this is used to verify feature 12 with the check-box checked and not checked.
 	public static void VerifyFeature12(checkBoxState state) throws Exception
 	{
 		// check that expedite check-box can be clicked and the text message is correct.

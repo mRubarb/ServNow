@@ -49,6 +49,15 @@ public class SideBar extends BaseClass
 		actions.moveToElement(myDevicesBtn).click().perform();
 	}
 	
+	// click my services button
+	public static void clickMyServicesBtn() 
+	{
+		WebElement myDevicesBtn = driver.findElement(By.xpath("//a[@id='2776df4f0fa74200e5680cbce1050e46']"));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(myDevicesBtn).click().perform();
+	}	
+	
+	
 	// click all my orders button
 	public static void clickAllMyOrders() 
 	{
