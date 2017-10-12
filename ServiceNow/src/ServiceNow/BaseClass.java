@@ -152,8 +152,8 @@ public class BaseClass
 
 	
 	// logins for SN
-	public static String userAdmin = "bob.lichtenfels.xx1";
-	public static String userAdminPasswd = "synergy#1"; 
+	public static String userAdmin = "sn.cert.admin"; // jnupp
+	public static String userAdminPasswd = "C3rt1fy!!"; // jnupp
 	public static String userLimited  = "bob.lichtenfels.xx1.limited";
 	public static String userLimitedPasswd = "tngo111";
 	public static String userApprover = "bob.lichtenfels.xx1.approver"; 
@@ -168,9 +168,13 @@ public class BaseClass
 	//public static String chooseActionsPullDownServices  = "//select[@ng-model='device.selectedAction']"; // // this is the pull down on 'my devices' page.  	
 	
 	public static int indexMyDevices = 2;
+	public static int indexMyServices = 3;
 	
 	// Number '2' indicates the second device listed 
 	public static String chooseActionsPullDownServices  = "//div/div[" + indexMyDevices + "]/div/select[@ng-model='device.selectedAction']"; // // this is the pull down on 'my devices' page.
+	
+	public static String chooseActionsPullDownServicesPage  = "(//select)[" + indexMyServices +"]";
+	
 	
 	
 	// these are for accessing current project folder.
@@ -278,6 +282,14 @@ public class BaseClass
 		WaitForElementVisible(By.xpath("//a[text()='Password Reset']"), MainTimeout);		
 	}
 	
+	public static void WaitForAdminMainPageLoad() throws Exception // jnupp
+	{
+		// this waits for admin page (page after login) to load.
+		WaitForElementVisible(By.xpath("//h2[contains(text(),'User Interface')]"), MainTimeout);
+		WaitForElementVisible(By.xpath("//h2[contains(text(),'User Administration')]"), MainTimeout);
+		WaitForElementVisible(By.xpath("//h2[contains(text(),'Reporting and Analytics')]"), MainTimeout);
+		WaitForElementClickable(By.cssSelector(".pointerhand.icon-stop-watch.btn.btn-icon"), MediumTimeout, "");
+	}	
 	
 	public static void ShowArray(String [] strArray)
 	{
@@ -530,7 +542,7 @@ public class BaseClass
 		{
 		    try
 		    {
-		    	//WebDriverWait wait = new WebDriverWait(driver, waitTime);
+		    	WebDriverWait wait = new WebDriverWait(driver, waitTime);
 		    	ExpectedConditions.not(ExpectedConditions.elementToBeClickable(by)).apply(driver);
 		    }
 		    catch (WebDriverException e)
@@ -540,7 +552,20 @@ public class BaseClass
 		    return true;
 		}	
 		
-		// ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(by)).apply(driver);
+
+		public static boolean WaitForElementClickableBoolean(By by, int waitTime)
+		{
+		    try
+		    {
+		    	WebDriverWait wait = new WebDriverWait(driver, waitTime);
+		    	wait.until(ExpectedConditions.elementToBeClickable(by));
+		    }
+		    catch (WebDriverException e)
+		    {
+		        return false;
+		    }
+		    return true;
+		}	
 		
 		
 		public static boolean WaitForElementVisible(By by, int timeOut) throws Exception 
@@ -625,6 +650,23 @@ public class BaseClass
 			//System.out.println(testCaseNumber + " " +testStepNumber + "");
 		}
 		
+		// This shows a pop-up  message with added text passed in.  
+		public static void Pause(String moreInfo) throws Exception // jnupp
+		{
+		    JOptionPane.showMessageDialog(frame, "PAUSE: " + moreInfo);
+		}
+
+		// jnupp below
+		public static void ShowText(String str) 
+		{
+			System.out.println(str);
+		}
+		
+		public static void ShowInt(int intIn) 
+		{
+			System.out.println(intIn);
+		}
+		// jnupp above.
 		
 		
 		/*

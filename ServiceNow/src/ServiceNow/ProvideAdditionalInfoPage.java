@@ -94,6 +94,30 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonAction);
 	}
 	
+	public static void EnterMissingInfoFeatures() throws Exception
+	{
+		// fill in preferred area code. 
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).sendKeys(preferredAreaCode);
+				
+		// fill in contact number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).sendKeys(contactNumber);
+		
+		// fill in the additional instructions
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
+
+		
+		// now select the reason in pull-down and set. used hard coded value because this is only for feature test.
+		WaitForElementClickable(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"),MiniTimeout , "Pulldown in 'ProvideAdditionalInfoPage.verifyErrorPresent()' can't be slected.");
+		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonAddDeviceAndService);
+	}	
+	
+	
+	
+	
+	
 	public static void EnterMissingInfoPortNumber() throws Exception
 	{
 
