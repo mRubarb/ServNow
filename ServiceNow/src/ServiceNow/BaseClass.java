@@ -40,16 +40,17 @@ public class BaseClass
 	
 	public static boolean testCaseStatus = false;
 	
+	// --- *** FOLLOWING 3 VARIABLES TO BE REMOVED *** ------------------------
+	// these are values used throughout testing. 
+	//public static String deviceSelectedForAllPages = "Apple iPhone 5 (16GB) - Black"; // this is the device selected in the device page class that is used in all pages after the device page.
+	//public static String deviceVendorSelectedForAllPages = "Verizon Wireless"; // this is the vendor selected in the device page class that will go with 'deviceSelectedForAllPages' above..
+	//public static String planSelectedForAllPages = "Nationwide for Business Talk Share Plan"; // this is the plan selected in the plan class that is used in all pages after the device page.
 	
-	// these are values used throughout testing.
-	public static String deviceSelectedForAllPages = "Apple iPhone 5 (16GB) - Black"; // this is the device selected in the device page class that is used in all pages after the device page.
-	public static String deviceVendorSelectedForAllPages = "Verizon Wireless"; // this is the vendor selected in the device page class that will go with 'deviceSelectedForAllPages' above..
-	public static String planSelectedForAllPages = "Nationwide for Business Talk Share Plan"; // this is the plan selected in the plan class that is used in all pages after the device page.
 	
 	// Index for device selected when doing New Activation
 	// This index will be incremented and used to select a new device on New Activation when the device selected has no plans
 	// Added by Ana 9/8/17
-	public static int indexDeviceSelectedNewActivation = 4;
+	public static int indexDeviceSelectedNewActivation = 1;
 	// Added by Ana 9/11/17
 	public static boolean isFirstPass = true; // this is needed in the case that the selected device has no plans. In that case, when test goes to the Choose Device
 											  // page, the will be one less 'Add to Cart' button, and the 'Add to Cart' button clicked won't match with the desired
@@ -145,10 +146,6 @@ public class BaseClass
 	//Admin_User
 	public static String admin_userName = "bob.lichtenfels.xx1";
 	// public static String admin_userName = "bob.lichtenfels.xx1.limited";	
-	
-	//TC0002 User
-	//public static String tc0002SN_UserName = "rob.qa_tc0002";
-	//public static String tc0002SN_UID = "rob.qa_tc0002";
 
 	
 	// logins for SN
@@ -241,6 +238,7 @@ public class BaseClass
 	// this is for indicating what type of action is being done. used in approval page object.
 	public static enum ApprovalActionType
 	{
+		newActivation,
 		deactivate,
 		suspend,
 		unsuspend,
@@ -264,7 +262,7 @@ public class BaseClass
 	public BaseClass()  
 	{
 		System.out.println("BASE CLASS CONSTRUCTOR...");
-		planInfoActions = new PlanInfoActions(planSelectedForAllPages); // setup plan name 
+		planInfoActions = new PlanInfoActions();  //  PlanInfoActions(planSelectedForAllPages); // setup plan name 
 		deviceInfoActions  = new DeviceInfoActions(); // new DeviceInfoActions(deviceSelectedForAllPages, deviceVendorSelectedForAllPages);
 		currentDirectory = new File(".");
 		projectPath = currentDirectory.getAbsolutePath();

@@ -40,7 +40,7 @@ public class OrderAccessories extends ActionsBase
 			EnterShippingInfoPage.clickNextBtn();
 
 			VerifyOrderPage.WaitForPageToLoad();
-			VerifyOrderPage.VerifyAdditionalInformationOderAccessories();
+			VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationOderAccessories();
 			VerifyOrderPage.VerifyOrderAccessoriesAction(); 
 			VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction();	
 			VerifyCostOrderAccessoriesAction();

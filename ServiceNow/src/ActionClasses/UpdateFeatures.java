@@ -37,7 +37,7 @@ public class UpdateFeatures extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(updateServiceTitle);		
 		VerifyOrderPage.VerifyFeatures();	
-		VerifyOrderPage.VerifyAdditionalInformationUpdateFeature();
+		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformationUpdateFeature();
 		VerifyOrderPage.VerifyFeaturesCost();
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();

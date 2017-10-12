@@ -35,7 +35,7 @@ public class TC0001NewActivation extends BaseClass
 	{
 	
 		// **** This is to verify the merge . *****
-		
+		approvalActionType = ApprovalActionType.newActivation; 
 		
 		// WaitForElementClickable(By.xpath("//div[text()='Service Automation']"), MainTimeout , "Failed wait in step 1."); // this waits for an item in the top window.
 	
@@ -255,7 +255,7 @@ public class TC0001NewActivation extends BaseClass
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.VerifyAdditionalInformation();		
+		VerifyOrderPage.verifyAdditionalInformationBlock();		
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		BaseClass.stepComplete("TC:0001", "TS:30");

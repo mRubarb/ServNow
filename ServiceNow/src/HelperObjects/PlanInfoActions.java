@@ -40,6 +40,10 @@ public class PlanInfoActions
 		
 	}
 	
+	
+	public PlanInfoActions() { }
+	
+
 	// this returns the numeric cost. it finds the cost section in planCostCompleteField, removes the dollar sign, and removes commas. 
 	public String PlanDecimalCost()
 	{

@@ -384,7 +384,8 @@ public class Approvals extends BaseClass
 		String externalOrderNumber = "External Order Number:" + orderDetailsObjectExpected.externalOrderId;
 		
 		
-		if(descriptionLines.contains(title)) System.out.println("Ok"); else {System.out.println("Not found - " + title);}
+		/*
+		 * if(descriptionLines.contains(title)) System.out.println("Ok"); else {System.out.println("Not found - " + title);}
 		if(descriptionLines.contains(totalCost)) System.out.println("Ok"); else {System.out.println("Not found - " + totalCost);}
 		if(descriptionLines.contains(itemsOrderedLabel)) System.out.println("Ok"); else {System.out.println("Not found - " + itemsOrderedLabel);}
 		if(descriptionLines.contains(deviceModelAndCost)) System.out.println("Ok"); else {System.out.println("Not found - " + deviceModelAndCost);}
@@ -398,7 +399,7 @@ public class Approvals extends BaseClass
 		if(descriptionLines.contains(shipTo)) System.out.println("Ok"); else {System.out.println("Not found - " + shipTo);}
 		if(descriptionLines.contains(orderId)) System.out.println("Ok"); else {System.out.println("Not found - " + orderId);}
 		if(descriptionLines.contains(externalOrderNumber)) System.out.println("Ok"); else {System.out.println("Not found - " + externalOrderNumber);}
-		
+		*/
 		
 		
 		Assert.assertTrue(descriptionLines.contains(title), errMessage);

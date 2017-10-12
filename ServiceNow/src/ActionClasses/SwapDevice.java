@@ -40,7 +40,7 @@ public class SwapDevice extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(swapDevice);		
 		VerifyOrderPage.VerifySwapDeviceExistingAndNewDevices();
-		VerifyOrderPage.VerifyAdditionalInformationSwapDevice();
+		VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		
