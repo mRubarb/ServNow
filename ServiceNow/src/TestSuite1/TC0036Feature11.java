@@ -51,6 +51,7 @@ public class TC0036Feature11 extends BaseClass
 		Features.RunFeature11(Features.checkBoxState.notChecked);
 		CommonTestSteps.Logout();
 
+		// set feature 10 to 13 check-boxes true.
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
 		SettingsPage.SetCheckboxesTrue();

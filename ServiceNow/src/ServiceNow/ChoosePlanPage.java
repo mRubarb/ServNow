@@ -413,7 +413,7 @@ public class ChoosePlanPage extends BaseClass
 	// this is for features test.  
 	static public void SelectFirstPlan()
 	{
-		if(!WaitForElementClickableBoolean(By.xpath("//button[text()='Add to Cart']"), MediumTimeout))
+		if(!WaitForElementClickableBoolean(By.xpath("//button[text()='Add to Cart']"), ExtremeTimeout - MainTimeout))
 		{
 			Assert.fail("No plan found in plan list in method 'SelectFirstPlan()'");			
 		}
@@ -536,7 +536,16 @@ public class ChoosePlanPage extends BaseClass
 		buttonNext.click();
 	}
 
-
+	// click next button when it's clickable.
+	public static void clickNextButtonSimple() throws Exception 
+	{
+		WaitForElementClickable(By.xpath("(//button[text()='Next'])[1]"), MainTimeout, "Next button on plan page is not clickable in method 'clickNextButton()'");
+		
+		WebElement buttonNext = driver.findElement(By.xpath("//button[text()='Next']"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0," + buttonNext.getLocation().y + ")");
+		buttonNext.click();
+	}
+	
 	// page has settled. select the add to cart for first plan on list.
 	public static void clickAddToCartButtonPlan()  
 	{
@@ -758,5 +767,9 @@ public class ChoosePlanPage extends BaseClass
     	return retString[1];
     }
 
-  
+	// this is the original (prehistoric) wait for page load.
+    static public void WaitForPageToLoadPlanOrig() throws Exception
+	{
+    	WaitForElementClickable(By.xpath("(//button[text()='Add to Cart'])[1]"), ExtremeTimeout - MainTimeout, "Failed to find a plan listed in the plan page.");
+	}
 }

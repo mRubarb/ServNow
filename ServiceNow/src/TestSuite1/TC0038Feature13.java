@@ -24,43 +24,39 @@ public class TC0038Feature13 extends BaseClass
 	}
 
 	@Test
-	public static void tc0037Feature12()throws Exception
+	public static void tc0038Feature13()throws Exception
 	{
 		// login as admin user.
-		//CommonTestSteps.LoginAdmin();
-		//CommonTestSteps.GoToAdminSettings();
+		CommonTestSteps.LoginAdmin();
+		CommonTestSteps.GoToAdminSettings();
 
 		// make sure check-boxes are all checked for feature 10 to 13.
-		//SettingsPage.SetCheckboxesTrue();
-		//CommonTestSteps.Logout(); 
+		SettingsPage.SetCheckboxesTrue();
+		CommonTestSteps.Logout(); 
 
-		CommonTestSteps.LoginLimitedUser();
-		// run test for feature 12 checked. 
+		CommonTestSteps.LoginLimitedUserBrowserOpen();
+		
+		// run test for feature 13 checked. 
 		Features.RunFeature13(Features.checkBoxState.checked);
-		
-		Pause("");
-		
-		/*
 		CommonTestSteps.Logout();
 		
 		// uncheck feature 13 check-box.
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
-		SettingsPage.SelectFeature12();
+		SettingsPage.SelectFeature13();
 		CommonTestSteps.Logout();
 		
+		// login as limited user and run test for feature 13 not checked.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
-		
-		// run test for feature 12 not checked.
-		Features.RunFeature12(Features.checkBoxState.notChecked);
+		Features.RunFeature13(Features.checkBoxState.notChecked);
 		
 		CommonTestSteps.Logout();
 
+		// set feature 10 to 13 check-boxes true.
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
 		SettingsPage.SetCheckboxesTrue();
-		*/
-		
+
 		testPassed =  true;
 	}
 	
@@ -70,7 +66,7 @@ public class TC0038Feature13 extends BaseClass
 	{
 		if(!testPassed) // if testing didn't go all the way through, make sure features 10 to 13 are all disabled in admin settings.
 		{
-			// Features.CloseClean();
+			Features.CloseClean();
 		}
 		
 		System.out.println("Close Browser.");

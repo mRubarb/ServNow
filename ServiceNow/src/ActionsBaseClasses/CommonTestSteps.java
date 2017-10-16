@@ -105,6 +105,14 @@ public class CommonTestSteps extends BaseClass
 		Frames.switchToGsftMainFrame();
 	}
 	
+	public static void GoToTangoeMobilityOrderRequests() throws Exception 
+	{
+		// select side bar 'TangoeMobilityOrderRequests'.
+		Frames.switchToGsftNavFrame();
+		SideBar.adminClickTangoeMobilityOrderRequests();
+		Frames.switchToGsftMainFrame();
+	}
+	
 	public static void LoginApprover() throws Exception
 	{
 		// login as approver and approve the order.

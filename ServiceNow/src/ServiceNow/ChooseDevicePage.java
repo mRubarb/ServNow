@@ -396,8 +396,7 @@ public class ChooseDevicePage extends BaseClass
 
 	public static void SelectFirstDevice() throws Exception 
 	{
-		// WaitForElementClickable(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout, "");
-		if(!WaitForElementClickableBoolean(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout))
+		if(!WaitForElementClickableBoolean(By.xpath("(//button[text()='Add to Cart'])[1]"), ExtremeTimeout - MainTimeout))
 		{
 			Assert.fail("No device found in device list in method 'SelectFirstDevice()'");
 		}

@@ -12,56 +12,54 @@ import ServiceNow.BaseClass;
 import ServiceNow.Frames;
 import ServiceNow.SideBar;
 
-public class TenMinute extends BaseClass 
+public class TC0039CommandUpdatesSubmittedOrder extends BaseClass 
 {
 
 	@BeforeClass
 	public static void setUp() throws Exception
 	{
-		userLoginMode = UserLoginMode.Admin; // setup login for admin user.
-		setUpDriver(DriverSetup.ServiceNow);
+		//userLoginMode = UserLoginMode.Admin; // setup login for admin user.
+		//setUpDriver(DriverSetup.ServiceNow);
 	}
 
 	@Test
-	public static void tc0016Home()throws Exception
+	public static void TC0039CommandUpdatesSubmittedOrder()throws Exception
 	{
 
-		BaseClass.stepComplete("------------------ Starting deactivate action with approve. -----------------------", "");
-
-		testCaseStatus = false;
+		CommonTestSteps.LoginAdmin();
 		
-		//approverAction = ApproverAction.approve; // setup enum for indicating approval type. 
+		CommonTestSteps.GoToTangoeMobilityOrderRequests();
 		
-		// setup enum for indicating approval action type. this is used to tell which module will verify info in approval description sections.
-		//approvalActionType = ApprovalActionType.deactivate; 
-
-		// login as limited user.
-		CommonTestSteps.loginAsAdmin();
+		WaitForElementVisible(By.cssSelector(".navbar-title.list_title"), ExtremeTimeout - MainTimeout);
 		
-		WaitForElementClickable(By.id("sysparm_search"), MainTimeout , "Failed wait for top frame search box."); // this waits for an item in the top window.
-		Frames.switchToGsftMainFrame();
-		WaitForElementVisible(By.xpath("//h2[normalize-space()='User Administration']"), MainTimeout);
-		Frames.switchToGsftNavFrame();		
+		Pause("");
+		
+		//SideBar.adminClickTangoeMobilityOrderRequests();
 
-
-		// got to the devices page through the home page. 
-		SideBar.adminClickTangoeMobilityOrderRequests();
-
+		/*
 		// (//a[text()='Awaiting Approval'])[1]
 		Frames.switchToGsftMainFrame();
+		
+		
 		ShowPopup("wait");
+		
 		
 		driver.findElement(By.xpath("(//a[text()='Awaiting Approval'])[1]")).click();
 		
 		DebugTimeout(9999, "Freeze");
 		
-		
+		WaitForElementClickable(By.id("sysparm_search"), MainTimeout , "Failed wait for top frame search box."); // this waits for an item in the top window.
+		Frames.switchToGsftMainFrame();
+		WaitForElementVisible(By.xpath("//h2[normalize-space()='User Administration']"), MainTimeout);
+		Frames.switchToGsftNavFrame();		
+		*/
 		
 		// this does this. 
 		// 1) run through the deactivate action
 		// 2) setup order details expected object for correct values.
 		// 3) verify results in order-submitted/order-details page after su
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
+		/*
 		DeactivateService.RunDeactivateService();
 		
 		CommonTestSteps.Logout();
@@ -100,6 +98,7 @@ public class TenMinute extends BaseClass
 		BaseClass.stepComplete("Deactivate Service Test Complete.", "");
 		
 		testCaseStatus = true;
+		*/
 	}
 	
 	
@@ -107,10 +106,10 @@ public class TenMinute extends BaseClass
 	public static void closeDriver() throws Exception
 	{
 		System.out.println("Close Browser.");
-		if(orderDetailsObjectExpected != null)
-		{
-			orderDetailsObjectExpected.Show();			
-		}
+		//if(orderDetailsObjectExpected != null)
+		//{
+		//	orderDetailsObjectExpected.Show();			
+		//}
 	    // JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();

@@ -13,6 +13,15 @@ import HelperObjects.PlanInfoActions;
 
 public class ProvideAdditionalInfoPage extends BaseClass
 {
+	
+	public static enum SelectedFeature
+	{
+		feature12,
+		feature13
+	}
+	
+	public static SelectedFeature selectedFeature;
+	
 	public static WebElement element = null;
 	public static String errMessage = "";
 	
@@ -61,6 +70,13 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		WaitForElementPresent(By.xpath("(//button[text()='Next'])[2]"), MediumTimeout);
 	}		
 	
+	public static void WaitForPageToLoadSuspendLongWait() throws Exception
+	{
+		WaitForElementPresent(By.xpath("//label[text()='Additional Instructions']"), ExtremeTimeout - MediumTimeout - MediumTimeout);
+		WaitForElementPresent(By.xpath("(//button[text()='Next'])[1]"), MediumTimeout);		
+		WaitForElementPresent(By.xpath("(//button[text()='Next'])[2]"), MediumTimeout);
+	}		
+	
 	
 	public static void VerifyDeviceAndPlanSectionsCorrect()
 	{
@@ -94,11 +110,14 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonAction);
 	}
 	
-	public static void EnterMissingInfoFeatures() throws Exception
+	public static void EnterMissingInfoFeatures(SelectedFeature feature) throws Exception
 	{
-		// fill in preferred area code. 
-		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).clear();
-		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).sendKeys(preferredAreaCode);
+		if(feature.equals(SelectedFeature.feature12))
+		{
+			// fill in preferred area code. 
+			driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).clear();
+			driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).sendKeys(preferredAreaCode);
+		}
 				
 		// fill in contact number.
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();
@@ -108,15 +127,18 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
 
-		
-		// now select the reason in pull-down and set. used hard coded value because this is only for feature test.
-		WaitForElementClickable(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"),MiniTimeout , "Pulldown in 'ProvideAdditionalInfoPage.verifyErrorPresent()' can't be slected.");
-		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonAddDeviceAndService);
+		// now select the reason in pull-down and set.		
+		if(feature.equals(SelectedFeature.feature12))
+		{
+			WaitForElementClickable(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"),MiniTimeout , "Pulldown in 'ProvideAdditionalInfoPage.verifyErrorPresent()' can't be slected.");
+			new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonAddDeviceAndService);
+		}
+		else
+		{
+			WaitForElementClickable(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"),MiniTimeout , "Pulldown in 'ProvideAdditionalInfoPage.verifyErrorPresent()' can't be slected.");
+			new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonWarrantRepair);
+		}
 	}	
-	
-	
-	
-	
 	
 	public static void EnterMissingInfoPortNumber() throws Exception
 	{

@@ -53,6 +53,7 @@ public class TC0037Feature12 extends BaseClass
 		
 		CommonTestSteps.Logout();
 
+		// set feature 10 to 13 check-boxes true.
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
 		SettingsPage.SetCheckboxesTrue();

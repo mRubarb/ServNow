@@ -23,6 +23,7 @@ import ServiceNow.OrderNewServicePage;
 import ServiceNow.ProvideAdditionalInfoPage;
 import ServiceNow.SettingsPage;
 import ServiceNow.SideBar;
+import ServiceNow.VerifyOrderPage;
 
 
 public class Features extends BaseClass 
@@ -89,9 +90,9 @@ public class Features extends BaseClass
 		ChoosePlanPage.clickNextButton(); // this gets to accessories page.		
 		ChooseAccessoriesPage.clickNextBtn();
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
-		ProvideAdditionalInfoPage.EnterMissingInfoFeatures();
+		ProvideAdditionalInfoPage.EnterMissingInfoFeatures(ProvideAdditionalInfoPage.selectedFeature = ProvideAdditionalInfoPage.SelectedFeature.feature12);
 		ProvideAdditionalInfoPage.clickNextBtn();
-		EnterShippingInfoPage.WaitForPageLoad();
+
 		
 		VerifyFeature12(state);
 	}
@@ -107,68 +108,116 @@ public class Features extends BaseClass
 		ChooseDevicePage.WaitForPageToLoadUpgradeService();
 		VerifyDeviceExistsInUpgradeService(); // make sue a device is shown in Upgrade Service page. 
 		ChooseDevicePage.clickNextButton();
-		ChoosePlanPage.WaitForPageToLoadNoPlanSelected();
+		ChoosePlanPage.WaitForPageToLoadPlanOrig();
+		ChoosePlanPage.SelectFirstPlan();
+		ChoosePlanPage.clickNextButtonSimple();
+		ChoosePlanPage.clickNextButtonSimple();
+		ProvideAdditionalInfoPage.WaitForPageToLoadSuspendLongWait();
+		ProvideAdditionalInfoPage.EnterMissingInfoFeatures(ProvideAdditionalInfoPage.selectedFeature = ProvideAdditionalInfoPage.SelectedFeature.feature13);
 		
-		
-		
-		/*
-		SideBar.clickHomeButton();
-		Frames.switchToGsftMainFrame();
-		HomePage.WaitForPageToLoad();
-		HomePage.clickCreateAnOrderButton();
-		OrderNewServicePage.selectCountryFromDropDown();
-		OrderNewServicePage.fillPostalCodeTextBox("02451");
-		OrderNewServicePage.clickNextButtonSelectRegion(); // move to device select page.
-		ChooseDevicePage.SelectFirstDevice(); // this waits for first device and clicks it if found else error.
-		ChooseDevicePage.clickNextButton();
-		ChoosePlanPage.SelectFirstPlan(); // this waits for first plan and clicks it if found else error.
-		ChoosePlanPage.clickNextButton();
-		ChoosePlanPage.clickNextButton(); // this gets to accessories page.		
-		ChooseAccessoriesPage.clickNextBtn();
-		ProvideAdditionalInfoPage.WaitForPageToLoad();
-		ProvideAdditionalInfoPage.EnterMissingInfoFeatures();
-		ProvideAdditionalInfoPage.clickNextBtn();
-		EnterShippingInfoPage.WaitForPageLoad();
-		*/
-		
-		// VerifyFeature12(state);
+		VerifyFeature13(state);
 	}
-	
 	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 														HELPERS
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public static void VerifyFeature13(checkBoxState state) throws Exception // bladd
+	{
+		 // with check-box checked there should be a shipping info page.
+		if(state.equals(checkBoxState.checked)) 
+		{
+			WaitForElementVisible(By.xpath("//div[text()='Enter Shipping Info']"), MediumTimeout); // verify the radio button for shipping info is visible.
+			ProvideAdditionalInfoPage.clickNextBtn();
+			EnterShippingInfoPage.WaitForPageLoadExtended();
+			
+			// verify expedited section, text in main title bar, and the postal code entry are shown.
+			VerifyExpediteSectionInShippingInfoExists(); 
+			VerifyShippingInfoOtherItems();
+			
+			ShowText("Feature 13 checked test passed.");
+		}
+		else
+		{
+			// at this point information has been entered into the provide additional information page.
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS); // this keeps the MiniTimeout wait below to 3 seconds.
+			if(WaitForElementVisibleNoThrow(By.xpath("//div[text()='Enter Shipping Info']"), MiniTimeout)) // verify the radio button for shipping info is not visible.
+			{
+				Assert.fail("Fail in Features 'VerifyFeature13' method. The radio button for shipping info appears to be visible.");
+			}
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // back to original.  
+
+			ProvideAdditionalInfoPage.clickNextBtn(); // go to verify order page. 
+			VerifyOrderPage.WaitForPageToLoad();
+			
+			// verify this is order page
+			String expected = "Verify your order.";
+			Assert.assertEquals(driver.findElement(By.xpath("//span[text()='Verify your order.']")).getText(), expected, "");
+			
+			String actual = driver.findElement(By.xpath("//div/span[text()='This request contains errors.']")).getText();
+			expected = "This request contains errors.";
+			Assert.assertEquals(actual, expected, "");
+			
+			actual = driver.findElement(By.xpath("//div/span[text()='This request contains errors.']/..")).getText();
+			expected = "This request contains errors. Please note that making corrections to one part of the order could affect subsequent steps in the order process."; 
+			Assert.assertEquals(actual, expected, "");
+			
+			//Pause("b4 click");
+
+			driver.findElement(By.xpath("//button[text()='Begin Fixing Errors']")).click();
+			
+			// Pause("after click");
+
+			String expectedText = "";
+			String errMess = "Expected text " +  expectedText + "is not present";
+			
+			// //////////////////////////////////////////////////////////////////////////////////////
+			// verify the device page is present after clicking on 'Begin Fixing Errors' above.
+			// //////////////////////////////////////////////////////////////////////////////////////
+			ChooseDevicePage.WaitForPageToLoadUpgradeService();
+			
+			expectedText = "Choose your new device.";			
+			//ShowText(driver.findElement(By.cssSelector(".sn-flow__heading.ng-binding")).getText());
+			Assert.assertEquals(driver.findElement(By.cssSelector(".sn-flow__heading.ng-binding")).getText(), 
+								expectedText, errMess);
+			
+			expectedText = "Error: SHIPPING_ADDRESS is required.";
+			//ShowText(driver.findElement(By.cssSelector(".sn-notifyBlockList>li")).getText());
+			Assert.assertEquals(driver.findElement(By.cssSelector(".sn-notifyBlockList>li")).getText(), expectedText, errMess);
+			
+			ShowText("Feature 13 not checked test passed.");
+		}
+	}
+	
 	// this verifies a device exists in the Choose a Device Page for Upgrade Service. It's assumed the page is already open.
 	public static void VerifyDeviceExistsInUpgradeService() throws Exception
 	{
- 
 		String errMessageInstructions = " field in 'Features.VerifyDeviceExistsInUpgradeService' method is empty. Need to select a proper value for 'indexMyServices' in the Base Class "
 									   + " that will select a service that has an associated device when 'MyServicesPage.SelectUpgradeServiceAction()' is called in this test.";
 
+		//driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS); // this keeps the MiniTimeout wait below to 3 seconds.
 		
-		ShowText(driver.findElement(By.cssSelector("#existing-manufacturer")).getAttribute("label"));
-		
+		// /////////////////////////////////////////////////////////////////////////////////
+		// leaving many of these uncommented because they makes this section  real slow.
+		// /////////////////////////////////////////////////////////////////////////////////
 		
 		// verify manufacturer
 		Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-manufacturer"))).getFirstSelectedOption().getText().equals("")
 						   ,"Maunufacturer" + errMessageInstructions);
 		
 		// verify model
-		Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-model"))).getFirstSelectedOption().getText().equals("")
-				   ,"Model" + errMessageInstructions);
+		//Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-model"))).getFirstSelectedOption().getText().equals("")
+		//		   ,"Model" + errMessageInstructions);
 		
 		// verify serial number
 		Assert.assertFalse(driver.findElement(By.cssSelector("#existing-serial-number")).getAttribute("value").equals("")
 				   ,"Serial Number" + errMessageInstructions);
 		
 		// verify serial number type 
-		Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-serial-number-type"))).getFirstSelectedOption().getText().equals("")
-				   ,"Maunufacturer" + errMessageInstructions);
+		//Assert.assertFalse(new Select(driver.findElement(By.cssSelector("#existing-serial-number-type"))).getFirstSelectedOption().getText().equals("")
+		//		   ,"Existing Serial Number" + errMessageInstructions);
 		
-
-		
-		
+		//driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS); // this keeps the MiniTimeout wait below to 3 seconds.
 	}	
 	
 	public static void CleanUpFailedTest() throws Exception
@@ -245,16 +294,7 @@ public class Features extends BaseClass
 		// check that expedite check-box can be clicked and the text message is correct.
 		if(state.equals(checkBoxState.checked))
 		{
-			if(!WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label>input"), ShortTimeout))
-			{
-				Assert.fail("Checkbox for expediting order is not present in 'VerifyFeature12' method.");
-			}
-			
-			// ShowText("Text: " + driver.findElement(By.cssSelector(".tg-space--half--bottom.ng-scope>label")).getText()); // DEBUG
-			
-			// verify correct text message.
-			String expected = " Please expedite this order. (Additional charges may apply.)";
-			Assert.assertEquals(driver.findElement(By.cssSelector(".tg-space--half--bottom.ng-scope>label")).getText(), expected);
+			VerifyExpediteSectionInShippingInfoExists(); // verify expedited section is shown. 
 			ShowText("Verify feature 12 checked test passed.");
 		}
 		else
@@ -277,6 +317,37 @@ public class Features extends BaseClass
 			ShowText("Verify feature 12 un-checked test passed.");
 		}
 	}
+	
+	// verify expedite order section in shipping info.
+	public static void VerifyExpediteSectionInShippingInfoExists() throws Exception
+	{
+		if(!WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label>input"), ShortTimeout)) // checkbox
+		{
+			Assert.fail("Checkbox for expediting order is not present in 'VerifyFeature12' method.");
+		}
+		
+		// ShowText("Text: " + driver.findElement(By.cssSelector(".tg-space--half--bottom.ng-scope>la;bel")).getText()); // DEBUG
+		
+		// verify correct text message.
+		String expected = " Please expedite this order. (Additional charges may apply.)";
+		String errMessage = "";
+		Assert.assertEquals(driver.findElement(By.cssSelector(".tg-space--half--bottom.ng-scope>label")).getText(), expected, errMessage); // text
+	}
+	
+	// this verifies the title bar is presnt and the postal code text box is clickable.  
+	public static void VerifyShippingInfoOtherItems() throws Exception
+	{
+		WaitForElementVisible(By.cssSelector(".sn-flow__heading.ng-binding"), MediumTimeout);
+		
+		// ShowText(driver.findElement(By.cssSelector(".sn-flow__heading.ng-binding")).getText());
+
+		String expected = "Where should we ship this order?";
+		Assert.assertEquals(driver.findElement(By.cssSelector(".sn-flow__heading.ng-binding")).getText(), expected,"");
+		
+		WaitForElementClickable(By.id("ADDRESS_FORMAT_POSTAL_CODE"), MainTimeout, "Failed to find the Postal Code field in Enter Shipping Info page.");
+
+	}
+	
 	
 	//  this verifies presence or no presence of check-boxes, depending on state passed in, and verifies expected text.  
 	public static void VerifyRadioButtonAndText(checkBoxState state) throws Exception

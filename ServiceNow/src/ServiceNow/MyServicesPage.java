@@ -16,7 +16,7 @@ public class MyServicesPage extends BaseClass
 
 	public static void WaitForPageToLoad()
 	{
-		if(!WaitForElementClickableBoolean(By.xpath("(//select)[1]"), MediumTimeout))
+		if(!WaitForElementClickableBoolean(By.xpath("(//select)[1]"), ExtremeTimeout - MainTimeout))
 		{
 			Assert.fail("There are no services that can have an action applied in 'MyServicesPage.WaitForPageToLoad'.");
 		}
@@ -25,11 +25,5 @@ public class MyServicesPage extends BaseClass
 		{
 			Assert.fail("There are no service that can be viewed in 'MyServicesPage.WaitForPageToLoad'.");
 		}
-		
 	}
-
-
-
-
-
 }

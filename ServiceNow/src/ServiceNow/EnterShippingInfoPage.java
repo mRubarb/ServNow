@@ -35,6 +35,13 @@ public class EnterShippingInfoPage extends BaseClass
 		WaitForElementVisible(By.xpath("(//button[text()='Next'])[2]"), MainTimeout);
 	}
 	
+	public static void WaitForPageLoadExtended() throws Exception
+	{
+		WaitForElementVisible(By.xpath("//label[text()='Postal Code']"), ExtremeTimeout - MainTimeout);
+		WaitForElementVisible(By.xpath("(//button[text()='Next'])[1]"), MainTimeout);
+		WaitForElementVisible(By.xpath("(//button[text()='Next'])[2]"), MainTimeout);
+	}
+	
 	public static void VerifyCorrectData() throws Exception
 	{
 		Assert.assertEquals(new Select(driver.findElement(By.xpath("//select[@ng-model='shipping.selectedCountry']"))).getFirstSelectedOption().getText(),
