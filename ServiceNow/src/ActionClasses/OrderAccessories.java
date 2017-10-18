@@ -86,6 +86,81 @@ public class OrderAccessories extends ActionsBase
 		
 	}
 	
+	
+	
+	// For test SFD112968_OrderAccessories
+	
+	public static boolean runOrderAccessories_SFD112968() throws Exception
+	{
+		MyDevicesPage.WaitForPageToLoad();
+		//MyDevicesPage.StoreServiceNumberFormats();
+		MyDevicesPage.SelectOrderAccessoriesAction();
+		
+			
+		ChooseAccessoriesPage.loadAvailableAccessoriesIntoExpectedList();
+		// This test can be performed only if there are available accessories to be ordered for the selected device
+		boolean accessoriesAvailable = ChooseAccessoriesPage.addRemoveAccessoryFromCart(); 
+		/*
+		if (accessoriesAvailable) {
+			
+			ProvideAdditionalInfoPage.WaitForPageToLoadUnsuspend(); // use unsuspend wait. it's the same as order accessories.
+			VerifyPageTitle(orderAccessoriesActionTitle);		
+			ProvideAdditionalInfoPage.EnterMissingInfoOrderAccessories();
+			monthlyCostOrderAccessories = ProvideAdditionalInfoPage.GetCostTotal(); // save the total cost of the accessories ordered.
+			ProvideAdditionalInfoPage.clickNextBtn();
+
+			EnterShippingInfoPage.WaitForPageLoad();
+			EnterShippingInfoPage.SelectExpiditeCheckBox();
+			VerifyPageTitle(orderAccessoriesActionTitle);		
+			EnterShippingInfoPage.clickNextBtn();
+
+			VerifyOrderPage.WaitForPageToLoad();
+			VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationOderAccessories();
+			VerifyOrderPage.VerifyOrderAccessoriesAction(); 
+			VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction();	
+			VerifyCostOrderAccessoriesAction();
+			VerifyOrderPage.clickSubmitBtn(); // submit order.
+			VerifyOrderPage.WaitForOrderComplete();
+			
+			StoreOrderNumberToVariable(); // in order accessories the order number is shown in the order submitted page.
+			Thread.sleep(2000); // wait two seconds before selecting to view the order.
+			
+			OrderSubmittedPage.SelectViewOrder(); // view order.	
+			OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
+
+			// create and setup order details expected object with order type, order id, and expected status. 
+			CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service.
+			SetupOrderDetailsExpectedObject(); // this changes the object properties in the object created above for deactivate service. 
+			
+			// this verifies the order number in verify page matches the order number in order details 
+			// page and verifies the correct order type at the top of the order details (submitted) page.
+			VerifyOrderNumberAndOrderTypeBetweenPages(); 
+			
+			// more verifications here.
+			VerifyFullServiceNumber();
+			OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
+			OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();  	
+			
+			// go to 'my orders' main page to setup for the loop test below.
+			CommonTestSteps.GoToMyOrders();
+			
+			// this loops on going into the 'my orders' page until all verifications on the 'my orders' page pass.  
+			// the 'orderActionBlock' variable is set here.   
+			VerifyLimitedUserOrderMyOrdersMainPage();
+
+			CommonTestSteps.GoToMyOrders();
+			VerifyOrderDetailsPagePreApproval();
+			
+			// at this point the order type has to be changed so the order can be found in the order approvals list.
+			// in the order approvals page the status is called  "Accessories Order";
+			orderDetailsObjectExpected.orderType = "Accessories Order";
+
+		}
+		*/
+		return accessoriesAvailable;
+		
+	}
+	
 	// //////////////////////////////////////////////////////////////////////////////////////////////////
 	// 										Helper methods below.
 	// //////////////////////////////////////////////////////////////////////////////////////////////////

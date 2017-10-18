@@ -15,10 +15,10 @@ public class DeviceInfoActions
 	public static String orderAccessories = "Order Accessories";
 	public static String swapDevices = "Swap Devices";
 	public static String upgradeDevice = "Upgrade Device";
+	public static String upgradeService = "Upgrade Service";
 	public static String updateFeatures = "Update Features";	
 	public static String portNumber = "Port Number";	
 	
-	public static String upgradeDeviceName = "Nokia Lumia 822";
 	public static int upgradeDeviceIndex = 0;
 	
 	public static String reasonUpgradeAction = "warrant repair";

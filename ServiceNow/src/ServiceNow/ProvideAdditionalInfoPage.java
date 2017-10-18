@@ -278,7 +278,7 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		
 	}		
 	
-	// this populates additional information when doing order accessories action.   
+	// this populates additional information when doing Upgrade Device action.   
 	public static void EnterMissingInfoUpgradeDevice() throws InterruptedException
 	{
 		// fill in contact number.

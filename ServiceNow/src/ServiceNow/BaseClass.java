@@ -167,6 +167,9 @@ public class BaseClass
 	public static int indexMyDevices = 2;
 	public static int indexMyServices = 3;
 	
+	//Added by Ana - this is used in method ServiceNow.MyDevicesPage.StoreServiceNumberFormats() to identify whether to use indexMyDevices or indexMyServices
+	public static boolean actionOnlyOnService = false;
+	
 	// Number '2' indicates the second device listed 
 	public static String chooseActionsPullDownServices  = "//div/div[" + indexMyDevices + "]/div/select[@ng-model='device.selectedAction']"; // // this is the pull down on 'my devices' page.
 	

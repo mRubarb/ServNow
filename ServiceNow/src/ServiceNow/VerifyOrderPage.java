@@ -28,7 +28,7 @@ public class VerifyOrderPage extends BaseClass
 	public static String errMessage = "";
 	
 	
-
+	// ** NOT USED **
 	public static void VerifyDeactivateTopSection() throws Exception
 	{
 		String orderNumber = driver.findElement(By.xpath("//h1[contains(text(),'Order')]")).getText().split(":")[0].replace("#","");
@@ -41,6 +41,7 @@ public class VerifyOrderPage extends BaseClass
 		WaitForElementClickable(By.xpath("(//button[text()='Back'])[2]"), MainTimeout, "Page open for VerifyOrderPage.WaitForPageToLoad() failed looking for button.");		
 	}
 	
+	// ** NOT USED **
 	public static void WaitForPageToLoadDeactivate() throws Exception
 	{
 		WaitForElementVisible(By.xpath("(//button[text()='Submit Order'])[1]"), MainTimeout);
@@ -404,7 +405,7 @@ public class VerifyOrderPage extends BaseClass
 	}
 	
 	// it is assumed the last accessory on the accessoriesDetailsListExpected list was selected.
-	public static void VerifyUpgaredDeviceAccessoriesAction() throws Exception
+	public static void verifyUpgradeDeviceAccessoriesAction() throws Exception
 	{
 		errMessage = "Fail in VerifyOrderPage.VerifyUpgaredDeviceAccessoriesAction."; 
 		// use the name of the accessory to get an array of the accessory name, vendor, and price.
@@ -418,13 +419,25 @@ public class VerifyOrderPage extends BaseClass
 	}
 	
 	// verify final cost and final cost monthly. 
-	public static void VerifyCostAndCostmonthlyUpgradeDevice()
+	public static void verifyCostMonthlyUpgradeDevice()
 	{
-		errMessage = "Fail in VerifyOrderPage.VerifyCostAndCostmonthlyUpgradeDevice";
+		errMessage = "Fail in VerifyOrderPage.verifyCostMonthlyUpgradeDevice";
+		
+		System.out.println("Cost monthly actual: " + driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText());
+		System.out.println("Cost monthly expected: " + planInfoActions.costMonthlyTotal);
+		
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText(), planInfoActions.costMonthlyTotal, errMessage);		
+		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText(), AccessoriesDetailsExpected.finalCostMonthly, errMessage);		
+	}
+	
+	public static void verifyCostUpgradeDevice()
+	{
+		errMessage = "Fail in VerifyOrderPage.verifyCostUpgradeDevice";
 		
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), AccessoriesDetailsExpected.finalCost, errMessage);
-		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText(), AccessoriesDetailsExpected.finalCostMonthly, errMessage);		
+				
 	}
+	
 	
 	// verify final cost and final cost monthly. 
 	public static void VerifyCostAndCostmonthlyPortNumber()
@@ -540,10 +553,10 @@ public class VerifyOrderPage extends BaseClass
 	}*/
 	
 	
-	// this verification is called when processing a Swap Device. -- making it generic --- 10/3/17 Ana
+	// This verification is called when processing any kind of order. It applies to all orders --- 10/3/17 Ana
 	public static void verifyAdditionalInformationBlock() throws Exception
 	{
-		String errorMessage = "Failure in checking additional information for Swap Device action in SwapDevice.VerifyAdditionalInformationSwapDevice.";		
+		String errorMessage = "Failure in checking additional information in VerifyOrder.verifyAdditionalInformationBlock.";		
 
 		HashMap<String, String> additionalInfoMap = getAdditionalInformationData();
 			
@@ -572,7 +585,7 @@ public class VerifyOrderPage extends BaseClass
 			
 			System.out.println(" Key: " + additionalInfoMap.get("Authorization Code"));
 			Assert.assertEquals(additionalInfoMap.get("Authorization Code"), IdentifyDevices.authorizationCode, errorMessage);
-			
+			 
 		} if (additionalInfoMap.containsKey("Preferred Area Code")) {
 			
 			System.out.println(" Key: " + additionalInfoMap.get("Preferred Area Code"));
@@ -649,7 +662,7 @@ public class VerifyOrderPage extends BaseClass
 		
 		for (int i = 1; i < listAdditionalInfoRows.size(); i++) {
 			
-			System.out.println("Row: " + listAdditionalInfoRows.get(i-1).getText());
+			// System.out.println("Row: " + listAdditionalInfoRows.get(i-1).getText());
 			
 			String label = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr[" + i + "]/td[1]")).getText();  //row.getText().split(":")[0].trim();
 			String value = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling::div/table/tbody/tr[" + i + "]/td[2]")).getText();   //row.getText().split(":")[1].trim();
@@ -750,7 +763,7 @@ public class VerifyOrderPage extends BaseClass
 	
 	public static void VerifyShippingInformation() throws Exception
 	{
-		String errorMessage = "Wrong information found in test for shipping information in VerifyOrderPge.VerifyShippingInformation.";
+		String errorMessage = "Wrong information found in test for shipping information in VerifyOrderPage.VerifyShippingInformation.";
 
 		// this gets all of the string information for the shipping information listed.
 		String [] additionalInformation = driver.findElement(By.xpath("//div[@ng-if='orderConfirmation.shipTo']/table")).getText().split("\n");

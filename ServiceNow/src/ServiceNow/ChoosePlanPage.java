@@ -422,10 +422,6 @@ public class ChoosePlanPage extends BaseClass
 		
 		WaitForElementClickable(By.xpath("//button[text()='Remove from Cart']"), MediumTimeout, "");
 		
-		
-		
-		// 
-		// return true;
 	}
 	
 	public static WebElement backButton() {
@@ -614,6 +610,11 @@ public class ChoosePlanPage extends BaseClass
 		
 		//new Actions(driver).moveToElement(driver.findElement(By.xpath("(//li/label)[" +  optionalFeaturesList.size()  + "]"))).perform();
 		//driver.findElement(By.xpath("(//li/label)[" +  optionalFeaturesList.size()  + "]")).click();
+		
+		// ******** TEST ************
+		// Ana Oct 13
+		planInfoActions.costMonthlyTotal = driver.findElement(By.xpath("//span[text()='Cost Monthly']/following ::span[1]")).getText();		
+		
 		
 	}
 	

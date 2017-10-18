@@ -24,10 +24,8 @@ public class PortNumber extends ActionsBase
 {
 
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////
-	// this is the main method for this class. it goes through the pages needed to do a deactivate service
-	// and die s verification. It uses as much of the existing page object methods it can. In cases where 
-	// it can't use the existing page object methods it uses helper methods found in this class. 
-	// The helper methods are further below.
+	// This is the main method for this class. It goes through the pages needed to do Port Number
+	// and does verification. 
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void RunPortNumber() throws Exception
 	{

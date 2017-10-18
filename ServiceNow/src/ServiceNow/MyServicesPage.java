@@ -28,6 +28,10 @@ public class MyServicesPage extends BaseClass
 		
 	}
 
+	public static void selectUpgradeServiceAction()
+	{
+		new Select(driver.findElement(By.xpath(chooseActionsPullDownServicesPage))).selectByVisibleText(DeviceInfoActions.upgradeService);
+	}	
 
 
 

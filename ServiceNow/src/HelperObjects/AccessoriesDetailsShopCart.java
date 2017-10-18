@@ -1,6 +1,7 @@
 package HelperObjects;
 
-import junit.framework.Assert;
+import org.testng.Assert;
+
 
 public class AccessoriesDetailsShopCart 
 {

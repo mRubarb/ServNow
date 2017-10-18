@@ -536,6 +536,80 @@ public class ChooseAccessoriesPage extends BaseClass
 			
 		
 	}
+
+	// ** SFD112968
+	public static boolean addRemoveAccessoryFromCart() throws Exception {
+		
+		// If there are accessories
+		if (WaitForElementVisibleNoThrow(By.xpath("//div[text()='Select one or more accessories below to add to your shopping cart.']"), MainTimeout )) {
+			
+			// Add accessory to cart
+			WaitForElementClickable(By.xpath("//button[text()='Add to Cart']"), MainTimeout, "Button 'Add to Cart' not clickable.");
+			
+			String accessoryName = driver.findElement(By.xpath("(//button[text()='Add to Cart'])[1]/../../../preceding-sibling::div")).getText();
+			
+			System.out.println("** accessoryName:      " + accessoryName);
+			
+			// Click the first 'Add to Cart' button.
+			driver.findElement(By.xpath("(//button[text()='Add to Cart'])[1]")).click();
+			
+			String accessoryNameInCart = driver.findElement(By.cssSelector("div.sn-cart__item")).getText();
+			
+			System.out.println("** accessoryNameInCart: " + accessoryNameInCart);
+			
+			// Verify the accessory has been added to cart
+			Assert.assertEquals(accessoryNameInCart, accessoryName);
+			
+			
+			// Remove the accessory added from cart 
+			WaitForElementClickable(By.xpath("//button[text()='Remove from Cart']"), MainTimeout, "Button 'Remove from Cart' not clickable.");
+			
+			// Click 'Remove from Cart' button.
+			driver.findElement(By.xpath("(//button[text()='Remove from Cart'])[1]")).click();
+						
+			// Verify that the shopping cart is empty
+			try {
+				
+				driver.findElement(By.xpath("div.sn-cart__item"));
+				
+			} catch (NullPointerException e) { 
+				
+				System.out.println("** Ok - Shopping cart is empty");
+				
+			}
+			
+			
+			// Click Next button	
+			WaitForElementClickable(By.xpath("(//button[text()='Next'])[1]"), ExtremeTimeout, "failed in accessories page 'addAccessoryToCart()'. Expected clickable button never showed up.");
+			clickNextBtn();	
+			
+			// Verify that user cannot move to 'Provide Additional Info' step if no accessory has been added to cart.
+			String titleStepNameFound = driver.findElement(By.cssSelector("div.tg-infoBarCell>span")).getText();
+			String titleStepNameExpected = "Choose your accessories.";
+			
+			// Verify that the current step is still 'Choose your accessories'
+			Assert.assertEquals(titleStepNameFound, titleStepNameExpected);
+			
+			String titleStepNameNotExpected = "Provide additional information about your order.";
+			
+			Assert.assertNotEquals(titleStepNameFound, titleStepNameNotExpected);
+			
+			// Verify that there's an error message stating that at least one accessory needs to be added to cart
+			String message = "Please select at least one accessory.";
+			
+			
+			
+			return true;
+			
+		} else {
+			
+			// Wait for label 'No Accessories Found'
+			WaitForElementVisibleNoThrow(By.xpath("//span[text()='No Accessories Found']"), MainTimeout);
+			return false;
+		}
+			
+		
+	}
 	
 	
 	

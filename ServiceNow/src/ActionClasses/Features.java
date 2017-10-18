@@ -1,10 +1,8 @@
 package ActionClasses;
 
-import java.nio.file.ProviderNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -13,7 +11,6 @@ import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
-import ServiceNow.DevicePage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
 import ServiceNow.HomePage;

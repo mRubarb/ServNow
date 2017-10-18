@@ -8,6 +8,7 @@ import ServiceNow.Frames;
 import ServiceNow.HomePage;
 import ServiceNow.LoginPage;
 import ServiceNow.MyOrdersPage;
+import ServiceNow.MyServicesPage;
 import ServiceNow.SideBar;
 
 public class CommonTestSteps extends BaseClass 
@@ -87,6 +88,20 @@ public class CommonTestSteps extends BaseClass
 		HomePage.WaitForPageToLoad();
 		HomePage.SelectViewDevices();	
 	}
+	
+	// Added by Ana - Oct 12
+	public static void goToServicesPage() throws Exception
+	{
+		// get to main side bar frame.
+		Frames.switchToGsftNavFrame();		
+		SideBar.clickMyServicesBtn();
+		
+		// wait for My Services page to load 
+		Frames.switchToGsftMainFrame(); 
+		MyServicesPage.WaitForPageToLoad();
+		
+	}
+	
 	
 	public static void GoToMyOrders() throws Exception
 	{
