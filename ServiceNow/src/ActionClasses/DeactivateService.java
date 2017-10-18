@@ -67,6 +67,32 @@ public class DeactivateService extends ActionsBase
 		
 	}
 
+	// //////////////////////////////////////////////////////////////////////
+	// this is short version of above used for command update order test.
+	// //////////////////////////////////////////////////////////////////////
+	public static void RunDeactivateServiceSubmitOnly() throws Exception
+	{
+		// go through the deactivate pages.
+
+		MyDevicesPage.WaitForPageToLoad();
+		MyDevicesPage.StoreServiceNumberFormats();
+		MyDevicesPage.SelectDeactivateAction();
+		
+		ServiceNow.ProvideAdditionalInfoPage.WaitForPageToLoad();
+		VerifyPageTitle(deactivateActionTitle);
+		ServiceNow.ProvideAdditionalInfoPage.EnterMissingInfo();
+		ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
+		
+		VerifyOrderPage.WaitForPageToLoad();
+		VerifyPageTitle(deactivateActionTitle);
+		VerifyOrderPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationDeactivate();  // **** TEST *****
+		VerifyOrderPage.clickSubmitBtn(); // submit order.
+		VerifyOrderPage.WaitForOrderComplete();
+		
+		StoreOrderNumberToVariable(); // in deactivate the order number is shown in the order submitted page.
+		Thread.sleep(2000); // wait two seconds before selecting to view the order.
+	}	
+	
 	// //////////////////////////////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////////////////////////////////////////////////////////////////
 	//									Helper Methods Below
