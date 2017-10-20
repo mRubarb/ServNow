@@ -945,5 +945,13 @@ public class VerifyOrderPage extends BaseClass
 							  strArray[2].replace("Service Number ", "")}; 
 	}*/	
 	
-	
+	// this is for SFD112978_Suspend. bob 10/20/17
+	public static void VerifyHoldServiceHasData()
+	{
+		// NOTE: xpath may need to be "label[text()='Hold Service']/../following-sibling::td/span"
+
+		ShowText(driver.findElement(By.xpath("//label[text()='Hold Service']/../following-sibling::td")).getText());
+		
+		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Hold Service']/../following-sibling::td")).getText(), limitedUserPulldownSelection, "");
+	}
 }

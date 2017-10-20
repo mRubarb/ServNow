@@ -16,7 +16,7 @@ import ServiceNow.MyDevicesPage;
 import ServiceNow.TangoeMobilityOrderRequestsPage;
 import ActionClasses.DeactivateService;
 
-public class SFD113063_UnfriendlyErrorMessage extends BaseClass 
+public class SFD113063_DeactivateNoService extends BaseClass 
 {
 
 	@BeforeClass
@@ -27,7 +27,7 @@ public class SFD113063_UnfriendlyErrorMessage extends BaseClass
 	}
 
 	@Test
-	public static void SFD113063_UnfriendlyErrorMessageTest()throws Exception
+	public static void SFD113063_DeactivateNoServiceTest()throws Exception
 	{
 		CommonTestSteps.LoginLimitedUser();
 		
