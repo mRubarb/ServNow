@@ -1,6 +1,7 @@
 package ServiceNow;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -570,11 +571,11 @@ public class ChooseAccessoriesPage extends BaseClass
 			// Verify that the shopping cart is empty
 			try {
 				
-				driver.findElement(By.xpath("div.sn-cart__item"));
+				driver.findElement(By.cssSelector("div.sn-cart__item"));
 				
-			} catch (NullPointerException e) { 
+			} catch (NoSuchElementException e) { 
 				
-				System.out.println("** Ok - Shopping cart is empty");
+				System.out.println("** Shopping cart is empty --> OK **");
 				
 			}
 			
@@ -597,7 +598,7 @@ public class ChooseAccessoriesPage extends BaseClass
 			// Verify that there's an error message stating that at least one accessory needs to be added to cart
 			String message = "Please select at least one accessory.";
 			
-			
+			Assert.assertEquals(driver.findElement(By.cssSelector("div.sn-notifyBlock__header>span")).getText(), message);
 			
 			return true;
 			
@@ -606,6 +607,7 @@ public class ChooseAccessoriesPage extends BaseClass
 			// Wait for label 'No Accessories Found'
 			WaitForElementVisibleNoThrow(By.xpath("//span[text()='No Accessories Found']"), MainTimeout);
 			return false;
+			
 		}
 			
 		

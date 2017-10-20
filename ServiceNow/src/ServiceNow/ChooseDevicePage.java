@@ -99,6 +99,8 @@ public class ChooseDevicePage extends BaseClass
 			
 		}
 		
+		shoppingCart.costOneTime = deviceInfoActions.cost;
+		
 		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		
 		
 	}

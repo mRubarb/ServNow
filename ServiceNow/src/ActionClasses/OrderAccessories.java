@@ -93,14 +93,15 @@ public class OrderAccessories extends ActionsBase
 	public static boolean runOrderAccessories_SFD112968() throws Exception
 	{
 		MyDevicesPage.WaitForPageToLoad();
-		//MyDevicesPage.StoreServiceNumberFormats();
+		MyDevicesPage.StoreServiceNumberFormats();
 		MyDevicesPage.SelectOrderAccessoriesAction();
 		
 			
 		ChooseAccessoriesPage.loadAvailableAccessoriesIntoExpectedList();
 		// This test can be performed only if there are available accessories to be ordered for the selected device
 		boolean accessoriesAvailable = ChooseAccessoriesPage.addRemoveAccessoryFromCart(); 
-		/*
+		
+		// ** Following steps can be removed - not needed to verify defect **
 		if (accessoriesAvailable) {
 			
 			ProvideAdditionalInfoPage.WaitForPageToLoadUnsuspend(); // use unsuspend wait. it's the same as order accessories.
@@ -115,11 +116,11 @@ public class OrderAccessories extends ActionsBase
 			EnterShippingInfoPage.clickNextBtn();
 
 			VerifyOrderPage.WaitForPageToLoad();
-			VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationOderAccessories();
+			VerifyOrderPage.verifyAdditionalInformationBlock(); 
 			VerifyOrderPage.VerifyOrderAccessoriesAction(); 
 			VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction();	
 			VerifyCostOrderAccessoriesAction();
-			VerifyOrderPage.clickSubmitBtn(); // submit order.
+			VerifyOrderPage.clickSubmitBtn(); 
 			VerifyOrderPage.WaitForOrderComplete();
 			
 			StoreOrderNumberToVariable(); // in order accessories the order number is shown in the order submitted page.
@@ -156,7 +157,7 @@ public class OrderAccessories extends ActionsBase
 			orderDetailsObjectExpected.orderType = "Accessories Order";
 
 		}
-		*/
+		
 		return accessoriesAvailable;
 		
 	}

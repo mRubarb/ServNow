@@ -128,10 +128,6 @@ public class OrderSubmittedPage extends BaseClass
 	public static void VerifyAdditionalInformation() throws Exception
 	{
 		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyAdditionalInformation";
-
-		//tmpString = driver.findElement(By.xpath("(//table/tbody)[1]")).getText();		
-
-		//tmpStringArray = tmpString.split("\n");
 		
 		String[] additionalInformation = driver.findElement(By.xpath("(//table/tbody)[1]")).getText().split("\n");
 		

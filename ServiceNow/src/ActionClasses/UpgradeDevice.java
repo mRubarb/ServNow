@@ -4,7 +4,7 @@ import org.testng.Assert;
 
 import ActionsBaseClasses.ActionsBase;
 import ActionsBaseClasses.CommonTestSteps;
-
+import HelperObjects.ShoppingCart;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
@@ -197,4 +197,81 @@ public class UpgradeDevice extends ActionsBase
 		orderDetailsObjectExpected.orderId = orderSubmittedPageOrderNumber;
 		orderDetailsObjectExpected.status = awaitingApprovalStatus;
 	}
+
+
+	public static void runUpgradeDevice_SFD112988() throws Exception {
+		
+		
+		// Initialize shopping cart
+		shoppingCart = new ShoppingCart();
+		
+		MyDevicesPage.WaitForPageToLoad();
+		MyDevicesPage.StoreServiceNumberFormats();
+		MyDevicesPage.SelectUpgradeDeviceAction();
+		
+		ChooseDevicePage.WaitForPageToLoadUpgradeDevice();
+		ChooseDevicePage.SetupForDeviceSelection();
+	
+		ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
+		ChooseDevicePage.clickNextButton();
+		
+		// Keep existing plan
+		ChoosePlanPage.selectExistingPlan();
+		ChoosePlanPage.clickNextButton();
+		
+		// Don't add accessories to shopping cart
+		ChooseAccessoriesPage.clickNextBtn();
+
+		ProvideAdditionalInfoPage.WaitForPageToLoad();
+		ProvideAdditionalInfoPage.EnterMissingInfoUpgradeDevice();
+		ProvideAdditionalInfoPage.clickNextBtn();
+		
+		EnterShippingInfoPage.WaitForPageLoad();
+		EnterShippingInfoPage.VerifyCorrectDataDeviceAction();
+		EnterShippingInfoPage.clickNextBtn();
+		
+		VerifyOrderPage.WaitForPageToLoad();
+		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
+		VerifyOrderPage.verifyAdditionalInformationBlock();  // additional info section
+		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
+				
+		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
+		
+		VerifyOrderPage.clickSubmitBtn(); // submit order.
+		VerifyOrderPage.WaitForOrderComplete();
+
+		StoreOrderNumberToVariable(); // in deactivate the order number is shown in the order submitted page.
+		Thread.sleep(2000); // wait two seconds before selecting to view the order.
+
+		OrderSubmittedPage.SelectViewOrder();	
+		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
+		
+		// create and setup order details expected object with order type, order id, and expected status. 
+		CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service.
+		SetupOrderDetailsExpectedObject(); // this changes the object properties in the object created above for deactivate service. 
+		
+		// this verifies the order number in verify page matches the order number in order details 
+		// page and verifies the correct order type at the top of the order details (submitted) page.
+		VerifyOrderNumberAndOrderTypeBetweenPages(); 
+		
+		// more verifications here.
+		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
+		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		
+		// go to 'my orders' main page to setup for the loop test below.
+		CommonTestSteps.GoToMyOrders();
+		
+		// this loops on going into the 'my orders' page until all verifications on the 'my orders' page pass.  
+		// the 'orderActionBlock' variable is set here.
+		VerifyLimitedUserOrderMyOrdersMainPage();
+		
+		CommonTestSteps.GoToMyOrders();
+		VerifyOrderDetailsPagePreApproval();
+		
+		// at this point the order type has to be changed so the order can be found in the order approvals list.
+		// in the order approvals page the status is called  "Accessories Order";
+		orderDetailsObjectExpected.orderType = "Upgrade Order";
+		
+	}
+	
 }

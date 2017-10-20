@@ -6,14 +6,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ActionClasses.OrderAccessories;
+import ActionClasses.SwapDevice;
 import ActionsBaseClasses.CommonTestSteps;
 
 import ServiceNow.BaseClass;
 
 
-public class SFD112968_OrderAccessories extends BaseClass {
-
+public class SFD113339_SwapDevices extends BaseClass {
+	
 	@BeforeClass
 	public static void setUp() throws Exception
 	{
@@ -21,37 +21,33 @@ public class SFD112968_OrderAccessories extends BaseClass {
 	}
 
 	@Test
-	public static void tc00018OrderAccessoriesApprove() throws Exception
+	public static void sfd113339_SwapDevices() throws Exception
 	{
-		BaseClass.stepComplete("------------------ Starting Order Accessories - SFD112968 -----------------------", "");		
 
-				
+		BaseClass.stepComplete("------------------ Starting Swap Devices - SFD 113339 -----------------------", "");
+
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
 		
 		// got to the devices page through the home page. 
 		CommonTestSteps.GoToDevicesPage();
-
-		boolean accessoriesAvailable = OrderAccessories.runOrderAccessories_SFD112968();
-				
-		CommonTestSteps.Logout();
-
-		if (!accessoriesAvailable) {
-			
-			JOptionPane.showMessageDialog(frame, "No accessories available for selected device. Select a different device to verify defect.");
-			
-		}
 		
+		 
+		SwapDevice.runSwapDevices_SFD113339();
+		
+
+		CommonTestSteps.Logout();
+		
+				
 	}
+	
 	
 	@AfterClass
 	public static void closeDriver() throws Exception
 	{
-		System.out.println("Close Browser.");		
+		System.out.println("Close Browser.");
 		JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
-	}		
-	
-	
+	}
 }

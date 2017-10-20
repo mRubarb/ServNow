@@ -28,6 +28,7 @@ import HelperObjects.OrderDetailsObjectActual;
 import HelperObjects.OrderDetailsObjectExpected;
 import HelperObjects.PlanInfoActions;
 import HelperObjects.PlanOptionalFeatures;
+import HelperObjects.ShoppingCart;
 
 
 public class BaseClass
@@ -164,7 +165,7 @@ public class BaseClass
 	public static String shopCartCount = "//h3[text()='Shopping Cart']/following-sibling ::div"; // use this to see how many sections in shopping cart.	
 	//public static String chooseActionsPullDownServices  = "//select[@ng-model='device.selectedAction']"; // // this is the pull down on 'my devices' page.  	
 	
-	public static int indexMyDevices = 2;
+	public static int indexMyDevices = 1;
 	public static int indexMyServices = 3;
 	
 	//Added by Ana - this is used in method ServiceNow.MyDevicesPage.StoreServiceNumberFormats() to identify whether to use indexMyDevices or indexMyServices
@@ -209,6 +210,7 @@ public class BaseClass
 	// is not always the same as the order in which they are displayed on 'Choose Accessories' page
 	public static HashMap<String, AccessoriesDetailsExpected> accessoriesInCartHashMap  = new HashMap<String, AccessoriesDetailsExpected>(); 
  
+	public static ShoppingCart shoppingCart;
 	
 	public enum Action 
 	{

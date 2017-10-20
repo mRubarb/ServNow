@@ -184,6 +184,39 @@ public class ProvideAdditionalInfoPage extends BaseClass
 	
 	
 	
+	public static void enterMissingInfoSwapDevice_SFD113339() throws Exception
+	{
+		// fill in contact number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).sendKeys(contactNumber);
+
+		// fill in extension
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).sendKeys(extension);
+		
+		// fill in the additional instructions
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
+	
+		// fill service number
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).sendKeys(serviceNumber);
+		
+		// If field for 'Preferred Area Code' is present, fill Preferred Area Code (for some vendors it may not be present) 
+		if (WaitForElementVisibleNoThrow(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE"), TinyTimeout)) {
+			driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).clear();
+			driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).sendKeys(preferredAreaCode);
+		}
+				
+		// If field for 'Authorization Code' is present, fill Authorization Code (when vendor is Verizon, field is present)
+		if (WaitForElementVisibleNoThrow(By.id("ORDER_PROPERTY_FIELD_AUTHORIZATION_CODE"), TinyTimeout)) {
+			driver.findElement(By.id("ORDER_PROPERTY_FIELD_AUTHORIZATION_CODE")).clear();
+			driver.findElement(By.id("ORDER_PROPERTY_FIELD_AUTHORIZATION_CODE")).sendKeys(IdentifyDevices.authorizationCode);
+		}
+		
+	}	
+	
+	
 	public static void EnterMissingInfoSuspend() throws InterruptedException
 	{
 		// fill in contact number.

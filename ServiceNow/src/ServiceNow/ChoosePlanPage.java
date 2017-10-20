@@ -759,5 +759,13 @@ public class ChoosePlanPage extends BaseClass
     	return retString[1];
     }
 
+    // Click checkbox 'Use your existing plan' 
+	public static void selectExistingPlan() {
+
+		driver.findElement(By.xpath("//label/span[text()='Use your existing plan']")).click();
+		
+		
+	}
+
   
 }

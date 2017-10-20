@@ -16,6 +16,7 @@ import HelperObjects.DevicePortNumber;
 import HelperObjects.Feature;
 import HelperObjects.FeatureShoppingCart;
 import HelperObjects.PlanInfoActions;
+import HelperObjects.ShoppingCart;
 
 
 public class VerifyOrderPage extends BaseClass
@@ -182,7 +183,7 @@ public class VerifyOrderPage extends BaseClass
 
 		Assert.assertEquals(strArray[0], deviceInfoActions.name, errMessage);		
 		Assert.assertEquals(strArray[1].replace("Vendor ", ""), deviceInfoActions.vendor, errMessage);		
-		// Assert.assertEquals(strArray[2].replace("Price ", ""), deviceInfoActions.cost, errMessage); // <-- UNCOMMENT WHEN SFD112988 IS FIXED
+		Assert.assertEquals(strArray[2].replace("Price ", ""), deviceInfoActions.cost, errMessage); // <-- UNCOMMENT WHEN SFD112988 IS FIXED
 																										// *************************************
 	}
 	
@@ -434,8 +435,8 @@ public class VerifyOrderPage extends BaseClass
 	{
 		errMessage = "Fail in VerifyOrderPage.verifyCostUpgradeDevice";
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), AccessoriesDetailsExpected.finalCost, errMessage);
-				
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), ShoppingCart.costOneTime, errMessage);
+				// AccessoriesDetailsExpected.finalCost
 	}
 	
 	

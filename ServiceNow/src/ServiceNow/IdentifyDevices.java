@@ -13,7 +13,7 @@ public class IdentifyDevices extends BaseClass
 	public static String newSerialNumberType = "IMEI"; // "CAP CODE";
 	public static String newSerialNumberTypeForVerify = "IMEI"; // "CAP_CODE";	
 	public static String newSerialNumber = "121527071";	
-	public static String authorizationCode = "20161952";	
+	public static String authorizationCode = "1478527"; // "20161952";	
 	
 	public static String oldManufacturer = "";	
 	public static String oldModel = "";
