@@ -1,4 +1,4 @@
-package TestSuite1;
+package testSuiteDefects;
 
 import javax.swing.JOptionPane;
 

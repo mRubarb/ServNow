@@ -1,4 +1,4 @@
-package TestSuite1;
+package testSuiteDefects;
 
 public class SFD112988_PortNumber {
 

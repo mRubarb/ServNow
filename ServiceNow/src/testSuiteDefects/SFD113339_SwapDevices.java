@@ -1,4 +1,4 @@
-package TestSuite1;
+package testSuiteDefects;
 
 import javax.swing.JOptionPane;
 
@@ -6,15 +6,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ActionClasses.UpgradeDevice;
+import ActionClasses.SwapDevice;
 import ActionsBaseClasses.CommonTestSteps;
 
 import ServiceNow.BaseClass;
 
 
-public class SFD112988_UpgradeDevice extends BaseClass 
-{
-
+public class SFD113339_SwapDevices extends BaseClass {
+	
 	@BeforeClass
 	public static void setUp() throws Exception
 	{
@@ -22,29 +21,33 @@ public class SFD112988_UpgradeDevice extends BaseClass
 	}
 
 	@Test
-	public static void tc0030UpgradeDeviceApprove() throws Exception
+	public static void sfd113339_SwapDevices() throws Exception
 	{
-		BaseClass.stepComplete("------------------ Starting Upgrade Device - SFD 112988 -----------------------", "");
+
+		BaseClass.stepComplete("------------------ Starting Swap Devices - SFD 113339 -----------------------", "");
 
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
-
+		
 		// got to the devices page through the home page. 
 		CommonTestSteps.GoToDevicesPage();
-
-		UpgradeDevice.runUpgradeDevice_SFD112988();
 		
+		 
+		SwapDevice.runSwapDevices_SFD113339();
+		
+
 		CommonTestSteps.Logout();
 		
+				
 	}
+	
 	
 	@AfterClass
 	public static void closeDriver() throws Exception
 	{
 		System.out.println("Close Browser.");
-	    JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
+		JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
 	}
-
 }
