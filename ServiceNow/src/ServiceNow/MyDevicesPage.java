@@ -14,54 +14,31 @@ public class MyDevicesPage extends BaseClass
 	// store away full service number and numbers-only service number.
 	public static void StoreServiceNumberFormats() throws Exception
 	{
+		int index = indexMyDevices;
+		
+		if (actionOnlyOnService) {
+			
+			index = indexMyServices;
+			
+		}
 		
 		// get the complete service number and device
-		String fullServiceNumberFromUI = driver.findElement(By.xpath("//div/div[" + indexMyDevices +"]/div[@class='tg-display--table-cell']/div[2]")).getText();
+		String fullServiceNumberFromUI = driver.findElement(By.xpath("//div/div[" + index +"]/div[@class='tg-display--table-cell']/div[2]")).getText();
 				
 		//System.out.println("fullServiceNumberFromUI: " + fullServiceNumberFromUI);
 		
-		String [] strArray = fullServiceNumberFromUI.split(" ");  //driver.findElement(By.cssSelector(".tg-pad--quarter--top")).getText().split( " "); // get service number parts
+		String [] strArray = fullServiceNumberFromUI.split(" ");  //driver.findElement(By.cssSelector(".tg-pad--quarter--top")).getText().split( " "); // get service number parts	
 		
-		/*for (String s: strArray) {
-			System.out.println("service number part: " + s);
-
-		}*/
-		
-		fullServiceNumber = fullServiceNumberFromUI;
 		serviceNumber = strArray[1].replace("(","").replace(")", "") + strArray[2].replace("-","");  // get numbers-only service number. 
 		
-		//System.out.println("serviceNumber: " + serviceNumber);
+		serviceNumber = serviceNumber.replaceAll("[^0-9]", "");
 		
-		//return new String [] {serviceNumber, fullServiceNumberFromUI};
-		
-		
-		//System.out.println("serviceNumber: " + serviceNumber);
-		//System.out.println("fullServiceNumber: " + fullServiceNumber);
-	}
-
-	// this returns the full service number and the number-only service number
-	/*static public String [] SetupServiceNumber()
-	{
-		// get the complete service number and device
-		String fullServiceNumberFromUI  = driver.findElement(By.xpath("//div/div[" + indexMyDevices +"]/div[@class='tg-display--table-cell']/div[2]")).getText();
-				
-		System.out.println("fullServiceNumberFromUI: " + fullServiceNumberFromUI);
-		
-		String [] strArray = fullServiceNumberFromUI.split(" ");  //driver.findElement(By.cssSelector(".tg-pad--quarter--top")).getText().split( " "); // get service number part
-		
-		for (String s: strArray) {
-			System.out.println("service number part: " + s);
-
-		}
-		
-		String serviceNumber = strArray[1].replace("(","").replace(")", "") + strArray[2].replace("-","");  // get numbers-only service number. 
+		fullServiceNumber = fullServiceNumberFromUI.replaceAll("[A-Z]", "");
 		
 		System.out.println("serviceNumber: " + serviceNumber);
+		System.out.println("fullServiceNumber: " + fullServiceNumber);
 		
-		return new String [] {serviceNumber, fullServiceNumberFromUI};
-		
-	}*/
-	
+	}
 	
 	
 	public static void WaitForPageToLoad() throws Exception

@@ -26,4 +26,12 @@ public class MyServicesPage extends BaseClass
 			Assert.fail("There are no service that can be viewed in 'MyServicesPage.WaitForPageToLoad'.");
 		}
 	}
+
+
+	public static void selectUpgradeServiceAction()
+	{
+		new Select(driver.findElement(By.xpath(chooseActionsPullDownServicesPage))).selectByVisibleText(DeviceInfoActions.upgradeService);
+	}	
+
+
 }

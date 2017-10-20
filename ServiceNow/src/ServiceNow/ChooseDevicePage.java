@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByCssSelector;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import HelperObjects.AccessoriesDetailsExpected;
@@ -34,10 +34,7 @@ public class ChooseDevicePage extends BaseClass
 
 	public static String errMessage = "";
 	public static String [] strArray;	
-	
-	static String testDevice = "Apple iPhone 5 (16GB) - Black";
-	static String testVendor = "Apple iPhone 5 (16GB) - Black";
-	
+		
 	public static List<DeviceAndVendor> deviceVendorList = new ArrayList<DeviceAndVendor>(); // this holds devices and their vendor/price info.
 	public static List<WebElement> webEleListDevices = new ArrayList<WebElement>(); // devices
 	public static List<WebElement> webEleListVendor = new ArrayList<WebElement>(); // vendors and their cost 
@@ -101,6 +98,8 @@ public class ChooseDevicePage extends BaseClass
 			System.out.println("Device Selected: " +  deviceInfoActions.name);
 			
 		}
+		
+		shoppingCart.costOneTime = deviceInfoActions.cost;
 		
 		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		
 		
@@ -193,11 +192,12 @@ public class ChooseDevicePage extends BaseClass
 				
 	}
 	
-	public static void clickAddToCartButtonDevice() 
+	// ** NOT USED **
+	/*public static void clickAddToCartButtonDevice() 
 	{
 		WaitForElementClickable(By.xpath("(//button[text()='Add to Cart'])[" + cartButtonIndexToSelectForAdd + "]"), MainTimeout, "Failed in clickAddToCartButtonDevice1.");
 		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + cartButtonIndexToSelectForAdd + "]")).click();
-	}	
+	}*/	
 	
 	// this selects the first device.  
 	// rather than the list in this class, so it can be accessed everywhere.
@@ -404,4 +404,21 @@ public class ChooseDevicePage extends BaseClass
 		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[1]")).click();
 		WaitForElementVisible(By.cssSelector(".tg-float--left"), MediumTimeout);
 	}
+
+	
+	public static void getExistingDeviceInfo() {
+		
+		String existingDeviceManufacturer = new Select(driver.findElement(By.id("existing-manufacturer"))).getFirstSelectedOption().getText().trim();
+		String existingDeviceModel = new Select(driver.findElement(By.id("existing-model"))).getFirstSelectedOption().getText().trim();
+		String existingDeviceSerialNumber = driver.findElement(By.id("existing-serial-number")).getText().trim();
+		String existingDeviceSerialNumberType = new Select(driver.findElement(By.id("existing-serial-number-type"))).getFirstSelectedOption().getText().trim();
+		
+		IdentifyDevices.oldManufacturer = existingDeviceManufacturer;
+		IdentifyDevices.oldModel = existingDeviceModel;
+		IdentifyDevices.oldSerialNumber = existingDeviceSerialNumber;
+		IdentifyDevices.oldSerialNumberType = existingDeviceSerialNumberType;
+		
+	}
+
+
 }

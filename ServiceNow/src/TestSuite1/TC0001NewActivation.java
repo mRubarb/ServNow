@@ -98,7 +98,7 @@ public class TC0001NewActivation extends BaseClass
 		// 11. Now click on 'Add to Cart' button for a different device. Verify that the new device is added to 
 		// Shopping cart, and that the device selected in previous step has been removed from Shopping cart.  
 
-		ChooseDevicePage.AddRemoveAllDevices(); //<-- *** UNCOMMENT LATER *****
+		ChooseDevicePage.AddRemoveAllDevices(); 
 		
 		boolean planForDevice = false; 
 		

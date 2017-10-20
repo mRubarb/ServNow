@@ -413,7 +413,7 @@ public class ChoosePlanPage extends BaseClass
 	// this is for features test.  
 	static public void SelectFirstPlan()
 	{
-		if(!WaitForElementClickableBoolean(By.xpath("//button[text()='Add to Cart']"), ExtremeTimeout - MainTimeout))
+		if(!WaitForElementClickableBoolean(By.xpath("//button[text()='Add to Cart']"), MediumTimeout))
 		{
 			Assert.fail("No plan found in plan list in method 'SelectFirstPlan()'");			
 		}
@@ -422,10 +422,6 @@ public class ChoosePlanPage extends BaseClass
 		
 		WaitForElementClickable(By.xpath("//button[text()='Remove from Cart']"), MediumTimeout, "");
 		
-		
-		
-		// 
-		// return true;
 	}
 	
 	public static WebElement backButton() {
@@ -771,5 +767,14 @@ public class ChoosePlanPage extends BaseClass
     static public void WaitForPageToLoadPlanOrig() throws Exception
 	{
     	WaitForElementClickable(By.xpath("(//button[text()='Add to Cart'])[1]"), ExtremeTimeout - MainTimeout, "Failed to find a plan listed in the plan page.");
+	}
+
+    
+	// Click checkbox 'Use your existing plan' 
+	public static void selectExistingPlan() {
+
+		driver.findElement(By.xpath("//label/span[text()='Use your existing plan']")).click();
+		
+		
 	}
 }

@@ -32,7 +32,8 @@ public class ActionsBase extends BaseClass
 	public static String unsuspendActionTitle = "Unsuspend your Service"; 
 	public static String orderAccessoriesActionTitle = "Order Accessories";	
 	public static String swapDevice = "Swap a Device";	
-	public static String upgradeDevice = "Upgrade a Device";	
+	public static String upgradeDevice = "Upgrade a Device";
+	public static String upgradeService = "Upgrade a Service";	
 	public static String updateServiceTitle = "Update Service Features for Device";
 	public static String portNumberTitle = "Port your Number";	
 	
@@ -198,36 +199,6 @@ public class ActionsBase extends BaseClass
 	}
 
 	
-	// *** NOT USED, DUPLICATED-->SAME AS METHOD ABOVE --- TO BE REMOVED 
-	// this verifies each row in the order details page. this is for the order details page after an order action 
-	// has been submitted and the order details page has synced with command.
-	/*public static void VerifyHistoryDetailsForOrderSubmittedOrderAccessories() throws Exception
-	{
-		String errMessage = "Failed to verify History Details in order details page with method ActionBase.VerifyHistoryDetails.";
-		
-		WaitForElementVisible(By.xpath("//td[text()='Test Additional Instructions']"), MainTimeout);
-		historyDataArray = driver.findElement(By.xpath("//div[text()='History']/following ::div[1]/table/tbody")).getText().split("\n");
-		
-		Assert.assertTrue(historyDataArray[0].contains("Entered Order Processing"), errMessage); // row 1
-		Assert.assertTrue(historyDataArray[0].contains(CalendarDateTimeObject.BuildDateForHistory()), errMessage); // row 1 		
-		
-		Assert.assertEquals(historyDataArray[1].trim(), "Workflow",errMessage); // row 2	
-		
-		Assert.assertEquals(historyDataArray[2].replace("EventAwaiting","Awaiting"), "Awaiting Approval Event", errMessage); // row 3
-		
-		Assert.assertTrue(historyDataArray[3].contains(CalendarDateTimeObject.BuildDateForHistory()), errMessage); // row 4 
-		
-		Assert.assertEquals(historyDataArray[4].trim(), userLimitedShorterNameOrderHistory, errMessage); // row 5
-		
-		Assert.assertEquals(historyDataArray[5].replace("EventOrder","Order"), "Order Submitted Event", errMessage); // row 6		
-		
-		Assert.assertTrue(historyDataArray[6].contains("Test Additional Instructions"), errMessage); // row 7 
-		Assert.assertTrue(historyDataArray[6].contains(CalendarDateTimeObject.BuildDateForHistory()), errMessage); // row 7
-		
-		Assert.assertEquals(historyDataArray[7].trim(), userLimitedShorterNameOrderHistory, errMessage); // row 8		
-		
-		Assert.assertEquals(historyDataArray[8].replace("Event","").trim(), "Initiator-Note", errMessage); // row 9
-	} */
 	
 	// this verifies he history section depending on the order approval type. 
 	public static void VerifyOrderDetailsHistoryAfterApproval() throws Exception

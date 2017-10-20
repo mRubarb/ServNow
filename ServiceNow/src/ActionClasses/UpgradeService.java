@@ -4,19 +4,19 @@ import org.testng.Assert;
 
 import ActionsBaseClasses.ActionsBase;
 import ActionsBaseClasses.CommonTestSteps;
-import HelperObjects.ShoppingCart;
-import ServiceNow.ChooseAccessoriesPage;
+
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.MyOrdersPage;
+import ServiceNow.MyServicesPage;
 import ServiceNow.OrderSubmittedPage;
 import ServiceNow.ProvideAdditionalInfoPage;
 import ServiceNow.VerifyOrderPage;
  
 
-public class UpgradeDevice extends ActionsBase
+public class UpgradeService extends ActionsBase
 {
 
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,23 +25,27 @@ public class UpgradeDevice extends ActionsBase
 	// it can't use the existing page object methods it uses helper methods found in this class. 
 	// The helper methods are further below.
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////
-	public static void RunUpgradeDevice() throws Exception
+	
+	
+	public static void runUpgradeService() throws Exception
 	{
 		// Go through the Upgrade Device/Service pages.
 
-		MyDevicesPage.WaitForPageToLoad();
-		MyDevicesPage.StoreServiceNumberFormats();
-		MyDevicesPage.SelectUpgradeDeviceAction();
+		actionOnlyOnService = true;
 		
-		ChooseDevicePage.WaitForPageToLoadUpgradeDevice();
-		ChooseDevicePage.SetupForDeviceSelection();
-		VerifyPageTitle(upgradeDevice);
+		MyServicesPage.WaitForPageToLoad();
+		MyDevicesPage.StoreServiceNumberFormats();
+		MyServicesPage.selectUpgradeServiceAction();
+		
+		ChooseDevicePage.WaitForPageToLoadUpgradeService();
+		ChooseDevicePage.getExistingDeviceInfo();
+		VerifyPageTitle(upgradeService);
 	
-		ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
+		//ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
 		ChooseDevicePage.clickNextButton();
 		
 		ChoosePlanPage.WaitForPageToLoadNoPlanSelected();
-		VerifyPageTitle(upgradeDevice);		
+		VerifyPageTitle(upgradeService);		
 		ChoosePlanPage.StoreNameOfFirstPlanInList();
 		ChoosePlanPage.clickAddToCartButtonPlan();
 		ChoosePlanPage.clickNextButton();
@@ -49,31 +53,22 @@ public class UpgradeDevice extends ActionsBase
 		ChoosePlanPage.storeOptionalFeaturesNamesAndInfoNew();
 		ChoosePlanPage.selectFirstLastOptionalFeature();
 		ChoosePlanPage.clickNextButton();
-
-				
-		VerifyPageTitle(upgradeDevice);
-		ChooseAccessoriesPage.loadAvailableAccessoriesIntoExpectedList();
-		ChooseAccessoriesPage.addAccessoryToCart_Upgrade(); 
 		
 
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
-		VerifyPageTitle(upgradeDevice);		
+		VerifyPageTitle(upgradeService);		
 		ProvideAdditionalInfoPage.EnterMissingInfoUpgradeDevice();
 		ProvideAdditionalInfoPage.clickNextBtn();
 		
 		EnterShippingInfoPage.WaitForPageLoad();
-		VerifyPageTitle(upgradeDevice);
+		VerifyPageTitle(upgradeService);
 		EnterShippingInfoPage.VerifyCorrectDataDeviceAction();
 		EnterShippingInfoPage.clickNextBtn();
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
-		VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
-		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
+		VerifyOrderPage.verifyAdditionalInformationBlock();  // additional info section
 		VerifyOrderPage.VerifyPlanInfoUpgradeDevice(); // plan section
-		
-		VerifyOrderPage.verifyUpgradeDeviceAccessoriesAction();	// accessory section	
-		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
 		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly
 		
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
@@ -95,7 +90,7 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();  //verifyAdditionalInformationUpgradeService();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -110,10 +105,9 @@ public class UpgradeDevice extends ActionsBase
 		// at this point the order type has to be changed so the order can be found in the order approvals list.
 		// in the order approvals page the status is called  "Accessories Order";
 		orderDetailsObjectExpected.orderType = "Upgrade Order";
-	}
-
-	
 		
+	}
+	
 	
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,11 +134,10 @@ public class UpgradeDevice extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();   //VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
-		OrderSubmittedPage.verifyStatusAndVendor();
-		OrderSubmittedPage.VerifyDeviceSectionUpgradeDevice();
+		//OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
@@ -163,10 +156,9 @@ public class UpgradeDevice extends ActionsBase
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();   //VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
-		OrderSubmittedPage.verifyStatusAndVendor();
-		OrderSubmittedPage.VerifyDeviceSectionUpgradeDevice();
+		//OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
@@ -197,81 +189,4 @@ public class UpgradeDevice extends ActionsBase
 		orderDetailsObjectExpected.orderId = orderSubmittedPageOrderNumber;
 		orderDetailsObjectExpected.status = awaitingApprovalStatus;
 	}
-
-
-	public static void runUpgradeDevice_SFD112988() throws Exception {
-		
-		
-		// Initialize shopping cart
-		shoppingCart = new ShoppingCart();
-		
-		MyDevicesPage.WaitForPageToLoad();
-		MyDevicesPage.StoreServiceNumberFormats();
-		MyDevicesPage.SelectUpgradeDeviceAction();
-		
-		ChooseDevicePage.WaitForPageToLoadUpgradeDevice();
-		ChooseDevicePage.SetupForDeviceSelection();
-	
-		ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
-		ChooseDevicePage.clickNextButton();
-		
-		// Keep existing plan
-		ChoosePlanPage.selectExistingPlan();
-		ChoosePlanPage.clickNextButton();
-		
-		// Don't add accessories to shopping cart
-		ChooseAccessoriesPage.clickNextBtn();
-
-		ProvideAdditionalInfoPage.WaitForPageToLoad();
-		ProvideAdditionalInfoPage.EnterMissingInfoUpgradeDevice();
-		ProvideAdditionalInfoPage.clickNextBtn();
-		
-		EnterShippingInfoPage.WaitForPageLoad();
-		EnterShippingInfoPage.VerifyCorrectDataDeviceAction();
-		EnterShippingInfoPage.clickNextBtn();
-		
-		VerifyOrderPage.WaitForPageToLoad();
-		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
-		VerifyOrderPage.verifyAdditionalInformationBlock();  // additional info section
-		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
-				
-		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
-		
-		VerifyOrderPage.clickSubmitBtn(); // submit order.
-		VerifyOrderPage.WaitForOrderComplete();
-
-		StoreOrderNumberToVariable(); // in deactivate the order number is shown in the order submitted page.
-		Thread.sleep(2000); // wait two seconds before selecting to view the order.
-
-		OrderSubmittedPage.SelectViewOrder();	
-		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
-		
-		// create and setup order details expected object with order type, order id, and expected status. 
-		CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service.
-		SetupOrderDetailsExpectedObject(); // this changes the object properties in the object created above for deactivate service. 
-		
-		// this verifies the order number in verify page matches the order number in order details 
-		// page and verifies the correct order type at the top of the order details (submitted) page.
-		VerifyOrderNumberAndOrderTypeBetweenPages(); 
-		
-		// more verifications here.
-		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
-		
-		// go to 'my orders' main page to setup for the loop test below.
-		CommonTestSteps.GoToMyOrders();
-		
-		// this loops on going into the 'my orders' page until all verifications on the 'my orders' page pass.  
-		// the 'orderActionBlock' variable is set here.
-		VerifyLimitedUserOrderMyOrdersMainPage();
-		
-		CommonTestSteps.GoToMyOrders();
-		VerifyOrderDetailsPagePreApproval();
-		
-		// at this point the order type has to be changed so the order can be found in the order approvals list.
-		// in the order approvals page the status is called  "Accessories Order";
-		orderDetailsObjectExpected.orderType = "Upgrade Order";
-		
-	}
-	
 }

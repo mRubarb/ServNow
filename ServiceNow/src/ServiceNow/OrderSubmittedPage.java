@@ -7,6 +7,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import ActionClasses.UpgradeDevice;
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
 import HelperObjects.DeviceInfoActions;
@@ -127,10 +128,6 @@ public class OrderSubmittedPage extends BaseClass
 	public static void VerifyAdditionalInformation() throws Exception
 	{
 		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyAdditionalInformation";
-
-		//tmpString = driver.findElement(By.xpath("(//table/tbody)[1]")).getText();		
-
-		//tmpStringArray = tmpString.split("\n");
 		
 		String[] additionalInformation = driver.findElement(By.xpath("(//table/tbody)[1]")).getText().split("\n");
 		
@@ -194,7 +191,7 @@ public class OrderSubmittedPage extends BaseClass
 	// ///////////////////////////////////////////////////////////////////////		
 	public static void VerifyAdditionalInformationOrderAccessories() 
 	{
-		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
+		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOrderAccessories.";		
 
 		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
@@ -203,6 +200,26 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
 		Assert.assertEquals(tmpStringArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
 	}		
+	
+	
+	public static void verifyAdditionalInformationUpgradeService() 
+	{
+		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.verifyAdditionalInformationUpgradeService.";		
+
+		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
+		
+		Assert.assertEquals(tmpStringArray[0].replace("Current Device Make", ""), IdentifyDevices.oldManufacturer, errMessage);
+		Assert.assertEquals(tmpStringArray[1].replace("Current Device Model ", ""), IdentifyDevices.oldModel, errMessage);		
+		Assert.assertEquals(tmpStringArray[2].replace("Current Device Serial Number", ""), IdentifyDevices.oldSerialNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[3].replace("Current Device Serial Number Type", ""), IdentifyDevices.oldSerialNumberType, errMessage);
+		Assert.assertEquals(tmpStringArray[4].replace("Contact Phone Number ", ""), contactNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[5].replace("Ext ", ""), extension, errMessage);		
+		Assert.assertEquals(tmpStringArray[6].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(tmpStringArray[7].replace("Service Number", ""), serviceNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[8].replace("Reason", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);
+		
+	}	
+	
 	
 	// /////////////////////////////////////////////////////////////////////////////
 	// verify additional information section for suspend  and un-suspend actions.
@@ -317,7 +334,26 @@ public class OrderSubmittedPage extends BaseClass
 					
 					Assert.assertEquals(additionalInformation[i], "Preferred Area Code " + preferredAreaCode, errorMessage);
 					break;
+				
+				// *** additions to make it generic to all transaction types - in progress - Oct 17 - Ana
+				case "Reason":
+					
+					if (approvalActionType.equals(ApprovalActionType.newActivation)) {
 						
+						Assert.assertEquals(additionalInformation[i], "Reason " + reasonAddDeviceAndService, errorMessage);
+					
+					} else if (approvalActionType.equals(ApprovalActionType.upgradeDevice)) {
+					
+						Assert.assertEquals(additionalInformation[i], "Reason " + UpgradeDevice.reasonUpgradeDevice, errorMessage);
+					
+					} else if (approvalActionType.equals(ApprovalActionType.deactivate)) {
+					
+						Assert.assertEquals(additionalInformation[i], "Reason " + reasonAction, errorMessage);
+						
+					} 
+					
+					
+					
 			}
 					
 		}

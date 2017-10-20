@@ -3,13 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="TestSuite1.TC0030UpgradeDeviceApprove">
+      <class name="TestSuite1.TC0040UpgradeServiceApprove">
         <methods>
-          <include name="setUp"/>
           <include name="closeDriver"/>
+          <include name="setUp"/>
           <include name="tc0030UpgradeDeviceApprove"/>
         </methods>
-      </class> <!-- TestSuite1.TC0030UpgradeDeviceApprove -->
+      </class> <!-- TestSuite1.TC0040UpgradeServiceApprove -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-Default_suite">
-                    <span>C:\Users\apace\AppData\Local\Temp\testng-eclipse--1188451024\testng-customsuite.xml</span>
+                    <span>C:\Users\apace\AppData\Local\Temp\testng-eclipse--1198395249\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -102,7 +102,7 @@
                     <div class="method-list-content failed suite-Default_suite">
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="TestSuite1.TC0030UpgradeDeviceApprove" hash-for-method="tc0030UpgradeDeviceApprove">tc0030UpgradeDeviceApprove</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="TestSuite1.TC0040UpgradeServiceApprove" hash-for-method="tc0030UpgradeDeviceApprove">tc0030UpgradeDeviceApprove</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-Default_suite -->
@@ -120,7 +120,7 @@
           <div class="suite-Default_suite-class-failed">
             <div class="main-panel-header rounded-window-top">
               <img src="failed.png"/>
-              <span class="class-name">TestSuite1.TC0030UpgradeDeviceApprove</span>
+              <span class="class-name">TestSuite1.TC0040UpgradeServiceApprove</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
@@ -128,38 +128,36 @@
                   <a name="tc0030UpgradeDeviceApprove">
                   </a> <!-- tc0030UpgradeDeviceApprove -->
                   <span class="method-name">tc0030UpgradeDeviceApprove</span>
-                  <div class="stack-trace">java.lang.Exception: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.xpath: (//button[text()=&apos;View Order&apos;])[3] (tried for 45 second(s) with 500 MILLISECONDS interval)
-	at ServiceNow.BaseClass.WaitForElementVisible(BaseClass.java:554)
-	at ServiceNow.MyOrdersPage.WaitForPageToLoad(MyOrdersPage.java:21)
-	at ActionsBaseClasses.ActionsBase.GoOutAndBackMyOrders(ActionsBase.java:154)
-	at ActionsBaseClasses.ActionsBase.RunTimedCall_VerifyLimitedUserOrdersPage(ActionsBase.java:127)
-	at ActionClasses.UpgradeDevice.VerifyLimitedUserOrderMyOrdersMainPage(UpgradeDevice.java:124)
-	at TestSuite1.TC0030UpgradeDeviceApprove.tc0030UpgradeDeviceApprove(TC0030UpgradeDeviceApprove.java:78)
+                  <div class="stack-trace">java.lang.Exception: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.xpath: //label[text()=&apos;Postal Code&apos;] (tried for 45 second(s) with 500 MILLISECONDS interval)
+	at ServiceNow.BaseClass.WaitForElementVisible(BaseClass.java:584)
+	at ServiceNow.EnterShippingInfoPage.WaitForPageLoad(EnterShippingInfoPage.java:33)
+	at ActionClasses.UpgradeService.runUpgradeService(UpgradeService.java:63)
+	at TestSuite1.TC0040UpgradeServiceApprove.tc0030UpgradeDeviceApprove(TC0040UpgradeServiceApprove.java:49)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
 	at java.lang.reflect.Method.invoke(Unknown Source)
 	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:669)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:877)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1201)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
 	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.TestRunner.privateRun(TestRunner.java:776)
+	at org.testng.TestRunner.run(TestRunner.java:634)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:425)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:420)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:385)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:334)
 	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
 	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1318)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1243)
+	at org.testng.TestNG.runSuites(TestNG.java:1161)
+	at org.testng.TestNG.run(TestNG.java:1129)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 
 </div> <!-- stack-trace -->
                 </div> <!-- method-content -->
@@ -169,7 +167,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\apace\AppData\Local\Temp\testng-eclipse--1188451024\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\apace\AppData\Local\Temp\testng-eclipse--1198395249\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -178,7 +176,7 @@
 &lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;Default suite&quot;&gt;
   &lt;test verbose=&quot;2&quot; name=&quot;Default test&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;TestSuite1.TC0030UpgradeDeviceApprove&quot;/&gt;
+      &lt;class name=&quot;TestSuite1.TC0040UpgradeServiceApprove&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Default test --&gt;
 &lt;/suite&gt; &lt;!-- Default suite --&gt;
@@ -221,13 +219,13 @@ data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'tc0030UpgradeDeviceApprove')
-data.setCell(0, 2, 'TestSuite1.TC0030UpgradeDeviceApprove')
-data.setCell(0, 3, 546445);
+data.setCell(0, 2, 'TestSuite1.TC0040UpgradeServiceApprove')
+data.setCell(0, 3, 179976);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 9 minutes</span>
+              <span class="suite-total-time">Total running time: 2 minutes</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -253,7 +251,7 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">TestSuite1.TC0030UpgradeDeviceApprove</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">TestSuite1.TC0040UpgradeServiceApprove</div> <!-- chronological-class-name -->
               <div class="configuration-class before">
                 <span class="method-name">setUp</span>
                 <span class="method-start">0 ms</span>
@@ -262,11 +260,11 @@ return data;
                 <img src="failed.png">
                 </img>
                 <span class="method-name">tc0030UpgradeDeviceApprove</span>
-                <span class="method-start">28 ms</span>
+                <span class="method-start">27 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-class after">
                 <span class="method-name">closeDriver</span>
-                <span class="method-start">546484 ms</span>
+                <span class="method-start">180025 ms</span>
               </div> <!-- configuration-class after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
