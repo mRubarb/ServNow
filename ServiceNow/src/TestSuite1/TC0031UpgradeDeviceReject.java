@@ -52,10 +52,10 @@ public class TC0031UpgradeDeviceReject extends BaseClass
 		// go to approvals page.
 		CommonTestSteps.GoToMyApprovalsPage();
 		
-		// this finds the approval entry for the deactivate order just placed by the limited user, approves it, and 
+		// this finds the approval entry for the Upgrade Device order just placed by the limited user, approves it, and 
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
-		Approvals.ApprovalAction(ApproverAction.reject);
+		Approvals.selectAndRejectOrder();
 		
 		CommonTestSteps.Logout();
 		

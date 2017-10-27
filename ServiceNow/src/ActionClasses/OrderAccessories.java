@@ -35,7 +35,7 @@ public class OrderAccessories extends ActionsBase
 			ProvideAdditionalInfoPage.clickNextBtn();
 
 			EnterShippingInfoPage.WaitForPageLoad();
-			EnterShippingInfoPage.SelectExpiditeCheckBox();
+			EnterShippingInfoPage.selectExpeditedCheckBox();
 			VerifyPageTitle(orderAccessoriesActionTitle);		
 			EnterShippingInfoPage.clickNextBtn();
 
@@ -111,7 +111,7 @@ public class OrderAccessories extends ActionsBase
 			ProvideAdditionalInfoPage.clickNextBtn();
 
 			EnterShippingInfoPage.WaitForPageLoad();
-			EnterShippingInfoPage.SelectExpiditeCheckBox();
+			EnterShippingInfoPage.selectExpeditedCheckBox();
 			VerifyPageTitle(orderAccessoriesActionTitle);		
 			EnterShippingInfoPage.clickNextBtn();
 
@@ -194,7 +194,7 @@ public class OrderAccessories extends ActionsBase
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
 		OrderSubmittedPage.VerifyApprovals();		
-		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPreApproval();
+		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPreApproval();
 		OrderSubmittedPage.VerifyOrderSegmentAccessoriesOrderAction();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
@@ -210,7 +210,7 @@ public class OrderAccessories extends ActionsBase
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
-		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();
+		OrderSubmittedPage.VerifyShippingInformation();  //VerifyShippingInformationOrderAccessoriesPostApproval();
 		OrderSubmittedPage.VerifyOrderSegmentAccessoriesOrderAction();
 		
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		

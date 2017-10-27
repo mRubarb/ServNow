@@ -173,7 +173,7 @@ public class PortNumber extends ActionsBase
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
-		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
+		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();
 		OrderSubmittedPage.verifyOrderSegmentPlan();
@@ -195,7 +195,7 @@ public class PortNumber extends ActionsBase
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
 		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
-		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
+		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();
 		OrderSubmittedPage.verifyOrderSegmentPlan();

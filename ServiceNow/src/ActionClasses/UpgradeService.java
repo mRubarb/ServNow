@@ -136,7 +136,7 @@ public class UpgradeService extends ActionsBase
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();   //VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyApprovals();	
-		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
+		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		//OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
 		
@@ -157,7 +157,7 @@ public class UpgradeService extends ActionsBase
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
 		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();   //VerifyAdditionalInformationUpgradeDevice();
-		OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
+		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		//OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
 		

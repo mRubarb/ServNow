@@ -25,7 +25,7 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 	}
 
 	@Test
-	public static void tc0030UpgradeDeviceApprove() throws Exception
+	public static void tc0040UpgradeServiceApprove() throws Exception
 	{
 		BaseClass.stepComplete("------------------ Starting upgrade service action with approve. -----------------------", "");
 
@@ -50,7 +50,7 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 		
 		CommonTestSteps.Logout();
 		
-		BaseClass.stepComplete("Run upgrade device action complete. Now will approve the order.", "");
+		BaseClass.stepComplete("Run upgrade service action complete. Now will approve the order.", "");
 
 		// login as approver.
 		CommonTestSteps.LoginApproverBrowserOpen();		
@@ -61,7 +61,7 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 		// this finds the approval entry for the Upgrade Service order just placed by the limited user, approves it, and 
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
-		Approvals.ApprovalAction(ApproverAction.approve);
+		Approvals.selectAndApproveOrder();
 		
 		CommonTestSteps.Logout();
 		
@@ -85,7 +85,7 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 		// the order details page is open. it has synced with command so now the history section can be verified. 
 		UpgradeService.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);
 
-		BaseClass.stepComplete("Upgrade Device Test Complete.", "");
+		BaseClass.stepComplete("Upgrade Service Test Complete.", "");
 		
 	}
 	

@@ -13,6 +13,7 @@ import org.testng.Assert;
 import HelperObjects.FeatureShoppingCart;
 import HelperObjects.PlanInfoActions;
 import HelperObjects.PlanOptionalFeatures;
+import HelperObjects.ShoppingCart;
 
 import org.openqa.selenium.JavascriptExecutor;
 
@@ -120,14 +121,14 @@ public class ChoosePlanPage extends BaseClass
 		
 		// get the text for cost and cost monthly in plan features at the very bottom of the shopping cart
 		// these are considered the actual values. 
-		String planFeatureCost = driver.findElement(By.xpath("//span[text()='Cost']/following-sibling::span[1]")).getText();
-		String planFeatureCostMonthly = driver.findElement(By.xpath("//span[text()='Cost Monthly']/following-sibling::span[1]")).getText();
+		String planFeatureCost = driver.findElement(By.xpath("//span[text()='Cost']/following-sibling::span[1]")).getText().replace("$", "");
+		String planFeatureCostMonthly = driver.findElement(By.xpath("//span[text()='Cost Monthly']/following-sibling::span[1]")).getText().replace("$", "");
 		
 		VerifyDeviceAndPlanSections();
 		
 		// now compare the actual values in plan features section with the stored off values.
-		Assert.assertEquals(planFeatureCost, deviceInfoActions.cost, "Error in plan page 'StoreOptionalFeaturesNamesAndInfo()'. Cost value doesn't match between plan features and device cost.");
-		Assert.assertEquals(planFeatureCostMonthly, planInfoActions.PlanTextCost(), "Error in plan page 'StoreOptionalFeaturesNamesAndInfo()'. Cost monthly value doesn't match between plan features and device cost.");
+		Assert.assertEquals(planFeatureCost, ShoppingCart.costOneTime, "Error in plan page 'StoreOptionalFeaturesNamesAndInfo()'. Cost value doesn't match between plan features and device cost.");  //deviceInfoActions.cost
+		Assert.assertEquals(planFeatureCostMonthly, ShoppingCart.costMonthly, "Error in plan page 'StoreOptionalFeaturesNamesAndInfo()'. Cost monthly value doesn't match between plan features and device cost.");  // planInfoActions.PlanTextCost()
 		
 		// verify no optional features have been added.
 		// Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//div[text()='Plan Features']//following-sibling ::div[1]/descendant ::div[text()='" + noOptionalFeatures +"']"), MediumTimeout));		
@@ -189,7 +190,7 @@ public class ChoosePlanPage extends BaseClass
 				//	CostMonthlyCalculatedConvertToFullText(totalString), "Cost Monthly value in shopping cart is not correct in ChoosePlanPage.MakeDesiredSelections");
 			
 			// make sure the cost at the bottom of the shopping cart remains at the device cost. 
-			Assert.assertEquals(driver.findElement(By.xpath("//span[text()='Cost']/following-sibling::span[1]")).getText(), deviceInfoActions.cost);
+			Assert.assertEquals(driver.findElement(By.xpath("//span[text()='Cost']/following-sibling::span[1]")).getText().replace("$", ""), ShoppingCart.costOneTime);  // deviceInfoActions.cost
 
 		}
 
@@ -275,16 +276,20 @@ public class ChoosePlanPage extends BaseClass
 				CostMonthlyCalculatedConvertToFullText(addUpCost), "Cost Monthly value in shopping cart is not correct in ChoosePlanPage.MakeDesiredSelections");
 		
 		// make sure the cost at the bottom of the shopping cart remains at the device cost. 
-		Assert.assertEquals(driver.findElement(By.xpath("//span[text()='Cost']/following-sibling::span[1]")).getText(), deviceInfoActions.cost);
+		Assert.assertEquals(driver.findElement(By.xpath("//span[text()='Cost']/following-sibling::span[1]")).getText().replace("$", ""), ShoppingCart.costOneTime);  // deviceInfoActions.cost
 		
 		// store away the expected (calculated) final cost monthly at bottom of shopping cart for tests made in future		
-		planInfoActions.costMonthlyTotal = addUpCost;
-			
+		//planInfoActions.costMonthlyTotal = addUpCost;
+		ShoppingCart.costMonthly = addUpCost;
+		
+		
 		PlanInfoActions.optionalFeatures = new ArrayList<>();
 		PlanInfoActions.optionalFeatures.add(optionalFeaturesList.get(0).name);
 		PlanInfoActions.optionalFeatures.add(optionalFeaturesList.get(optionalFeaturesList.size()-1).name);
 		
 	}	
+	
+	
 	
 	// this checks for options being present in the plan page after one click of the next button.
 	public static void VerifyOptionalFeaturesPresent() throws Exception
@@ -342,7 +347,10 @@ public class ChoosePlanPage extends BaseClass
 		List<WebElement> tempWebElementList =  driver.findElements(By.cssSelector(".tg-valign--top.ng-binding")); 
 		planInfoActions.planCostCompleteField = tempWebElementList.get(1).getText();
 		
-		planInfoActions.costMonthlyTotal = planInfoActions.PlanDecimalCost();
+		// replaced by cost in ShoppingCart -- see line below
+		//planInfoActions.costMonthlyTotal = planInfoActions.PlanDecimalCost();
+		
+		ShoppingCart.costMonthly = planInfoActions.PlanDecimalCost();
 		
 		planInfoActions.planSelectedName = driver.findElement(By.cssSelector("div.sn-section-heading.ng-binding")).getText();
 		System.out.println("Plan Name Selected: " + planInfoActions.planSelectedName);
@@ -546,8 +554,8 @@ public class ChoosePlanPage extends BaseClass
 	public static void clickAddToCartButtonPlan()  
 	{
 		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[1]")).click();
-		planInfoActions.costMonthlyTotal = planInfoActions.PlanDecimalCost();
-		
+		//planInfoActions.costMonthlyTotal = planInfoActions.PlanDecimalCost();
+		ShoppingCart.costMonthly = planInfoActions.PlanDecimalCost();
 	}
 	
 	// store the included features into list in planInfoActions object.
@@ -611,6 +619,8 @@ public class ChoosePlanPage extends BaseClass
 		// Click the element
 		lastFeature.click();
 				
+		ShoppingCart.costMonthly = GetNewTotal(ShoppingCart.costMonthly, optionalFeaturesList.get(0).CostWithNoDollarSignNoComma(), Action.Add); 
+		ShoppingCart.costMonthly = GetNewTotal(ShoppingCart.costMonthly, optionalFeaturesList.get(optionalFeaturesList.size()-1).CostWithNoDollarSignNoComma(), Action.Add);
 		
 		
 		//new Actions(driver).moveToElement(driver.findElement(By.xpath("(//li/label)[1]"))).perform();

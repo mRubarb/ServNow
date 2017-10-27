@@ -57,10 +57,10 @@ public class TC0018OrderAccessoriesApprove extends BaseClass
 			// go to approvals page.
 			CommonTestSteps.GoToMyApprovalsPage();
 			
-			// this finds the approval entry for the deactivate order just placed by the limited user, approves it, and 
+			// this finds the approval entry for the Order Accessories order just placed by the limited user, approves it, and 
 			// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 			// status to 'In Fulfillment' if everything goes OK.
-			Approvals.ApprovalAction(ApproverAction.approve);
+			Approvals.selectAndApproveOrder();
 
 			CommonTestSteps.Logout();
 			
@@ -102,7 +102,7 @@ public class TC0018OrderAccessoriesApprove extends BaseClass
 			orderDetailsObjectExpected.Show();			
 		}
 
-		// JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
+		JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
 	}		

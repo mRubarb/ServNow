@@ -85,13 +85,89 @@ public class DeactivateService extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
-		VerifyOrderPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationDeactivate();  // **** TEST *****
+		VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		
 		StoreOrderNumberToVariable(); // in deactivate the order number is shown in the order submitted page.
 		Thread.sleep(2000); // wait two seconds before selecting to view the order.
 	}	
+	
+	
+	// jnupp below
+	public static void RunDeactivateService(boolean isFirstOrder) throws Exception
+	{
+		if(isFirstOrder)
+		{
+			RunDeactivateService();
+		}
+		else
+		{
+			RunDeactivateServiceSecondTime();
+		}
+		
+		
+	}
+
+
+	public static void RunDeactivateServiceSecondTime() throws Exception
+	{
+		// go through the deactivate pages.
+
+		MyDevicesPage.WaitForPageToLoad();
+		MyDevicesPage.StoreServiceNumberFormats();
+		MyDevicesPage.SelectDeactivateAction();
+		
+		ServiceNow.ProvideAdditionalInfoPage.WaitForPageToLoad();
+		VerifyPageTitle(deactivateActionTitle);
+		ServiceNow.ProvideAdditionalInfoPage.EnterMissingInfo();
+		ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
+		
+		VerifyOrderPage.WaitForPageToLoad();
+		VerifyPageTitle(deactivateActionTitle);
+		VerifyOrderPage.verifyAdditionalInformationBlock();
+		VerifyOrderPage.clickSubmitBtn(); // submit order.
+		VerifyOrderPage.WaitForOrderComplete();
+		
+		// StoreOrderNumberToVariable(); // in deactivate the order number is shown in the order submitted page. // 
+		StoreOrderNumberTwoObjectVariable(); // jnupp
+		
+		//ShowText(orderDetailsObjectExpected.orderId);
+		//ShowText(orderDetailsObjectExpected.orderIdTwo);
+		
+		//Pause("first order done");
+		
+		Thread.sleep(2000); // wait two seconds before selecting to view the order.
+
+		OrderSubmittedPage.SelectViewOrder();	
+		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
+
+		// create and setup order details expected object with order type, order id, and expected status. 
+		//CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service. // jnupp
+		//SetupOrderDetailsExpectedObject(); // this changes the object properties in the object created above for deactivate service. // jnupp 
+		
+		// this verifies the order number in verify page matches the order number in order details 
+		// page and verifies the correct order type at the top of the order details (submitted) page.
+		//VerifyOrderNumberAndOrderTypeBetweenPages(); // jnupp
+		
+		// more verifications here.
+		OrderSubmittedPage.VerifyTopSectionSecondTime(); // jnupp this also sets external order id in orderDetailsObjectExpected object that was setup further above.
+		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
+		
+		// go to 'my orders' main page to setup for the loop test below.
+		CommonTestSteps.GoToMyOrders();
+		
+		// this loops on going into the 'my orders' page until all verifications on the 'my orders' page pass.  
+		// the 'orderActionBlock' variable is set here.
+		VerifyLimitedUserOrderMyOrdersMainPage();
+		
+		CommonTestSteps.GoToMyOrders();
+		VerifyOrderDetailsPagePreApproval();
+		
+		
+	}
+	// jnupp above.		
+		
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////////////////////////////////////////////////////////////////
