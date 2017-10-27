@@ -231,7 +231,7 @@ public class Features extends BaseClass
 		// wait for expected number of add to cart buttons.		
 		if(!WaitForElements(By.xpath("//button[text()='Add to Cart']"), MainTimeout, numberExpectedAddToCartButtons))
 		{
-			Assert.fail("Error in 'RunFeature10()' method. Expected to find " + numberExpectedAddToCartButtons + " devices in the devices list. " +
+			Assert.fail("Error in 'RunFeature' test. Expected to find " + numberExpectedAddToCartButtons + " devices in the devices list. " +
 					    "May need to change expected number of devices variable 'numberExpectedAddToCartButtons' in 'RunFeature10()' method.");
 		}
 	}
@@ -355,7 +355,7 @@ public class Features extends BaseClass
 			ShowText("Verifying Feature Unchecked.");
 			
 			// wait for expected number of add to cart buttons.
-			WaitForDeviceList();
+			// WaitForDeviceList(); // commented 10/23/17 - non needed.
 			
 			// verify expected text.
 			Assert.assertEquals(driver.findElement(By.cssSelector(".sn-instructions.tg-pad--quarter--top.tg-pad--bottom.ng-binding")).getText(), featureTenExpectedText,
@@ -378,13 +378,15 @@ public class Features extends BaseClass
 			}
 			
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // set back to original.
+			
+			ShowText("Verifying Feature Unchecked Passed.");
 		}
 		else // feature checked.
 		{
 			ShowText("Verifying Feature Checked.");
 			
 			// wait for expected number of add to cart buttons.
-			WaitForDeviceList();
+			// WaitForDeviceList(); // commented 10/23/17 - non needed.
 
 			// System.out.println(WaitForElementClickableBoolean(By.cssSelector(".tg-grid__cell.tg-one-half.tg-pad--right~div>label>input"), ShortTimeout)); // DEBUG
 			
@@ -408,6 +410,8 @@ public class Features extends BaseClass
 			}
 			
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // set back to original.
+			
+			ShowText("Verifying Feature Checked Passed.");
 
 		}
 		

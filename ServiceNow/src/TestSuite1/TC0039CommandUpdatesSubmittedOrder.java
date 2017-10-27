@@ -50,7 +50,7 @@ public class TC0039CommandUpdatesSubmittedOrder extends BaseClass
 		TangoeMobilityOrderRequestsPage.ObserveStartingStates();
 
 		TangoeMobilityOrderRequestsPage.StartPolling();
-		Pause("");
+		Pause("Test Passed.");
 		
 
 		
