@@ -87,7 +87,7 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[0], featuresList.get(Feature.selectionThree).action + " " + featuresList.get(Feature.selectionThree).fullName, "");
 		//Assert.assertEquals(strArray[1].trim(), costText + featuresList.get(Feature.selectionThree).monthlyTag,"");
 		Assert.assertEquals(strArray[1], costText + featuresList.get(Feature.selectionThree).monthlyTag + " " + featuresList.get(Feature.selectionThree).dollarCost,"");
-	}
+	} 
 	
 	// there are three added update features. indexes selectionOne, selectionTwo, and selectionThree from the 'featuresList' have been selected.
 	public static void VerifyFeaturesCost() 
@@ -183,7 +183,7 @@ public class VerifyOrderPage extends BaseClass
 
 		Assert.assertEquals(strArray[0], deviceInfoActions.name, errMessage);		
 		Assert.assertEquals(strArray[1].replace("Vendor ", ""), deviceInfoActions.vendor, errMessage);		
-		Assert.assertEquals(strArray[2].replace("Price ", ""), deviceInfoActions.cost, errMessage); // <-- UNCOMMENT WHEN SFD112988 IS FIXED
+		//Assert.assertEquals(strArray[2].replace("Price ", ""), deviceInfoActions.cost, errMessage); // <-- UNCOMMENT WHEN SFD112988 IS FIXED
 																										// *************************************
 	}
 	
@@ -424,10 +424,15 @@ public class VerifyOrderPage extends BaseClass
 	{
 		errMessage = "Fail in VerifyOrderPage.verifyCostMonthlyUpgradeDevice";
 		
-		System.out.println("Cost monthly actual: " + driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText());
-		System.out.println("Cost monthly expected: " + planInfoActions.costMonthlyTotal);
+		String costMonthlyActual = driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText();
+		String costMonthlyExpected = "$" + ShoppingCart.costMonthly;
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText(), planInfoActions.costMonthlyTotal, errMessage);		
+		System.out.println("Cost monthly actual: " + costMonthlyActual);
+		System.out.println("Cost monthly expected: " + costMonthlyExpected);
+		
+		Assert.assertEquals(costMonthlyActual, costMonthlyExpected, errMessage);	
+		
+		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText(), planInfoActions.costMonthlyTotal, errMessage);		
 		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText(), AccessoriesDetailsExpected.finalCostMonthly, errMessage);		
 	}
 	
@@ -435,7 +440,7 @@ public class VerifyOrderPage extends BaseClass
 	{
 		errMessage = "Fail in VerifyOrderPage.verifyCostUpgradeDevice";
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), ShoppingCart.costOneTime, errMessage);
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), "$" + ShoppingCart.costOneTime, errMessage);
 				// AccessoriesDetailsExpected.finalCost
 	}
 	
@@ -850,12 +855,12 @@ public class VerifyOrderPage extends BaseClass
 	{
 		
 		String costMonthlyFound = driver.findElement(By.xpath("//label[text()='Cost Monthly']/../following ::td[1]")).getText();
-		String costMonthlyExpected = CostMonthlyCalculatedConvertToFullText(planInfoActions.costMonthlyTotal);
+		String costMonthlyExpected = CostMonthlyCalculatedConvertToFullText(ShoppingCart.costMonthly);  // planInfoActions.costMonthlyTotal 
 		
 		Assert.assertEquals(costMonthlyFound, costMonthlyExpected, "");
 		
 		String costFound = driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]/span")).getText();
-		String costExpected = CostMonthlyCalculatedConvertToFullText(AccessoriesDetailsExpected.finalCost);
+		String costExpected = CostMonthlyCalculatedConvertToFullText(ShoppingCart.costOneTime);  // AccessoriesDetailsExpected.finalCost
 		
 		Assert.assertEquals(costFound, costExpected, "");
 		

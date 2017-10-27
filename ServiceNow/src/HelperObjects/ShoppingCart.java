@@ -2,7 +2,10 @@ package HelperObjects;
 
 public class ShoppingCart {
 
+	// costOneTime = device price + accessory price
 	public static String costOneTime;
+	
+	// costMonthly = plan price + optional features price
 	public static String costMonthly;
 	
 	

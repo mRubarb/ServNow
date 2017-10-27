@@ -12,6 +12,7 @@ import org.testng.Assert;
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.DeviceInfoActions;
 import HelperObjects.DevicePortNumber;
+import HelperObjects.ShoppingCart;
 
 
 // http://www.tutorialspoint.com/guava/guava_multimap.htm
@@ -99,7 +100,7 @@ public class ChooseDevicePage extends BaseClass
 			
 		}
 		
-		shoppingCart.costOneTime = deviceInfoActions.cost;
+		ShoppingCart.costOneTime = deviceInfoActions.cost;
 		
 		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		
 		
@@ -188,8 +189,9 @@ public class ChooseDevicePage extends BaseClass
 		indexDeviceSelectedNewActivation++;
 		isFirstPass = false;
 		
-		AccessoriesDetailsExpected.finalCost = deviceInfoActions.DeviceCostRemoveDollarSign(); 
-				
+		//AccessoriesDetailsExpected.finalCost = deviceInfoActions.DeviceCostRemoveDollarSign(); 
+		ShoppingCart.costOneTime = deviceInfoActions.DeviceCostRemoveDollarSign();
+		
 	}
 	
 	// ** NOT USED **
@@ -230,7 +232,10 @@ public class ChooseDevicePage extends BaseClass
 		deviceInfoActions.vendor = DevicePortNumber.selectedDeviceVendor;
 		deviceInfoActions.cost = DevicePortNumber.selectedDevicePrice;
 		
-		AccessoriesDetailsExpected.finalCost = DevicePortNumber.selectedDevicePrice.replace("$", ""); 
+		// replaced by cost in ShoppingCart -- see line below
+		//AccessoriesDetailsExpected.finalCost = DevicePortNumber.selectedDevicePrice.replace("$", ""); 
+		
+		ShoppingCart.costOneTime = DevicePortNumber.selectedDevicePrice.replace("$", "");
 		
 		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[1]")).click();		
 	}		

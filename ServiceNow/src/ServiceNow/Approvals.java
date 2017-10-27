@@ -12,6 +12,7 @@ import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
 import HelperObjects.DeviceInfoActions;
 import HelperObjects.Feature;
+import HelperObjects.ShoppingCart;
 
 
 // this is for all actions related to the accessories page.   
@@ -19,11 +20,13 @@ import HelperObjects.Feature;
 public class Approvals extends BaseClass
 {
 	
-	public static int loopMax = 10;
+	public static int loopMax = 20;
 	public static int rowNumContainingOrder = 0;
 
 	static String [] strArray;
 	static String tmpStr;	
+	
+	
 	
 	// this waits for first check box at top of approvals list and the 'to' text at the bottom of the page.
 	public static void WaitForPageToLoad() throws Exception
@@ -34,11 +37,53 @@ public class Approvals extends BaseClass
 		WaitForElementPresent(By.xpath("(//span[contains(text(),'to')])[3]"), MediumTimeout);		
 	}
 	
-	// assume the approval page is opened and loaded.
-	public static void ApprovalAction(ApproverAction approverAction) throws Exception
-	{
+	
+	// new method to replace ApprovalAction() method - approval part .... - 10/25/2017 - Ana 
+	public static void selectAndApproveOrder() throws Exception {
+	
+		// Select order from list
+		openOrderDetails();
+	
+		// Verify the items in the short and full description.
+		verifyApprovalPageData();
+		
+		// If get to here the order to be approved has been found. do the approval and wait for main page to load. doing the approval brings user back to the main page.		
+		
+		// Select approver from dropdown list 
+		int approverIndex = selectApprover();
+		 
+		// Approve order 
+		approveOrder(approverIndex);
 
-		// ** Added on 9/19/17 to replace former 'for' loop *** TEST *** 
+		Thread.sleep(5000);  // ** Giving time for order to have status updated 
+		
+	}
+	
+	// new method to replace ApprovalAction() method - reject part .... - 10/25/2017 - Ana
+	public static void selectAndRejectOrder() throws Exception {
+		
+		// Select order from list
+		openOrderDetails();
+	
+		// Verify the items in the short and full description.
+		verifyApprovalPageData();
+		
+		// If get to here the order to be approved has been found. do the approval and wait for main page to load. doing the approval brings user back to the main page.		
+		
+		// Select approver from dropdown list 
+		int approverIndex = selectApprover();
+		 
+		// Approve order 
+		rejectOrder(approverIndex);
+
+		Thread.sleep(5000);  // ** Giving time for order to have status updated 
+		
+	}
+	
+	
+	
+	private static void openOrderDetails() throws Exception {
+		
 		boolean correctUserAndType = false;
 		boolean correctExternalOrderId = false;
 		int x = 1;
@@ -50,7 +95,7 @@ public class Approvals extends BaseClass
 			// select row
 			System.out.println(" *** Click on order listed # " + x + " ***");
 			
-			WebElement orderNumLink = driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[1]/td[7]/a[@class='linked']"));
+			WebElement orderNumLink = driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + x + "]/td[7]/a[@class='linked']"));
 			orderNumLink.click(); 
 			
 			// wait for the short description and  description text areas to become visible. 
@@ -58,10 +103,10 @@ public class Approvals extends BaseClass
 			WaitForElementVisible(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']"), MediumTimeout);
 			
 			// Verify order type and user name in short description
-			correctUserAndType = IsCorrectOrderTypeAndUser(driver.findElement(By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']")).getAttribute("value"));
+			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']")).getAttribute("value"));
 
 			// Verify external order number and order id in full description
-			correctExternalOrderId = ContainsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']")).getText().split("\n"));
+			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']")).getText().split("\n"));
 			
 			if(correctUserAndType && correctExternalOrderId)
 			{
@@ -78,18 +123,71 @@ public class Approvals extends BaseClass
 		} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
 		
 		
+		// verify order to approve was found. if the order action wasn't found within loop max rows it looks like it can't be found. 
+		Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
+		
+	}
+	
+	
+	
+	public static void openOrderDetails(String orderId, String externalOrderId) throws Exception {
+		
+		boolean correctUserAndType = false;
+		boolean correctExternalOrderId = false;
+		int x = 1;
+		
+		do {	
+			
+			WaitForElementClickable(By.cssSelector("tbody.list2_body>tr>td>span>input.checkbox:nth-of-type(1)"), MediumTimeout, "Failed waiting for row in Approvals.ApprovalAction");
+			
+			// select row
+			System.out.println(" *** Click on order listed # " + x + " ***");
+			
+			WebElement orderNumLink = driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + x + "]/td[7]/a[@class='linked']"));  // "//tbody[@class='list2_body']/tr[1]/td[7]/a[@class='linked']"
+			orderNumLink.click(); 
+			
+			// wait for the short description and  description text areas to become visible. 
+			
+			By shortDescription = By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']");
+			By fullDescription = By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']");
+			
+			WaitForElementVisible(shortDescription, MediumTimeout);		
+			WaitForElementVisible(fullDescription, MediumTimeout);
+			
+			// Verify order type and user name in short description
+			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(shortDescription).getAttribute("value"));
+
+			// Verify external order number and order id in full description
+			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(fullDescription).getText().split("\n"), orderId, externalOrderId);
+			
+			if(correctUserAndType && correctExternalOrderId)
+			{
+				rowNumContainingOrder = x;
+				
+			} else { 
+			
+				x++;
+			}
+			
+			driver.findElement(By.xpath("//span[text()='Back']/..")).click();
+			WaitForPageToLoad();
+			
+			
+		} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
+		
 		
 		// verify order to approve was found. if the order action wasn't found within loop max rows it looks like it can't be found. 
 		Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
+		
+	}
+	
+	
+	
 
-		// verify the items in the short and full description.
-		VerifyApprovalPageData();
-		
-		
-		// If get to here the order to be approved has been found. do the approval and wait for main page to load. doing the approval brings user back to the main page.		
-		
+	private static int selectApprover() {
 		
 		// 1. The approver must be selected first, from a table located at the bottom of the UI
+		
 		// Get the approvers' names listed:
 		List<WebElement> approversList = driver.findElements(By.xpath("//tbody[@class='list2_body']/tr/td[4]/a[@class='linked']"));
 		
@@ -109,95 +207,91 @@ public class Approvals extends BaseClass
 		
 		driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[1]")).click();			
 		
-		switch(approverAction)
-		{
-			case approve:
-			{
-				// The 'Approve' button is not listed anymore. --> // driver.findElement(By.xpath("(//button[text()='Approve'])[2]")).click(); 
-								
-				// 3. The action ('Approve' in this case) must be selected from a dropdown list located below 
-				
-				new Select(driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"))).selectByVisibleText("Approve");
-				
-				// 4. Verify that the State changes to 'Approved'
-				
-				Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[3]")).getText(), "Approved", "Failed. State is not Approved.");	
-								
-		 		//WaitForPageToLoad();
-				
-				// verify the order row that was approved shows approved.
-				//Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + rowNumContainingOrder + "]/td[3]/a")).getText(), "Approved", 
-					//				"Item that was approved in Row " + rowNumContainingOrder + " does not show as approved in the main Approvals list in Approvals.FindApprovalAndApprove.");
-				
-				// now set the order details expected status to 'In Fulfillment'
-				orderDetailsObjectExpected.status = "In Fulfillment";			
-				
-				System.out.println("Order has been approved.");
-				
-				break;
-			}
-			
-			case reject: // TODO -- 
-			{
-				// The 'Comments' textbox is not displayed anymore. Text for Comment is something like: 
-				// "Order was rejected in ServiceNow. Approvers: rejected:Bob Lichtenfels-Approver,
-				//  not_required:Mike McPadden, not_required:ServiceNow Certifier - Admin, not_required:ServiceNow Certifier - Approver ."
-				// -- > driver.findElement(By.xpath(".//*[@id='sysapproval_approver.comments']")).clear();
-				// --> driver.findElement(By.xpath(".//*[@id='sysapproval_approver.comments']")).sendKeys("Reject This Order");
-				// The 'Reject' button is not listed anymore. --> // driver.findElement(By.xpath("(//button[text()='Reject'])[2]")).click();				
-				//WaitForPageToLoad();
-				
-				// verify the order row that was rejected shows rejected.
-				//Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + rowNumContainingOrder + "]/td[3]/a")).getText(), "Rejected", 
-					//				"Item that was approved in Row " + rowNumContainingOrder + " does not show as approved in the main Approvals list in Approvals.FindApprovalAndApprove.");
-				
-				
-				
-				// 3. The action ('Reject' in this case) must be selected from a dropdown list located below 
-				
-				//driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select")).click();
-				
-				//Thread.sleep(5000);
-				
-				List<WebElement> options = driver.findElements(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select>option"));
-				int indexReject = 0;
-				
-				for (int i = 0; i < options.size(); i++) {
-					
-					if (options.get(i).getText().trim().equals("Reject")) {
-						indexReject = i;
-					}
-					
-				}
-				
-				//driver.findElement(By.xpath("//select/option[text()='Reject']")).click(); // <-- it doesn't work, replaced by line below
-				new Select(driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"))).selectByIndex(indexReject);
-				
-				// 4. Verify that the State changes to 'Rejected'
-				
-				Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[3]")).getText(), "Rejected", "Failed. State is not Rejected.");	
-				
-				// now set the order details expected status to 'Approval Rejected'
-				orderDetailsObjectExpected.status = "Approval Rejected";				
-				
-				System.out.println("Order has been rejected.");
-				
-				break;			
-			}
-			
-			case none:
-			{
-				Assert.fail("FAILURE: Approval page not setting expected status.");
-			}
-		}
-		
-		Thread.sleep(5000);  // ** Giving time for order to have status updated 
+		return approverIndex;
 		
 	}
 	
 	
+
+	
+	private static void rejectOrder(int approverIndex) {
+		
+		// The 'Comments' textbox is not displayed anymore. Text for Comment is something like: 
+		// "Order was rejected in ServiceNow. Approvers: rejected:Bob Lichtenfels-Approver,
+		//  not_required:Mike McPadden, not_required:ServiceNow Certifier - Admin, not_required:ServiceNow Certifier - Approver ."
+		// The 'Reject' button is not listed anymore. --> So the Reject action must be selected from a dropdown list 			
+		
+		
+		// 3. The action ('Reject' in this case) must be selected from a dropdown list located below 
+		
+		//driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select")).click();
+		
+		//Thread.sleep(5000);
+		
+		List<WebElement> options = driver.findElements(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select>option"));
+		
+		int indexReject = 0;
+		
+		for (int i = 0; i < options.size(); i++) {
+			
+			if (options.get(i).getText().trim().equals("Reject")) {
+				indexReject = i;
+			}
+			
+		}
+		
+		//driver.findElement(By.xpath("//select/option[text()='Reject']")).click(); // <-- it doesn't work, replaced by line below
+		new Select(driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"))).selectByIndex(indexReject);
+		
+		// 4. Verify that the State changes to 'Rejected'
+		
+		Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[3]")).getText(), "Rejected", "Failed. State is not Rejected.");	
+		
+		// now set the order details expected status to 'Approval Rejected'
+		orderDetailsObjectExpected.status = "Approval Rejected";				
+		
+		// verify the order row that was rejected shows rejected. -- ** NEEDS TO BE REVIEWED ** 
+		// Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + rowNumContainingOrder + "]/td[3]/a")).getText(), "Rejected", 
+		//				"Item that was approved in Row " + rowNumContainingOrder + " does not show as approved in the main Approvals list in Approvals.FindApprovalAndApprove.");
+			
+		
+		System.out.println("Order has been rejected.");
+		
+		
+	}
+	
+	
+
+	
+	private static void approveOrder(int approverIndex) {
+		
+		// The 'Approve' button is not listed anymore. --> So the Approve action must be selected from a dropdown list 
+		
+		// 3. The action ('Approve' in this case) must be selected from a dropdown list located below 
+		
+		new Select(driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"))).selectByVisibleText("Approve");
+		
+		// 4. Verify that the State changes to 'Approved'
+		
+		Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[3]")).getText(), "Approved", "Failed. State is not Approved.");	
+		
+		
+		// now set the order details expected status to 'In Fulfillment'
+		orderDetailsObjectExpected.status = "In Fulfillment";			
+		
+		// verify the order row that was approved shows approved.  -- ** NEEDS TO BE REVIEWED ** 
+		//Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + rowNumContainingOrder + "]/td[3]/a")).getText(), "Approved", 
+		//				"Item that was approved in Row " + rowNumContainingOrder + " does not show as approved in the main Approvals list in Approvals.FindApprovalAndApprove.");	
+		
+		System.out.println("Order has been approved.");
+		
+		
+	}
+	
+	
+
 	// this looks at the short description for the full user name of the limited user that requested the order and the order type.
-	public static boolean IsCorrectOrderTypeAndUser(String shortDescription)
+	public static boolean isCorrectOrderTypeAndUser(String shortDescription)
 	{
 		
 		if(shortDescription.contains(userLimitedShorterName) && shortDescription.contains(orderDetailsObjectExpected.orderType))
@@ -209,7 +303,7 @@ public class Approvals extends BaseClass
 	}	
 	
 	
-	public static boolean ContainsCorrectExternalOrderIdAndOrderId(String[] descriptionAllLines) throws Exception
+	public static boolean containsCorrectExternalOrderIdAndOrderId(String[] descriptionAllLines) throws Exception
 	{
 		
 		boolean externOrderIdOK = descriptionAllLines[descriptionAllLines.length - 1].split(":")[1].equals(orderDetailsObjectExpected.externalOrderId);
@@ -220,7 +314,24 @@ public class Approvals extends BaseClass
 	}	
 	
 	
-	public static void VerifyApprovalPageData() throws Exception
+	public static boolean containsCorrectExternalOrderIdAndOrderId(String[] descriptionAllLines, String orderId, String externalOrderId) throws Exception
+	{
+		
+		System.out.println("External Order Id Expected: " + descriptionAllLines[descriptionAllLines.length - 1].split(":")[1]);
+		System.out.println("Order Id Expected: " + descriptionAllLines[descriptionAllLines.length - 2].split(":")[1]);
+		
+		System.out.println("External Order Id Found: " + externalOrderId);
+		System.out.println("Order Id Found: " + orderId);
+		
+		boolean externOrderIdOK = descriptionAllLines[descriptionAllLines.length - 1].split(":")[1].equals(externalOrderId);
+		boolean orderIdOK = descriptionAllLines[descriptionAllLines.length - 2].split(":")[1].equals(orderId);
+		
+		return (externOrderIdOK && orderIdOK);
+		
+	}	
+	
+	
+	public static void verifyApprovalPageData() throws Exception
 	{
 		switch(approvalActionType)
 		{
@@ -345,7 +456,8 @@ public class Approvals extends BaseClass
 		
 		String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + fullServiceNumber + "].";   
 		
-		String totalCost = "Total Cost:" + AccessoriesDetailsExpected.finalCost + " Total Monthly Cost:" + AccessoriesDetailsExpected.finalCostMonthly; 
+		//String totalCost = "Total Cost:" + AccessoriesDetailsExpected.finalCost + " Total Monthly Cost:" + AccessoriesDetailsExpected.finalCostMonthly; 
+		String totalCost = "Total Cost:$" + ShoppingCart.costOneTime + " Total Monthly Cost:$" + ShoppingCart.costMonthly;
 		
 		String itemsOrderedLabel = "Items Ordered:";
 		
@@ -382,25 +494,11 @@ public class Approvals extends BaseClass
 		String orderId = "Tangoe Order ID:" + orderDetailsObjectExpected.orderId;
 		
 		String externalOrderNumber = "External Order Number:" + orderDetailsObjectExpected.externalOrderId;
+
+	
 		
-		
-		/*
-		 * if(descriptionLines.contains(title)) System.out.println("Ok"); else {System.out.println("Not found - " + title);}
-		if(descriptionLines.contains(totalCost)) System.out.println("Ok"); else {System.out.println("Not found - " + totalCost);}
-		if(descriptionLines.contains(itemsOrderedLabel)) System.out.println("Ok"); else {System.out.println("Not found - " + itemsOrderedLabel);}
-		if(descriptionLines.contains(deviceModelAndCost)) System.out.println("Ok"); else {System.out.println("Not found - " + deviceModelAndCost);}
-		if(descriptionLines.contains(planNameAndCost)) System.out.println("Ok"); else {System.out.println("Not found - " + planNameAndCost);}
-		if(descriptionLines.contains(additionalInfoLabel)) System.out.println("Ok"); else {System.out.println("Not found - " + additionalInfoLabel);}
-		if(descriptionLines.contains(additionalInfoContactNumber)) System.out.println("Ok"); else {System.out.println("Not found - " + additionalInfoContactNumber);}
-		if(descriptionLines.contains(additionalInfoExt)) System.out.println("Ok"); else {System.out.println("Not found - " + additionalInfoExt);}
-		if(descriptionLines.contains(additionalInfoAdditionalInstructions)) System.out.println("Ok"); else {System.out.println("Not found - " + additionalInfoAdditionalInstructions);}
-		if(descriptionLines.contains(additionalInfoServiceNumber)) System.out.println("Ok"); else {System.out.println("Not found - " + additionalInfoServiceNumber);}
-		if(descriptionLines.contains(additionalInfoReason)) System.out.println("Ok"); else {System.out.println("Not found - " + additionalInfoReason);}
-		if(descriptionLines.contains(shipTo)) System.out.println("Ok"); else {System.out.println("Not found - " + shipTo);}
-		if(descriptionLines.contains(orderId)) System.out.println("Ok"); else {System.out.println("Not found - " + orderId);}
-		if(descriptionLines.contains(externalOrderNumber)) System.out.println("Ok"); else {System.out.println("Not found - " + externalOrderNumber);}
-		*/
-		
+		System.out.println("totalCost: " + totalCost);
+		System.out.println("deviceModelAndCost: " + deviceModelAndCost);
 		
 		Assert.assertTrue(descriptionLines.contains(title), errMessage);
 		// Assert.assertTrue(descriptionLines.contains(totalCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
@@ -417,47 +515,7 @@ public class Approvals extends BaseClass
 		Assert.assertTrue(descriptionLines.contains(orderId), errMessage);
 		Assert.assertTrue(descriptionLines.contains(externalOrderNumber), errMessage);
 		
-		
-		
-		
-		// *************************************
-/*		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
-		
-		// build title that is in short description. 
-		//String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + fullServiceNumber + "].";   
-		
-		Assert.assertEquals(strArray[0].trim(), title, errMessage);
-		
-		tmpStr =  "Total Cost:" + AccessoriesDetailsExpected.finalCost + " Total Monthly Cost:" + AccessoriesDetailsExpected.finalCostMonthly; //total costs
-		// Assert.assertEquals(strArray[2].trim(), tmpStr, errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
-
-		Assert.assertEquals(strArray[4].trim(), "Items Ordered:", errMessage); // title for items ordered.
-		
-		tmpStr = deviceInfoActions.name + " " + deviceInfoActions.cost; // device and cost
-		//Assert.assertEquals(strArray[5], tmpStr, errMessage);	// -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED	
-
-		tmpStr = planInfoActions.planSelectedName + " " + planInfoActions.PlanTextCost() + " Monthly"; // plan and cost.  
-		Assert.assertEquals(strArray[6], tmpStr , errMessage);		
-		
-		// need to insert "-" to make the two planOptions match format of plan options stored in the 'optionalFeaturesList' list.
-		PlanOptionalFeatures.VerifyPlanOptionsFirstLast(strArray[7].replace("$", "- $"), strArray[8].replace("$", "- $"));
-		
-		Assert.assertEquals(strArray[11], "Additional Info:" , errMessage); // title		
-		
-		Assert.assertEquals(strArray[12].replace("Contact Phone Number:", ""), contactNumber, errMessage); 
-		Assert.assertEquals(strArray[13].replace("Ext:", ""), extension, errMessage); 
-		Assert.assertEquals(strArray[14].replace("Additional Instructions:", ""), additionalInstructions, errMessage); 		
-		Assert.assertEquals(strArray[15].replace("Service Number:", ""), serviceNumber, errMessage); 
-		Assert.assertEquals(strArray[16].replace("Reason:", "").trim(), DeviceInfoActions.reasonUpgradeAction, errMessage);		
-		
-		// build and verify 'ship to' string.
-		String space = " ";
-		tmpStr = userLimitedShorterName + space + addressLineOne + space + cityOrderActions + space + stateOrderActions + space + zipCodeOrderActions; 
-		Assert.assertEquals(strArray[18].replace("Ship to:", "").replace(".","").trim(), tmpStr, errMessage);
-		
-		Assert.assertEquals(strArray[20].replace("Tangoe Order ID:",""), orderDetailsObjectExpected.orderId, errMessage);		
-		Assert.assertEquals(strArray[21].replace("External Order Number:",""), orderDetailsObjectExpected.externalOrderId, errMessage);		
-	*/
+				
 	}
 	
 	
@@ -520,7 +578,7 @@ public class Approvals extends BaseClass
 		String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + fullServiceNumber + "].";   
 		
 		Assert.assertEquals(strArray[0].trim(), title, errMessage);
-		Assert.assertEquals(strArray[2].replace("Total Cost:", "").trim(), AccessoriesDetailsExpected.finalCost, errMessage);		
+		Assert.assertEquals(strArray[2].replace("Total Cost:", "").trim(), ShoppingCart.costOneTime, errMessage);  // AccessoriesDetailsExpected.finalCost		
 		Assert.assertEquals(strArray[4],"Items Ordered: ", errMessage);		
 		
 		// create AccessoriesDetailsExpected objects from the accessories in the main description section.

@@ -9,7 +9,8 @@ public class OrderDetailsObjectExpected
 	public String orderType = "";	
 	public String status = "";
 	public String orderDate = "";	
-	
+	public String orderIdTwo = ""; // jnupp
+	public String externalOrderIdTwo = ""; // jnupp
 	
 	public static String awaitApproval = "Awaiting Approval";
 	

@@ -23,7 +23,7 @@ public class EnterShippingInfoPage extends BaseClass
 	}
 	
 	// select the expedite check box.
-	public static void SelectExpiditeCheckBox() throws Exception
+	public static void selectExpeditedCheckBox() throws Exception
 	{
 		driver.findElement(By.id("expedited")).click();
 	}

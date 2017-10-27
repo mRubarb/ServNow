@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.AccessoriesDetailsShopCart;
+import HelperObjects.ShoppingCart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -280,7 +281,7 @@ public class ChooseAccessoriesPage extends BaseClass
 			
 		} else { // Else, if order type is 'New Activation' | 'Upgrade Device'
 			
-			initialCost = deviceInfoActions.DeviceCostRemoveDollarSign();
+			initialCost = ShoppingCart.costOneTime.replace("$", "");   // deviceInfoActions.DeviceCostRemoveDollarSign();
 		}
 				
 		// get the number of add to cart buttons. this is needed to index into the accessoriesDetailsListExpected list.
@@ -310,7 +311,10 @@ public class ChooseAccessoriesPage extends BaseClass
 		}
 		
 		// store away the final value for cost, at the bottom of the shopping cart, to be used in the future.
-		AccessoriesDetailsExpected.finalCost = finalCost;
+		
+		// replaced by cost in ShoppingCart -- see line below
+		//AccessoriesDetailsExpected.finalCost = finalCost;
+		ShoppingCart.costOneTime = finalCost;
 		
 	}
 	
@@ -495,8 +499,8 @@ public class ChooseAccessoriesPage extends BaseClass
 			
 			// Add accessory to cart
 			addAccessoriesToShoppingCart(false);
-			AccessoriesDetailsExpected.finalCost = driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
-			AccessoriesDetailsExpected.finalCostMonthly = driver.findElement(By.xpath("//span[text()='Cost Monthly']/following ::span[1]")).getText();		
+			//AccessoriesDetailsExpected.finalCost = driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
+			//AccessoriesDetailsExpected.finalCostMonthly = driver.findElement(By.xpath("//span[text()='Cost Monthly']/following ::span[1]")).getText();		
 			
 		} else {
 			
@@ -519,8 +523,11 @@ public class ChooseAccessoriesPage extends BaseClass
 		if (WaitForElementVisibleNoThrow(By.xpath("//div[text()='Select one or more accessories below to add to your shopping cart.']"), MainTimeout )) {
 			
 			// Add accessory to cart
-			addAccessoriesToShoppingCart(true); //makeDesiredSelectionsOrderAccessories();
-			AccessoriesDetailsExpected.finalCost = driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
+			addAccessoriesToShoppingCart(true); 
+			
+			ShoppingCart.costOneTime = driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
+			
+			// AccessoriesDetailsExpected.finalCost = driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
 			// AccessoriesDetailsExpected.finalCostMonthly = driver.findElement(By.xpath("//span[text()='Cost Monthly']/following ::span[1]")).getText();		
 			
 			// Click Next button	

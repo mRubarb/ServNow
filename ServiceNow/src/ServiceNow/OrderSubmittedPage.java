@@ -83,6 +83,53 @@ public class OrderSubmittedPage extends BaseClass
 		
 	}
 
+	// jnupp below
+	// get some of the information "ABOVE" the Account Holder information. not all information is present when an order is first submitted.
+	public static void VerifyTopSectionSecondTime() throws Exception 
+	{
+		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyTopSection";
+		
+		// this gets section with date submit, service #, external order Id.
+		tmpString = driver.findElement(By.xpath("//label[text()='Date Submitted']/../..")).getText();
+		tmpStringArray = tmpString.split(" ");
+
+		// for(int x = 0; x < tmpStringArray.length; x++){System.out.println(x + " " + tmpStringArray[x]);} // DEBUG view all strings
+
+		LocalDateTime ldt = LocalDateTime.now();
+		
+		for(int z = 0; z < tmpStringArray.length; z ++)
+		{
+			switch(z)
+			{                      
+				case 3: // day
+				{
+					Assert.assertEquals(tmpStringArray[z], Integer.toString(ldt.getDayOfMonth()), errorMessage);
+					break;
+				}
+				case 4: // month
+				{
+					Assert.assertEquals(tmpStringArray[z], GetMonth(), errorMessage);					
+					break;
+				}
+			}
+		}
+
+		// verify year
+		Assert.assertEquals(driver.findElement(By.id("dateSubmitted")).getText().split(" ")[2].substring(0, 4), Integer.toString(ldt.getYear()) , errorMessage);
+		
+		// service number
+		Assert.assertEquals(driver.findElement(By.xpath(".//*[@id='serviceNumber']")).getText(), fullServiceNumber, "");
+		
+		// set external order id in order details expected.
+		orderDetailsObjectExpected.externalOrderIdTwo = driver.findElement(By.id("externalOrderNumber")).getText().trim(); // jnupp
+		
+		//System.out.println("orderDetailsObjectExpected.externalOrderId: " + orderDetailsObjectExpected.externalOrderId);
+		
+	}
+	// jnupp above
+	
+	
+	
 	// this verifies items in order details page that weren't verified before the command sync. this is before approval.
 	public static void VerifyTopSectionActionsAfterCommandSync() throws Exception
 	{
@@ -396,7 +443,8 @@ public class OrderSubmittedPage extends BaseClass
 	}	
 	
 	
-	
+	// ** NOT USED - DUPLICATED - REPLACED BY  --> VerifyShippingInformation(); -- 10/20/2017
+	/*
 	public static void VerifyShippingInformationOrderAccessoriesPreApproval() throws Exception
 	{
 		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPreApproval";
@@ -407,10 +455,13 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(strArray[1].replace("City ", ""), cityOrderActions  , errorMessage); // verify city
 		Assert.assertEquals(strArray[2].replace("State ", ""), stateOrderActions  , errorMessage); // verify state
 		Assert.assertEquals(strArray[3].replace("Postal Code ", ""), zipCodeOrderActions  , errorMessage); // verify postal code
+		
 	}	
+	*/
 	
+	// ** NOT USED - DUPLICATED - REPLACED BY  --> VerifyShippingInformation(); -- 10/20/2017
 	// this is for shipping information after approval.
-	public static void VerifyShippingInformationOrderAccessoriesPostApproval() throws Exception
+	/*public static void VerifyShippingInformationOrderAccessoriesPostApproval() throws Exception
 	{
 		String errMessage = "Wrong information found in test for shipping information in OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval.";
 		
@@ -419,8 +470,10 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(strArray[0].replace("Line 1 ", ""), addressLineOne, errMessage);
 		Assert.assertEquals(strArray[1].replace("City ","" ), cityOrderActions, errMessage);
 		Assert.assertEquals(strArray[2].replace("State ", ""), stateOrderActions, errMessage);
-		Assert.assertEquals(strArray[3].replace("Postal Code ", ""), zipCodeOrderActions, errMessage);		
+		Assert.assertEquals(strArray[3].replace("Postal Code ", ""), zipCodeOrderActions, errMessage);
+		
 	}
+	*/
 	
 	public static void VerifyShippingInformation()
 	{
@@ -438,6 +491,7 @@ public class OrderSubmittedPage extends BaseClass
 		// verify postal code
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Postal Code']/../following::td")).getText(), userPostalCode, errorMessage);
 	}	
+	
 	
 	// this section has accessory information for element at bottom of accessory list.
 	// this accessory was picked when device/plan were being added.

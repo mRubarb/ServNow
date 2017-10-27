@@ -74,6 +74,23 @@ public class ActionsBase extends BaseClass
 		
 	}
 	
+	// jnupp below
+	//   
+	public static void StoreOrderNumberTwoObjectVariable() throws Exception
+	{
+		// orderSubmittedPageOrderNumber = driver.findElement(By.xpath("//div[@class='sn-notifyBlock__body']/p")).getText().replace("Order #",""); // orig
+		//orderSubmittedPageOrderNumber = driver.findElement(By.cssSelector("h1.tg-pageTitle.ng-binding")).getText().replace("Order #","").trim();
+		
+		if(orderDetailsObjectExpected.equals(null))
+		{
+			Assert.fail();
+		}
+		
+		orderDetailsObjectExpected.orderIdTwo = driver.findElement(By.xpath("//div[@class='sn-notifyBlock__body']/p")).getText().replace("Order #","");
+	}
+	// jnupp above
+		
+		
 	// this compares the order number on the verify order page to what is displayed on the order submitted page.
 	public static void VerifyOrderNumberAndOrderTypeBetweenPages() throws Exception
 	{
