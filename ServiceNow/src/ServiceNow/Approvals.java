@@ -26,6 +26,8 @@ public class Approvals extends BaseClass
 	static String [] strArray;
 	static String tmpStr;	
 	
+	// this is common in many places.
+	public static String commonXpathForDescriptions = ".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/../div/following-sibling::input[1]"; // bladdzz	
 	
 	
 	// this waits for first check box at top of approvals list and the 'to' text at the bottom of the page.
@@ -100,13 +102,16 @@ public class Approvals extends BaseClass
 			
 			// wait for the short description and  description text areas to become visible. 
 			WaitForElementVisible(By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']"), MediumTimeout);		
-			WaitForElementVisible(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']"), MediumTimeout);
+			// WaitForElementVisible(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']"), MediumTimeout);
+			WaitForElementVisible(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/.."), MediumTimeout); // bladdzz	-- new			
 			
 			// Verify order type and user name in short description
-			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']")).getAttribute("value"));
+			// correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']")).getAttribute("value"));
+			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value")); // bladdzz			
 
 			// Verify external order number and order id in full description
-			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']")).getText().split("\n"));
+			//correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']")).getText().split("\n"));
+			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n")); // bladdzz			
 			
 			if(correctUserAndType && correctExternalOrderId)
 			{
@@ -390,7 +395,9 @@ public class Approvals extends BaseClass
 	public static void VerifyDeactivate() throws Exception
 	{
 		DebugTimeout(0, "Verify Deactivate in approval page.");
-		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); // bladdzz		
+		
 
 		Assert.assertEquals(strArray[2],"Additional Info:","");		
 		Assert.assertEquals(strArray[6].replace("Reason:",""), reasonAction,"");	
@@ -402,7 +409,8 @@ public class Approvals extends BaseClass
 	public static void VerifySuspend() throws Exception
 	{
 		DebugTimeout(0, "Verify Suspend in approval page.");
-		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); // bladdzz
 		
 		// this verifies 'preferred suspension date' month and year.
 		CalendarDateTimeObject.VerifyPreferredSuspendionDateForApproval(strArray[6].replace("Preferred Suspension Date:", ""));
@@ -414,7 +422,8 @@ public class Approvals extends BaseClass
 	public static void VerifyUnsuspend() throws Exception
 	{
 		DebugTimeout(0, "Verify Unsuspend in approval page.");
-		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); // bladdzz
 		
 		// this verifies 'preferred suspension date' month and year.
 		CalendarDateTimeObject.VerifyPreferredSuspendionDateForApproval(strArray[6].replace("Preferred Suspension Date:", ""));
@@ -429,7 +438,8 @@ public class Approvals extends BaseClass
 	public static void VerifySwapDevice() throws Exception
 	{
 		DebugTimeout(0, "Verify SwapDevice in approval page.");
-		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); // bladdzz		
 		
 		VerifySwapDevices(strArray);
 	}				
@@ -440,7 +450,9 @@ public class Approvals extends BaseClass
 			
 		// Lines found in 'Description'
 		
-		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n");
+		
 		List<String> descriptionLines = new ArrayList<String>(); 
 				
 		System.out.println("Description:");
@@ -522,7 +534,8 @@ public class Approvals extends BaseClass
 	public static void VerifyUpdateFeatures() throws Exception
 	{
 		String errMessage = "Failure in Approvals.VerifyUpdateFeatures.";
-		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); // bladdzz		
 		DebugTimeout(0, "Verify UpdateFeatures in approval page.");		
 
 		// build title that is in short description. 
@@ -572,7 +585,8 @@ public class Approvals extends BaseClass
 		String errMessage = "Failure in Approvals.VerifyOrderAccessories.";
 		
 		DebugTimeout(0, "Verify OrderAccessories in approval page.");
-		strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); // bladdzz		
 		
 		// build title that is in short description. 
 		String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + fullServiceNumber + "].";   

@@ -318,7 +318,8 @@ public class Features extends BaseClass
 	// verify expedite order section in shipping info.
 	public static void VerifyExpediteSectionInShippingInfoExists() throws Exception
 	{
-		if(!WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label>input"), ShortTimeout)) // checkbox
+		//if(!WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label>input"), ShortTimeout)) // checkbox
+		if(!WaitForElementClickableBoolean(By.cssSelector("#expedited"), ShortTimeout)) // checkbox		 // bladdzz	 ??????
 		{
 			Assert.fail("Checkbox for expediting order is not present in 'VerifyFeature12' method.");
 		}

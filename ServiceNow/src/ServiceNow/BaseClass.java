@@ -281,7 +281,7 @@ public class BaseClass
 	{
 		// this waits for main page (page after login) to load.
 		WaitForElementVisible(By.xpath("//td[text()='My Incidents by State']"), MainTimeout);
-		WaitForElementVisible(By.xpath("//a[text()='Item Designer Category Request']"), MainTimeout);
+		//WaitForElementVisible(By.xpath("//a[text()='Item Designer Category Request']"), MainTimeout); // bob removed 7/26/18
 		WaitForElementVisible(By.xpath("//a[text()='Request Developer Project Equipment']"), MainTimeout);
 		WaitForElementVisible(By.xpath("//a[text()='Password Reset']"), MainTimeout);		
 	}
