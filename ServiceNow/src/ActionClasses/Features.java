@@ -119,7 +119,7 @@ public class Features extends BaseClass
 	// 														HELPERS
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public static void VerifyFeature13(checkBoxState state) throws Exception // bladd
+	public static void VerifyFeature13(checkBoxState state) throws Exception
 	{
 		 // with check-box checked there should be a shipping info page.
 		if(state.equals(checkBoxState.checked)) 
@@ -318,8 +318,7 @@ public class Features extends BaseClass
 	// verify expedite order section in shipping info.
 	public static void VerifyExpediteSectionInShippingInfoExists() throws Exception
 	{
-		//if(!WaitForElementClickableBoolean(By.cssSelector(".tg-space--half--bottom.ng-scope>label>input"), ShortTimeout)) // checkbox
-		if(!WaitForElementClickableBoolean(By.cssSelector("#expedited"), ShortTimeout)) // checkbox		 // bladdzz	 ??????
+		if(!WaitForElementClickableBoolean(By.cssSelector("#expedited"), ShortTimeout)) // check box	
 		{
 			Assert.fail("Checkbox for expediting order is not present in 'VerifyFeature12' method.");
 		}

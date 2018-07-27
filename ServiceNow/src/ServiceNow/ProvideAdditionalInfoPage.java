@@ -127,12 +127,12 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
 
-		if(feature.equals(SelectedFeature.feature12)) // bladdzz - add
+		if(feature.equals(SelectedFeature.feature12))
 		{
 			// ORDER_PROPERTY_FIELD_BUSINESS_UNIT
 			// fill in the additional instructions
 			driver.findElement(By.id("ORDER_PROPERTY_FIELD_BUSINESS_UNIT")).clear();
-			driver.findElement(By.id("ORDER_PROPERTY_FIELD_BUSINESS_UNIT")).sendKeys("buissness unit");
+			driver.findElement(By.id("ORDER_PROPERTY_FIELD_BUSINESS_UNIT")).sendKeys(buisnessUnit);
 		}		
 		
 		// now select the reason in pull-down and set.		

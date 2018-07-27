@@ -96,6 +96,7 @@ public class BaseClass
 	public static String reasonAction = "Cancel service as employee is no longer with the company";
 	public static String reasonWarrantRepair = "warrant repair";	
 	public static String additionalInstructions = "Test Additional Instructions";	
+	public static String buisnessUnit = "business unit";	
 	public static String userStateOrderDetails = "MA";
 	public static String orderNewDeviceAndServiceOrderType = "Activate New Service";
 	public static String orderNewDeviceAndServiceOrderStatus = "Awaiting Approval";
