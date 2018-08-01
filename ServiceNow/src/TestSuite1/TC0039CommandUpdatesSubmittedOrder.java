@@ -34,9 +34,9 @@ public class TC0039CommandUpdatesSubmittedOrder extends BaseClass
 		CommonTestSteps.LoginLimitedUser();
 		
 		// got to the devices page through the home page. 
-		CommonTestSteps.GoToDevicesPage();
+		//CommonTestSteps.GoToDevicesPage();
 		
-		DeactivateService.RunDeactivateServiceSubmitOnly();
+		//DeactivateService.RunDeactivateServiceSubmitOnly();
 		
 		CommonTestSteps.Logout();
 		

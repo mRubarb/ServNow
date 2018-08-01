@@ -44,6 +44,8 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 	// this is set true if the order is already updated by command when the status of 'Tangoe Last Order Status' and 'Tangoe Order Status' columns are first checked. 
 	public static boolean startingStatesAlreadyUpdated = false;
 	
+	public static String commonCssRowSelector = ".list_div_cell>div>table>tbody>tr:nth-of-type("; // 7/31/18 - this appears in many places.
+	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
 	// this makes sure the required columns needed by the test that uses this class are present.
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,22 +60,29 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		
 		for(String str : columnNames)
 		{
-			if(str.equals(lastOrderStatus))
+			if(str.equals(""))
+			{
+				continue;
+			}
+			
+			ShowText("* " + str);
+			
+			if(str.contains(lastOrderStatus))
 			{
 				lastOrderStatusIndex = cntr;
 			}
 			
-			if(str.equals(orderStatus))
+			if(str.contains(orderStatus))
 			{
 				orderStatusIndex = cntr;
 			}
 
-			if(str.equals(tangoeOrderID))
+			if(str.contains(tangoeOrderID))
 			{
 				orderIdIndex = cntr;
 			}
 			
-			if(str.equals(shortDescription))
+			if(str.contains(shortDescription))
 			{
 				shortDescritionIndex = cntr;
 			}
@@ -82,7 +91,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		}
 
 		// DEBUG - show index of needed columns.
-		// System.out.println("Column numbers = lastOrderStatusIndex: " + lastOrderStatusIndex + " orderStatusIndex: " + orderStatusIndex + " Tangoe Order Id: " + orderIdIndex);
+		System.out.println("Column numbers = lastOrderStatusIndex: " + lastOrderStatusIndex + " orderStatusIndex: " + orderStatusIndex + " Tangoe Order Id: " + orderIdIndex);
 		
 		if(lastOrderStatusIndex == 0  || orderStatusIndex == 0 || orderIdIndex == 0 || shortDescritionIndex == 0)
 		{
@@ -106,16 +115,18 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		boolean tangoeLastOrderStatusFinished = false; 
 		boolean tangoeOrderStatusFinished = false;
 		
+		currentOrderID = "13296540"; // bladd
+		
 		ShowText("Order ID is: " + currentOrderID); // Debug
 		
 		orderIdRow = GetOrderIdRow();
 
 		// verify the orderId of interest has 'Deactivate Service Order' text in its short description column.
-		strActual = driver.findElement(By.cssSelector(".list_div_cell>div>table>tbody>tr:nth-of-type(" + orderIdRow + ")>td:nth-of-type(" + (shortDescritionIndex + 2) + ")")).getText();
+		strActual = driver.findElement(By.cssSelector(commonCssRowSelector + orderIdRow + ")>td:nth-of-type(" + (shortDescritionIndex + 2) + ")")).getText();
 		Assert.assertTrue(strActual.contains(orderType));
 		
 		// see if the 'Tangoe Last Order Status' column has the completed state. if it does, set its corresponding boolean true. if it doesn't, verify the expected text.  
-		strActual = driver.findElement(By.cssSelector(".list_div_cell>div>table>tbody>tr:nth-of-type(" + orderIdRow + ")>td:nth-of-type(" + (lastOrderStatusIndex + 2) + ")")).getText();
+		strActual = driver.findElement(By.cssSelector(commonCssRowSelector + orderIdRow + ")>td:nth-of-type(" + (lastOrderStatusIndex + 2) + ")")).getText();
 		if (strActual.equals(awaitApproval))
 		{
 			tangoeLastOrderStatusFinished = true;
@@ -126,8 +137,8 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		}
 		
 		// see if the 'Tangoe Order Status' column has the starting state. if it does, set its corresponding boolean true. if it doesn't, verify the expected text.
-		strActual = driver.findElement(By.cssSelector(".list_div_cell>div>table>tbody>tr:nth-of-type(" + orderIdRow + ")>td:nth-of-type(" + (orderStatusIndex + 2) + ")")).getText();
-		if (strActual.equals(awaitApproval))
+		strActual = driver.findElement(By.cssSelector(commonCssRowSelector + orderIdRow + ")>td:nth-of-type(" + (orderStatusIndex + 2) + ")")).getText();
+		if (strActual.equals(awaitApprovalInServicenow))
 		{
 			tangoeOrderStatusFinished = true;
 		}
@@ -167,7 +178,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 			rowNum = GetOrderIdRow();
 			
 			// get the 'tangoe last order status' and and see if it is gone to "Awaiting Approval".  
-			strActual = driver.findElement(By.cssSelector(".list_div_cell>div>table>tbody>tr:nth-of-type(" + rowNum + ")>td:nth-of-type(" + (lastOrderStatusIndex + 2) + ")")).getText();
+			strActual = driver.findElement(By.cssSelector(commonCssRowSelector + rowNum + ")>td:nth-of-type(" + (lastOrderStatusIndex + 2) + ")")).getText();
 
 			if(strActual.equals(awaitApproval))
 			{
@@ -175,7 +186,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 			}
 			
 			// get the 'tangoe order status' and and see if it is gone to "Awaiting Approval in ServiceNow".
-			strActual = driver.findElement(By.cssSelector(".list_div_cell>div>table>tbody>tr:nth-of-type(" + rowNum + ")>td:nth-of-type(" + (orderStatusIndex + 2) + ")")).getText();
+			strActual = driver.findElement(By.cssSelector(commonCssRowSelector + rowNum + ")>td:nth-of-type(" + (orderStatusIndex + 2) + ")")).getText();
 
 			if(strActual.equals(awaitApprovalInServicenow))
 			{
@@ -224,13 +235,13 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		int rowNum = 0;
 		
 		// wait for first row orderId to be click-able.
-		WaitForElementClickable(By.cssSelector(".list_div_cell>div>table>tbody>tr:nth-of-type(" + 1 + ")>td:nth-of-type(" + (orderIdIndex + 2) + ")"), MediumTimeout, "");
+		WaitForElementClickable(By.cssSelector(commonCssRowSelector + 1 + ")>td:nth-of-type(" + (orderIdIndex + 2) + ")"), MediumTimeout, "");
 		
 		/// loop through 20 rows in 'Tangoe Mobility Order Requests' page and find what row the orderId is in. 
 		for(int x = 1; x < 21; x++)
 		{
 			// get orderId row and save it into class global variable.
-			if(driver.findElement(By.cssSelector(".list_div_cell>div>table>tbody>tr:nth-of-type(" + x + ")>td:nth-of-type(" + (orderIdIndex + 2) + ")")).getText().equals(currentOrderID))
+			if(driver.findElement(By.cssSelector(commonCssRowSelector + x + ")>td:nth-of-type(" + (orderIdIndex + 2) + ")")).getText().equals(currentOrderID))
 			{
 				rowNum = x;
 				break;
@@ -248,7 +259,8 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 	// get the column names shown across the top of the 'Tangoe Mobility Order Requests' page.
 	public static List<String> GetColumnNames()
 	{
-		List<WebElement> columnList = driver.findElements(By.cssSelector(".list_div_cell>div>table>thead>tr>th>span>a"));
+		// List<WebElement> columnList = driver.findElements(By.cssSelector(".list_div_cell>div>table>thead>tr>th>span"));
+		List<WebElement> columnList = driver.findElements(By.xpath("//a[@class='column_head list_hdrcell table-col-header']")); // bladd		
 		List<String> returnList = new ArrayList<String>();
 		
 		for(WebElement ele : columnList)

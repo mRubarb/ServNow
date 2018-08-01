@@ -31,11 +31,11 @@ public class UpgradeService extends ActionsBase
 	{
 		// Go through the Upgrade Device/Service pages.
 
-		actionOnlyOnService = true;
+		actionOnlyOnService = false; // change to false 8/1/18 bob
 		
 		MyServicesPage.WaitForPageToLoad();
 		MyDevicesPage.StoreServiceNumberFormats();
-		MyServicesPage.selectUpgradeServiceAction();
+		MyServicesPage.SelectUpgradeServiceAction(); // call different version of this method 8/1/18 bob 
 		
 		ChooseDevicePage.WaitForPageToLoadUpgradeService();
 		ChooseDevicePage.getExistingDeviceInfo();

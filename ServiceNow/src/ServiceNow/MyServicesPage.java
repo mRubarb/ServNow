@@ -11,7 +11,8 @@ public class MyServicesPage extends BaseClass
 {
 	public static void SelectUpgradeServiceAction()
 	{
-		new Select(driver.findElement(By.xpath(chooseActionsPullDownServicesPage))).selectByVisibleText("Upgrade Service"); // need to create Serviceinfo class or rename DeviceInfo class
+		// new Select(driver.findElement(By.xpath(chooseActionsPullDownServicesPage))).selectByVisibleText("Upgrade Service"); // need to create Serviceinfo class or rename DeviceInfo class
+		new Select(driver.findElement(By.xpath("//select[@data-serviceid='41759468']"))).selectByVisibleText("Upgrade Service"); // need to create Serviceinfo class or rename DeviceInfo class
 	}
 
 	public static void WaitForPageToLoad()
