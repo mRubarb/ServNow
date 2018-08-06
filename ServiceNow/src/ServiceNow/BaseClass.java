@@ -89,6 +89,9 @@ public class BaseClass
 	public static String addressLineThreeDummyInfo = "LineThreeDummyInfo";
 	public static String preferredAreaCode = "781";
 	public static String contactNumber = "7812739306";	
+	public static String newServiceNumber = "5669879877";
+	public static String carrierAcctNumber = "56";
+	public static String pinOrPassword = "1234";
 	public static String serviceNumber = ""; // this is queried for in MyDevicesPage.	
 	public static String fullServiceNumber = ""; // this is queried for in MyDevicesPage.
 	public static String reasonAddDeviceAndService =  "Broken Device";
@@ -254,6 +257,7 @@ public class BaseClass
 		upgradeDevice,
 		updateFeatures,
 		portNumber,
+		transferServiceIn, // ana add -- 8/6/18
 		none
 	}	
 	

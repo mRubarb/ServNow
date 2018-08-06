@@ -358,10 +358,40 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		
 		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(UpgradeDevice.reasonUpgradeDevice);
 	
-	
 	}		
 	
 	
+	// this populates additional information when doing Upgrade Device action.   
+	public static void enterMissingInfoTransferServiceIn() throws InterruptedException
+	{
+		
+		// fill in service number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).sendKeys(newServiceNumber);
+						
+		// fill in carrier account number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CARRIER_ACCT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CARRIER_ACCT_NUMBER")).sendKeys(carrierAcctNumber);
+		
+		// fill in contact number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).sendKeys(contactNumber);
+		
+		// fill in the extension
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).sendKeys(extension);
+
+		// fill in the additional instructions
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
+		
+		// fill in the pin/password
+		//driver.findElement(By.id("ORDER_PROPERTY_FIELD_PIN_PASSWORD")).clear();
+		//driver.findElement(By.id("ORDER_PROPERTY_FIELD_PIN_PASSWORD")).sendKeys(pinOrPassword);
+			
+	
+	}		
+
 	public static String GetCostTotal() throws InterruptedException
 	{
 		return driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
@@ -463,8 +493,8 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath(mainErrorMessage), MediumTimeout), 
 						  "Expected Error message not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");
 		
-		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//li[text()='Preferred Area Code is required']"), MediumTimeout), 
-				  "Expected Error message 'Preferred Area Code is required' not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");
+		//Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//li[text()='Preferred Area Code is required']"), MediumTimeout), 
+		//		  "Expected Error message 'Preferred Area Code is required' not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");
 		
 		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//li[text()='Contact Phone Number is required']"), MediumTimeout), 
 				  "Expected Error message 'Contact Phone Number is required' not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");

@@ -16,7 +16,7 @@ import ServiceNow.Frames;
 import ServiceNow.HomePage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.MyServicesPage;
-import ServiceNow.OrderNewServicePage;
+import ServiceNow.SelectRegionPage;
 import ServiceNow.ProvideAdditionalInfoPage;
 import ServiceNow.SettingsPage;
 import ServiceNow.SideBar;
@@ -44,9 +44,9 @@ public class Features extends BaseClass
 		Frames.switchToGsftMainFrame();
 		HomePage.WaitForPageToLoad();
 		HomePage.clickCreateAnOrderButton();
-		OrderNewServicePage.selectCountryFromDropDown();
-		OrderNewServicePage.fillPostalCodeTextBox("02451");
-		OrderNewServicePage.clickNextButtonSelectRegion(); // move to device select page.
+		SelectRegionPage.selectCountryFromDropDown();
+		SelectRegionPage.fillPostalCodeTextBox("02451");
+		SelectRegionPage.clickNextButtonSelectRegion(); // move to device select page.
 		ChooseDevicePage.WaitForPageToLoad();
 
 		numberExpectedAddToCartButtons = 9; // setup for expected number of devices in device list.
@@ -77,9 +77,9 @@ public class Features extends BaseClass
 		Frames.switchToGsftMainFrame();
 		HomePage.WaitForPageToLoad();
 		HomePage.clickCreateAnOrderButton();
-		OrderNewServicePage.selectCountryFromDropDown();
-		OrderNewServicePage.fillPostalCodeTextBox("02451");
-		OrderNewServicePage.clickNextButtonSelectRegion(); // move to device select page.
+		SelectRegionPage.selectCountryFromDropDown();
+		SelectRegionPage.fillPostalCodeTextBox("02451");
+		SelectRegionPage.clickNextButtonSelectRegion(); // move to device select page.
 		ChooseDevicePage.SelectFirstDevice(); // this waits for first device and clicks it if found else error.
 		ChooseDevicePage.clickNextButton();
 		ChoosePlanPage.SelectFirstPlan(); // this waits for first plan and clicks it if found else error.
