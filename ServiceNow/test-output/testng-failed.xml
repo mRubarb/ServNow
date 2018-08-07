@@ -3,13 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="TestSuite1.TC0032ApproveMoreThanOneOrderAtTime">
+      <class name="TestSuite1.TC0042TransferServiceInApprove">
         <methods>
-          <include name="setUp"/>
           <include name="closeDriver"/>
-          <include name="tc0016DeactivateApprove"/>
+          <include name="tC0042TransferServiceIn"/>
+          <include name="setUp"/>
         </methods>
-      </class> <!-- TestSuite1.TC0032ApproveMoreThanOneOrderAtTime -->
+      </class> <!-- TestSuite1.TC0042TransferServiceInApprove -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

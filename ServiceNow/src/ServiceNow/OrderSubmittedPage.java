@@ -74,13 +74,26 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(driver.findElement(By.id("dateSubmitted")).getText().split(" ")[2].substring(0, 4), Integer.toString(ldt.getYear()) , errorMessage);
 		
 		// service number
-		Assert.assertEquals(driver.findElement(By.xpath(".//*[@id='serviceNumber']")).getText(), fullServiceNumber, "");
+		if (approvalActionType.equals(ApprovalActionType.transferServiceIn)) {
+			
+			Assert.assertEquals(getNumber(driver.findElement(By.xpath(".//*[@id='serviceNumber']")).getText()), "1" + newServiceNumber, "");
+			
+		} else {
+			
+			Assert.assertEquals(driver.findElement(By.xpath(".//*[@id='serviceNumber']")).getText(), fullServiceNumber, "");
+		}
+		
 		
 		// set external order id in order details expected.
 		orderDetailsObjectExpected.externalOrderId = driver.findElement(By.id("externalOrderNumber")).getText().trim();
 		
 		//System.out.println("orderDetailsObjectExpected.externalOrderId: " + orderDetailsObjectExpected.externalOrderId);
 		
+	}
+
+	private static String getNumber(String numberToFormat) {
+		
+		return numberToFormat.replace(" ", "").replace("+", "").replace("-", "").replace("(", "").replace(")", "").trim();
 	}
 
 	// jnupp below
@@ -768,14 +781,15 @@ public class OrderSubmittedPage extends BaseClass
 	
 	public static void verifyOrderSegments() {
 		
-		verifyOrderSegmentGeneral();
+		if (!approvalActionType.equals(ApprovalActionType.transferServiceIn))
+			verifyOrderSegmentGeneral();
 		verifyOrderSegmentDevice();
 		verifyOrderSegmentPlan();
 		verifyOrderSegmentAccessories();
 		
 	}
 
-	
+		
 	public static void verifyOrderSegmentGeneral() {
 		
 		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.verifyOrderSegmentGeneral";

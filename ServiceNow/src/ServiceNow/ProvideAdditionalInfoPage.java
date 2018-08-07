@@ -371,7 +371,7 @@ public class ProvideAdditionalInfoPage extends BaseClass
 						
 		// fill in carrier account number.
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CARRIER_ACCT_NUMBER")).clear();
-		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CARRIER_ACCT_NUMBER")).sendKeys(carrierAcctNumber);
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CARRIER_ACCT_NUMBER")).sendKeys(PlanInfoActions.carrierAccountNumber);
 		
 		// fill in contact number.
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();

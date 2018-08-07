@@ -1,25 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="136206" started-at="2017-10-27T15:41:29Z" finished-at="2017-10-27T15:43:46Z">
+  <suite name="Default suite" duration-ms="402651" started-at="2018-08-07T20:05:12Z" finished-at="2018-08-07T20:11:55Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="136206" started-at="2017-10-27T15:41:29Z" finished-at="2017-10-27T15:43:46Z">
-      <class name="TestSuite1.TC0032ApproveMoreThanOneOrderAtTime">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:TestSuite1.TC0032ApproveMoreThanOneOrderAtTime@523884b2]" name="setUp" is-config="true" duration-ms="15" started-at="2017-10-27T12:41:29Z" finished-at="2017-10-27T12:41:29Z">
+    <test name="Default test" duration-ms="402651" started-at="2018-08-07T20:05:12Z" finished-at="2018-08-07T20:11:55Z">
+      <class name="TestSuite1.TC0042TransferServiceInApprove">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:TestSuite1.TC0042TransferServiceInApprove@29774679]" name="setUp" is-config="true" duration-ms="6" started-at="2018-08-07T17:05:12Z" finished-at="2018-08-07T17:05:12Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="tC0032ApproveMoreThanOneOrderAtTime()[pri:0, instance:TestSuite1.TC0032ApproveMoreThanOneOrderAtTime@523884b2]" name="tC0032ApproveMoreThanOneOrderAtTime" duration-ms="128830" started-at="2017-10-27T12:41:29Z" finished-at="2017-10-27T12:43:38Z">
+        <test-method status="FAIL" signature="tC0042TransferServiceIn()[pri:0, instance:TestSuite1.TC0042TransferServiceInApprove@29774679]" name="tC0042TransferServiceIn" duration-ms="296485" started-at="2018-08-07T17:05:12Z" finished-at="2018-08-07T17:10:09Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove. expected [true] but found [false]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove. expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:93)
+	at org.testng.Assert.failNotEquals(Assert.java:512)
+	at org.testng.Assert.assertTrue(Assert.java:41)
+	at ServiceNow.Approvals.openOrderDetails(Approvals.java:129)
+	at ServiceNow.Approvals.selectAndApproveOrder(Approvals.java:47)
+	at TestSuite1.TC0042TransferServiceInApprove.tC0042TransferServiceIn(TC0042TransferServiceInApprove.java:53)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:669)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:877)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1201)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:776)
+	at org.testng.TestRunner.run(TestRunner.java:634)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:425)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:420)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:385)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:334)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1318)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1243)
+	at org.testng.TestNG.runSuites(TestNG.java:1161)
+	at org.testng.TestNG.run(TestNG.java:1129)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- tC0032ApproveMoreThanOneOrderAtTime -->
-        <test-method status="PASS" signature="closeDriver()[pri:0, instance:TestSuite1.TC0032ApproveMoreThanOneOrderAtTime@523884b2]" name="closeDriver" is-config="true" duration-ms="7319" started-at="2017-10-27T12:43:38Z" finished-at="2017-10-27T12:43:46Z">
+        </test-method> <!-- tC0042TransferServiceIn -->
+        <test-method status="PASS" signature="closeDriver()[pri:0, instance:TestSuite1.TC0042TransferServiceInApprove@29774679]" name="closeDriver" is-config="true" duration-ms="106146" started-at="2018-08-07T17:10:09Z" finished-at="2018-08-07T17:11:55Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closeDriver -->
-      </class> <!-- TestSuite1.TC0032ApproveMoreThanOneOrderAtTime -->
+      </class> <!-- TestSuite1.TC0042TransferServiceInApprove -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
