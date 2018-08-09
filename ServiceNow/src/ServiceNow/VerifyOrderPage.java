@@ -657,7 +657,13 @@ public class VerifyOrderPage extends BaseClass
 			System.out.println(" Key: " + additionalInfoMap.get("Current Carrier"));
 			Assert.assertEquals(additionalInfoMap.get("Current Carrier"), DeviceInfoActions.currentVendorPortNumber, errorMessage);
 			
-		} 
+		} if (additionalInfoMap.containsKey("Personal E-mail Address")) {  // for personal email address
+		       
+            System.out.println(" Key: " + additionalInfoMap.get("Personal E-mail Address"));
+            Assert.assertEquals(additionalInfoMap.get("Personal E-mail Address"), approverAdminMail, errorMessage);
+		}
+
+
 		
 		
 	}	

@@ -43,6 +43,12 @@ public class Approvals extends BaseClass
 	// new method to replace ApprovalAction() method - approval part .... - 10/25/2017 - Ana 
 	public static void selectAndApproveOrder() throws Exception {
 	
+		// added 8/9/2018
+		System.out.println(".. Giving time for the order to be added to the list ....");
+		Thread.sleep(20000); // sometimes it takes some time until the order is added to the list after is created. 
+							// giving some time for the order to be added to the list
+		
+		
 		// Select order from list
 		openOrderDetails();
 	
@@ -121,8 +127,9 @@ public class Approvals extends BaseClass
 				
 				x++;
 			}
-			
-		} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
+		
+		} while ((x <= 5) && !(correctUserAndType && correctExternalOrderId));
+		//} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
 		
 		
 		// verify order to approve was found. if the order action wasn't found within loop max rows it looks like it can't be found. 
@@ -137,7 +144,7 @@ public class Approvals extends BaseClass
 		boolean correctUserAndType = false;
 		boolean correctExternalOrderId = false;
 		int x = 1;
-		
+
 		do {	
 			
 			WaitForElementClickable(By.cssSelector("tbody.list2_body>tr>td>span>input.checkbox:nth-of-type(1)"), MediumTimeout, "Failed waiting for row in Approvals.ApprovalAction");
@@ -172,8 +179,8 @@ public class Approvals extends BaseClass
 			}
 			
 			driver.findElement(By.xpath("//span[text()='Back']/..")).click();
-			WaitForPageToLoad();
 			
+			WaitForPageToLoad();
 			
 		} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
 		

@@ -214,7 +214,30 @@ public class OrderSubmittedPage extends BaseClass
 				
 				Assert.assertEquals(additionalInformation[i], "Business Unit " + businessUnit, errorMessage);
 				
-			}					
+			} else if (additionalInformation[i].startsWith("Ext")) { 
+                
+                ShowText("Key Ext: " + additionalInformation[i]);
+                Assert.assertEquals(additionalInformation[i], "Ext " + extension, errorMessage);
+                
+          } else if (additionalInformation[i].startsWith("Personal E-mail Address")) { 
+                
+                ShowText("Key Pers Email: " + additionalInformation[i]);
+                Assert.assertEquals(additionalInformation[i], "Personal E-mail Address " + approverAdminMail, errorMessage);
+                
+          } else if (additionalInformation[i].startsWith("Service Number")) { 
+                
+                ShowText("Key serv number: " + additionalInformation[i]);
+                
+                if (approvalActionType.equals(ApprovalActionType.transferServiceIn)) {
+                	
+                	Assert.assertEquals(additionalInformation[i], "Service Number " + newServiceNumber, errorMessage);
+                	
+                } else {
+                	
+                	Assert.assertEquals(additionalInformation[i], "Service Number " + serviceNumber, errorMessage);
+                	
+                }
+          }                                 
 			
 		}
 		
@@ -875,6 +898,21 @@ public class OrderSubmittedPage extends BaseClass
 			//System.out.println("Accessory price: " + accessoryPriceFound); 
 			
 		}
+		
+	}
+
+	public static void verifyAdditionalInformationTransferServiceIn() {
+		
+		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn.";		
+
+		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
+		
+		Assert.assertEquals(tmpStringArray[0].replace("Service Number: ", ""), newServiceNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[1].replace("Carrier Account Number: ", ""), PlanInfoActions.carrierAccountNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[2].replace("Name on Invoice: ", ""), userLimitedShorterName, errMessage);		
+		Assert.assertEquals(tmpStringArray[3].replace("Contact Phone Number: ", ""), contactNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[4].replace("Ext: ", ""), extension, errMessage);		
+		Assert.assertEquals(tmpStringArray[5].replace("Additional Instructions: ", ""), additionalInstructions, errMessage);
 		
 	}
 	
