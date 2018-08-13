@@ -404,6 +404,7 @@ public class BaseClass
 		//System.setProperty("webdriver.ie.driver", path + "\\IEDriverServer.exe");	    
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-extensions");
+		options.addArguments("--lang=en"); // --ana add 8/10/18
 		options.addArguments("disable-infobars");  // <-- Line added by Ana. Needed because with the chromedriver 2.28, there's an info bar that we don't want to have when browser is launched
 		driver = new ChromeDriver(options);		
 	    // driver = new ChromeDriver();

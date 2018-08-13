@@ -272,10 +272,10 @@ public class TransferServiceIn extends BaseClass {
 		
 		OrderSubmittedPage.verifyAdditionalInformationTransferServiceIn();
 		OrderSubmittedPage.VerifyShippingInformation();
-		OrderSubmittedPage.verifyStatusAndVendor();
-		//OrderSubmittedPage.VerifyDeviceSectionUpgradeDevice();
-		//OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
-		
+		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
+		OrderSubmittedPage.verifyDeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
+		OrderSubmittedPage.verifyPlanSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details
+		// SFD 114900
 		
 	}
 

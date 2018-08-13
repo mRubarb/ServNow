@@ -25,7 +25,7 @@ public class MyOrdersPage extends BaseClass
 	// this only checks the order info block on the 'my orders page'.  
 	public static void VerifyOrderInfoMyOrdersPageMainPage() throws Exception
 	{
-		String errMessage = "Failure in checking order block in My Orders Page in ActionsBase.VerifyOrderInfoInMyOrdersPage.";
+		String errMessage = "Failure in checking order block in My Orders Page in MyOrdersPage.VerifyOrderInfoInMyOrdersPage.";
 		
 		// this verifies the very top section that has action and order Id.
 		Assert.assertEquals(FormatTopSectionOfOrderBlock()[0], orderDetailsObjectExpected.orderId, errMessage);

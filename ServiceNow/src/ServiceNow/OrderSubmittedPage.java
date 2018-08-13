@@ -907,12 +907,22 @@ public class OrderSubmittedPage extends BaseClass
 
 		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
-		Assert.assertEquals(tmpStringArray[0].replace("Service Number: ", ""), newServiceNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[1].replace("Carrier Account Number: ", ""), PlanInfoActions.carrierAccountNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[2].replace("Name on Invoice: ", ""), userLimitedShorterName, errMessage);		
-		Assert.assertEquals(tmpStringArray[3].replace("Contact Phone Number: ", ""), contactNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[4].replace("Ext: ", ""), extension, errMessage);		
-		Assert.assertEquals(tmpStringArray[5].replace("Additional Instructions: ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(tmpStringArray[0].replace("Service Number", "").trim(), newServiceNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[1].replace("Carrier Account Number", "").trim(), PlanInfoActions.carrierAccountNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[2].replace("Name on Invoice", "").trim(), userLimitedShorterName, errMessage);		
+		Assert.assertEquals(tmpStringArray[3].replace("Contact Phone Number", "").trim(), contactNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[4].replace("Ext", "").trim(), extension, errMessage);		
+		//Assert.assertEquals(tmpStringArray[5].replace("Additional Instructions", "").trim(), additionalInstructions, errMessage);
+		
+	}
+
+	public static void verifyDeviceSectionTransferServiceIn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void verifyPlanSectionTransferServiceIn() {
+		// TODO Auto-generated method stub
 		
 	}
 	
