@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+
 public class MyOrdersPage extends BaseClass 
 {
 
@@ -40,7 +41,8 @@ public class MyOrdersPage extends BaseClass
 		Assert.assertEquals(tmpString, orderDetailsObjectExpected.status.toUpperCase(), errMessage); // verify order status in first line.
 		Assert.assertEquals(strTempArray[0].replace(tmpString, "").replace("Date Submitted  ", ""),BuildDateString(), errMessage); // verify date in first line. 
 		
-		if (approvalActionType.equals(ApprovalActionType.transferServiceIn)) {
+		if (approvalActionType.equals(ApprovalActionType.transferServiceIn)
+				|| approvalActionType.equals(ApprovalActionType.transferServiceInAndPort)) {
 		
 			Assert.assertEquals(strTempArray[1].replace("Service Number  ", ""), formatServiceNumber(newServiceNumber), errMessage); // verify full service number in second line
 			

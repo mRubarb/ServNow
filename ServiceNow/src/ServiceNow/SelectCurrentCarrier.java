@@ -19,4 +19,34 @@ public class SelectCurrentCarrier extends BaseClass {
 		
 	}
 
+	public static void selectNewCarrier(String newCarrier) {
+		
+		String xpathButtons = "//div/button[text()='Select']"; //"//form/div/div/div/div/div/button[text()='Select']";
+		
+		int amountCarriers = driver.findElements(By.xpath(xpathButtons)).size() + 1; // +1 because there's a carrier already selected and button's text is 'Unselect'
+		//System.out.println("amountCarriers: " + amountCarriers);
+		
+		boolean buttonClicked = false;
+		int i=0;
+				
+		while (i < amountCarriers && !buttonClicked) {
+			
+			String carrierFound = driver.findElement(By.xpath("//form/div[2]/div[" + (3 + i) + "]/div/div[2]/div/div")).getText();
+															//  form/div[2]/div[3]/div/div[2]/div/div[1]
+			//System.out.println("carrierFound: " + carrierFound);
+			
+			if (carrierFound.equals(newCarrier)) {
+				
+				String xpathButton = "//form/div[2]/div[" + (3 + i) + "]/div/div[3]/button[text()='Select']";
+				driver.findElement(By.xpath(xpathButton)).click();
+				buttonClicked = true;
+				
+			}
+			
+			i++;
+				
+		}
+		
+	}
+
 }

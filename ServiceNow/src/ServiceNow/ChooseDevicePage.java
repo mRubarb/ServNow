@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.DeviceInfoActions;
 import HelperObjects.DevicePortNumber;
 import HelperObjects.ShoppingCart;
@@ -253,7 +252,7 @@ public class ChooseDevicePage extends BaseClass
 		
 		// wait for next button at bottom of page and wait for button #5.
 		WaitForElementClickable(By.xpath("(//div/button[text()='Next'])[2]"), ExtremeTimeout, errMessage);
-		WaitForElementPresent(By.xpath("(//div/button[text()='Add to Cart'])[5]"), MainTimeout); //		
+		WaitForElementPresent(By.xpath("(//div/button[text()='Add to Cart'])[1]"), MainTimeout); //		
 	}
 	
 	

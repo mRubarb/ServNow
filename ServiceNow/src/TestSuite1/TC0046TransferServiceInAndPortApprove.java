@@ -13,7 +13,7 @@ import ServiceNow.BaseClass;
 
 
 
-public class TC0042TransferServiceInApprove extends BaseClass {
+public class TC0046TransferServiceInAndPortApprove extends BaseClass {
 
 	@BeforeClass
 	public static void setUp() throws Exception
@@ -24,22 +24,22 @@ public class TC0042TransferServiceInApprove extends BaseClass {
 	
 	
 	@Test
-	public static void tC0042TransferServiceIn() throws Exception
+	public static void tC0046TransferServiceInAndPortApprove() throws Exception
 	{
 		
 		approverAction = ApproverAction.approve; // setup enum for indicating approval type.	
 		
-		approvalActionType = ApprovalActionType.transferServiceIn; 
+		approvalActionType = ApprovalActionType.transferServiceInAndPort; 
 	
 		// 1. Log into ServiceNow as test user.
 		CommonTestSteps.LoginLimitedUser();
 		
 		// 2. Create a Transfer Service In order
-		TransferServiceIn.runTransferServiceInPhoneNumber();
+		TransferServiceIn.runTransferServiceInAndPortPhoneNumber();
 		
 		CommonTestSteps.Logout();
 		
-		BaseClass.stepComplete("Run Transfer Service In action complete. Now will approve the order.", "");
+		BaseClass.stepComplete("Run Transfer Service In And Port action complete. Now will approve the order.", "");
 
 		// login as approver.
 		CommonTestSteps.LoginApproverBrowserOpen();		
@@ -56,7 +56,7 @@ public class TC0042TransferServiceInApprove extends BaseClass {
 		
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		TransferServiceIn.setOrderTypeForPostApproval(false);
+		TransferServiceIn.setOrderTypeForPostApproval(true);
 		
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
@@ -74,7 +74,7 @@ public class TC0042TransferServiceInApprove extends BaseClass {
 		// the order details page is open. it has synced with command so now the history section can be verified. 
 		TransferServiceIn.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);
 
-		BaseClass.stepComplete("Transfer Service In Test Complete.", "");
+		BaseClass.stepComplete("Transfer Service In And Port Test Complete.", "");
 		
 		
 	}

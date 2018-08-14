@@ -586,7 +586,8 @@ public class VerifyOrderPage extends BaseClass
 			
 			System.out.println(" Key: " + additionalInfoMap.get("Service Number"));
 			
-			if (approvalActionType.equals(ApprovalActionType.transferServiceIn)) {
+			if (approvalActionType.equals(ApprovalActionType.transferServiceIn) 
+					|| approvalActionType.equals(ApprovalActionType.transferServiceInAndPort)) {
 				Assert.assertEquals(additionalInfoMap.get("Service Number"), newServiceNumber, errorMessage);
 			} else {
 				Assert.assertEquals(additionalInfoMap.get("Service Number"), serviceNumber, errorMessage);

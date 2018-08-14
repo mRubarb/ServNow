@@ -51,7 +51,7 @@ public class BaseClass
 	// Index for device selected when doing New Activation
 	// This index will be incremented and used to select a new device on New Activation when the device selected has no plans
 	// Added by Ana 9/8/17
-	public static int indexDeviceSelectedNewActivation = 1;
+	public static int indexDeviceSelectedNewActivation = 0;
 	// Added by Ana 9/11/17
 	public static boolean isFirstPass = true; // this is needed in the case that the selected device has no plans. In that case, when test goes to the Choose Device
 											  // page, the will be one less 'Add to Cart' button, and the 'Add to Cart' button clicked won't match with the desired
@@ -257,6 +257,7 @@ public class BaseClass
 		updateFeatures,
 		portNumber,
 		transferServiceIn, // ana add -- 8/6/18
+		transferServiceInAndPort, // ana add -- 8/14/18
 		none
 	}	
 	

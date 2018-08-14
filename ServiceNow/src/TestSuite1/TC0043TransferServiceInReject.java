@@ -56,7 +56,7 @@ public class TC0043TransferServiceInReject extends BaseClass {
 		
 		BaseClass.stepComplete("Order has been rejected. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		TransferServiceIn.setOrderTypeForPostApproval();
+		TransferServiceIn.setOrderTypeForPostApproval(false);
 		
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
