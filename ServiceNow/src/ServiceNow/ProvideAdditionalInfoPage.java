@@ -1,5 +1,9 @@
 package ServiceNow;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -261,8 +265,21 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).sendKeys(serviceNumber);
 				
 		// open the calendar picker, select the next month, and close it.
-		driver.findElement(By.xpath("//tbody/tr[5]/td[2]/input")).click(); // calendar picker (id doesn't work - use xpath).
+		//driver.findElement(By.xpath("//tbody/tr[5]/td[2]/input")).click(); // calendar picker (id doesn't work - use xpath).
 
+		
+		//*** ana add - 8/16/18
+		/*preferredSuspensionDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+		preferredSuspensionDateLong = new SimpleDateFormat("MMMM dd yyyy").format(Calendar.getInstance().getTime());
+		
+		System.out.println("preferredSuspensionDate: " + preferredSuspensionDate);
+		
+		
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_SUSPENSION_DATE")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_SUSPENSION_DATE")).sendKeys(preferredSuspensionDate);
+		
+		Thread.sleep(3000);*/
+		// END *** ana add - 8/16/18
 		
 		WaitForElementClickable(By.xpath("//th[@ng-click='next()']"), MiniTimeout, 
                 "Failed waiting for calendar picker 'next' selection in ProvideAdditionalInfoPage.EnterMissingInfoSuspend.");		
@@ -283,6 +300,8 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		
 		// select pull down with a user name in it.
 		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_HOLD_SERVICE"))).selectByVisibleText(limitedUserPulldownSelection);
+	
+		
 	}	
 	
 	

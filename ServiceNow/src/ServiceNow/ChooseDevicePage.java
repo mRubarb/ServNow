@@ -417,10 +417,12 @@ public class ChooseDevicePage extends BaseClass
 		String existingDeviceSerialNumber = driver.findElement(By.id("existing-serial-number")).getText().trim();
 		String existingDeviceSerialNumberType = new Select(driver.findElement(By.id("existing-serial-number-type"))).getFirstSelectedOption().getText().trim();
 		
+				
 		IdentifyDevices.oldManufacturer = existingDeviceManufacturer;
 		IdentifyDevices.oldModel = existingDeviceModel;
 		IdentifyDevices.oldSerialNumber = existingDeviceSerialNumber;
 		IdentifyDevices.oldSerialNumberType = existingDeviceSerialNumberType;
+
 		
 	}
 

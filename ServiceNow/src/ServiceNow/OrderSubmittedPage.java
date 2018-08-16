@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import ActionClasses.UpgradeDevice;
@@ -186,6 +187,7 @@ public class OrderSubmittedPage extends BaseClass
 	// //////////////////////////////////////////////////////////////////
 	// get all text in section additional information and verify
 	// //////////////////////////////////////////////////////////////////		
+	/*
 	public static void VerifyAdditionalInformation() throws Exception
 	{
 		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyAdditionalInformation";
@@ -254,8 +256,8 @@ public class OrderSubmittedPage extends BaseClass
 		
 			
 	}
-
-	
+*/
+	/*
 	// //////////////////////////////////////////////////////////////////
 	// verify additional information section for deactivate action.
 	// //////////////////////////////////////////////////////////////////		
@@ -344,110 +346,159 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), DeviceInfoActions.currentVendorPortNumber, errorMessage);		
 		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), serviceNumber, errorMessage);		
 	}
+			
+	*/
 	
-	public static void VerifyAdditionalInformationSwapDevice() throws Exception
+	
+	
+	// ************ KEEP **************************
+	public static void verifyAdditionalInformationBlock() throws Exception // use it for all tx types
+																				// see if there are missing options
+																				// **************************************	
 	{
-		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyAdditionalInformationSwapDevice.";
+		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyAdditionalInformation.";
 		
-		String[] additionalInformation = driver.findElement(By.xpath("(//table/tbody)[1]")).getText().split("\n");
-			
+		//String[] additionalInformation = driver.findElement(By.xpath("(//table/tbody)[1]")).getText().split("\n");
+		String xpath = "//div[@id='panel-properties']/div/div/div/table/tbody/tr/td";
 		
-		for (int i = 0; i < additionalInformation.length; i++) {
+		List<WebElement> additionalInformationLabels = driver.findElements(By.xpath(xpath + "/label"));	
+		List<WebElement> additionalInformationValues = driver.findElements(By.xpath(xpath + "/span"));
+		
+		for (int i = 0; i < additionalInformationLabels.size(); i++) {
 			
-			String label = additionalInformation[i].split("\\:")[0];
+			String label = additionalInformationLabels.get(i).getText();
+			String value = additionalInformationValues.get(i).getText();
+			
 			System.out.println("Label: " + label);
 			
 			switch (label) {
 			
-				case "Current Device Make ": 
-					
-					Assert.assertEquals(additionalInformation[i], "Current Device Make " + IdentifyDevices.oldManufacturer, errorMessage);
+				case "Current Device Make": 
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, IdentifyDevices.oldManufacturer, errorMessage);
 					break;
 					
-				case "New Device Make ":
-					
-					Assert.assertEquals(additionalInformation[i], "New Device Make " + IdentifyDevices.newManufacturer, errorMessage);
-					break;
-				
-				case "Current Device Model ":
-					
-					Assert.assertEquals(additionalInformation[i], "Current Device Model " + IdentifyDevices.oldModel, errorMessage);
+				case "New Device Make":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, IdentifyDevices.newManufacturer, errorMessage);
 					break;
 				
-				case "New Device Model ":
-					
-					Assert.assertEquals(additionalInformation[i], "New Device Model " + IdentifyDevices.newModel, errorMessage);
+				case "Current Device Model":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, IdentifyDevices.oldModel, errorMessage);
 					break;
 				
-				case "Current Device Serial Number ":
-					
-					Assert.assertEquals(additionalInformation[i], "Current Device Serial Number " + IdentifyDevices.oldSerialNumber, errorMessage);
+				case "New Device Model":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, IdentifyDevices.newModel, errorMessage);
 					break;
 				
-				case "Current Device Serial Number Type ":
-					
-					Assert.assertEquals(additionalInformation[i], "Current Device Serial Number Type " + IdentifyDevices.oldSerialNumberType, errorMessage);
+				case "Current Device Serial Number":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, IdentifyDevices.oldSerialNumber, errorMessage);
 					break;
 				
-				case "New Device Serial Number ":
-					
-					Assert.assertEquals(additionalInformation[i], "New Device Serial Number " + IdentifyDevices.newSerialNumber, errorMessage);
+				case "Current Device Serial Number Type":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value.toUpperCase(), IdentifyDevices.oldSerialNumberType.toUpperCase(), errorMessage);
 					break;
 				
-				case "New Device Serial Number Type ":
-					
-					Assert.assertEquals(additionalInformation[i], "New Device Serial Number Type " + IdentifyDevices.newSerialNumberType, errorMessage);
+				case "New Device Serial Number":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, IdentifyDevices.newSerialNumber, errorMessage);
+					break;
+				
+				case "New Device Serial Number Type":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value.toUpperCase(), IdentifyDevices.newSerialNumberType.toUpperCase(), errorMessage);
 					break;
 				
 				case "SIM ID / ICCID":
-					
-					Assert.assertEquals(additionalInformation[i], "SIM ID / ICCID " + IdentifyDevices.simId, errorMessage);
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, IdentifyDevices.simId, errorMessage);
 					break;
 				
 				case "Contact Phone Number":
-					
-					Assert.assertEquals(additionalInformation[i], "Contact Phone Number " + contactNumber, errorMessage);
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, contactNumber, errorMessage);
 					break;
 				
 				case "Ext":
-					
-					Assert.assertEquals(additionalInformation[i], "Ext " + extension, errorMessage);
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, extension, errorMessage);
 					break;
 				
 				case "Additional Instructions":
-					
-					Assert.assertEquals(additionalInformation[i], "Additional Instructions " + additionalInstructions, errorMessage);
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, additionalInstructions, errorMessage);
 					break;
 						
-				case "Service Number ":
-					
-					Assert.assertEquals(additionalInformation[i], "Service Number " + serviceNumber, errorMessage);
+				case "Service Number":
+					// System.out.println("Label: " + label);
+					//Assert.assertEquals(additionalInformation[i], "Service Number " + serviceNumber, errorMessage);
+					if (approvalActionType.equals(ApprovalActionType.transferServiceIn)
+	                		|| approvalActionType.equals(ApprovalActionType.transferServiceInAndPort)) {
+	                	
+	                	Assert.assertEquals(value, newServiceNumber, errorMessage);
+	                	
+	                } else {
+	                	
+	                	Assert.assertEquals(value, serviceNumber, errorMessage);
+	                	
+	                }
 					break;
 				
 				case "Preferred Area Code":
-					
-					Assert.assertEquals(additionalInformation[i], "Preferred Area Code " + preferredAreaCode, errorMessage);
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, preferredAreaCode, errorMessage);
 					break;
 				
 				// *** additions to make it generic to all transaction types - in progress - Oct 17 - Ana
 				case "Reason":
-					
+					// System.out.println("Label: " + label);
 					if (approvalActionType.equals(ApprovalActionType.newActivation)) {
 						
-						Assert.assertEquals(additionalInformation[i], "Reason " + reasonAddDeviceAndService, errorMessage);
-					
+						// *** SFD 113227 entered for missing value *** <-- UNCOMMENT WHEN DEFECT IS FIXED 
+						//Assert.assertEquals(value, reasonAddDeviceAndService, errorMessage);
+						 
 					} else if (approvalActionType.equals(ApprovalActionType.upgradeDevice)) {
 					
-						Assert.assertEquals(additionalInformation[i], "Reason " + UpgradeDevice.reasonUpgradeDevice, errorMessage);
+						Assert.assertEquals(value, UpgradeDevice.reasonUpgradeDevice, errorMessage);
 					
 					} else if (approvalActionType.equals(ApprovalActionType.deactivate)) {
 					
-						Assert.assertEquals(additionalInformation[i], "Reason " + reasonAction, errorMessage);
+						Assert.assertEquals(value, reasonAction, errorMessage);
 						
 					} 
+					break;
 					
+				case "Business Unit":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, businessUnit, errorMessage);
+					break;	
 					
+				case "Personal E-mail Address":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, approverAdminMail, errorMessage);
+					break;
 					
+				case "Carrier Account Number":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, PlanInfoActions.carrierAccountNumber, errorMessage);
+					break;	
+					
+				case "Name on Invoice":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, userLimitedShorterName, errorMessage);
+					break;		
+				
+				case "Preferred Suspension Date":
+					//Assert.assertEquals(value.replace("th", "").replace("st", "").replace("nd", "").replace("rd", ""), preferredSuspensionDateLong, errorMessage);
+					break;
+					
+				default:
+					System.out.println("Property " + label + " not included in case...");
+					break;
 			}
 					
 		}
@@ -815,8 +866,7 @@ public class OrderSubmittedPage extends BaseClass
 	
 	public static void verifyOrderSegments() {
 		
-		if (!approvalActionType.equals(ApprovalActionType.transferServiceIn)
-				|| approvalActionType.equals(ApprovalActionType.transferServiceInAndPort))
+		if (!(approvalActionType.equals(ApprovalActionType.transferServiceIn) || approvalActionType.equals(ApprovalActionType.transferServiceInAndPort)))
 			verifyOrderSegmentGeneral();
 		verifyOrderSegmentDevice();
 		verifyOrderSegmentPlan();

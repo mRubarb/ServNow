@@ -239,7 +239,7 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.VerifyAdditionalInformation();	
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -277,7 +277,7 @@ public class TransferServiceIn extends BaseClass {
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		OrderSubmittedPage.VerifyAdditionalInformation();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyDeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
@@ -519,7 +519,7 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.VerifyAdditionalInformation();	
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();

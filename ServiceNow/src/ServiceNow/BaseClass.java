@@ -100,6 +100,8 @@ public class BaseClass
 	public static String additionalInstructions = "Test Additional Instructions";	
 	public static String buisnessUnit = "business unit";	
 	public static String userStateOrderDetails = "MA";
+	public static String preferredSuspensionDate = "";
+	public static String preferredSuspensionDateLong;
 	public static String orderNewDeviceAndServiceOrderType = "Activate New Service";
 	public static String orderNewDeviceAndServiceOrderStatus = "Awaiting Approval";
 	public static String approverBob = "Bob Lichtenfels-Approver";	
@@ -254,6 +256,8 @@ public class BaseClass
 		swapDevice,
 		orderAccessories,
 		upgradeDevice,
+		upgradeService,  // ana add -- 8/15/18
+		upgradeDeviceService,  // ana add -- 8/15/18
 		updateFeatures,
 		portNumber,
 		transferServiceIn, // ana add -- 8/6/18

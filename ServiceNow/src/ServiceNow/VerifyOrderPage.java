@@ -440,7 +440,8 @@ public class VerifyOrderPage extends BaseClass
 	{
 		errMessage = "Fail in VerifyOrderPage.verifyCostUpgradeDevice";
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), "$" + ShoppingCart.costOneTime, errMessage);
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), ShoppingCart.costOneTime, errMessage);
+		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), "$" + ShoppingCart.costOneTime, errMessage);
 				// AccessoriesDetailsExpected.finalCost
 	}
 	

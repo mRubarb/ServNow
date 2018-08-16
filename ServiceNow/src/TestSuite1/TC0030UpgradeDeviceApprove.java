@@ -44,7 +44,7 @@ public class TC0030UpgradeDeviceApprove extends BaseClass
 		// 2) setup order details expected object for correct values.
 		// 3) verify results in order-submitted/order-details page
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
-		UpgradeDevice.RunUpgradeDevice();
+		UpgradeDevice.runUpgradeDevice();
 		
 		CommonTestSteps.Logout();
 		

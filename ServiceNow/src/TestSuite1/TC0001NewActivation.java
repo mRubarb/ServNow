@@ -268,7 +268,7 @@ public class TC0001NewActivation extends BaseClass
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.VerifyAdditionalInformation();	
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();

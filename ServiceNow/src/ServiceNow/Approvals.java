@@ -373,7 +373,12 @@ public class Approvals extends BaseClass
 			{
 				VerifyUpgradeDevice();				
 				break;
-			}			
+			}
+			case upgradeService:
+			{
+				verifyUpgradeService();				
+				break;
+			}
 			case updateFeatures:
 			{
 				VerifyUpdateFeatures();
@@ -395,6 +400,95 @@ public class Approvals extends BaseClass
 			break;			
 		}
 	}
+
+	private static void verifyUpgradeService() {
+		
+		String errMessage = "Failure in Approvals.VerifyUpgradeService.";
+		
+		// Lines found in 'Description'
+		
+		// strArray = driver.findElement(By.id("x_tango_mobility_tangoe_mobility_order_request.description")).getText().split("\n");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n");
+		
+		List<String> descriptionLines = new ArrayList<String>(); 
+				
+		System.out.println("Description:");
+		
+		for (int i = 0; i < strArray.length; i++) {
+			
+			descriptionLines.add(strArray[i].trim());
+			System.out.println(descriptionLines.get(i));
+		}
+		
+		
+		// Lines expected in 'Description'		
+		
+		String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + fullServiceNumber + "].";   
+		
+		//String totalCost = "Total Cost:" + AccessoriesDetailsExpected.finalCost + " Total Monthly Cost:" + AccessoriesDetailsExpected.finalCostMonthly; 
+		String totalCost = "Total Cost:$" + ShoppingCart.costOneTime + " Total Monthly Cost:$" + ShoppingCart.costMonthly;
+		
+		String itemsOrderedLabel = "Items Ordered:";
+		
+		//String deviceModelAndCost = deviceInfoActions.name + " " + deviceInfoActions.cost; 
+		
+		String planNameAndCost = planInfoActions.planSelectedName + " " + planInfoActions.PlanTextCost() + " Monthly";
+		
+		List<String> optFeatures = new ArrayList<>();
+		
+		for (int i = 0; i < BaseClass.optionalFeaturesList.size(); i++) {
+			
+			
+		}
+		
+		for (int i = 0; i < BaseClass.accessoriesDetailsListExpected.size(); i++) {
+			
+			
+		}
+		
+		String additionalInfoLabel = "Additional Info:";
+		
+		String additionalInfoContactNumber = "Contact Phone Number:" + contactNumber; 
+		
+		String additionalInfoExt = "Ext:" + extension; 
+		
+		String additionalInfoAdditionalInstructions = "Additional Instructions:" + additionalInstructions; 
+		
+		String additionalInfoServiceNumber = "Service Number:" + serviceNumber; 
+		
+		String additionalInfoReason = "Reason:" + DeviceInfoActions.reasonUpgradeAction; 
+		
+		String shipTo = "Ship to: " + userLimitedShorterName + " " + addressLineOne + " " + cityOrderActions + " " + stateOrderActions + " " + zipCodeOrderActions + " ."; 
+		
+		String orderId = "Tangoe Order ID:" + orderDetailsObjectExpected.orderId;
+		
+		String externalOrderNumber = "External Order Number:" + orderDetailsObjectExpected.externalOrderId;
+
+	
+		
+		System.out.println("totalCost: " + totalCost);
+		//System.out.println("deviceModelAndCost: " + deviceModelAndCost);
+		
+		Assert.assertTrue(descriptionLines.contains(title), errMessage);
+		// Assert.assertTrue(descriptionLines.contains(totalCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
+		Assert.assertTrue(descriptionLines.contains(itemsOrderedLabel), errMessage);
+		// Assert.assertTrue(descriptionLines.contains(deviceModelAndCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
+		Assert.assertTrue(descriptionLines.contains(planNameAndCost), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoLabel), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoContactNumber), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoExt), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoAdditionalInstructions), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoServiceNumber), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoReason), errMessage);
+		Assert.assertTrue(descriptionLines.contains(shipTo), errMessage);
+		Assert.assertTrue(descriptionLines.contains(orderId), errMessage);
+		Assert.assertTrue(descriptionLines.contains(externalOrderNumber), errMessage);
+		
+				
+		
+		
+	}
+
 
 	public static void VerifyDeactivate() throws Exception
 	{
@@ -475,7 +569,7 @@ public class Approvals extends BaseClass
 		
 		String deviceModelAndCost = deviceInfoActions.name + " " + deviceInfoActions.cost; 
 		
-		String planNameAndCost = planInfoActions.planSelectedName + " " + planInfoActions.PlanTextCost() + " Monthly";
+		//String planNameAndCost = planInfoActions.planSelectedName + " " + planInfoActions.PlanTextCost() + " Monthly";
 		
 		List<String> optFeatures = new ArrayList<>();
 		
@@ -516,7 +610,7 @@ public class Approvals extends BaseClass
 		// Assert.assertTrue(descriptionLines.contains(totalCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
 		Assert.assertTrue(descriptionLines.contains(itemsOrderedLabel), errMessage);
 		// Assert.assertTrue(descriptionLines.contains(deviceModelAndCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
-		Assert.assertTrue(descriptionLines.contains(planNameAndCost), errMessage);
+		//Assert.assertTrue(descriptionLines.contains(planNameAndCost), errMessage);
 		Assert.assertTrue(descriptionLines.contains(additionalInfoLabel), errMessage);
 		Assert.assertTrue(descriptionLines.contains(additionalInfoContactNumber), errMessage);
 		Assert.assertTrue(descriptionLines.contains(additionalInfoExt), errMessage);
