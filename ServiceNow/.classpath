@@ -36,6 +36,7 @@
 	<classpathentry kind="lib" path="Libs/lib_3_4/xalan-2.7.2.jar"/>
 	<classpathentry kind="lib" path="Libs/lib_3_4/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="Libs/lib_3_4/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="src/selenium-java-2.53.0.jar"/>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

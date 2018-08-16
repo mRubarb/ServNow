@@ -286,24 +286,22 @@ public class ProvideAdditionalInfoPage extends BaseClass
 
 		
 		//*** ana add - 8/16/18
-		/*preferredSuspensionDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+		preferredSuspensionDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 		preferredSuspensionDateLong = new SimpleDateFormat("MMMM dd yyyy").format(Calendar.getInstance().getTime());
-		
-		System.out.println("preferredSuspensionDate: " + preferredSuspensionDate);
-		
-		
+					
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_SUSPENSION_DATE")).clear();
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_SUSPENSION_DATE")).sendKeys(preferredSuspensionDate);
 		
-		Thread.sleep(3000);*/
+		Thread.sleep(3000);
 		// END *** ana add - 8/16/18
 		
 		WaitForElementClickable(By.xpath("//th[@ng-click='next()']"), MiniTimeout, 
                 "Failed waiting for calendar picker 'next' selection in ProvideAdditionalInfoPage.EnterMissingInfoSuspend.");		
 		driver.findElement(By.xpath("//th[@ng-click='next()']")).click();
+		driver.findElement(By.xpath("//th[@ng-click='prev()']")).click(); //  ana add - 8/16/18
 
 		// store the year and month
-		CalendarDateTimeObject.StoreYearMonth(driver.findElement(By.xpath("//th[@class='switch ng-binding']")).getText());
+		//CalendarDateTimeObject.StoreYearMonth(driver.findElement(By.xpath("//th[@class='switch ng-binding']")).getText());
 		
 		
 		// day of month select needs work. took out.
@@ -336,15 +334,25 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).sendKeys(serviceNumber);
 				
 		// open the calendar picker, select the next month, and close it.
-		driver.findElement(By.xpath("//tbody/tr[5]/td[2]/input")).click(); // calendar picker (id doesn't work - use xpath).
+		//driver.findElement(By.xpath("//tbody/tr[5]/td[2]/input")).click(); // calendar picker (id doesn't work - use xpath).
 
-		
+		//*** ana add - 8/16/18
+		preferredSuspensionDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+		preferredSuspensionDateLong = new SimpleDateFormat("MMMM dd yyyy").format(Calendar.getInstance().getTime());
+						
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_UNSUSPEND_DATE")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_UNSUSPEND_DATE")).sendKeys(preferredSuspensionDate);
+				
+		Thread.sleep(3000);
+		// END *** ana add - 8/16/18
+				
 		WaitForElementClickable(By.xpath("//th[@ng-click='next()']"), MiniTimeout, 
                 "Failed waiting for calendar picker 'next' selection in ProvideAdditionalInfoPage.EnterMissingInfoSuspend.");		
 		driver.findElement(By.xpath("//th[@ng-click='next()']")).click();
-
+		driver.findElement(By.xpath("//th[@ng-click='prev()']")).click(); //  ana add - 8/16/18
+		
 		// store the year and month
-		CalendarDateTimeObject.StoreYearMonth(driver.findElement(By.xpath("//th[@class='switch ng-binding']")).getText());
+		//CalendarDateTimeObject.StoreYearMonth(driver.findElement(By.xpath("//th[@class='switch ng-binding']")).getText());
 		
 		// day of month select needs work. took out.
 		// now that the next month is selected, select day 2.

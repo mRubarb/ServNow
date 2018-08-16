@@ -493,8 +493,19 @@ public class OrderSubmittedPage extends BaseClass
 					break;		
 				
 				case "Preferred Suspension Date":
-					//Assert.assertEquals(value.replace("th", "").replace("st", "").replace("nd", "").replace("rd", ""), preferredSuspensionDateLong, errorMessage);
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value.replace("th", "").replace("1st", "1").replace("2nd", "2").replace("3rd", "3"), preferredSuspensionDateLong, errorMessage);
 					break;
+					
+				case "Preferred Unsuspend Date":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value.replace("th", "").replace("1st", "1").replace("2nd", "2").replace("3rd", "3"), preferredSuspensionDateLong, errorMessage);
+					break;
+				
+				case "User":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, userLimitedFullNameExtended, errorMessage);
+					break;		
 					
 				default:
 					System.out.println("Property " + label + " not included in case...");
