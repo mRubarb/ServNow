@@ -117,7 +117,7 @@ public class PortNumber extends ActionsBase
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();	
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -172,7 +172,7 @@ public class PortNumber extends ActionsBase
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		OrderSubmittedPage.VerifyApprovals();	
-		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();
@@ -194,7 +194,7 @@ public class PortNumber extends ActionsBase
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();

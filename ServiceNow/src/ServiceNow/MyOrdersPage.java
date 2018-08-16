@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+
 public class MyOrdersPage extends BaseClass 
 {
 
@@ -25,7 +26,7 @@ public class MyOrdersPage extends BaseClass
 	// this only checks the order info block on the 'my orders page'.  
 	public static void VerifyOrderInfoMyOrdersPageMainPage() throws Exception
 	{
-		String errMessage = "Failure in checking order block in My Orders Page in ActionsBase.VerifyOrderInfoInMyOrdersPage.";
+		String errMessage = "Failure in checking order block in My Orders Page in MyOrdersPage.VerifyOrderInfoInMyOrdersPage.";
 		
 		// this verifies the very top section that has action and order Id.
 		Assert.assertEquals(FormatTopSectionOfOrderBlock()[0], orderDetailsObjectExpected.orderId, errMessage);
@@ -39,10 +40,41 @@ public class MyOrdersPage extends BaseClass
 		
 		Assert.assertEquals(tmpString, orderDetailsObjectExpected.status.toUpperCase(), errMessage); // verify order status in first line.
 		Assert.assertEquals(strTempArray[0].replace(tmpString, "").replace("Date Submitted  ", ""),BuildDateString(), errMessage); // verify date in first line. 
-		Assert.assertEquals(strTempArray[1].replace("Service Number  ", ""), fullServiceNumber, errMessage); // verify full service number in second line
-		Assert.assertEquals(strTempArray[2].replace("External Order #  ", ""), orderDetailsObjectExpected.externalOrderId, errMessage); // verify external order id in third line.		
+		
+		if (approvalActionType.equals(ApprovalActionType.transferServiceIn)
+				|| approvalActionType.equals(ApprovalActionType.transferServiceInAndPort)) {
+		
+			Assert.assertEquals(strTempArray[1].replace("Service Number  ", ""), formatServiceNumber(newServiceNumber), errMessage); // verify full service number in second line
+			
+		} else {
+			
+			Assert.assertEquals(strTempArray[1].replace("Service Number  ", ""), fullServiceNumber, errMessage); // verify full service number in second line
+		}
+		
+		Assert.assertEquals(strTempArray[2].replace("External Order #  ", ""), orderDetailsObjectExpected.externalOrderId, errMessage); // verify external order id in third line.
+		
 	}	
 	
+	
+	private static String formatServiceNumber(String serviceNumber) {
+		
+		// from 5669879877 to +1 (566) 987-9877
+		
+		String part1 = serviceNumber.substring(0, 3);
+		String part2 = serviceNumber.substring(3, 6);
+		String part3 = serviceNumber.substring(6, 10);
+		
+		//System.out.println("Part 1: " + part1);
+		//System.out.println("Part 2: " + part2);
+		//System.out.println("Part 3: " + part3);
+		
+		String formattedServiceNumber = "+1" + " (" + part1 + ") " + part2 + "-" + part3 ;
+		
+		return formattedServiceNumber;
+		
+	}
+	
+
 	// this only checks the order info block on the order details page'.  
 	public static void VerifyOrderInfoStatusMyOrdersPageMainPage() throws Exception
 	{

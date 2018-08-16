@@ -440,7 +440,8 @@ public class VerifyOrderPage extends BaseClass
 	{
 		errMessage = "Fail in VerifyOrderPage.verifyCostUpgradeDevice";
 		
-		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), "$" + ShoppingCart.costOneTime, errMessage);
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), ShoppingCart.costOneTime, errMessage);
+		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Cost']/../following ::td[1]")).getText(), "$" + ShoppingCart.costOneTime, errMessage);
 				// AccessoriesDetailsExpected.finalCost
 	}
 	
@@ -585,7 +586,13 @@ public class VerifyOrderPage extends BaseClass
 		} if (additionalInfoMap.containsKey("Service Number")) {
 			
 			System.out.println(" Key: " + additionalInfoMap.get("Service Number"));
-			Assert.assertEquals(additionalInfoMap.get("Service Number"), serviceNumber, errorMessage);
+			
+			if (approvalActionType.equals(ApprovalActionType.transferServiceIn) 
+					|| approvalActionType.equals(ApprovalActionType.transferServiceInAndPort)) {
+				Assert.assertEquals(additionalInfoMap.get("Service Number"), newServiceNumber, errorMessage);
+			} else {
+				Assert.assertEquals(additionalInfoMap.get("Service Number"), serviceNumber, errorMessage);
+			}
 			
 		} if (additionalInfoMap.containsKey("Authorization Code")) {
 			
@@ -652,7 +659,13 @@ public class VerifyOrderPage extends BaseClass
 			System.out.println(" Key: " + additionalInfoMap.get("Current Carrier"));
 			Assert.assertEquals(additionalInfoMap.get("Current Carrier"), DeviceInfoActions.currentVendorPortNumber, errorMessage);
 			
-		} 
+		} if (additionalInfoMap.containsKey("Personal E-mail Address")) {  // for personal email address
+		       
+            System.out.println(" Key: " + additionalInfoMap.get("Personal E-mail Address"));
+            Assert.assertEquals(additionalInfoMap.get("Personal E-mail Address"), approverAdminMail, errorMessage);
+		}
+
+
 		
 		
 	}	

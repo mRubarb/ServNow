@@ -6,49 +6,40 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ActionClasses.UpgradeDevice;
+import ActionClasses.TransferServiceIn;
 import ActionsBaseClasses.CommonTestSteps;
-import ServiceNow.BaseClass;
 import ServiceNow.Approvals;
+import ServiceNow.BaseClass;
 
-/** TC0030 -- Upgrade Device  **/  
 
-public class TC0030UpgradeDeviceApprove extends BaseClass 
-{
+
+public class TC0046TransferServiceInAndPortApprove extends BaseClass {
 
 	@BeforeClass
 	public static void setUp() throws Exception
 	{
-		//userLoginMode = UserLoginMode.Limited; // setup login for admin user.
+		//userLoginMode = UserLoginMode.Limited;  //UserLoginMode.Admin; // setup login for admin user.
 		//setUpDriver(DriverSetup.ServiceNow);
 	}
-
+	
+	
 	@Test
-	public static void tc0030UpgradeDeviceApprove() throws Exception
+	public static void tC0046TransferServiceInAndPortApprove() throws Exception
 	{
-		BaseClass.stepComplete("------------------ Starting upgrade device action with approve. -----------------------", "");
-
+		
 		approverAction = ApproverAction.approve; // setup enum for indicating approval type.	
-
-		// setup enum for indicating approval action type. this is used to tell which module will verify info in approval description sections.		
-		approvalActionType = ApprovalActionType.upgradeDevice;
-
-		// login as limited user.
+		
+		approvalActionType = ApprovalActionType.transferServiceInAndPort; 
+	
+		// 1. Log into ServiceNow as test user.
 		CommonTestSteps.LoginLimitedUser();
-
-		// got to the devices page through the home page. 
-		CommonTestSteps.GoToDevicesPage();
-
-		// this does this. 
-		// 1) run through the action.
-		// 2) setup order details expected object for correct values.
-		// 3) verify results in order-submitted/order-details page
-		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
-		UpgradeDevice.runUpgradeDevice();
+		
+		// 2. Create a Transfer Service In order
+		TransferServiceIn.runTransferServiceInAndPortPhoneNumber();
 		
 		CommonTestSteps.Logout();
 		
-		BaseClass.stepComplete("Run upgrade device action complete. Now will approve the order.", "");
+		BaseClass.stepComplete("Run Transfer Service In And Port action complete. Now will approve the order.", "");
 
 		// login as approver.
 		CommonTestSteps.LoginApproverBrowserOpen();		
@@ -65,7 +56,7 @@ public class TC0030UpgradeDeviceApprove extends BaseClass
 		
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		UpgradeDevice.SetOrderTypeForPostApproval();
+		TransferServiceIn.setOrderTypeForPostApproval(true);
 		
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
@@ -75,31 +66,28 @@ public class TC0030UpgradeDeviceApprove extends BaseClass
 		
 		// this verifies the order info in the 'my orders' page. this run's a loop on the 
 		// verification to allow  SN to sync with command. 
-		UpgradeDevice.VerifyLimitedUserOrderMyOrdersMainPage();
+		TransferServiceIn.verifyLimitedUserOrderMyOrdersMainPage();
 		
 		// this verifies the order details under the order that was verified in 'my orders' page. 
-		UpgradeDevice.VerifyOrderDetailsPagePostApproval();
+		TransferServiceIn.verifyOrderDetailsPagePostApproval();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
-		UpgradeDevice.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);
+		TransferServiceIn.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);
 
-		BaseClass.stepComplete("Upgrade Device Test Complete.", "");
+		BaseClass.stepComplete("Transfer Service In And Port Test Complete.", "");
+		
+		
 	}
 	
 	@AfterClass
-	public static void closeDriver() throws Exception
+	public void closeDriver() throws Exception
 	{
-		System.out.println("Close Browser.");
-		if(orderDetailsObjectExpected != null)
-		{
-		//	orderDetailsObjectExpected.Show();			
-		}
+		System.out.println("Close Browser.");		
 	    JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
 	}
+	
+	
+	
 }
-
-
-
-

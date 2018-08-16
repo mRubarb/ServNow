@@ -1,5 +1,9 @@
 package ServiceNow;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -261,8 +265,21 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).sendKeys(serviceNumber);
 				
 		// open the calendar picker, select the next month, and close it.
-		driver.findElement(By.xpath("//tbody/tr[5]/td[2]/input")).click(); // calendar picker (id doesn't work - use xpath).
+		//driver.findElement(By.xpath("//tbody/tr[5]/td[2]/input")).click(); // calendar picker (id doesn't work - use xpath).
 
+		
+		//*** ana add - 8/16/18
+		/*preferredSuspensionDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+		preferredSuspensionDateLong = new SimpleDateFormat("MMMM dd yyyy").format(Calendar.getInstance().getTime());
+		
+		System.out.println("preferredSuspensionDate: " + preferredSuspensionDate);
+		
+		
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_SUSPENSION_DATE")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_SUSPENSION_DATE")).sendKeys(preferredSuspensionDate);
+		
+		Thread.sleep(3000);*/
+		// END *** ana add - 8/16/18
 		
 		WaitForElementClickable(By.xpath("//th[@ng-click='next()']"), MiniTimeout, 
                 "Failed waiting for calendar picker 'next' selection in ProvideAdditionalInfoPage.EnterMissingInfoSuspend.");		
@@ -283,6 +300,8 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		
 		// select pull down with a user name in it.
 		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_HOLD_SERVICE"))).selectByVisibleText(limitedUserPulldownSelection);
+	
+		
 	}	
 	
 	
@@ -358,10 +377,40 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		
 		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(UpgradeDevice.reasonUpgradeDevice);
 	
-	
 	}		
 	
 	
+	// this populates additional information when doing Upgrade Device action.   
+	public static void enterMissingInfoTransferServiceIn() throws InterruptedException
+	{
+		
+		// fill in service number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_NUMBER")).sendKeys(newServiceNumber);
+						
+		// fill in carrier account number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CARRIER_ACCT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CARRIER_ACCT_NUMBER")).sendKeys(PlanInfoActions.carrierAccountNumber);
+		
+		// fill in contact number.
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).sendKeys(contactNumber);
+		
+		// fill in the extension
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).sendKeys(extension);
+
+		// fill in the additional instructions
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
+		
+		// fill in the pin/password
+		//driver.findElement(By.id("ORDER_PROPERTY_FIELD_PIN_PASSWORD")).clear();
+		//driver.findElement(By.id("ORDER_PROPERTY_FIELD_PIN_PASSWORD")).sendKeys(pinOrPassword);
+			
+	
+	}		
+
 	public static String GetCostTotal() throws InterruptedException
 	{
 		return driver.findElement(By.xpath("//span[text()='Cost']/following ::span[1]")).getText();
@@ -463,8 +512,8 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath(mainErrorMessage), MediumTimeout), 
 						  "Expected Error message not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");
 		
-		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//li[text()='Preferred Area Code is required']"), MediumTimeout), 
-				  "Expected Error message 'Preferred Area Code is required' not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");
+		//Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//li[text()='Preferred Area Code is required']"), MediumTimeout), 
+		//		  "Expected Error message 'Preferred Area Code is required' not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");
 		
 		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//li[text()='Contact Phone Number is required']"), MediumTimeout), 
 				  "Expected Error message 'Contact Phone Number is required' not present in 'ProvideAdditionalInfoPage.verifyErrorPresent()'.");

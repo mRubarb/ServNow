@@ -29,7 +29,7 @@ public class SwapDevice extends ActionsBase
 		IdentifyDevices.PopulateNewDevice();
 		
 		VerifyPageTitle(swapDevice);
-		//IdentifyDevices.ShowIdentityData();
+		IdentifyDevices.ShowIdentityData();
 		IdentifyDevices.ClickNext();
 		
 		ProvideAdditionalInfoPage.WaitForPageToLoadUnsuspend();
@@ -60,7 +60,7 @@ public class SwapDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -109,7 +109,7 @@ public class SwapDevice extends ActionsBase
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		ServiceNow.OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();
+		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock();
 		ServiceNow.OrderSubmittedPage.VerifyApprovals();		
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
@@ -123,7 +123,7 @@ public class SwapDevice extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
-		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();
+		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock();
 		
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
@@ -182,7 +182,7 @@ public class SwapDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();

@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.DeviceInfoActions;
 import HelperObjects.DevicePortNumber;
 import HelperObjects.ShoppingCart;
@@ -253,7 +252,7 @@ public class ChooseDevicePage extends BaseClass
 		
 		// wait for next button at bottom of page and wait for button #5.
 		WaitForElementClickable(By.xpath("(//div/button[text()='Next'])[2]"), ExtremeTimeout, errMessage);
-		WaitForElementPresent(By.xpath("(//div/button[text()='Add to Cart'])[5]"), MainTimeout); //		
+		WaitForElementPresent(By.xpath("(//div/button[text()='Add to Cart'])[1]"), MainTimeout); //		
 	}
 	
 	
@@ -418,10 +417,12 @@ public class ChooseDevicePage extends BaseClass
 		String existingDeviceSerialNumber = driver.findElement(By.id("existing-serial-number")).getText().trim();
 		String existingDeviceSerialNumberType = new Select(driver.findElement(By.id("existing-serial-number-type"))).getFirstSelectedOption().getText().trim();
 		
+				
 		IdentifyDevices.oldManufacturer = existingDeviceManufacturer;
 		IdentifyDevices.oldModel = existingDeviceModel;
 		IdentifyDevices.oldSerialNumber = existingDeviceSerialNumber;
 		IdentifyDevices.oldSerialNumberType = existingDeviceSerialNumberType;
+
 		
 	}
 

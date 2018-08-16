@@ -90,7 +90,7 @@ public class UpgradeService extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();  //verifyAdditionalInformationUpgradeService();
+		OrderSubmittedPage.verifyAdditionalInformationBlock();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -103,7 +103,7 @@ public class UpgradeService extends ActionsBase
 		VerifyOrderDetailsPagePreApproval();
 		
 		// at this point the order type has to be changed so the order can be found in the order approvals list.
-		// in the order approvals page the status is called  "Accessories Order";
+		// in the order approvals page the status is called  "Upgrade Order";
 		orderDetailsObjectExpected.orderType = "Upgrade Order";
 		
 	}
@@ -134,7 +134,7 @@ public class UpgradeService extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();   //VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		//OrderSubmittedPage.verifyStatusAndVendor();
@@ -156,7 +156,7 @@ public class UpgradeService extends ActionsBase
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();   //VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		//OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();

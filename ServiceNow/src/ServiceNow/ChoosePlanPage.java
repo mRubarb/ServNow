@@ -784,7 +784,9 @@ public class ChoosePlanPage extends BaseClass
 	public static void selectExistingPlan() {
 
 		driver.findElement(By.xpath("//label/span[text()='Use your existing plan']")).click();
-		
+		//driver.findElement(By.xpath("//label/input[@name='toggleNewExistingPlan']")).click();
 		
 	}
+
+	
 }

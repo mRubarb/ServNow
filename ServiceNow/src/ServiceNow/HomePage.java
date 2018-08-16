@@ -59,4 +59,13 @@ public class HomePage extends BaseClass
 		element = createAnOrderButton();
 		element.click();
 	}
+
+	public static void clickTransferServiceInButton() {
+		
+		String xpath = "//div/p/a[text()='Transfer my phone number']";
+		
+		WaitForElementClickable(By.xpath(xpath), 10, "Button not clickable.");
+		driver.findElement(By.xpath(xpath)).click();
+		
+	}
 }

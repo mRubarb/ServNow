@@ -14,7 +14,7 @@ import ServiceNow.ChoosePlanPage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
 import ServiceNow.HomePage;
-import ServiceNow.OrderNewServicePage;
+import ServiceNow.SelectRegionPage;
 import ServiceNow.OrderSubmittedPage;
 import ServiceNow.ProvideAdditionalInfoPage;
 import ServiceNow.SideBar;
@@ -67,20 +67,20 @@ public class TC0001NewActivation extends BaseClass
 		// 5. Set Country to ‘United States’. – There’s a field displayed to enter Postal Code.
 	
 		// TODO -----------------------------------------------  Click “Next” without choosing Country.
-		OrderNewServicePage.selectCountryFromDropDown();
+		SelectRegionPage.selectCountryFromDropDown();
 		BaseClass.stepComplete("TC:0001", "TS:04");
 	
 		// 6. Click Next leaving Postal Code blank (or fill it using an incorrect format). There's an error message for the required field Postal Code.
 	
-		OrderNewServicePage.clickNextButtonSelectRegion(); // added waitPresent
-		OrderNewServicePage.getErrorNoPostalCode();
-		OrderNewServicePage.verifyNoPostalCodeErrorPresent();
+		SelectRegionPage.clickNextButtonSelectRegion(); // added waitPresent
+		SelectRegionPage.getErrorNoPostalCode();
+		SelectRegionPage.verifyNoPostalCodeErrorPresent();
 		BaseClass.stepComplete("TC:0001", "TS:06");
 		
 		// 7. Fill in Postal Code and click Next. You are in the Choose a Device step. The available Devices for the selected country are listed.
 	
-		OrderNewServicePage.fillPostalCodeTextBox("02451");
-		OrderNewServicePage.clickNextButtonSelectRegion(); // move to device select page.
+		SelectRegionPage.fillPostalCodeTextBox("02451");
+		SelectRegionPage.clickNextButtonSelectRegion(); // move to device select page.
 		ChooseDevicePage.WaitForPageToLoad();
 		BaseClass.stepComplete("TC:0001", "TS:07");
 
@@ -268,7 +268,7 @@ public class TC0001NewActivation extends BaseClass
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.VerifyAdditionalInformation();	
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();

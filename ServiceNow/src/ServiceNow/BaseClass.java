@@ -51,7 +51,7 @@ public class BaseClass
 	// Index for device selected when doing New Activation
 	// This index will be incremented and used to select a new device on New Activation when the device selected has no plans
 	// Added by Ana 9/8/17
-	public static int indexDeviceSelectedNewActivation = 1;
+	public static int indexDeviceSelectedNewActivation = 0;
 	// Added by Ana 9/11/17
 	public static boolean isFirstPass = true; // this is needed in the case that the selected device has no plans. In that case, when test goes to the Choose Device
 											  // page, the will be one less 'Add to Cart' button, and the 'Add to Cart' button clicked won't match with the desired
@@ -89,6 +89,8 @@ public class BaseClass
 	public static String addressLineThreeDummyInfo = "LineThreeDummyInfo";
 	public static String preferredAreaCode = "781";
 	public static String contactNumber = "7812739306";	
+	public static String newServiceNumber = "5669879877";
+	public static String pinOrPassword = "1234";
 	public static String serviceNumber = ""; // this is queried for in MyDevicesPage.	
 	public static String fullServiceNumber = ""; // this is queried for in MyDevicesPage.
 	public static String reasonAddDeviceAndService =  "Broken Device";
@@ -98,6 +100,8 @@ public class BaseClass
 	public static String additionalInstructions = "Test Additional Instructions";	
 	public static String buisnessUnit = "business unit";	
 	public static String userStateOrderDetails = "MA";
+	public static String preferredSuspensionDate = "";
+	public static String preferredSuspensionDateLong;
 	public static String orderNewDeviceAndServiceOrderType = "Activate New Service";
 	public static String orderNewDeviceAndServiceOrderStatus = "Awaiting Approval";
 	public static String approverBob = "Bob Lichtenfels-Approver";	
@@ -252,8 +256,12 @@ public class BaseClass
 		swapDevice,
 		orderAccessories,
 		upgradeDevice,
+		upgradeService,  // ana add -- 8/15/18
+		upgradeDeviceService,  // ana add -- 8/15/18
 		updateFeatures,
 		portNumber,
+		transferServiceIn, // ana add -- 8/6/18
+		transferServiceInAndPort, // ana add -- 8/14/18
 		none
 	}	
 	
@@ -401,6 +409,7 @@ public class BaseClass
 		//System.setProperty("webdriver.ie.driver", path + "\\IEDriverServer.exe");	    
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-extensions");
+		options.addArguments("--lang=en"); // --ana add 8/10/18
 		options.addArguments("disable-infobars");  // <-- Line added by Ana. Needed because with the chromedriver 2.28, there's an info bar that we don't want to have when browser is launched
 		driver = new ChromeDriver(options);		
 	    // driver = new ChromeDriver();

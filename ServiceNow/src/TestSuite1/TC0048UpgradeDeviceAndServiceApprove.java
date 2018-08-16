@@ -13,7 +13,7 @@ import ServiceNow.Approvals;
 
 /** TC0030 -- Upgrade Device  **/  
 
-public class TC0030UpgradeDeviceApprove extends BaseClass 
+public class TC0048UpgradeDeviceAndServiceApprove extends BaseClass 
 {
 
 	@BeforeClass
@@ -44,7 +44,7 @@ public class TC0030UpgradeDeviceApprove extends BaseClass
 		// 2) setup order details expected object for correct values.
 		// 3) verify results in order-submitted/order-details page
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
-		UpgradeDevice.runUpgradeDevice();
+		UpgradeDevice.runUpgradeDeviceAndService();
 		
 		CommonTestSteps.Logout();
 		

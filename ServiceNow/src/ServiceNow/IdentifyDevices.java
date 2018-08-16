@@ -42,16 +42,17 @@ public class IdentifyDevices extends BaseClass
 		
 		// no such element: Unable to locate element: {"method":"id","selector":"swap-exist-manufacturer"}
 		
-		WaitForElementClickable(By.id("swap-exist-manufacturer"), MediumTimeout, "");
+		WaitForElementClickable(By.id("swap-exist-manufacturer"), MainTimeout, "");
 		
 		oldManufacturer = new Select(driver.findElement(By.id("swap-exist-manufacturer"))).getFirstSelectedOption().getText(); 
 		oldModel = new Select(driver.findElement(By.id("swap-exist-model"))).getFirstSelectedOption().getText();		
-		oldSerialNumberType = new Select(driver.findElement(By.id("swap-exist-serial-number-type"))).getFirstSelectedOption().getText();
-		simId = driver.findElement(By.id("swap-exist-sim-id")).getText();
+		oldSerialNumberType = new Select(driver.findElement(By.id("swap-exist-serial-number-type"))).getFirstSelectedOption().getText();		
+		oldSerialNumber = driver.findElement(By.id("swap-exist-serial-number")).getAttribute("value");
+		simId = driver.findElement(By.id("swap-exist-sim-id")).getAttribute("value");
 		
 		// couldn't get serial number. set it to already set variable  
-		driver.findElement(By.xpath("//input[@ng-model='existingDevice.serialNumber.value']")).clear();		
-		driver.findElement(By.xpath("//input[@ng-model='existingDevice.serialNumber.value']")).sendKeys(oldSerialNumber);
+		//driver.findElement(By.xpath("//input[@ng-model='existingDevice.serialNumber.value']")).clear();		
+		//driver.findElement(By.xpath("//input[@ng-model='existingDevice.serialNumber.value']")).sendKeys(oldSerialNumber);
 		
 		// set new device info.
 		new Select(driver.findElement(By.id("swap-new-manufacturer"))).selectByVisibleText(newManufacturer); // new manufacturer
@@ -67,10 +68,11 @@ public class IdentifyDevices extends BaseClass
 	public static void ShowIdentityData() throws InterruptedException
 	{
 		DebugTimeout(0, " --------------- Identity class stored data. ------------------------");
-		DebugTimeout(0, "oldManufactuer: " + oldManufacturer);
+		DebugTimeout(0, "oldManufacturer: " + oldManufacturer);
 		DebugTimeout(0, "oldModel: " + oldModel);
 		DebugTimeout(0, "oldSerialNumber: " + oldSerialNumber);
 		DebugTimeout(0, "oldSerialNumberType: " + oldSerialNumberType);
+		DebugTimeout(0, "simId: " + simId);
 		DebugTimeout(0, "newManufacturer: " + newManufacturer);
 		DebugTimeout(0, "newModel: " + newModel);
 		DebugTimeout(0, "newSerialNumberType: " + newSerialNumberType);
