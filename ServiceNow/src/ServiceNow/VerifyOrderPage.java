@@ -56,6 +56,12 @@ public class VerifyOrderPage extends BaseClass
 		driver.findElement(By.xpath("(//button[text()='Submit Order'])[1]")).click();
 	}
 	
+	public static void ClickBackButton() 
+	{
+		WaitForElementClickable(By.xpath("//button[text()='Back']"), MediumTimeout, "");
+		driver.findElement(By.xpath("//button[text()='Back']")).click();
+	}
+	
 	public static void WaitForOrderComplete() throws Exception
 	{
 		WaitForElementVisible(By.xpath("//span[text()='Your order has been submitted.']"),	ExtremeTimeout);	

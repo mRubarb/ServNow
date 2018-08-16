@@ -18,6 +18,7 @@ public class DeviceInfoActions
 	public static String upgradeService = "Upgrade Service";
 	public static String updateFeatures = "Update Features";	
 	public static String portNumber = "Port Number";	
+	public static String transferServiceOut = "Transfer Service Out"; 	
 	
 	public static int upgradeDeviceIndex = 0;
 	

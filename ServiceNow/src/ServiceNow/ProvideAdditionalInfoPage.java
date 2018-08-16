@@ -113,6 +113,23 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		WaitForElementClickable(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"),MiniTimeout , "Pulldown in 'ProvideAdditionalInfoPage.verifyErrorPresent()' can't be slected.");
 		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonAction);
 	}
+
+	// fill in fields.
+	public static void PopulateFieldsTransferServiceOut() 
+	{
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
+
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).sendKeys(contactNumber);
+		
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).clear();
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).sendKeys(extension);
+		
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_PERSONAL_EMAIL")).clear();
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_PERSONAL_EMAIL")).sendKeys(approverAdminMail); 
+	}	
+	
 	
 	public static void EnterMissingInfoFeatures(SelectedFeature feature) throws Exception
 	{

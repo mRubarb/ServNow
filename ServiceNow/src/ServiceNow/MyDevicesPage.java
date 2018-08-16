@@ -48,6 +48,11 @@ public class MyDevicesPage extends BaseClass
 		WaitForElementClickable(By.xpath("//button[text()='View Device']"), MediumTimeout, errMessage);
 	}
 	
+	public static void SelectTransferOutAction()
+	{
+		new Select(driver.findElement(By.xpath(chooseActionsPullDownServices))).selectByVisibleText(DeviceInfoActions.transferServiceOut);
+	}				
+		
 	public static void SelectDeactivateAction()
 	{
 		new Select(driver.findElement(By.xpath(chooseActionsPullDownServices))).selectByVisibleText(DeviceInfoActions.deactivate);

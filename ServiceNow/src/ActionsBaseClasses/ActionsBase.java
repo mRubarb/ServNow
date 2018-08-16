@@ -35,7 +35,8 @@ public class ActionsBase extends BaseClass
 	public static String upgradeDevice = "Upgrade a Device";
 	public static String upgradeService = "Upgrade a Service";	
 	public static String updateServiceTitle = "Update Service Features for Device";
-	public static String portNumberTitle = "Port your Number";	
+	public static String portNumberTitle = "Port your Number";
+	public static String transferServiceOutActionTitle = "Transfer Service for your Device to be personal"; // transfer service out.	
 	
 	// this holds the monthly cost after doing the 'VerifyAddFeatures' method.
 	public static String costMonthlyAfterAddingFeatures = "0";
