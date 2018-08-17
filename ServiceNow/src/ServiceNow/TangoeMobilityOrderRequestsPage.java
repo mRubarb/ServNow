@@ -115,7 +115,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		boolean tangoeLastOrderStatusFinished = false; 
 		boolean tangoeOrderStatusFinished = false;
 		
-		currentOrderID = "13296540"; // bladd
+		// currentOrderID = "13297008"; // bladd
 		
 		ShowText("Order ID is: " + currentOrderID); // Debug
 		
@@ -149,9 +149,10 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		
 		if(tangoeLastOrderStatusFinished && tangoeOrderStatusFinished)
 		{
-			Pause("Starting states already Done.");
+			Pause("Starting states already Done before going into loop. test already passed..");
 			startingStatesAlreadyUpdated = true;
 		}
+
 	}
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +171,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
-		ShowText("Start polling.");
+		ShowText("Start polling --------------------- .");
 		System.out.println(dateFormat.format(date));
 		
 		while(System.currentTimeMillis()<endTime)
@@ -206,7 +207,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		}
 		
 		date = new Date();
-		ShowText("Polling done.");
+		ShowText("Polling done -------------------------------- .");
 		System.out.println(dateFormat.format(date));
 		
 		boolean result = tangoeLastOrderStatusComplete && tangoeOrderStatusComplete;
@@ -216,11 +217,12 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 			Assert.fail("Failed to see 'tangoe last order status' and 'tangoe order status' columns go to correct state in StartPolling() method.");
 		}
 		
-		if(startingStatesAlreadyUpdated)
-		{
-			Pause("Already Complete.");
-			Assert.assertTrue(loopCntr == 1, "Completed statuses were found in ObserveStartingStates() method but StartPolling() method found an incomplete status. ");
-		}
+		// bladd - don't need.
+		//if(startingStatesAlreadyUpdated)
+		//{
+		//	Pause("Already Complete.");
+		//	Assert.assertTrue(loopCntr == 1, "Completed statuses were found in ObserveStartingStates() method but StartPolling() method found an incomplete status. ");
+		//}
 		
 		ShowText("Test Passed.");
 	}
@@ -260,7 +262,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 	public static List<String> GetColumnNames()
 	{
 		// List<WebElement> columnList = driver.findElements(By.cssSelector(".list_div_cell>div>table>thead>tr>th>span"));
-		List<WebElement> columnList = driver.findElements(By.xpath("//a[@class='column_head list_hdrcell table-col-header']")); // bladd		
+		List<WebElement> columnList = driver.findElements(By.xpath("//a[@class='column_head list_hdrcell table-col-header']")); 
 		List<String> returnList = new ArrayList<String>();
 		
 		for(WebElement ele : columnList)
