@@ -414,15 +414,15 @@ public class ChooseDevicePage extends BaseClass
 		
 		String existingDeviceManufacturer = new Select(driver.findElement(By.id("existing-manufacturer"))).getFirstSelectedOption().getText().trim();
 		String existingDeviceModel = new Select(driver.findElement(By.id("existing-model"))).getFirstSelectedOption().getText().trim();
-		String existingDeviceSerialNumber = driver.findElement(By.id("existing-serial-number")).getText().trim();
+		String existingDeviceSerialNumber = driver.findElement(By.id("existing-serial-number")).getAttribute("value").trim();
 		String existingDeviceSerialNumberType = new Select(driver.findElement(By.id("existing-serial-number-type"))).getFirstSelectedOption().getText().trim();
-		
+		String existingSimId = driver.findElement(By.id("existing-sim-id")).getAttribute("value").trim();
 				
 		IdentifyDevices.oldManufacturer = existingDeviceManufacturer;
 		IdentifyDevices.oldModel = existingDeviceModel;
 		IdentifyDevices.oldSerialNumber = existingDeviceSerialNumber;
 		IdentifyDevices.oldSerialNumberType = existingDeviceSerialNumberType;
-
+		IdentifyDevices.simId = existingSimId;
 		
 	}
 
