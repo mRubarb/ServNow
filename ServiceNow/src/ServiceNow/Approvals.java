@@ -12,6 +12,7 @@ import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
 import HelperObjects.DeviceInfoActions;
 import HelperObjects.Feature;
+import HelperObjects.PlanInfoActions;
 import HelperObjects.ShoppingCart;
 
 
@@ -28,7 +29,7 @@ public class Approvals extends BaseClass
 	
 	// this is common in many places. bob 7/27/18
 	public static String commonXpathForDescriptions = ".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/../div/following-sibling::input[1]"; 	
-	
+										       
 	
 	// this waits for first check box at top of approvals list and the 'to' text at the bottom of the page.
 	public static void WaitForPageToLoad() throws Exception
@@ -386,10 +387,14 @@ public class Approvals extends BaseClass
 			}
 			case portNumber:
 			{
-				//VerifyPortNumber();  //<-- TODO
+				verifyPortNumber();  //<-- TODO
 				break;
 			}
-				
+			case transferServiceIn:
+			{
+				verifyTransferServiceIn();  //<-- TODO
+				break;
+			}	
 			case none:
 			{
 				Assert.fail("Error in Approvals.VerifyApprovalPageData, reached an incorrect case value 'none'.");
@@ -400,6 +405,99 @@ public class Approvals extends BaseClass
 			break;			
 		}
 	}
+
+	
+	private static void verifyTransferServiceIn() {
+		
+		String errMessage = "Failure in Approvals.verifyTransferServiceIn.";
+		
+		// Lines found in 'Description'
+		strArray = driver.findElement(By.xpath("//texarea[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.description']")).getAttribute("value").split("\n");
+		//strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n");
+		//  	
+		List<String> descriptionLines = new ArrayList<String>(); 
+				
+		System.out.println("Description:");
+		
+		for (int i = 0; i < strArray.length; i++) {
+			
+			descriptionLines.add(strArray[i].trim());
+			System.out.println(descriptionLines.get(i));
+		}
+		
+		
+		// Lines expected in 'Description'		
+		String title = "Order for " + userLimitedShorterName + "."; // Change it to:
+																	// orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + newServiceNumber + "]."; 
+																	// it after defect is fixed 
+		
+		//String totalCost = "Total Cost:" + AccessoriesDetailsExpected.finalCost + " Total Monthly Cost:" + AccessoriesDetailsExpected.finalCostMonthly; 
+		String totalCost = "Total Cost:$" + ShoppingCart.costOneTime + " Total Monthly Cost:$" + ShoppingCart.costMonthly;
+		
+		String itemsOrderedLabel = "Items Ordered:";
+		
+		//String deviceModelAndCost = deviceInfoActions.name + " " + deviceInfoActions.cost; 
+		
+		String planNameAndCost = planInfoActions.planSelectedName + " " + planInfoActions.PlanTextCost() + " Monthly";
+		
+		List<String> optFeatures = new ArrayList<>();
+		
+		for (int i = 0; i < BaseClass.optionalFeaturesList.size(); i++) {
+			
+			
+		}
+		
+		for (int i = 0; i < BaseClass.accessoriesDetailsListExpected.size(); i++) {
+			
+			
+		}
+		
+		String additionalInfoLabel = "Additional Info:";
+		
+		String additionalInfoContactNumber = "Contact Phone Number:" + contactNumber; 
+		
+		String additionalInfoExt = "Ext:" + extension; 
+		
+		String additionalInfoAdditionalInstructions = "Additional Instructions:" + additionalInstructions; 
+		
+		String additionalInfoServiceNumber = "Service Number:" + newServiceNumber; 
+		
+		String additionalInfoCarrierAcctNumber = "Carrier Account Number:" + PlanInfoActions.carrierAccountNumber; 
+		
+		String shipTo = "Ship to: " + userLimitedShorterName + " " + addressLineOne + " " + cityOrderActions + " " + stateOrderActions + " " + zipCodeOrderActions + " ."; 
+		
+		String orderId = "Tangoe Order ID:" + orderDetailsObjectExpected.orderId;
+		
+		String externalOrderNumber = "External Order Number:" + orderDetailsObjectExpected.externalOrderId;
+
+	
+		
+		System.out.println("totalCost: " + totalCost);
+		//System.out.println("deviceModelAndCost: " + deviceModelAndCost);
+		
+		Assert.assertTrue(descriptionLines.contains(title), errMessage);
+		// Assert.assertTrue(descriptionLines.contains(totalCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
+		Assert.assertTrue(descriptionLines.contains(itemsOrderedLabel), errMessage);
+		// Assert.assertTrue(descriptionLines.contains(deviceModelAndCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
+		Assert.assertTrue(descriptionLines.contains(planNameAndCost), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoLabel), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoContactNumber), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoExt), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoAdditionalInstructions), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoServiceNumber), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoCarrierAcctNumber), errMessage);
+		Assert.assertTrue(descriptionLines.contains(shipTo), errMessage);
+		Assert.assertTrue(descriptionLines.contains(orderId), errMessage);
+		Assert.assertTrue(descriptionLines.contains(externalOrderNumber), errMessage);
+		
+	}
+
+
+	private static void verifyPortNumber() {
+		
+		
+	}
+
 
 	private static void verifyUpgradeService() {
 		

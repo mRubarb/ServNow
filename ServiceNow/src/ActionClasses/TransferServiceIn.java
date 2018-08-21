@@ -243,7 +243,9 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
-		 	
+		
+		orderDetailsObjectExpected.orderType = "Transfer Service In Order";
+		
 	}
 
 	public static void setOrderTypeForPostApproval(boolean txAndPort) {
