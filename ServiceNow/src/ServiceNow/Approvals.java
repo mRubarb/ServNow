@@ -16,7 +16,6 @@ import HelperObjects.PlanInfoActions;
 import HelperObjects.ShoppingCart;
 
 
-// this is for all actions related to the accessories page.   
 
 public class Approvals extends BaseClass
 {
@@ -44,11 +43,6 @@ public class Approvals extends BaseClass
 	// new method to replace ApprovalAction() method - approval part .... - 10/25/2017 - Ana 
 	public static void selectAndApproveOrder() throws Exception {
 	
-		// added 8/9/2018
-		System.out.println(".. Giving time for the order to be added to the list ....");
-		Thread.sleep(20000); // sometimes it takes some time until the order is added to the list after is created. 
-							// giving some time for the order to be added to the list
-		
 		
 		// Select order from list
 		openOrderDetails();
@@ -68,6 +62,22 @@ public class Approvals extends BaseClass
 		
 	}
 	
+	
+	private static void refreshList() throws InterruptedException {
+		
+		System.out.println(".. Giving time for the order to be added to the list ....");
+		Thread.sleep(30000); // sometimes it takes some time until the order is added to the list after is created. 
+							// giving some time for the order to be added to the list
+		
+		driver.findElement(By.xpath("//button[@data-list_id='sysapproval_approver']")).click();
+		
+		driver.findElement(By.xpath("//div[text()='Refresh List']")).click();
+		
+		Thread.sleep(2000);
+		
+	}
+
+
 	// new method to replace ApprovalAction() method - reject part .... - 10/25/2017 - Ana
 	public static void selectAndRejectOrder() throws Exception {
 		
@@ -93,6 +103,9 @@ public class Approvals extends BaseClass
 	
 	private static void openOrderDetails() throws Exception {
 		
+		// added 8/9/2018 - modified 8/22/2018
+		refreshList();						
+		
 		boolean correctUserAndType = false;
 		boolean correctExternalOrderId = false;
 		int x = 1;
@@ -112,6 +125,7 @@ public class Approvals extends BaseClass
 			WaitForElementVisible(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/.."), MediumTimeout); 			
 			
 			// Verify order type and user name in short description
+			// **** UNCOMMENT LINE BELOW when defect 114917 is fixed *** Defect fixed
 			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value"));			
 
 			// Verify external order number and order id in full description
@@ -119,7 +133,7 @@ public class Approvals extends BaseClass
 			
 			if(correctUserAndType && correctExternalOrderId)
 			{
-				rowNumContainingOrder = x;
+				rowNumContainingOrder = 1;  //x;
 				
 			} else { // If any of the expected values is not correct, then click 'Back' button
 				
@@ -392,7 +406,7 @@ public class Approvals extends BaseClass
 			}
 			case transferServiceIn:
 			{
-				verifyTransferServiceIn();  //<-- TODO
+				verifyTransferServiceIn();
 				break;
 			}	
 			case none:
@@ -407,14 +421,18 @@ public class Approvals extends BaseClass
 	}
 
 	
-	private static void verifyTransferServiceIn() {
+	private static void verifyTransferServiceIn() throws Exception {
 		
 		String errMessage = "Failure in Approvals.verifyTransferServiceIn.";
 		
 		// Lines found in 'Description'
-		strArray = driver.findElement(By.xpath("//texarea[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.description']")).getAttribute("value").split("\n");
-		//strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n");
-		//  	
+		//strArray = driver.findElement(By.name("x_tango_mobility_tangoe_mobility_order_request.description")).getAttribute("value").split("\n");
+		
+		WaitForElementPresent(By.name("x_tango_mobility_tangoe_mobility_order_request.description"), 5);
+		//WaitForElementPresent(By.xpath(commonXpathForDescriptions), 5);
+		
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n");
+		//strArray = driver.findElement(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/..")).getAttribute("value").split("\n");  	
 		List<String> descriptionLines = new ArrayList<String>(); 
 				
 		System.out.println("Description:");
@@ -427,10 +445,10 @@ public class Approvals extends BaseClass
 		
 		
 		// Lines expected in 'Description'		
-		String title = "Order for " + userLimitedShorterName + "."; // Change it to:
+		String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + ".";  //"Order for " + userLimitedShorterName + "."; // Change it to:
 																	// orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + newServiceNumber + "]."; 
-																	// it after defect is fixed 
-		
+																	// it after defect 114917 is fixed 
+				
 		//String totalCost = "Total Cost:" + AccessoriesDetailsExpected.finalCost + " Total Monthly Cost:" + AccessoriesDetailsExpected.finalCostMonthly; 
 		String totalCost = "Total Cost:$" + ShoppingCart.costOneTime + " Total Monthly Cost:$" + ShoppingCart.costMonthly;
 		
@@ -464,7 +482,7 @@ public class Approvals extends BaseClass
 		
 		String additionalInfoCarrierAcctNumber = "Carrier Account Number:" + PlanInfoActions.carrierAccountNumber; 
 		
-		String shipTo = "Ship to: " + userLimitedShorterName + " " + addressLineOne + " " + cityOrderActions + " " + stateOrderActions + " " + zipCodeOrderActions + " ."; 
+		String shipTo = "Ship to: " + userName + " " + addressLineOne + " " + cityOrderActions + " " + stateOrderActions + " " + zipCodeOrderActions + "  - please expedite this shipment."; 
 		
 		String orderId = "Tangoe Order ID:" + orderDetailsObjectExpected.orderId;
 		

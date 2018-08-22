@@ -39,7 +39,7 @@ public class TC0043TransferServiceInReject extends BaseClass {
 		
 		CommonTestSteps.Logout();
 		
-		BaseClass.stepComplete("Run upgrade device action complete. Now will approve the order.", "");
+		BaseClass.stepComplete("Run Transfer Service In action complete. Now will reject the order.", "");
 
 		// login as approver.
 		CommonTestSteps.LoginApproverBrowserOpen();		
@@ -50,7 +50,7 @@ public class TC0043TransferServiceInReject extends BaseClass {
 		// this finds the approval entry for the Upgrade Device order just placed by the limited user, approves it, and 
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
-		Approvals.selectAndApproveOrder();
+		Approvals.selectAndRejectOrder();
 		
 		CommonTestSteps.Logout();
 		
