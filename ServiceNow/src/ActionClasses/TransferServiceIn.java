@@ -342,10 +342,10 @@ public class TransferServiceIn extends BaseClass {
 		// STEP 2 - SELECT YOUR CURRENT CARRIER
 		
 		// Select current carrier from dropdown list
-		SelectCurrentCarrier.selectCurrentCarrier("Verizon Wireless");
+		SelectCurrentCarrier.selectCurrentCarrier(currentCarrier);
 		
 		// Select a new carrier - service will be moved to a different carrier.
-		SelectCurrentCarrier.selectNewCarrier("Sprint");
+		SelectCurrentCarrier.selectNewCarrier(newCarrier);
 	
 		SelectCurrentCarrier.clickNextButton();
 		
@@ -526,6 +526,7 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
 
+		orderDetailsObjectExpected.orderType = "Port Number Order";
 		
 	}
 	

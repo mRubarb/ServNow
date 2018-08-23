@@ -405,7 +405,7 @@ public class ProvideAdditionalInfoPage extends BaseClass
 	}		
 	
 	
-	// this populates additional information when doing Upgrade Device action.   
+	// this populates additional information when doing Transfer Service In action.   
 	public static void enterMissingInfoTransferServiceIn() throws InterruptedException
 	{
 		
