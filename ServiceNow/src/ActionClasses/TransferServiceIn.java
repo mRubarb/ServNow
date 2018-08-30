@@ -243,7 +243,9 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
-		 	
+		
+		orderDetailsObjectExpected.orderType = "Transfer Service In Order";
+		
 	}
 
 	public static void setOrderTypeForPostApproval(boolean txAndPort) {
@@ -279,9 +281,9 @@ public class TransferServiceIn extends BaseClass {
 		
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
 		OrderSubmittedPage.VerifyShippingInformation();
-		//OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
-		//OrderSubmittedPage.verifyDeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
-		//OrderSubmittedPage.verifyPlanSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details
+		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
+		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
+		OrderSubmittedPage.verifyOrderSegmentPlan();  // -- TBD - Order Segment section not included in Order's details
 		// SFD 114900
 		
 	}
@@ -340,10 +342,10 @@ public class TransferServiceIn extends BaseClass {
 		// STEP 2 - SELECT YOUR CURRENT CARRIER
 		
 		// Select current carrier from dropdown list
-		SelectCurrentCarrier.selectCurrentCarrier("Verizon Wireless");
+		SelectCurrentCarrier.selectCurrentCarrier(currentCarrier);
 		
 		// Select a new carrier - service will be moved to a different carrier.
-		SelectCurrentCarrier.selectNewCarrier("Sprint");
+		SelectCurrentCarrier.selectNewCarrier(newCarrier);
 	
 		SelectCurrentCarrier.clickNextButton();
 		
@@ -524,6 +526,7 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
 
+		orderDetailsObjectExpected.orderType = "Port Number Order";
 		
 	}
 	

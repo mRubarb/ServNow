@@ -91,6 +91,8 @@ public class BaseClass
 	public static String contactNumber = "7812739306";	
 	public static String newServiceNumber = "5669879877";
 	public static String pinOrPassword = "1234";
+	public static String currentCarrier = "Verizon Wireless"; // this is used for Transfer Service In and Port orders
+	public static String newCarrier = "Sprint"; // this is used for Transfer Service In and Port orders
 	public static String serviceNumber = ""; // this is queried for in MyDevicesPage.	
 	public static String fullServiceNumber = ""; // this is queried for in MyDevicesPage.
 	public static String reasonAddDeviceAndService =  "Broken Device";

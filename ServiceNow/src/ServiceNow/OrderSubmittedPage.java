@@ -507,6 +507,11 @@ public class OrderSubmittedPage extends BaseClass
 					Assert.assertEquals(value, userLimitedFullNameExtended, errorMessage);
 					break;		
 					
+				case "Current Carrier":
+					// System.out.println("Label: " + label);
+					Assert.assertEquals(value, currentCarrier, errorMessage);
+					break;		
+				
 				default:
 					System.out.println("Property " + label + " not included in case...");
 					break;
