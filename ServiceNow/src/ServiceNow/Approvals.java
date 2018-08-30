@@ -414,6 +414,11 @@ public class Approvals extends BaseClass
 				verifyTransferServiceIn();
 				break;
 			}	
+			case transferServiceOut:
+			{
+				VerifyTransferServiceOut();
+				break;
+			}						
 			case none:
 			{
 				Assert.fail("Error in Approvals.VerifyApprovalPageData, reached an incorrect case value 'none'.");
@@ -697,7 +702,25 @@ public class Approvals extends BaseClass
 		
 	}
 
+	public static void VerifyTransferServiceOut() throws Exception 
+	{
+		DebugTimeout(0, "Verify transfer service out in approval page.");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); 		
+		String expectedTitle = DeviceInfoActions.transferServiceOut + " Order for " + userLimitedShorterName + " [" + fullServiceNumber + "].";
 
+		// verify title
+		Assert.assertEquals(strArray[0].trim(), expectedTitle, "");
+		
+		Assert.assertEquals(strArray[2],"Additional Info:","");		
+		Assert.assertEquals(strArray[3].replace("Additional Instructions:",""), additionalInstructions,""); 
+		Assert.assertEquals(strArray[4].replace("Contact Phone Number:",""), contactNumber,"");
+		Assert.assertEquals(strArray[5].replace("Ext:",""), extension,"");
+		Assert.assertEquals(strArray[6].replace("Personal E-mail Address:",""), approverAdminMail,"");		
+		Assert.assertEquals(strArray[7].replace("Service Number:",""), serviceNumber,"");		
+		Assert.assertEquals(strArray[9].replace("Tangoe Order ID:",""), orderDetailsObjectExpected.orderId,"");		
+		Assert.assertEquals(strArray[10].replace("External Order Number:",""), orderDetailsObjectExpected.externalOrderId,"");		
+	}		
+	
 	public static void VerifyDeactivate() throws Exception
 	{
 		DebugTimeout(0, "Verify Deactivate in approval page.");
