@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import com.gargoylesoftware.htmlunit.javascript.host.dom.ShadowRoot;
+
 import ActionClasses.UpgradeDevice;
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
@@ -257,7 +259,8 @@ public class OrderSubmittedPage extends BaseClass
 			
 	}
 */
-	/*
+
+
 	// //////////////////////////////////////////////////////////////////
 	// verify additional information section for deactivate action.
 	// //////////////////////////////////////////////////////////////////		
@@ -298,21 +301,32 @@ public class OrderSubmittedPage extends BaseClass
 	}		
 	
 	
-	public static void verifyAdditionalInformationUpgradeService() 
+	public static void verifyAdditionalInformationUpgradeService() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.verifyAdditionalInformationUpgradeService.";		
 
 		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
-		Assert.assertEquals(tmpStringArray[0].replace("Current Device Make", ""), IdentifyDevices.oldManufacturer, errMessage);
-		Assert.assertEquals(tmpStringArray[1].replace("Current Device Model ", ""), IdentifyDevices.oldModel, errMessage);		
-		Assert.assertEquals(tmpStringArray[2].replace("Current Device Serial Number", ""), IdentifyDevices.oldSerialNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[3].replace("Current Device Serial Number Type", ""), IdentifyDevices.oldSerialNumberType, errMessage);
-		Assert.assertEquals(tmpStringArray[4].replace("Contact Phone Number ", ""), contactNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[5].replace("Ext ", ""), extension, errMessage);		
-		Assert.assertEquals(tmpStringArray[6].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
-		Assert.assertEquals(tmpStringArray[7].replace("Service Number", ""), serviceNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[8].replace("Reason", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);
+		int x = 0;
+		
+		for(String str : tmpStringArray)
+		{
+			System.out.println(x + " " + str);
+			x++;
+		}
+		
+		Pause("");
+		
+		Assert.assertEquals(tmpStringArray[0].replace("Current Device Make", "").trim(), IdentifyDevices.oldManufacturer, errMessage);
+		Assert.assertEquals(tmpStringArray[1].replace("Current Device Model ", "").trim(), IdentifyDevices.oldModel, errMessage);		
+		Assert.assertEquals(tmpStringArray[2].replace("Current Device Serial Number", "").trim(), IdentifyDevices.oldSerialNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[3].replace("Current Device Serial Number Type", "").trim().toUpperCase(), IdentifyDevices.oldSerialNumberType, errMessage);
+		// item 4 is not related to additional information items.
+		Assert.assertEquals(tmpStringArray[5].replace("Contact Phone Number ", "").trim(), contactNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[6].replace("Ext ", "").trim(), extension, errMessage);	
+		Assert.assertEquals(tmpStringArray[7].replace("Additional Instructions ", "").trim(), additionalInstructions, errMessage);
+		Assert.assertEquals(tmpStringArray[8].replace("Service Number", "").trim(), serviceNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[9].replace("Reason", "").trim(), UpgradeDevice.reasonUpgradeDevice, errMessage);
 		
 	}	
 	
@@ -346,10 +360,6 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), DeviceInfoActions.currentVendorPortNumber, errorMessage);		
 		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), serviceNumber, errorMessage);		
 	}
-			
-	*/
-	
-	
 	
 	// ************ KEEP **************************
 	public static void verifyAdditionalInformationBlock() throws Exception // use it for all tx types
@@ -575,7 +585,7 @@ public class OrderSubmittedPage extends BaseClass
 	
 	// ** NOT USED - DUPLICATED - REPLACED BY  --> VerifyShippingInformation(); -- 10/20/2017
 	// this is for shipping information after approval.
-	/*public static void VerifyShippingInformationOrderAccessoriesPostApproval() throws Exception
+	public static void VerifyShippingInformationOrderAccessoriesPostApproval() throws Exception
 	{
 		String errMessage = "Wrong information found in test for shipping information in OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval.";
 		
@@ -587,7 +597,6 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(strArray[3].replace("Postal Code ", ""), zipCodeOrderActions, errMessage);
 		
 	}
-	*/
 	
 	public static void VerifyShippingInformation()
 	{

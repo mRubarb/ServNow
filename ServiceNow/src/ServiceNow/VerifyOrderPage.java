@@ -538,9 +538,8 @@ public class VerifyOrderPage extends BaseClass
 	}*/
 
 
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/3/17 -- Ana
 	// this verification is called when processing a deactivate. 
-	/*public static void VerifyAdditionalInformationDeactivate() throws Exception
+	public static void VerifyAdditionalInformationDeactivate() throws Exception
 	{
 		String errorMessage = "Failure in checking additional information for Deactivate Service action in DeactivateService.VerifyAdditionalInformationDeactivate.";		
 		
@@ -549,7 +548,7 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(GetAdditionalInfoDeactivate()[2], serviceNumber, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoDeactivate()[3], reasonAction, errorMessage);
 
-	}*/
+	}
 	
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
@@ -748,7 +747,7 @@ public class VerifyOrderPage extends BaseClass
 	}*/
 
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	/*
+
 	public static void VerifyAdditionalInformationUpgradeDevice() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
@@ -756,7 +755,7 @@ public class VerifyOrderPage extends BaseClass
 		
 		VerifyAdditionalInformationCommon(strArray, errMessage);
 		Assert.assertEquals(strArray[4].replace("Reason ", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);		
-	} */
+	} 
 	
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
@@ -778,13 +777,13 @@ public class VerifyOrderPage extends BaseClass
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// can be used by other methods for common sections. 
-	/*public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
+	public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
 	{
 		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
 		Assert.assertEquals(strArray[1].replace("Ext ", ""), extension, errMessage);		
 		Assert.assertEquals(strArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
 		Assert.assertEquals(strArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
-	}*/
+	}
 	
 	public static void VerifyShippingInformation() throws Exception
 	{
@@ -910,16 +909,15 @@ public class VerifyOrderPage extends BaseClass
 							 strArray[4].replace("User ","")};
 	}	
 	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	/*public static String [] GetAdditionalInfoDeactivate()
+	public static String [] GetAdditionalInfoDeactivate()
 	{
 		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
 		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
 				              strArray[1].replace("Additional Instructions ", ""),
 							  strArray[2].replace("Service Number ", ""), 
 							  strArray[3].replace("Reason ", "")};
-	}*/
+	}
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// return all items in additional info block. this is a certain format. it isn't global for everything.

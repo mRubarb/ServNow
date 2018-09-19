@@ -33,7 +33,8 @@ public class DeactivateService extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
-		VerifyOrderPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationDeactivate();  // **** TEST *****
+		// VerifyOrderPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationDeactivate();  // **** TEST *****
+		VerifyOrderPage.VerifyAdditionalInformationDeactivate();
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		
@@ -53,7 +54,8 @@ public class DeactivateService extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
+		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
+		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
