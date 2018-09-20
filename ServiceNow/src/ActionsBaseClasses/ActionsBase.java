@@ -182,7 +182,7 @@ public class ActionsBase extends BaseClass
 	{
 		ServiceNow.MyOrdersPage.WaitForPageToLoad();
 		ServiceNow.MyOrdersPage.LocateOrderActionBlock();
-		ServiceNow.MyOrdersPage.VerifyOrderInfoMyOrdersPageMainPage();
+		ServiceNow.MyOrdersPage.VerifyOrderInfoMyOrdersPageMainPage(); // bladdzzz
 	}		
 	
 	// this verifies each row in the order details page. this is for the order details page after an order action 

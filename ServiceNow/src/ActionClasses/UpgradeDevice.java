@@ -73,9 +73,9 @@ public class UpgradeDevice extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
-		VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
+		//VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
+		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice();
 		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
-				
 		VerifyOrderPage.verifyUpgradeDeviceAccessoriesAction();	// accessory section	
 		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
 		
@@ -98,7 +98,8 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -160,13 +161,16 @@ public class UpgradeDevice extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
-		VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
+		//VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
+		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice(); 
 		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
 		VerifyOrderPage.VerifyPlanInfoUpgradeDevice(); // plan section
 		
 		VerifyOrderPage.verifyUpgradeDeviceAccessoriesAction();	// accessory section	
 		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
 		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly
+		
+		Pause("");
 		
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
@@ -256,14 +260,15 @@ public class UpgradeDevice extends ActionsBase
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyShippingInformation(); 
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyDeviceSectionUpgradeDevice();
 		
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
-		// VerifyOrderDetailsHistoryAccessoriesAfterApproval(action);;
+		// VerifyOrderDetailsHistoryAccessoriesAfterApproval(action);; // done in main test suite.
 	}
 	
 	public static void SetOrderTypeForPostApproval()

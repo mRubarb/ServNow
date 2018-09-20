@@ -47,7 +47,7 @@ public class TC0030UpgradeDeviceApprove extends BaseClass
 		UpgradeDevice.runUpgradeDevice();
 		
 		CommonTestSteps.Logout();
-		
+
 		BaseClass.stepComplete("Run upgrade device action complete. Now will approve the order.", "");
 
 		// login as approver.

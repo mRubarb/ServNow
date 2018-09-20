@@ -38,9 +38,13 @@ public class UpgradeService extends ActionsBase
 		MyServicesPage.SelectUpgradeServiceAction(); // call different version of this method 8/1/18 bob 
 		
 		ChooseDevicePage.WaitForPageToLoadUpgradeService();
+		ShowText("Start");
 		ChooseDevicePage.getExistingDeviceInfo();
 		VerifyPageTitle(upgradeService);
 
+		
+		Pause("Done");
+		
 		//ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
 		ChooseDevicePage.clickNextButton();
 		
@@ -68,10 +72,9 @@ public class UpgradeService extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
 		// VerifyOrderPage.verifyAdditionalInformationBlock();  // additional info section 
-		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice();
-		
-		VerifyOrderPage.VerifyPlanInfoUpgradeDevice(); // plan section
-		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly
+		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice(); // common to upgrade service
+		VerifyOrderPage.VerifyPlanInfoUpgradeDevice(); // plan section - common to upgrade service
+		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly - common to upgrade service
 
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
@@ -109,7 +112,6 @@ public class UpgradeService extends ActionsBase
 		// at this point the order type has to be changed so the order can be found in the order approvals list.
 		// in the order approvals page the status is called  "Upgrade Order";
 		orderDetailsObjectExpected.orderType = "Upgrade Order";
-		
 	}
 	
 	
@@ -166,14 +168,13 @@ public class UpgradeService extends ActionsBase
 		//OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
 		*/
-		// bladdxxx new below
+		// new below
 		OrderSubmittedPage.verifyAdditionalInformationUpgradeService(); 
 		OrderSubmittedPage.VerifyShippingInformation();
-		// OrderSubmittedPage.VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method. // this was commented.
-		// bladdxxx new above
+		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
-		//VerifyOrderDetailsHistoryAccessoriesAfterApproval(action);; // done further below
+		//VerifyOrderDetailsHistoryAccessoriesAfterApproval(action); // this is called in the main test suite
 	}
 	
 	public static void SetOrderTypeForPostApproval()

@@ -63,41 +63,30 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
 		Approvals.selectAndApproveOrder();
-		
+
 		CommonTestSteps.Logout();
-		
+
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		UpgradeService.SetOrderTypeForPostApproval(); // bladdxxx uncomment
-
-		/*
-		CreateOrderDetailsExpectedObject();
-
-		orderDetailsObjectExpected.orderId = "13298096";
-		orderDetailsObjectExpected.externalOrderId = "1537381775994e2a133a1d6c7fc984b4";
-		orderDetailsObjectExpected.orderType = "Upgrade Service";		
-		orderDetailsObjectExpected.status = "Awaiting Approval in ServiceNow";
-	
-		fullServiceNumber = "+1 (555) 123-3698";
-		serviceNumber = "5551233698";
-		*/
+		UpgradeService.SetOrderTypeForPostApproval();
+		
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
 		
 		// go to 'my orders main page'
 		CommonTestSteps.GoToMyOrders();		
+
+		//orderDetailsObjectExpected.status = "In Fulfillment";
 		
 		// this verifies the order info in the 'my orders' page. this run's a loop on the 
 		// verification to allow  SN to sync with command. 
 		UpgradeService.VerifyLimitedUserOrderMyOrdersMainPage();
 		
 		// this verifies the order details under the order that was verified in 'my orders' page. 
-		UpgradeService.VerifyOrderDetailsPagePostApproval();
+		UpgradeService.VerifyOrderDetailsPagePostApproval(); 
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
-		//UpgradeService.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve); 
-		// bladdxxx - above fails at very top WaitForElementVisible(By.xpath("(//label[text()='Event'])[5]"), MainTimeout); 
-		// also need to add '4 SIM ID / ICCID 6456546645'
+		UpgradeService.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve); 
 		
 		BaseClass.stepComplete("Upgrade Service Test Complete.", "");
 		

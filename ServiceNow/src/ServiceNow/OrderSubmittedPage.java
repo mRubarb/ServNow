@@ -307,21 +307,16 @@ public class OrderSubmittedPage extends BaseClass
 
 		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
-		int x = 0;
-		
-		for(String str : tmpStringArray)
-		{
-			System.out.println(x + " " + str);
-			x++;
-		}
-		
-		Pause("");
+		//int x = 0;
+		//for(String str : tmpStringArray){System.out.println(x + " " + str);	x++;}
 		
 		Assert.assertEquals(tmpStringArray[0].replace("Current Device Make", "").trim(), IdentifyDevices.oldManufacturer, errMessage);
 		Assert.assertEquals(tmpStringArray[1].replace("Current Device Model ", "").trim(), IdentifyDevices.oldModel, errMessage);		
 		Assert.assertEquals(tmpStringArray[2].replace("Current Device Serial Number", "").trim(), IdentifyDevices.oldSerialNumber, errMessage);
 		Assert.assertEquals(tmpStringArray[3].replace("Current Device Serial Number Type", "").trim().toUpperCase(), IdentifyDevices.oldSerialNumberType, errMessage);
 		// item 4 is not related to additional information items.
+		//IdentifyDevices.simId
+		Assert.assertEquals(tmpStringArray[4].replace("SIM ID / ICCID ", "").trim(),IdentifyDevices.simId , errMessage);
 		Assert.assertEquals(tmpStringArray[5].replace("Contact Phone Number ", "").trim(), contactNumber, errMessage);
 		Assert.assertEquals(tmpStringArray[6].replace("Ext ", "").trim(), extension, errMessage);	
 		Assert.assertEquals(tmpStringArray[7].replace("Additional Instructions ", "").trim(), additionalInstructions, errMessage);
@@ -809,6 +804,17 @@ public class OrderSubmittedPage extends BaseClass
 			AccessoriesDetailsExpected.verifyOrderAccessoriesManufacturers(listAccessoriesDetails);
 		}
 	}
+	
+	// verify status per 'orderDetailsObjectExpected' object.
+	public static void VerifyStatusUpgradeService()
+	{
+		errMessage = "Failed verification in OrderSubmittedPage.VerifyStatusUpgradeService.";
+		
+		// setup the expected status string
+		String statusText = orderDetailsObjectExpected.status.split(" ")[0] + " " + orderDetailsObjectExpected.status.split(" ")[1];
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Tangoe Order Status']/following ::span[1]")).getText(), statusText, errMessage);
+	}
+	
 	
 	
 	// this is status and vendor. the status text is only part of the complete expected status. 
