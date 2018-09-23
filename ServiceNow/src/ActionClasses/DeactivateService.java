@@ -54,6 +54,7 @@ public class DeactivateService extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
 		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
 		
@@ -209,6 +210,7 @@ public class DeactivateService extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		//ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
 		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
 		

@@ -53,7 +53,10 @@ public class SuspendService extends ActionsBase
 
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
+		OrderSubmittedPage.VerifyTopSectionLowerPart(); // 9/23/18
+		
+		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
+		OrderSubmittedPage.VerifyAdditionalInformationBothSuspends();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -82,8 +85,10 @@ public class SuspendService extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
+		ServiceNow.OrderSubmittedPage.VerifyTopSectionLowerPart(); // 9/23/18
 		ServiceNow.OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
+		// ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
+		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationBothSuspends(); // 923/18
 		ServiceNow.OrderSubmittedPage.VerifyApprovals();		
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 

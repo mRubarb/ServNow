@@ -143,12 +143,10 @@ public class UpgradeDevice extends ActionsBase
 		ChoosePlanPage.selectFirstLastOptionalFeature();
 		ChoosePlanPage.clickNextButton();
 
-				
 		VerifyPageTitle(upgradeDevice);
 		ChooseAccessoriesPage.loadAvailableAccessoriesIntoExpectedList();
 		ChooseAccessoriesPage.addAccessoryToCart_Upgrade(); 
 		
-
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
 		VerifyPageTitle(upgradeDevice);		
 		ProvideAdditionalInfoPage.EnterMissingInfoUpgradeDevice();
@@ -170,8 +168,6 @@ public class UpgradeDevice extends ActionsBase
 		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
 		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly
 		
-		Pause("");
-		
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 
@@ -191,7 +187,9 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();

@@ -41,9 +41,6 @@ public class UpgradeService extends ActionsBase
 		ShowText("Start");
 		ChooseDevicePage.getExistingDeviceInfo();
 		VerifyPageTitle(upgradeService);
-
-		
-		Pause("Done");
 		
 		//ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
 		ChooseDevicePage.clickNextButton();
@@ -58,7 +55,6 @@ public class UpgradeService extends ActionsBase
 		ChoosePlanPage.selectFirstLastOptionalFeature();
 		ChoosePlanPage.clickNextButton();
 		
-
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
 		VerifyPageTitle(upgradeService);		
 		ProvideAdditionalInfoPage.EnterMissingInfoUpgradeDevice();
@@ -75,7 +71,7 @@ public class UpgradeService extends ActionsBase
 		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice(); // common to upgrade service
 		VerifyOrderPage.VerifyPlanInfoUpgradeDevice(); // plan section - common to upgrade service
 		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly - common to upgrade service
-
+		
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 
@@ -95,9 +91,9 @@ public class UpgradeService extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		//OrderSubmittedPage.verifyAdditionalInformationBlock();
 		OrderSubmittedPage.verifyAdditionalInformationUpgradeService();
-		
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -172,6 +168,8 @@ public class UpgradeService extends ActionsBase
 		OrderSubmittedPage.verifyAdditionalInformationUpgradeService(); 
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
+		OrderSubmittedPage.VerifyTopSection();
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
 		//VerifyOrderDetailsHistoryAccessoriesAfterApproval(action); // this is called in the main test suite

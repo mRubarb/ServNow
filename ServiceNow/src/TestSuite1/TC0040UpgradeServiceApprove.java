@@ -67,17 +67,15 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 		CommonTestSteps.Logout();
 
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
-
-		UpgradeService.SetOrderTypeForPostApproval();
 		
+		UpgradeService.SetOrderTypeForPostApproval(); 
+
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
 		
 		// go to 'my orders main page'
 		CommonTestSteps.GoToMyOrders();		
 
-		//orderDetailsObjectExpected.status = "In Fulfillment";
-		
 		// this verifies the order info in the 'my orders' page. this run's a loop on the 
 		// verification to allow  SN to sync with command. 
 		UpgradeService.VerifyLimitedUserOrderMyOrdersMainPage();
@@ -89,7 +87,6 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 		UpgradeService.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve); 
 		
 		BaseClass.stepComplete("Upgrade Service Test Complete.", "");
-		
 	}
 	
 	@AfterClass

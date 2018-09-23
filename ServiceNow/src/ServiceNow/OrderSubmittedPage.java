@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.xerces.impl.dv.DVFactoryException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -42,7 +43,30 @@ public class OrderSubmittedPage extends BaseClass
 		// WaitForElementPresent(By.xpath("//td[text()='Entered Order Processing']"), MainTimeout); // this is too risky to wait for. timed out once. 		
 	}
 	
-
+	// 9/21/18
+	// this verifies the section in the lower part of the top section of the order details page shown after order 
+	// submit and order approve or reject. this also verifies the external order Id value that is shown after order submit.
+	public static void VerifyTopSectionLowerPart()
+	{
+		// limited user
+		Assert.assertEquals(driver.findElement(By.cssSelector(".tg-pad--eighth--top>div:nth-of-type(1)")).getText(), userLimitedShorterName);
+		// user department name
+		Assert.assertEquals(driver.findElement(By.cssSelector(".tg-pad--eighth--top>div:nth-of-type(2)")).getText(), userDepartmentName);
+		// first column title
+		Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='panel-1']/div/h3)[1]")).getText(), "Account Holder");
+		// second column title
+		Assert.assertEquals(driver.findElement(By.cssSelector("#panel-1>div:nth-of-type(2)>h3")).getText(), "Requested By");		
+		// Administrator
+		Assert.assertEquals(driver.findElement(By.cssSelector("#panel-1>div:nth-of-type(2)>div>div:nth-of-type(1)")).getText(), approverAdmin);		
+		// department
+		Assert.assertEquals(driver.findElement(By.cssSelector("#panel-1>div:nth-of-type(2)>div>div:nth-of-type(2)")).getText(), "Unknown");
+		// account holder
+		Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='panel-1']/div/h3)[1]")).getText(), "Account Holder");
+		// external order Id.
+		Assert.assertEquals(driver.findElement(By.xpath(".//*[@id='externalOrderNumber']")).getText(), orderDetailsObjectExpected.externalOrderId);
+	}
+	
+	
 	// get some of the information "ABOVE" the Account Holder information. not all information is present when an order is first submitted.
 	public static void VerifyTopSection() throws Exception 
 	{
@@ -52,8 +76,10 @@ public class OrderSubmittedPage extends BaseClass
 		tmpString = driver.findElement(By.xpath("//label[text()='Date Submitted']/../..")).getText();
 		tmpStringArray = tmpString.split(" ");
 
-		// for(int x = 0; x < tmpStringArray.length; x++){System.out.println(x + " " + tmpStringArray[x]);} // DEBUG view all strings
-
+		// need to see if expected size is found. 9/21/18
+		//System.out.println("*************************** Size of array = " + tmpStringArray.length);
+		//for(int x = 0; x < tmpStringArray.length; x++){System.out.println(x + " " + tmpStringArray[x]);} // DEBUG view all strings
+	
 		LocalDateTime ldt = LocalDateTime.now();
 		
 		for(int z = 0; z < tmpStringArray.length; z ++)
