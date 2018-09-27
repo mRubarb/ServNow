@@ -41,10 +41,11 @@ public class TransferServiceOut extends ActionsBase
 		ServiceNow.ProvideAdditionalInfoPage.WaitForPageToLoad();
 		ServiceNow.ProvideAdditionalInfoPage.PopulateFieldsTransferServiceOut();
 		ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
-		
+
 		// verify additional information in verify order page. 
 		VerifyOrderPage.WaitForPageToLoad();
-		VerifyOrderPage.verifyAdditionalInformationBlock();
+		//VerifyOrderPage.verifyAdditionalInformationBlock();
+		VerifyOrderPage.VerifyAdditionalInformationTransferServiceOut();		
 
 		// SUBMIT
 		VerifyOrderPage.clickSubmitBtn();
@@ -66,8 +67,9 @@ public class TransferServiceOut extends ActionsBase
 
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		//OrderSubmittedPage.VerifyAdditionalInformation();
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // ana's new method
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceOut();
+		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // ana's new method
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -92,8 +94,9 @@ public class TransferServiceOut extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
-		// ServiceNow.OrderSubmittedPage.VerifyAdditionalInformation();
-		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock();		
+		ServiceNow.OrderSubmittedPage.VerifyTopSectionLowerPart();
+		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationTransferServiceOut();
+		//ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock();		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 

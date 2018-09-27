@@ -66,6 +66,50 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(driver.findElement(By.xpath(".//*[@id='externalOrderNumber']")).getText(), orderDetailsObjectExpected.externalOrderId);
 	}
 	
+	// bladd
+	// 9/27/18
+	public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
+	{
+		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
+		Assert.assertEquals(strArray[1].replace("Ext ", ""), extension, errMessage);		
+		Assert.assertEquals(strArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(strArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
+	}	
+
+	// 9/27/18
+	public static void VerifyAdditionalInformationSwapDevice() throws Exception
+	{
+		errMessage = "Fail in VerifyOrderPage.VerifyAdditionalInformationUpdateFeature";
+		String strArray [] = driver.findElement(By.xpath("//div[@class='tg-space--eighth--top']/table/tbody")).getText().split("\n");
+		
+		VerifyAdditionalInformationCommon(strArray, errMessage);
+	
+	}
+	
+	// 9/27/18
+	// return all items in additional info block. this is a certain format. it isn't global for everything.
+	public static String [] GetAdditionalInfoTransferServiceOut()
+	{
+		String [] strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
+		return new String [] {strArray[0].replace("Additional Instructions ", ""),
+							  strArray[1].replace("Contact Phone Number ", ""),
+				              		  strArray[2].replace("Ext ", ""),
+							  strArray[3].replace("Personal E-mail Address ", ""), 
+							  strArray[4].replace("Service Number ", "")};
+	}
+	
+	// 9/27/18
+	// this verification is called when processing a transfer service out. 
+	public static void VerifyAdditionalInformationTransferServiceOut() throws Exception
+	{
+		String errorMessage = "Failure in checking additional information for Transfer Service Out action in DeactivateService.VerifyAdditionalInformationServiceOut.";		
+		
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], contactNumber, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], extension, errorMessage);		
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], approverAdminMail, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], serviceNumber, errorMessage);
+	}	
 	
 	// get some of the information "ABOVE" the Account Holder information. not all information is present when an order is first submitted.
 	public static void VerifyTopSection() throws Exception 

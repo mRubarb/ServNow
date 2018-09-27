@@ -64,8 +64,20 @@ public class TC0044TransferServiceOutAndApprove extends BaseClass
 
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		//CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service. // << ----  TAKE OUT !!!
+		/*
+		CreateOrderDetailsExpectedObject();
+
+		orderDetailsObjectExpected.orderId = "13298510";
+		orderDetailsObjectExpected.externalOrderId = "153807340056811611302308e9dc1521";
+		orderDetailsObjectExpected.orderType = "Upgrade Service";		
+		orderDetailsObjectExpected.status = "Awaiting Approval in ServiceNow";
+	
+		fullServiceNumber = "+1 (555) 123-3698";
+		serviceNumber = "5551233698";
 		
+
+		orderDetailsObjectExpected.status = "In Fulfillment";
+		*/
 		TransferServiceOut.SetOrderTypeForPostApproval();
 		
 		// login as limited user.
@@ -81,6 +93,7 @@ public class TC0044TransferServiceOutAndApprove extends BaseClass
 		// this verifies the order details under the order that was verified in 'my orders' page. 
 		TransferServiceOut.VerifyOrderDetailsPagePostApproval();
 		
+		// below is dine in method above.
 		// the order details page is open. it has synced with command so now the history section can be verified. 
 		//TransferServiceOut.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);
 		

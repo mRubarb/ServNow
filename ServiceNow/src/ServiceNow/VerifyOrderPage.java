@@ -553,7 +553,7 @@ public class VerifyOrderPage extends BaseClass
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing an update action. 
-	/*
+
 	public static void VerifyAdditionalInformationUpdateFeature() throws Exception
 	{
 		errMessage = "Fail in VerifyOrderPage.VerifyAdditionalInformationUpdateFeature";
@@ -562,8 +562,18 @@ public class VerifyOrderPage extends BaseClass
 		VerifyAdditionalInformationCommon(strArray, errMessage);
 
 		// css= #verify_properties > div:nth-child(2) table tbody tr:nth-of-type(1) // gets one element of additional info in verify orders page.
-	}*/
+	}
 	
+
+	// bladd
+	public static void VerifyAdditionalInformationSwapDevice() throws Exception
+	{
+		errMessage = "Fail in VerifyOrderPage.VerifyAdditionalInformationUpdateFeature";
+		strArray = driver.findElement(By.cssSelector("#verify_properties > div:nth-child(2) table tbody ")).getText().split("\n");
+		
+		VerifyAdditionalInformationCommon(strArray, errMessage);
+	
+	}
 	
 	// This verification is called when processing any kind of order. It applies to all orders --- 10/3/17 Ana
 	public static void verifyAdditionalInformationBlock() throws Exception
@@ -774,8 +784,6 @@ public class VerifyOrderPage extends BaseClass
 	}*/
 	
 	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	// can be used by other methods for common sections. 
 	public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
 	{
 		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
@@ -916,6 +924,31 @@ public class VerifyOrderPage extends BaseClass
 				              strArray[1].replace("Additional Instructions ", ""),
 							  strArray[2].replace("Service Number ", ""), 
 							  strArray[3].replace("Reason ", "")};
+	}
+	
+	// 9/27/18
+	// return all items in additional info block. this is a certain format. it isn't global for everything.
+	public static String [] GetAdditionalInfoTransferServiceOut()
+	{
+		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
+		return new String [] {strArray[0].replace("Additional Instructions ", ""),
+							  strArray[1].replace("Contact Phone Number ", ""),
+				              strArray[2].replace("Ext ", ""),
+							  strArray[3].replace("Personal E-mail Address ", ""), 
+							  strArray[4].replace("Service Number ", "")};
+	}
+	
+	// 9/27/18
+	// this verification is called when processing a transfer service out. 
+	public static void VerifyAdditionalInformationTransferServiceOut() throws Exception
+	{
+		String errorMessage = "Failure in checking additional information for Transfer Service Out action in VerifyOrderPage.VerifyAdditionalInformationServiceOut.";		
+		
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], contactNumber, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], extension, errorMessage);		
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], approverAdminMail, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], serviceNumber, errorMessage);
 	}
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana

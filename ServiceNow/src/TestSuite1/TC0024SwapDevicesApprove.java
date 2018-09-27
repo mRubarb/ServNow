@@ -34,7 +34,7 @@ public class TC0024SwapDevicesApprove extends BaseClass
 
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
-		
+		/*
 		// got to the devices page through the home page. 
 		CommonTestSteps.GoToDevicesPage();
 		
@@ -60,6 +60,17 @@ public class TC0024SwapDevicesApprove extends BaseClass
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
 		Approvals.selectAndApproveOrder();
+		*/
+		
+		CreateOrderDetailsExpectedObject();
+
+		orderDetailsObjectExpected.orderId = "13298540";
+		orderDetailsObjectExpected.externalOrderId = "15380859909409905bd0cf997e60fc9f";
+		orderDetailsObjectExpected.orderType = "Swap a Device";		
+		orderDetailsObjectExpected.status = "Awaiting Approval in ServiceNow";
+	
+		fullServiceNumber = "+1 (555) 123-3698";
+		serviceNumber = "5551233698";
 		
 		CommonTestSteps.Logout();
 		

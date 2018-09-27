@@ -40,7 +40,8 @@ public class SwapDevice extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(swapDevice);		
 		VerifyOrderPage.VerifySwapDeviceExistingAndNewDevices();
-		VerifyOrderPage.verifyAdditionalInformationBlock();
+		VerifyOrderPage.VerifyAdditionalInformationSwapDevice(); // 9/27/18
+		// VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		
@@ -60,7 +61,9 @@ public class SwapDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock();
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
+		OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();
+		// OrderSubmittedPage.verifyAdditionalInformationBlock();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -123,7 +126,8 @@ public class SwapDevice extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
-		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock();
+		ServiceNow.OrderSubmittedPage.VerifyTopSectionLowerPart();
+		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationSwapDevice();
 		
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
