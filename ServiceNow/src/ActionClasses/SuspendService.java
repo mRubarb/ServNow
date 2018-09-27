@@ -34,7 +34,8 @@ public class SuspendService extends ActionsBase
 
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(suspendActionTitle);		
-		VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationSuspend();
+		// VerifyOrderPage.verifyAdditionalInformationBlock();  
+		VerifyOrderPage.VerifyAdditionalInformationSuspend();
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		StoreOrderNumberToVariable(); // in suspend the order number is shown in the order submitted page.
@@ -102,6 +103,7 @@ public class SuspendService extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
+		OrderSubmittedPage.VerifyTopSectionLowerPart(); // 9/26/18
 		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
 		
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		

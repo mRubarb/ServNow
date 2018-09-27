@@ -743,7 +743,10 @@ public class Approvals extends BaseClass
 		CalendarDateTimeObject.VerifyPreferredSuspendionDateForApproval(strArray[6].replace("Preferred Suspension Date:", ""));
 		
 		// this covers the rest of the items.
-		VerifySubset(strArray);
+		//VerifySubset(strArray);
+		
+		VerifySubsetSuspend(strArray);
+		
 	}		
 	
 	public static void VerifyUnsuspend() throws Exception
@@ -974,6 +977,30 @@ public class Approvals extends BaseClass
 		Assert.assertEquals(tmpArray[8].replace("Tangoe Order ID:",""), orderDetailsObjectExpected.orderId,"");		
 		Assert.assertEquals(tmpArray[9].replace("External Order Number:",""), orderDetailsObjectExpected.externalOrderId,"");		
 	}
+	
+	// this tests suspend details 
+	public static void VerifySubsetSuspend(String [] tmpArray) throws Exception
+	{
+		// build title that is in short description. 
+		String title = orderDetailsObjectExpected.orderType + " Order for " + userLimitedShorterName + " [" + fullServiceNumber + "].";   
+
+		//for(String str : tmpArray)
+		//{
+		//	ShowText(str);			
+		//}
+		//Pause("STOP");
+		
+		Assert.assertEquals(tmpArray[0].trim(), title, "");
+		Assert.assertEquals(tmpArray[2],"Additional Info:","");		
+		Assert.assertEquals(tmpArray[3].replace("Contact Phone Number:",""), contactNumber,"");		
+		Assert.assertEquals(tmpArray[4].replace("Additional Instructions:",""), additionalInstructions,"");		
+		Assert.assertEquals(tmpArray[5].replace("Service Number:",""), serviceNumber,"");	
+		// preferred suspension date was done by caller.
+		Assert.assertEquals(tmpArray[7].replace("Hold Service:",""),"In pool for Bob Limited"); // added 9/26/18
+		Assert.assertEquals(tmpArray[9].replace("Tangoe Order ID:",""), orderDetailsObjectExpected.orderId,"");		
+		Assert.assertEquals(tmpArray[10].replace("External Order Number:",""), orderDetailsObjectExpected.externalOrderId,"");
+	}
+	
 	
 	// this tests items similar to many actions. 
 	public static void VerifySwapDevices(String [] additionalInformation) throws Exception

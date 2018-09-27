@@ -49,7 +49,7 @@ public class TC0022SuspendApprove extends BaseClass
 		CommonTestSteps.Logout();
 		
 		BaseClass.stepComplete("Run suspend action complete. Now will approve the order.", "");
-		
+
 		// login as approver.
 		CommonTestSteps.LoginApproverBrowserOpen();		
 		

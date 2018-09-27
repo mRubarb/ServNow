@@ -98,6 +98,7 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
 		
@@ -260,7 +261,9 @@ public class UpgradeDevice extends ActionsBase
 		
 		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
-		OrderSubmittedPage.VerifyShippingInformation(); 
+		OrderSubmittedPage.VerifyShippingInformation();
+		OrderSubmittedPage.VerifyTopSection();
+		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyDeviceSectionUpgradeDevice();
 		

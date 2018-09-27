@@ -705,7 +705,7 @@ public class VerifyOrderPage extends BaseClass
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing a suspend.
 	// NOTE: 'Hold Service' has defect DE# 107772.
-	/*
+
 	public static void VerifyAdditionalInformationSuspend() throws Exception
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationSuspend.";
@@ -715,15 +715,14 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(GetAdditionalInfoSuspend()[3]));		
 		
 		String holdServiceFound = driver.findElement(By.xpath("//td/label[text()='Hold Service']/../following-sibling::td/span")).getText(); 
-		// Assert.assertEquals(holdServiceFound, limitedUserPulldownSelection, errMessage); // <-- UNCOMMENT WHEN SFD 112978 IS FIXED
-		
-	}*/
+		Assert.assertEquals(holdServiceFound, limitedUserPulldownSelection, errMessage); // <-- UNCOMMENT WHEN SFD 112978 IS FIXED
+	}
 	
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing a suspend.
 	// NOTE: 'Hold Service' has defect DE# 107772.
-	/*public static void VerifyAdditionalInformationUnsuspend() throws Exception
+	public static void VerifyAdditionalInformationUnsuspend() throws Exception
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationSuspend.";
      
@@ -732,7 +731,7 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(GetAdditionalInfoUnsuspend()[2], serviceNumber, errMessage);
 		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(GetAdditionalInfoSuspend()[3]));	
 		Assert.assertEquals(GetAdditionalInfoUnsuspend()[4], userLimitedFullNameExtended, errMessage);
-	}*/	
+	}	
 	
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/3/17 -- Ana
