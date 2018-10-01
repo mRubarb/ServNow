@@ -64,20 +64,6 @@ public class TC0044TransferServiceOutAndApprove extends BaseClass
 
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		/*
-		CreateOrderDetailsExpectedObject();
-
-		orderDetailsObjectExpected.orderId = "13298510";
-		orderDetailsObjectExpected.externalOrderId = "153807340056811611302308e9dc1521";
-		orderDetailsObjectExpected.orderType = "Upgrade Service";		
-		orderDetailsObjectExpected.status = "Awaiting Approval in ServiceNow";
-	
-		fullServiceNumber = "+1 (555) 123-3698";
-		serviceNumber = "5551233698";
-		
-
-		orderDetailsObjectExpected.status = "In Fulfillment";
-		*/
 		TransferServiceOut.SetOrderTypeForPostApproval();
 		
 		// login as limited user.

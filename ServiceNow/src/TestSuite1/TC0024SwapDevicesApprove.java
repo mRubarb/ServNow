@@ -34,7 +34,7 @@ public class TC0024SwapDevicesApprove extends BaseClass
 
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
-		/*
+
 		// got to the devices page through the home page. 
 		CommonTestSteps.GoToDevicesPage();
 		
@@ -44,6 +44,7 @@ public class TC0024SwapDevicesApprove extends BaseClass
 		// 3) verify results in order-submitted/order-details page after su
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
 		SwapDevice.RunSwapDevice();
+
 		SwapDevice.SetupOrderDetailsExpectedObjectPreApproval();
 
 		CommonTestSteps.Logout();
@@ -60,18 +61,19 @@ public class TC0024SwapDevicesApprove extends BaseClass
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
 		Approvals.selectAndApproveOrder();
-		*/
-		
+ 
+		/*
 		CreateOrderDetailsExpectedObject();
 
-		orderDetailsObjectExpected.orderId = "13298540";
-		orderDetailsObjectExpected.externalOrderId = "15380859909409905bd0cf997e60fc9f";
+		orderDetailsObjectExpected.orderId = "13298568";
+		orderDetailsObjectExpected.externalOrderId = "153814952521998d47938a122c6bdb52";
 		orderDetailsObjectExpected.orderType = "Swap a Device";		
 		orderDetailsObjectExpected.status = "Awaiting Approval in ServiceNow";
 	
 		fullServiceNumber = "+1 (555) 123-3698";
 		serviceNumber = "5551233698";
-		
+		*/
+
 		CommonTestSteps.Logout();
 		
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details psge.", "");

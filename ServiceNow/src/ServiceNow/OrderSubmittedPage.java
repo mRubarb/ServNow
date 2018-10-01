@@ -86,6 +86,31 @@ public class OrderSubmittedPage extends BaseClass
 	
 	}
 	
+	public static void VerifyAdditionalInformationOrderDetailsAfterSubmitSwapDevice() throws Exception
+	{
+		
+		String [] strArray =  driver.findElement(By.xpath("//tbody")).getText().split("\n");
+		
+		// for(String str : strArray){ShowText(str);}
+		
+		Assert.assertEquals(strArray[0].replace("Current Device Make ", ""), IdentifyDevices.oldManufacturer, "");
+		Assert.assertEquals(strArray[1].replace("New Device Make ", ""), IdentifyDevices.newManufacturer, "");		
+		Assert.assertEquals(strArray[2].replace("Current Device Model ", ""), IdentifyDevices.oldModel, "");
+		Assert.assertEquals(strArray[3].replace("New Device Model ", ""), IdentifyDevices.newModel, "");
+		Assert.assertEquals(strArray[4].replace("Current Device Serial Number ", ""), IdentifyDevices. oldSerialNumber, "");
+		Assert.assertEquals(strArray[5].replace("Current Device Serial Number Type ", "").toUpperCase(), IdentifyDevices.oldSerialNumberType, "");
+		Assert.assertEquals(strArray[6].replace("SIM ID / ICCID ", ""), IdentifyDevices.simId, "");		
+ 		Assert.assertEquals(strArray[7].replace("New Device Serial Number ", ""), IdentifyDevices.newSerialNumber, "");
+		Assert.assertEquals(strArray[8].replace("New Device Serial Number Type ", ""), IdentifyDevices.newSerialNumberType, "");
+		Assert.assertEquals(strArray[9].replace("Contact Phone Number ", ""), contactNumber, "");
+		Assert.assertEquals(strArray[10].replace("Ext ", ""), extension, "");		
+		Assert.assertEquals(strArray[11].replace("Additional Instructions ", ""), additionalInstructions, "");
+		Assert.assertEquals(strArray[12].replace("Service Number ", ""), serviceNumber, "");		
+	}
+	
+	
+	
+	
 	// 9/27/18
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
 	public static String [] GetAdditionalInfoTransferServiceOut()
@@ -384,8 +409,6 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[1].replace("Current Device Model ", "").trim(), IdentifyDevices.oldModel, errMessage);		
 		Assert.assertEquals(tmpStringArray[2].replace("Current Device Serial Number", "").trim(), IdentifyDevices.oldSerialNumber, errMessage);
 		Assert.assertEquals(tmpStringArray[3].replace("Current Device Serial Number Type", "").trim().toUpperCase(), IdentifyDevices.oldSerialNumberType, errMessage);
-		// item 4 is not related to additional information items.
-		//IdentifyDevices.simId
 		Assert.assertEquals(tmpStringArray[4].replace("SIM ID / ICCID ", "").trim(),IdentifyDevices.simId , errMessage);
 		Assert.assertEquals(tmpStringArray[5].replace("Contact Phone Number ", "").trim(), contactNumber, errMessage);
 		Assert.assertEquals(tmpStringArray[6].replace("Ext ", "").trim(), extension, errMessage);	

@@ -745,7 +745,7 @@ public class VerifyOrderPage extends BaseClass
 	
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/3/17 -- Ana
-	/*
+
 	public static void VerifyAdditionalInformationOderAccessories() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
@@ -753,7 +753,7 @@ public class VerifyOrderPage extends BaseClass
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 
 		VerifyAdditionalInformationCommon(strArray, errMessage);
-	}*/
+	}
 
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 
