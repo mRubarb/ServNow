@@ -104,7 +104,8 @@ public class SuspendService extends ActionsBase
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionLowerPart(); // 9/26/18
-		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
+		// ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); 
+		OrderSubmittedPage.VerifyAdditionalInformationBothSuspends();
 		
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    

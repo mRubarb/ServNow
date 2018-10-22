@@ -217,7 +217,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 			Assert.fail("Failed to see 'tangoe last order status' and 'tangoe order status' columns go to correct state in StartPolling() method.");
 		}
 		
-		// bladd - don't need.
+		// don't need.
 		//if(startingStatesAlreadyUpdated)
 		//{
 		//	Pause("Already Complete.");

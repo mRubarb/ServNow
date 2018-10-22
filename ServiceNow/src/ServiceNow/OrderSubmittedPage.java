@@ -66,7 +66,6 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(driver.findElement(By.xpath(".//*[@id='externalOrderNumber']")).getText(), orderDetailsObjectExpected.externalOrderId);
 	}
 	
-	// bladd
 	// 9/27/18
 	public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
 	{
@@ -99,17 +98,16 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(strArray[3].replace("New Device Model ", ""), IdentifyDevices.newModel, "");
 		Assert.assertEquals(strArray[4].replace("Current Device Serial Number ", ""), IdentifyDevices. oldSerialNumber, "");
 		Assert.assertEquals(strArray[5].replace("Current Device Serial Number Type ", "").toUpperCase(), IdentifyDevices.oldSerialNumberType, "");
-		Assert.assertEquals(strArray[6].replace("SIM ID / ICCID ", ""), IdentifyDevices.simId, "");		
- 		Assert.assertEquals(strArray[7].replace("New Device Serial Number ", ""), IdentifyDevices.newSerialNumber, "");
-		Assert.assertEquals(strArray[8].replace("New Device Serial Number Type ", ""), IdentifyDevices.newSerialNumberType, "");
-		Assert.assertEquals(strArray[9].replace("Contact Phone Number ", ""), contactNumber, "");
-		Assert.assertEquals(strArray[10].replace("Ext ", ""), extension, "");		
-		Assert.assertEquals(strArray[11].replace("Additional Instructions ", ""), additionalInstructions, "");
-		Assert.assertEquals(strArray[12].replace("Service Number ", ""), serviceNumber, "");		
+		// dBase refresh 10/18/18 Assert.assertEquals(strArray[6].replace("SIM ID / ICCID ", ""), IdentifyDevices.simId, "");		
+ 		Assert.assertEquals(strArray[6].replace("New Device Serial Number ", ""), IdentifyDevices.newSerialNumber, "");
+		Assert.assertEquals(strArray[7].replace("New Device Serial Number Type ", ""), IdentifyDevices.newSerialNumberType, "");
+		Assert.assertEquals(strArray[8].replace("Contact Phone Number ", ""), contactNumber, "");
+		Assert.assertEquals(strArray[9].replace("Ext ", ""), extension, "");		
+		Assert.assertEquals(strArray[10].replace("Additional Instructions ", ""), additionalInstructions, "");
+		Assert.assertEquals(strArray[11].replace("Service Number ", ""), serviceNumber, "");
+		Assert.assertEquals(strArray[12].replace("Preferred Area Code ", ""), preferredAreaCode, "");
+		
 	}
-	
-	
-	
 	
 	// 9/27/18
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
@@ -117,23 +115,52 @@ public class OrderSubmittedPage extends BaseClass
 	{
 		String [] strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
 		return new String [] {strArray[0].replace("Additional Instructions ", ""),
+				  			  strArray[1].replace("Date of Birth ", ""),				
+							  strArray[2].replace("Contact Phone Number ", ""),
+				              strArray[3].replace("Ext ", ""),
+							  strArray[4].replace("Personal E-mail Address ", ""), 
+							  strArray[5].replace("Social Security Number ", ""),							  
+							  strArray[6].replace("Driver's License Number ", ""),							  
+							  strArray[7].replace("Driver's License Exp. Date ", ""),							  
+							  strArray[8].replace("Driver's License State/ Province ", ""),							  
+							  strArray[9].replace("Service Number ", "")};
+
+		
+		
+		/*
+		String [] strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
+		return new String [] {strArray[0].replace("Additional Instructions ", ""),
 							  strArray[1].replace("Contact Phone Number ", ""),
 				              		  strArray[2].replace("Ext ", ""),
 							  strArray[3].replace("Personal E-mail Address ", ""), 
 							  strArray[4].replace("Service Number ", "")};
+		(*/
 	}
 	
-	// 9/27/18
+	// 10/22/18
 	// this verification is called when processing a transfer service out. 
 	public static void VerifyAdditionalInformationTransferServiceOut() throws Exception
 	{
 		String errorMessage = "Failure in checking additional information for Transfer Service Out action in DeactivateService.VerifyAdditionalInformationServiceOut.";		
+
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
+		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], birthDate, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], contactNumber, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], extension, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], approverAdminMail, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[5], socialSecurityNumber, errorMessage);		
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[6], licenseNumber, errorMessage);		
+		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[7], licenseExpire, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[8], userStateShort, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[9], serviceNumber, errorMessage);
 		
+		/*
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], contactNumber, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], extension, errorMessage);		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], approverAdminMail, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], serviceNumber, errorMessage);
+		*/
 	}	
 	
 	// get some of the information "ABOVE" the Account Holder information. not all information is present when an order is first submitted.

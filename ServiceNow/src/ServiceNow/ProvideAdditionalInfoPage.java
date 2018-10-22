@@ -1,6 +1,8 @@
 package ServiceNow;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,7 +12,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import ActionClasses.UpgradeDevice;
-import HelperObjects.CalendarDateTimeObject;
 import HelperObjects.DeviceInfoActions;
 import HelperObjects.PlanInfoActions;
 
@@ -115,8 +116,10 @@ public class ProvideAdditionalInfoPage extends BaseClass
 	}
 
 	// fill in fields.
-	public static void PopulateFieldsTransferServiceOut() 
+	public static void PopulateFieldsTransferServiceOut() throws Exception 
 	{
+		String currentDay = LocalDate.now().toString().split("-")[2]; // store the current day so it can be used in date picker.
+		
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
 		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
 
@@ -127,7 +130,43 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).sendKeys(extension);
 		
 		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_PERSONAL_EMAIL")).clear();
-		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_PERSONAL_EMAIL")).sendKeys(approverAdminMail); 
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_PERSONAL_EMAIL")).sendKeys(approverAdminMail);
+		
+		// bring date picker up for birth date
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_DATE_OF_BIRTH")).click();
+		
+		// set date back one month
+		WaitForElementClickable(By.xpath("//th[@ng-click='prev()']"), ShortTimeout, "");
+		driver.findElement(By.xpath("//th[@ng-click='prev()']")).click();
+
+		// click today to close picker
+		WaitForElementClickable(By.xpath("//span[text()='" + currentDay + "']"), ShortTimeout, "");
+		driver.findElement(By.xpath("//span[text()='" + currentDay + "']")).click();
+	
+		// bring date picker up for license expiration date.
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_DRIVER_LICENSE_EXP_DATE")).click();
+
+		// set date forward one month
+		WaitForElementClickable(By.xpath("//th[@ng-click='next()']"), ShortTimeout, "");
+		driver.findElement(By.xpath("//th[@ng-click='next()']")).click();
+
+		// click today to close picker
+		WaitForElementClickable(By.xpath("//span[text()='" + currentDay + "']"), ShortTimeout, "");
+		driver.findElement(By.xpath("//span[text()='" + currentDay + "']")).click();
+
+		// license number
+		WaitForElementClickable(By.cssSelector("#ORDER_PROPERTY_FIELD_DRIVER_LICENSE_NUMBER"), ShortTimeout, "");
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_DRIVER_LICENSE_NUMBER")).sendKeys(licenseNumber);
+		
+		// license state
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_DRIVER_LICENSE_STATE")).sendKeys(userStateShort);
+		
+		// SS #
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_SOCIAL_SECURITY_NUMBER")).sendKeys(socialSecurityNumber);
+		
+		// store away 
+		licenseExpire = LocalDate.now().plusMonths(1).toString();
+		birthDate = LocalDate.now().minusMonths(1).toString();
 	}	
 	
 	

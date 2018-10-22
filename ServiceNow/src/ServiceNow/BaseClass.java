@@ -114,6 +114,10 @@ public class BaseClass
 	public static int orderBlockIndex = 0; // this is for holding a block location in 'my orders' page and is changed in various locations.
 	public static ApproverAction approverAction; // this is set in test cases (at the very top) to indicate the type of approval. 
 	public static ApprovalActionType approvalActionType = ApprovalActionType.none; // this is set in test cases (at the very top) to indicate the type of order action that will have it's content verified in the approval page.
+	public static String socialSecurityNumber = "111-22-3456"; 
+	public static String licenseNumber = "ETKV456";
+	public static String licenseExpire = "";
+	public static String birthDate = "";
 	
 	//approverAction
 	
@@ -130,7 +134,8 @@ public class BaseClass
 	public static String commandURL = "https://qa1cmd.tangoe.com/manage/login/login.trq";
 	
 	// service now
-	public static String serviceNowURL = "https://ven01270.service-now.com/";	
+	public static String serviceNowURL = "https://ven01270.service-now.com/"; // qa	
+	//public static String serviceNowURL = "https://ven01269.service-now.com/"; // dev
 	public static UserLoginMode userLoginMode;
 	
 	

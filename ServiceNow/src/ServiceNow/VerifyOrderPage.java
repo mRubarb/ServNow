@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import ActionClasses.UpgradeDevice;
+import ActionsBaseClasses.ActionsBase;
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
 import HelperObjects.DeviceInfoActions;
@@ -565,13 +566,13 @@ public class VerifyOrderPage extends BaseClass
 	}
 	
 
-	// bladd
 	public static void VerifyAdditionalInformationSwapDevice() throws Exception
 	{
-		errMessage = "Fail in VerifyOrderPage.VerifyAdditionalInformationUpdateFeature";
+		errMessage = "Fail in VerifyOrderPage.VerifyAdditionalInformationSwapDevice";
 		strArray = driver.findElement(By.cssSelector("#verify_properties > div:nth-child(2) table tbody ")).getText().split("\n");
 		
-		VerifyAdditionalInformationCommon(strArray, errMessage);
+		// changed where calls because of 10/2 dBase refresh.
+		VerifyAdditionalInformationCommonTwo(strArray, errMessage);
 	
 	}
 	
@@ -792,6 +793,17 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
 	}
 	
+	// after 10/2 database refresh.
+	public static void VerifyAdditionalInformationCommonTwo(String [] strArray, String errMessage)
+	{
+		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
+		Assert.assertEquals(strArray[1].replace("Ext ", ""), extension, errMessage);		
+		Assert.assertEquals(strArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(strArray[3].replace("Preferred Area Code ", ""), preferredAreaCode, errMessage);		
+		Assert.assertEquals(strArray[4].replace("Service Number ", ""), serviceNumber, errMessage);
+	}
+	
+	
 	public static void VerifyShippingInformation() throws Exception
 	{
 		String errorMessage = "Wrong information found in test for shipping information in VerifyOrderPage.VerifyShippingInformation.";
@@ -932,10 +944,15 @@ public class VerifyOrderPage extends BaseClass
 	{
 		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
 		return new String [] {strArray[0].replace("Additional Instructions ", ""),
-							  strArray[1].replace("Contact Phone Number ", ""),
-				              strArray[2].replace("Ext ", ""),
-							  strArray[3].replace("Personal E-mail Address ", ""), 
-							  strArray[4].replace("Service Number ", "")};
+				  			  strArray[1].replace("Date of Birth ", ""),				
+							  strArray[2].replace("Contact Phone Number ", ""),
+				              strArray[3].replace("Ext ", ""),
+							  strArray[4].replace("Personal E-mail Address ", ""), 
+							  strArray[5].replace("Social Security Number ", ""),							  
+							  strArray[6].replace("Driver's License Number ", ""),							  
+							  strArray[7].replace("Driver's License Exp. Date ", ""),							  
+							  strArray[8].replace("Driver's License State/ Province ", ""),							  
+							  strArray[9].replace("Service Number ", "")};
 	}
 	
 	// 9/27/18
@@ -945,10 +962,18 @@ public class VerifyOrderPage extends BaseClass
 		String errorMessage = "Failure in checking additional information for Transfer Service Out action in VerifyOrderPage.VerifyAdditionalInformationServiceOut.";		
 		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], contactNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], extension, errorMessage);		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], approverAdminMail, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], serviceNumber, errorMessage);
+		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], birthDate, errorMessage);
+		VerifyDates(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
+		
+		Pause("");
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], contactNumber, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], extension, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], approverAdminMail, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[5], socialSecurityNumber, errorMessage);		
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[6], licenseNumber, errorMessage);		
+		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[7], licenseExpire, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[8], userStateShort, errorMessage);
+		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[9], serviceNumber, errorMessage);
 	}
 	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
@@ -1008,4 +1033,27 @@ public class VerifyOrderPage extends BaseClass
 		
 		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Hold Service']/../following-sibling::td")).getText(), limitedUserPulldownSelection, "");
 	}
+	
+	// this uses the 'expectedDate' passed in to verify the 'actualDateOfBirth' that is in a different format.
+	// example of expectedDate: 2018-09-22
+	// example of actualDate: September 22nd 2018
+	public static void VerifyDates(String expectedDate, String actualDate) throws Exception
+	{
+		// get name of expected month from expectedDate and verify it is in actualDateOfBirth
+		String nameOfMonth = ActionsBase.FormatMonth(expectedDate.split("-")[1]);
+		Assert.assertTrue(actualDate.contains(nameOfMonth), "Failed to find correct month in actual.");
+		
+		// get year from expectedDate and verify it is in actualDateOfBirth
+		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[0]));
+		
+		// get day from expectedDate and verify it is in actualDateOfBirth
+		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[2]));
+		
+		//ShowText(expectedDateOfBirth);
+		//2018-09-22
+		//ShowText(actualDateOfBirth);
+		//September 22nd 2018
+		
+	}
+	
 }

@@ -25,19 +25,20 @@ public class TransferServiceOut extends ActionsBase
 		MyDevicesPage.WaitForPageToLoad();
 		MyDevicesPage.StoreServiceNumberFormats();
 		MyDevicesPage.SelectTransferOutAction();		
-		
+
 		// verify title and expected service number.
 		ServiceNow.ProvideAdditionalInfoPage.WaitForPageToLoad();
 		VerifyPageTitle(transferServiceOutActionTitle);
 		VerifyServiceNumberShownProvideInfoPage();
 		
+		// below - can't do anymore - dBase refresh changed everything to required.
 		// got to next page and verify expected service number.
-		ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
-		ServiceNow.VerifyOrderPage.WaitForPageToLoad();
-		VerifyServiceNumberShownVerifyOrderPage();
+		//ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
+		//ServiceNow.VerifyOrderPage.WaitForPageToLoad();
+		//VerifyServiceNumberShownVerifyOrderPage();
 		
-		// go back and populate provide additional info page.
-		ServiceNow.VerifyOrderPage.ClickBackButton();
+		// populate provide additional info page.
+		//ServiceNow.VerifyOrderPage.ClickBackButton();
 		ServiceNow.ProvideAdditionalInfoPage.WaitForPageToLoad();
 		ServiceNow.ProvideAdditionalInfoPage.PopulateFieldsTransferServiceOut();
 		ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
@@ -45,8 +46,10 @@ public class TransferServiceOut extends ActionsBase
 		// verify additional information in verify order page. 
 		VerifyOrderPage.WaitForPageToLoad();
 		//VerifyOrderPage.verifyAdditionalInformationBlock();
-		VerifyOrderPage.VerifyAdditionalInformationTransferServiceOut();		
-
+		VerifyOrderPage.VerifyAdditionalInformationTransferServiceOut();
+		
+		Pause("do not submitt");
+		
 		// SUBMIT
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete(); // added this Wednesday

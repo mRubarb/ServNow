@@ -132,7 +132,7 @@ public class OrderStatusPage extends ServiceNow.BaseClass
 
 	    for(int x = 4, z = 1; x < 13 ; x += 2, z++) 
 		{
-		    DebugTimeout(0,"Pass"); // frame click problem // bladdxx - removed 2/9/16 
+		    DebugTimeout(0,"Pass"); // frame click problem // removed 2/9/16 
 	    	WaitForElementVisible(By.xpath("(((//tr/td[text()='USER INFO']/../../tr)[" + x + "]/td))[5]"), MainTimeout);
 	    	WaitForElementClickable((By.xpath("(((//tr/td[text()='USER INFO']/../../tr)[" + x + "]/td))[5]")), MainTimeout, "failed wait for clickable in method GetAndOutputOrderList_Details");	    
 	    	

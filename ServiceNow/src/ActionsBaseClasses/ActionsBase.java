@@ -1,5 +1,8 @@
 package ActionsBaseClasses;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -182,7 +185,7 @@ public class ActionsBase extends BaseClass
 	{
 		ServiceNow.MyOrdersPage.WaitForPageToLoad();
 		ServiceNow.MyOrdersPage.LocateOrderActionBlock();
-		ServiceNow.MyOrdersPage.VerifyOrderInfoMyOrdersPageMainPage(); // bladdzzz
+		ServiceNow.MyOrdersPage.VerifyOrderInfoMyOrdersPageMainPage(); 
 	}		
 	
 	// this verifies each row in the order details page. this is for the order details page after an order action 
@@ -379,5 +382,14 @@ public class ActionsBase extends BaseClass
 	}
 
 
+	// this will return the text name for the month number (as string) sent to this method.
+	public static String FormatMonth(String month) throws Exception  
+	{
+	    SimpleDateFormat monthParse = new SimpleDateFormat("MM");
+	    SimpleDateFormat monthDisplay = new SimpleDateFormat("MMMM");
+	    return monthDisplay.format(monthParse.parse(month));
+	}	
+	
+	
 
 }
