@@ -167,6 +167,10 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		// store away 
 		licenseExpire = LocalDate.now().plusMonths(1).toString();
 		birthDate = LocalDate.now().minusMonths(1).toString();
+		
+		ShowText("1 " + licenseExpire);
+		ShowText("2 " + birthDate);
+		
 	}	
 	
 	

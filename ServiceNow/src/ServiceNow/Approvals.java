@@ -696,10 +696,6 @@ public class Approvals extends BaseClass
 		Assert.assertTrue(descriptionLines.contains(shipTo), errMessage);
 		Assert.assertTrue(descriptionLines.contains(orderId), errMessage);
 		Assert.assertTrue(descriptionLines.contains(externalOrderNumber), errMessage);
-		
-				
-		
-		
 	}
 
 	public static void VerifyTransferServiceOut() throws Exception 
@@ -713,13 +709,13 @@ public class Approvals extends BaseClass
 		
 		Assert.assertEquals(strArray[2],"Additional Info:","");		
 		Assert.assertEquals(strArray[3].replace("Additional Instructions:",""), additionalInstructions,"");		
-		// Assert.assertEquals(strArray[4].replace("Date of Birth:",""), additionalInstructions,""); 
+		Assert.assertEquals(strArray[4].replace("Date of Birth:",""), birthDate + " 00:00:00",""); 
 		Assert.assertEquals(strArray[5].replace("Contact Phone Number:",""), contactNumber,"");
 		Assert.assertEquals(strArray[6].replace("Ext:",""), extension,"");
 		Assert.assertEquals(strArray[7].replace("Personal E-mail Address:",""), approverAdminMail,"");
 		Assert.assertEquals(strArray[8].replace("Social Security Number:",""), socialSecurityNumber,"");		
 		Assert.assertEquals(strArray[9].replace("Driver's License Number:",""), licenseNumber,"");
-		//Assert.assertEquals(strArray[10].replace("Driver's License Exp. Date:",""), licenseNumber,"");		
+		Assert.assertEquals(strArray[10].replace("Driver's License Exp. Date:",""), licenseExpire + " 00:00:00","");		
 		Assert.assertEquals(strArray[11].replace("Driver's License State/ Province:",""), userStateShort,"");		
 		Assert.assertEquals(strArray[12].replace("Service Number:",""), serviceNumber,"");		
 		Assert.assertEquals(strArray[14].replace("Tangoe Order ID:",""), orderDetailsObjectExpected.orderId,"");		

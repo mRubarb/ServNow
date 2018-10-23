@@ -99,6 +99,8 @@ public class ChooseDevicePage extends BaseClass
 			
 		}
 		
+		
+		System.out.println("Selected Device Cost: " + deviceInfoActions.cost);
 		ShoppingCart.costOneTime = deviceInfoActions.cost;
 		
 		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		

@@ -59,7 +59,7 @@ public class TC0044TransferServiceOutAndApprove extends BaseClass
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
 		Approvals.selectAndApproveOrder();
-		
+
 		CommonTestSteps.Logout();
 
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
@@ -79,7 +79,7 @@ public class TC0044TransferServiceOutAndApprove extends BaseClass
 		// this verifies the order details under the order that was verified in 'my orders' page. 
 		TransferServiceOut.VerifyOrderDetailsPagePostApproval();
 		
-		// below is dine in method above.
+		// below is done in method above.
 		// the order details page is open. it has synced with command so now the history section can be verified. 
 		//TransferServiceOut.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);
 		

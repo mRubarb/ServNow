@@ -51,13 +51,13 @@ public class TC0046TransferServiceInAndPortApprove extends BaseClass {
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
 		Approvals.selectAndApproveOrder();
-		
+
 		CommonTestSteps.Logout();
 		
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		TransferServiceIn.setOrderTypeForPostApproval(true);
-		
+		TransferServiceIn.setOrderTypeForPostApproval(true); 
+
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
 		
@@ -75,8 +75,6 @@ public class TC0046TransferServiceInAndPortApprove extends BaseClass {
 		TransferServiceIn.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);
 
 		BaseClass.stepComplete("Transfer Service In And Port Test Complete.", "");
-		
-		
 	}
 	
 	@AfterClass

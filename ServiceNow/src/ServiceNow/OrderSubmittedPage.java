@@ -12,6 +12,7 @@ import org.testng.Assert;
 import com.gargoylesoftware.htmlunit.javascript.host.dom.ShadowRoot;
 
 import ActionClasses.UpgradeDevice;
+import ActionsBaseClasses.ActionsBase;
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
 import HelperObjects.DeviceInfoActions;
@@ -144,23 +145,15 @@ public class OrderSubmittedPage extends BaseClass
 		String errorMessage = "Failure in checking additional information for Transfer Service Out action in DeactivateService.VerifyAdditionalInformationServiceOut.";		
 
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
-		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], birthDate, errorMessage);
+		ActionsBase.VerifyDates(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], contactNumber, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], extension, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], approverAdminMail, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[5], socialSecurityNumber, errorMessage);		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[6], licenseNumber, errorMessage);		
-		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[7], licenseExpire, errorMessage);
+		ActionsBase.VerifyDates(licenseExpire, GetAdditionalInfoTransferServiceOut()[7]);		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[8], userStateShort, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[9], serviceNumber, errorMessage);
-		
-		/*
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], contactNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], extension, errorMessage);		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], approverAdminMail, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], serviceNumber, errorMessage);
-		*/
 	}	
 	
 	// get some of the information "ABOVE" the Account Holder information. not all information is present when an order is first submitted.
@@ -436,12 +429,12 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[1].replace("Current Device Model ", "").trim(), IdentifyDevices.oldModel, errMessage);		
 		Assert.assertEquals(tmpStringArray[2].replace("Current Device Serial Number", "").trim(), IdentifyDevices.oldSerialNumber, errMessage);
 		Assert.assertEquals(tmpStringArray[3].replace("Current Device Serial Number Type", "").trim().toUpperCase(), IdentifyDevices.oldSerialNumberType, errMessage);
-		Assert.assertEquals(tmpStringArray[4].replace("SIM ID / ICCID ", "").trim(),IdentifyDevices.simId , errMessage);
-		Assert.assertEquals(tmpStringArray[5].replace("Contact Phone Number ", "").trim(), contactNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[6].replace("Ext ", "").trim(), extension, errMessage);	
-		Assert.assertEquals(tmpStringArray[7].replace("Additional Instructions ", "").trim(), additionalInstructions, errMessage);
-		Assert.assertEquals(tmpStringArray[8].replace("Service Number", "").trim(), serviceNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[9].replace("Reason", "").trim(), UpgradeDevice.reasonUpgradeDevice, errMessage);
+		//Assert.assertEquals(tmpStringArray[4].replace("SIM ID / ICCID ", "").trim(),IdentifyDevices.simId , errMessage); // dBase upgrade.
+		Assert.assertEquals(tmpStringArray[4].replace("Contact Phone Number ", "").trim(), contactNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[5].replace("Ext ", "").trim(), extension, errMessage);	
+		Assert.assertEquals(tmpStringArray[6].replace("Additional Instructions ", "").trim(), additionalInstructions, errMessage);
+		Assert.assertEquals(tmpStringArray[7].replace("Service Number", "").trim(), serviceNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[8].replace("Reason", "").trim(), UpgradeDevice.reasonUpgradeDevice, errMessage);
 		
 	}	
 	
@@ -472,8 +465,18 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[2].replace("Contact Phone Number ",""), contactNumber, errorMessage);		
 		Assert.assertEquals(tmpStringArray[3].replace("Ext ",""), extension, errorMessage);		
 		Assert.assertEquals(tmpStringArray[4].replace("Additional Instructions ",""), additionalInstructions, errorMessage);		
-		Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), DeviceInfoActions.currentVendorPortNumber, errorMessage);		
-		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), serviceNumber, errorMessage);		
+		//Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), DeviceInfoActions.currentVendorPortNumber, errorMessage); // original failed.		
+		Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), currentCarrier, errorMessage);
+		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), newServiceNumber, errorMessage);		
+	}
+	
+	
+	public static void VerifyAdditionalInformationTrensferServiceInAndPort()
+	{
+		
+		
+		
+		
 	}
 	
 	// ************ KEEP **************************

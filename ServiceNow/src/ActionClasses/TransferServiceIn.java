@@ -279,7 +279,8 @@ public class TransferServiceIn extends BaseClass {
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
+		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
+		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
@@ -467,7 +468,6 @@ public class TransferServiceIn extends BaseClass {
 			ChooseAccessoriesPage.addAccessoriesToShoppingCart(false);
 		}
 		
-			
 		 // 22.	Click Next. You are in the Provide Additional Info step. 
 		ChooseAccessoriesPage.clickNextBtn();
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
@@ -495,7 +495,7 @@ public class TransferServiceIn extends BaseClass {
 		EnterShippingInfoPage.SelectDropdownToUnitedStates();
 		EnterShippingInfoPage.WaitForPageLoad();
 		EnterShippingInfoPage.VerifyErrorsUnitedStates();
-				
+		
 		 // 29.	Check box "Please expedite order".  Click "Next". You are in the "Verify Order" step
 		EnterShippingInfoPage.checkExpediteOrder();
 		EnterShippingInfoPage.clickNextBtn();
@@ -512,7 +512,6 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
-		
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete();
@@ -521,13 +520,14 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); 
+		
+		// OrderSubmittedPage.VerifyAdditionalInformation(); // useless	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
 
 		orderDetailsObjectExpected.orderType = "Port Number Order";
-		
 	}
 	
 	

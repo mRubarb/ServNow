@@ -1,4 +1,4 @@
- package ActionClasses;
+package ActionClasses;
 
 import org.testng.Assert;
 
@@ -168,7 +168,7 @@ public class UpgradeDevice extends ActionsBase
 		VerifyOrderPage.verifyUpgradeDeviceAccessoriesAction();	// accessory section	
 		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
 		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly
-		
+				
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 
@@ -188,9 +188,8 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
-		
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -236,7 +235,8 @@ public class UpgradeDevice extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // if things are mising, this won't find it.
+		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice(); 
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyShippingInformation();  // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
@@ -355,7 +355,7 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice(); // bladd
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();

@@ -390,6 +390,20 @@ public class ActionsBase extends BaseClass
 	    return monthDisplay.format(monthParse.parse(month));
 	}	
 	
-	
+	// this uses the 'expectedDate' passed in to verify the 'actualDateOfBirth' that is in a different format.
+	// example of expectedDate: 2018-09-22
+	// example of actualDate: September 22nd 2018
+	public static void VerifyDates(String expectedDate, String actualDate) throws Exception
+	{
+		// get name of expected month from expectedDate and verify it is in actualDateOfBirth
+		String nameOfMonth = FormatMonth(expectedDate.split("-")[1]);
+		Assert.assertTrue(actualDate.contains(nameOfMonth), "Failed to find correct month in actual.");
+		
+		// get year from expectedDate and verify it is in actualDateOfBirth
+		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[0]));
+		
+		// get day from expectedDate and verify it is in actualDateOfBirth
+		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[2]));
+	}	
 
 }

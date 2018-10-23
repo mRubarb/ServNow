@@ -68,10 +68,10 @@ public class TC0040UpgradeServiceApprove extends BaseClass
 
 		BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 		
-		UpgradeService.SetOrderTypeForPostApproval(); 
-
+		UpgradeService.SetOrderTypeForPostApproval();
+		
 		// login as limited user.
-		CommonTestSteps.LoginLimitedUserBrowserOpen();
+		CommonTestSteps.LoginLimitedUserBrowserOpen(); 
 		
 		// go to 'my orders main page'
 		CommonTestSteps.GoToMyOrders();		

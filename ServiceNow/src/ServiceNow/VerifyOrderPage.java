@@ -18,6 +18,7 @@ import HelperObjects.Feature;
 import HelperObjects.FeatureShoppingCart;
 import HelperObjects.PlanInfoActions;
 import HelperObjects.ShoppingCart;
+import ActionsBaseClasses.ActionsBase;
 
 
 public class VerifyOrderPage extends BaseClass
@@ -190,7 +191,7 @@ public class VerifyOrderPage extends BaseClass
 
 		Assert.assertEquals(strArray[0], deviceInfoActions.name, errMessage);		
 		Assert.assertEquals(strArray[1].replace("Vendor ", ""), deviceInfoActions.vendor, errMessage);		
-		//Assert.assertEquals(strArray[2].replace("Price ", ""), deviceInfoActions.cost, errMessage); // <-- UNCOMMENT WHEN SFD112988 IS FIXED
+		// Assert.assertEquals(strArray[2].replace("Price ", ""), deviceInfoActions.cost, errMessage); // <-- UNCOMMENT WHEN SFD112988 IS FIXED // 10/23/18 (still bad)
 																										// *************************************
 	}
 	
@@ -577,6 +578,7 @@ public class VerifyOrderPage extends BaseClass
 	}
 	
 	// This verification is called when processing any kind of order. It applies to all orders --- 10/3/17 Ana
+	// A down-side  with this is it doesn't find missing items 10/23/18.
 	public static void verifyAdditionalInformationBlock() throws Exception
 	{
 		String errorMessage = "Failure in checking additional information in VerifyOrder.verifyAdditionalInformationBlock.";		
@@ -962,16 +964,13 @@ public class VerifyOrderPage extends BaseClass
 		String errorMessage = "Failure in checking additional information for Transfer Service Out action in VerifyOrderPage.VerifyAdditionalInformationServiceOut.";		
 		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
-		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[1], birthDate, errorMessage);
-		VerifyDates(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
-		
-		Pause("");
+		ActionsBase.VerifyDates(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], contactNumber, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], extension, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], approverAdminMail, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[5], socialSecurityNumber, errorMessage);		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[6], licenseNumber, errorMessage);		
-		//Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[7], licenseExpire, errorMessage);
+		ActionsBase.VerifyDates(licenseExpire, GetAdditionalInfoTransferServiceOut()[7]);		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[8], userStateShort, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[9], serviceNumber, errorMessage);
 	}
@@ -1033,27 +1032,4 @@ public class VerifyOrderPage extends BaseClass
 		
 		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Hold Service']/../following-sibling::td")).getText(), limitedUserPulldownSelection, "");
 	}
-	
-	// this uses the 'expectedDate' passed in to verify the 'actualDateOfBirth' that is in a different format.
-	// example of expectedDate: 2018-09-22
-	// example of actualDate: September 22nd 2018
-	public static void VerifyDates(String expectedDate, String actualDate) throws Exception
-	{
-		// get name of expected month from expectedDate and verify it is in actualDateOfBirth
-		String nameOfMonth = ActionsBase.FormatMonth(expectedDate.split("-")[1]);
-		Assert.assertTrue(actualDate.contains(nameOfMonth), "Failed to find correct month in actual.");
-		
-		// get year from expectedDate and verify it is in actualDateOfBirth
-		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[0]));
-		
-		// get day from expectedDate and verify it is in actualDateOfBirth
-		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[2]));
-		
-		//ShowText(expectedDateOfBirth);
-		//2018-09-22
-		//ShowText(actualDateOfBirth);
-		//September 22nd 2018
-		
-	}
-	
 }

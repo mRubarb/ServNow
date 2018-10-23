@@ -30,7 +30,7 @@ public class TransferServiceOut extends ActionsBase
 		ServiceNow.ProvideAdditionalInfoPage.WaitForPageToLoad();
 		VerifyPageTitle(transferServiceOutActionTitle);
 		VerifyServiceNumberShownProvideInfoPage();
-		
+
 		// below - can't do anymore - dBase refresh changed everything to required.
 		// got to next page and verify expected service number.
 		//ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
@@ -47,8 +47,6 @@ public class TransferServiceOut extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		//VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.VerifyAdditionalInformationTransferServiceOut();
-		
-		Pause("do not submitt");
 		
 		// SUBMIT
 		VerifyOrderPage.clickSubmitBtn();

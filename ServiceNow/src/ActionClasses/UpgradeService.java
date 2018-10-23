@@ -59,7 +59,7 @@ public class UpgradeService extends ActionsBase
 		VerifyPageTitle(upgradeService);		
 		ProvideAdditionalInfoPage.EnterMissingInfoUpgradeDevice();
 		ProvideAdditionalInfoPage.clickNextBtn();
-		
+
 		EnterShippingInfoPage.WaitForPageLoad();
 		VerifyPageTitle(upgradeService);
 		EnterShippingInfoPage.VerifyCorrectDataDeviceAction();
@@ -139,6 +139,7 @@ public class UpgradeService extends ActionsBase
 		OrderSubmittedPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
+		OrderSubmittedPage.verifyAdditionalInformationUpgradeService();
 		//OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.VerifyPlanSectionUpgradeDevice();
 		
