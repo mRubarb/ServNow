@@ -46,9 +46,14 @@ public class TC0021PortNumberReject extends BaseClass
 		// 3) verify results in order-submitted/order-details page
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
 		PortNumber.RunPortNumber();
-		
-		//DebugTimeout(3, "Freeze");
-		
+
+		CreateOrderDetailsExpectedObject();
+
+		orderDetailsObjectExpected.orderId = "13295456";
+		orderDetailsObjectExpected.externalOrderId = "15404160649773f8aca1f191aae50bde";
+		orderDetailsObjectExpected.orderType = "Port Number";		
+		orderDetailsObjectExpected.status = "Approval Rejected";
+
 		CommonTestSteps.Logout();
 		
 		BaseClass.stepComplete("Run port number action complete. Now will reject the order.", "");
@@ -63,9 +68,12 @@ public class TC0021PortNumberReject extends BaseClass
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
 		Approvals.selectAndRejectOrder();
-		
+
 		CommonTestSteps.Logout();
+
+		// NOTE: below was verified good....
 		
+		/*
 		BaseClass.stepComplete("Order has been rejected. Now will verify limited user's details in 'my orders' page and order details page.", "");
 		
 		// login as limited user.
@@ -73,7 +81,6 @@ public class TC0021PortNumberReject extends BaseClass
 		
 		// go to 'my orders main page'
 		CommonTestSteps.GoToMyOrders();		
-		  
 	
 		// this verifies the order info in the 'my orders' page. this run's a loop on the 
 		// verification to allow  SN to sync with command. 
@@ -86,7 +93,7 @@ public class TC0021PortNumberReject extends BaseClass
 		PortNumber.VerifyOrderDetailsHistoryAccessoriesAfterApproval(ApproverAction.reject);
 		
 		BaseClass.stepComplete("Port Number Test Complete.", "");
-		
+		*/
 	}
 	
 	@AfterClass

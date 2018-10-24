@@ -637,7 +637,15 @@ public class OrderSubmittedPage extends BaseClass
 					
 				case "Current Carrier":
 					// System.out.println("Label: " + label);
-					Assert.assertEquals(value, currentCarrier, errorMessage);
+ 
+					if(approvalActionType.equals(approvalActionType.portNumber)) // add hook for port number 10/24/18
+					{
+						Assert.assertEquals(value, currentCarrierPortNumber, errorMessage);
+					}
+					else
+					{
+						Assert.assertEquals(value, currentCarrier, errorMessage);
+					}
 					break;		
 				
 				default:

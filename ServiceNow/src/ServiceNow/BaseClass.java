@@ -93,6 +93,7 @@ public class BaseClass
 	public static String pinOrPassword = "1234";
 	public static String currentCarrier = "Verizon Wireless"; // this is used for Transfer Service In and Port orders
 	public static String newCarrier = "Sprint"; // this is used for Transfer Service In and Port orders
+	public static String currentCarrierPortNumber = ""; // this is for storing the current carrier for Port Number orders. this is not entered by user - verified in Command.
 	public static String serviceNumber = ""; // this is queried for in MyDevicesPage.	
 	public static String fullServiceNumber = ""; // this is queried for in MyDevicesPage.
 	public static String reasonAddDeviceAndService =  "Broken Device";

@@ -675,9 +675,16 @@ public class VerifyOrderPage extends BaseClass
 		} if (additionalInfoMap.containsKey("Current Carrier")) {  // for Port Number
 			
 			System.out.println(" Key: " + additionalInfoMap.get("Current Carrier"));
-			Assert.assertEquals(additionalInfoMap.get("Current Carrier"), DeviceInfoActions.currentVendorPortNumber, errorMessage);
-			
-		} if (additionalInfoMap.containsKey("Personal E-mail Address")) {  // for personal email address
+			//Assert.assertEquals(additionalInfoMap.get("Current Carrier"), DeviceInfoActions.currentVendorPortNumber, errorMessage);
+			if(approvalActionType.equals(approvalActionType.portNumber)) // add hook for portNumber 10/24/18
+			{
+				Assert.assertEquals(additionalInfoMap.get("Current Carrier"), currentCarrierPortNumber, errorMessage);
+			}
+			else
+			{
+				Assert.assertEquals(additionalInfoMap.get("Current Carrier"), currentCarrier, errorMessage);				
+			}
+ 		} if (additionalInfoMap.containsKey("Personal E-mail Address")) {  // for personal email address
 		       
             System.out.println(" Key: " + additionalInfoMap.get("Personal E-mail Address"));
             Assert.assertEquals(additionalInfoMap.get("Personal E-mail Address"), approverAdminMail, errorMessage);

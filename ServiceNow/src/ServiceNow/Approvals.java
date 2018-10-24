@@ -87,6 +87,7 @@ public class Approvals extends BaseClass
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
 		
+
 		// If get to here the order to be approved has been found. do the approval and wait for main page to load. doing the approval brings user back to the main page.		
 		
 		// Select approver from dropdown list 
@@ -95,7 +96,7 @@ public class Approvals extends BaseClass
 		// Approve order 
 		rejectOrder(approverIndex);
 
-		Thread.sleep(5000);  // ** Giving time for order to have status updated 
+		Thread.sleep(5000);  // ** Giving time for order to have status updated
 		
 	}
 	

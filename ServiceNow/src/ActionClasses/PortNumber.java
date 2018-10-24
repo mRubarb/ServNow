@@ -38,7 +38,7 @@ public class PortNumber extends ActionsBase
 		VerifyPageTitle(portNumberTitle);
 		ChooseCarrierPage.verifyErrorMessageNoCarrierSelected();
 		ChooseCarrierPage.VerifyButtonSelectsAndContinue();
-
+		
 		ChooseDevicePage.WaitForPageToLoadPortNumber();	
 		VerifyPageTitle(portNumberTitle);
 		ChooseDevicePage.AddPortDevice();
@@ -48,15 +48,16 @@ public class PortNumber extends ActionsBase
 		VerifyPageTitle(portNumberTitle);		
 		ChoosePlanPage.AddPortPlan();
 		ChoosePlanPage.clickNextButton();
-		
+
 		ChoosePlanPage.StoreIncludedFeaturesCss();
-		
+
+		/*
 		boolean optionalFeaturesAvailable = ChoosePlanPage.storeOptionalFeaturesNamesAndInfoNew();
 		if (optionalFeaturesAvailable) {
 			ChoosePlanPage.selectFirstLastOptionalFeature();
 		}
 		ChoosePlanPage.clickNextButton();
-		
+
 		ChooseAccessoriesPage.waitForPageToLoadAccessories();
 		boolean accessoriesAvailable = ChooseAccessoriesPage.waitForPageToLoadAccessories();
 		//ChooseAccessoriesPage.VerifyDeviceAndPlanCorrect();
@@ -71,6 +72,7 @@ public class PortNumber extends ActionsBase
 		
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
 		ProvideAdditionalInfoPage.clickNextBtn();
+
 		ProvideAdditionalInfoPage.EnterMissingInfoPortNumber();
 		//ProvideAdditionalInfoPage.VerifyDeviceAndPlanSectionsCorrect();
 		ProvideAdditionalInfoPage.clickNextBtn();
@@ -99,7 +101,7 @@ public class PortNumber extends ActionsBase
 		VerifyOrderPage.verifySelectedDeviceDetailsPortNumber();  	
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails(); 
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformation();		
+		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformation();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		BaseClass.stepComplete("TC:0001", "TS:30");
@@ -142,7 +144,7 @@ public class PortNumber extends ActionsBase
 		
 		CommonTestSteps.GoToMyOrders();
 		VerifyOrderDetailsPagePreApproval();
-		
+		*/
 	}
 
 	
@@ -224,6 +226,15 @@ public class PortNumber extends ActionsBase
 		
 		// Duplicated line, it's included in the method called in line above
 		//DeviceInfoActions.currentVendorPortNumber = driver.findElement(By.xpath("//label[text()='Vendor']/following ::span[1]")).getText();
+		
+		// store the logged in user's carrier for port number transaction. for port number, the user's carrier is what becomes the current carrier.
+		// verified this in the command port number transaction.
+		if(approvalActionType.equals(approvalActionType.portNumber))
+		{
+			WaitForElementVisible(By.xpath("(//label[text()='Vendor']/following ::span)[1]"), ShortTimeout);
+			currentCarrierPortNumber = driver.findElement(By.xpath("(//label[text()='Vendor']/following ::span)[1]")).getText(); 
+			System.out.println("currentCarrierPortNumber for Port Number transaction: " + currentCarrierPortNumber);
+		}
 	}
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////////
