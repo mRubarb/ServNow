@@ -51,7 +51,6 @@ public class PortNumber extends ActionsBase
 
 		ChoosePlanPage.StoreIncludedFeaturesCss();
 
-		/*
 		boolean optionalFeaturesAvailable = ChoosePlanPage.storeOptionalFeaturesNamesAndInfoNew();
 		if (optionalFeaturesAvailable) {
 			ChoosePlanPage.selectFirstLastOptionalFeature();
@@ -134,7 +133,6 @@ public class PortNumber extends ActionsBase
 		// page and verifies the correct order type at the top of the order details (submitted) page.
 		VerifyOrderNumberAndOrderTypeBetweenPages(); 
 
-		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
 		
@@ -144,10 +142,7 @@ public class PortNumber extends ActionsBase
 		
 		CommonTestSteps.GoToMyOrders();
 		VerifyOrderDetailsPagePreApproval();
-		*/
 	}
-
-	
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////////////////////////////////////////////////////////////////

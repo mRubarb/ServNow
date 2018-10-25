@@ -280,7 +280,8 @@ public class TransferServiceIn extends BaseClass {
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
 		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
-		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
@@ -508,6 +509,7 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
+		VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort(); // bladd
 		VerifyOrderPage.verifyAdditionalInformationBlock();		
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
@@ -522,6 +524,7 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); 
 		
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
 		// OrderSubmittedPage.VerifyAdditionalInformation(); // useless	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		

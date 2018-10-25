@@ -947,6 +947,21 @@ public class VerifyOrderPage extends BaseClass
 							  strArray[3].replace("Reason ", "")};
 	}
 	
+
+	// use this in addition to block test. 10/25/18
+	public static void VerifyAdditionalInformationTransferServiceInAndPort()
+	{
+		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
+		//for(String str : strArray){ShowText(str);}
+
+		Assert.assertEquals(strArray[0].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
+		Assert.assertEquals(strArray[1].replace("Name on Invoice ",""), userLimitedShorterName, "");
+		Assert.assertEquals(strArray[2].replace("Contact Phone Number ",""), contactNumber, "");
+		Assert.assertEquals(strArray[3].replace("Ext ",""), extension, "");
+		Assert.assertEquals(strArray[4].replace("Additional Instructions ",""), additionalInstructions, "");
+		Assert.assertEquals(strArray[5].replace("Service Number ",""), newServiceNumber, "");
+	}
+	
 	// 9/27/18
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
 	public static String [] GetAdditionalInfoTransferServiceOut()

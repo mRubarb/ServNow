@@ -87,7 +87,6 @@ public class Approvals extends BaseClass
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
 		
-
 		// If get to here the order to be approved has been found. do the approval and wait for main page to load. doing the approval brings user back to the main page.		
 		
 		// Select approver from dropdown list 
@@ -97,7 +96,6 @@ public class Approvals extends BaseClass
 		rejectOrder(approverIndex);
 
 		Thread.sleep(5000);  // ** Giving time for order to have status updated
-		
 	}
 	
 	
@@ -546,10 +544,26 @@ public class Approvals extends BaseClass
 		
 		
 		// Lines expected in 'Description'		
-		String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + ".";  //"Order for " + userLimitedShorterName + "."; // Change it to:
+		//String title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + ".";  //"Order for " + userLimitedShorterName + "."; // Change it to:
 																	// orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + newServiceNumber + "]."; 
 																	// it after defect 114917 is fixed 
-				
+
+		String title = "";
+		
+		if((approvalActionType.equals(approvalActionType.portNumber)))
+		{
+			title = orderDetailsObjectExpected.orderType + " Order for " + userLimitedShorterName +  " [" +  fullServiceNumber  + "]" +  ".";  //"Order for " + userLimitedShorterName + "."; // Change it to:
+			// orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + newServiceNumber + "]."; 
+			// it after defect 114917 is fixed
+		}
+		else
+		{
+			// Lines expected in 'Description'		
+			title = orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + ".";  //"Order for " + userLimitedShorterName + "."; // Change it to:
+																		// orderDetailsObjectExpected.orderType + " for " + userLimitedShorterName + " [" + newServiceNumber + "]."; 
+																		// it after defect 114917 is fixed 
+		}
+		
 		//String totalCost = "Total Cost:" + AccessoriesDetailsExpected.finalCost + " Total Monthly Cost:" + AccessoriesDetailsExpected.finalCostMonthly; 
 		String totalCost = "Total Cost:$" + ShoppingCart.costOneTime + " Total Monthly Cost:$" + ShoppingCart.costMonthly;
 		
@@ -583,7 +597,18 @@ public class Approvals extends BaseClass
 		
 		String additionalInfoAdditionalInstructions = "Additional Instructions:" + additionalInstructions; 
 		
-		String additionalInfoServiceNumber = "Service Number:" + newServiceNumber; 
+		String additionalInfoServiceNumber = "";
+		
+		if((approvalActionType.equals(approvalActionType.portNumber))) // bladd
+		{
+			additionalInfoServiceNumber = "Service Number:" + serviceNumber;
+		}
+		else
+		{
+			additionalInfoServiceNumber = "Service Number:" + newServiceNumber;
+		}
+		
+		//String additionalInfoServiceNumber = "Service Number:" + newServiceNumber; // orig 
 		
 		String shipTo = "Ship to: " + userName + " " + addressLineOne + " " + cityOrderActions + " " + stateOrderActions + " " + zipCodeOrderActions + "  - please expedite this shipment."; 
 		
@@ -596,7 +621,7 @@ public class Approvals extends BaseClass
 		System.out.println("totalCost: " + totalCost);
 		//System.out.println("deviceModelAndCost: " + deviceModelAndCost);
 		
-		Assert.assertTrue(descriptionLines.contains(title), errMessage);
+		Assert.assertTrue(descriptionLines.contains(title), errMessage); 
 		// Assert.assertTrue(descriptionLines.contains(totalCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
 		Assert.assertTrue(descriptionLines.contains(itemsOrderedLabel), errMessage);
 		// Assert.assertTrue(descriptionLines.contains(deviceModelAndCost), errMessage); // -- COMMENTING ASSERT UNTIL SFD112988 IS FIXED
@@ -607,7 +632,7 @@ public class Approvals extends BaseClass
 		Assert.assertTrue(descriptionLines.contains(additionalInfoContactNumber), errMessage);
 		Assert.assertTrue(descriptionLines.contains(additionalInfoExt), errMessage);
 		Assert.assertTrue(descriptionLines.contains(additionalInfoAdditionalInstructions), errMessage);
-		Assert.assertTrue(descriptionLines.contains(additionalInfoServiceNumber), errMessage);
+		Assert.assertTrue(descriptionLines.contains(additionalInfoServiceNumber), errMessage); // bladd
 		Assert.assertTrue(descriptionLines.contains(shipTo), errMessage);
 		Assert.assertTrue(descriptionLines.contains(orderId), errMessage);
 		Assert.assertTrue(descriptionLines.contains(externalOrderNumber), errMessage);
