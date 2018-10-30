@@ -776,22 +776,21 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[4].replace("Reason ", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);		
 	} 
 	
-	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	/*
+
+	// bladd
 	public static void VerifyAdditionalInformationPortNumber() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationPortNumber.";		
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
 		Assert.assertEquals(strArray[0].replace("Carrier Account Number ", ""), PlanInfoActions.carrierAccountNumber, errMessage);
-		Assert.assertEquals(strArray[1].replace("Name on Invoice ", ""), userLimitedFullName, errMessage);		
+		Assert.assertEquals(strArray[1].replace("Name on Invoice ", ""), userLimitedShorterName, errMessage);		
 		Assert.assertEquals(strArray[2].replace("Contact Phone Number ", ""), contactNumber, errMessage);
 		Assert.assertEquals(strArray[3].replace("Ext ", ""), extension, errMessage);
 		Assert.assertEquals(strArray[4].replace("Additional Instructions ", ""), additionalInstructions, errMessage);		
 		Assert.assertEquals(strArray[5].replace("Current Carrier ", ""), DeviceInfoActions.currentVendorPortNumber, errMessage);
 		Assert.assertEquals(strArray[6].replace("Service Number ", ""), serviceNumber, errMessage);
-	}*/
+	}
 	
 	
 	public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)

@@ -97,7 +97,6 @@ public class DeactivateService extends ActionsBase
 	}	
 	
 	
-	// jnupp below
 	public static void RunDeactivateService(boolean isFirstOrder) throws Exception
 	{
 		if(isFirstOrder)

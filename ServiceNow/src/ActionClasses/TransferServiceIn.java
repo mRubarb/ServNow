@@ -509,7 +509,7 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort(); // bladd
+		VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort();
 		VerifyOrderPage.verifyAdditionalInformationBlock();		
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();

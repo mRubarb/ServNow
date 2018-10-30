@@ -46,15 +46,7 @@ public class TC0021PortNumberReject extends BaseClass
 		// 3) verify results in order-submitted/order-details page
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
 		PortNumber.RunPortNumber();
-		/*
-		CreateOrderDetailsExpectedObject();
 
-		orderDetailsObjectExpected.orderId = "13295456";
-		orderDetailsObjectExpected.externalOrderId = "15404160649773f8aca1f191aae50bde";
-		orderDetailsObjectExpected.orderType = "Port Number";		
-		orderDetailsObjectExpected.status = "Approval Rejected";
-		*/
-		
 		CommonTestSteps.Logout();
 		
 		BaseClass.stepComplete("Run port number action complete. Now will reject the order.", "");
@@ -73,7 +65,14 @@ public class TC0021PortNumberReject extends BaseClass
 		CommonTestSteps.Logout();
 
 		BaseClass.stepComplete("Order has been rejected. Now will verify limited user's details in 'my orders' page and order details page.", "");
-		
+		/*
+		CreateOrderDetailsExpectedObject();
+
+		orderDetailsObjectExpected.orderId = "13295658";
+		orderDetailsObjectExpected.externalOrderId = "1540907122590e8e8f5fe04c1c24a7df";
+		orderDetailsObjectExpected.orderType = "Port Number";		
+		orderDetailsObjectExpected.status = "Approval Rejected";
+		*/
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
 		

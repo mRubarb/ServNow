@@ -6,6 +6,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ActionClasses.NewActivation;
 import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
@@ -31,21 +32,23 @@ public class TC0001NewActivation extends BaseClass
 	}
 	
 	@Test
-	public static void tc0001NewActivation() throws Exception
+	public static void tc0001NewActivationReject() throws Exception
 	{
-	
-		// **** This is to verify the merge . *****
-		approvalActionType = ApprovalActionType.newActivation; 
-		
-		// WaitForElementClickable(By.xpath("//div[text()='Service Automation']"), MainTimeout , "Failed wait in step 1."); // this waits for an item in the top window.
-	
-		// 1. Log into ServiceNow as test user.
-		//Frames.switchToGsftMainFrame();
-		//LoginPage.Login();
+
+		approverAction = ApproverAction.reject; // setup enum for indicating approval type.	
+
+		// setup enum for indicating approval action type. this is used to tell which module will verify info in approval description sections.		
+		approvalActionType = ApprovalActionType.newActivation;		
 		
 		CommonTestSteps.LoginLimitedUser();
-		BaseClass.stepComplete("TC:0001", "TS:01");
+		
+		NewActivation.RunNewActivation();
 
+		//CommonTestSteps.
+		
+		Pause("Freeze");
+		
+// /////////////////////////////////////////////////////////////////////////////////////////////
 		 // 2. On the left pane, under Tangoe Mobility, click Home. There are four sections displayed.
 
 		// switch to main frame and wait for text in one of the displayed selections.

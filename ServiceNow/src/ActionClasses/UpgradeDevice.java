@@ -204,12 +204,7 @@ public class UpgradeDevice extends ActionsBase
 		// at this point the order type has to be changed so the order can be found in the order approvals list.
 		// in the order approvals page the status is called  "Upgrade Order";
 		orderDetailsObjectExpected.orderType = "Upgrade Order";
-		
 	}
-
-	
-	
-	
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////////////////////////////////////////////////////////////////

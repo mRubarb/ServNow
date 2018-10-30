@@ -54,7 +54,7 @@ public class CommonTestSteps extends BaseClass
 		WaitForAdminMainPageLoad();
 	}
 	
-	public static void LoginAdminBrowserOpen() throws Exception  // jnupp
+	public static void LoginAdminBrowserOpen() throws Exception  
 	{
 
 		userLoginMode = UserLoginMode.Admin; // setup login for limited user.
@@ -87,6 +87,14 @@ public class CommonTestSteps extends BaseClass
 		Frames.switchToGsftMainFrame(); 
 		HomePage.WaitForPageToLoad();
 		HomePage.SelectViewDevices();	
+	}
+
+	public static void GoToHomePage() throws Exception
+	{
+		Frames.switchToGsftNavFrame(); // get to main side bar frame.		
+		SideBar.clickHomeButton();
+		Frames.switchToGsftMainFrame(); // get to main frame. 
+		HomePage.WaitForPageToLoad();
 	}
 	
 	// Added by Ana - Oct 12

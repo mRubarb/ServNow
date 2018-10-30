@@ -100,7 +100,8 @@ public class PortNumber extends ActionsBase
 		VerifyOrderPage.verifySelectedDeviceDetailsPortNumber();  	
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails(); 
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformation();
+		// VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformation();
+		VerifyOrderPage.VerifyAdditionalInformationPortNumber();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		BaseClass.stepComplete("TC:0001", "TS:30");
@@ -118,7 +119,8 @@ public class PortNumber extends ActionsBase
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();	
+		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();	
+		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -191,7 +193,8 @@ public class PortNumber extends ActionsBase
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();
+		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();
+		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();		
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();

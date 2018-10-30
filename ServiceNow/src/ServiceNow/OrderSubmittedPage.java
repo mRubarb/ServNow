@@ -465,9 +465,8 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[2].replace("Contact Phone Number ",""), contactNumber, errorMessage);		
 		Assert.assertEquals(tmpStringArray[3].replace("Ext ",""), extension, errorMessage);		
 		Assert.assertEquals(tmpStringArray[4].replace("Additional Instructions ",""), additionalInstructions, errorMessage);		
-		//Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), DeviceInfoActions.currentVendorPortNumber, errorMessage); // original failed.		
-		Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), currentCarrier, errorMessage);
-		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), newServiceNumber, errorMessage);		
+		Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), DeviceInfoActions.currentVendorPortNumber, errorMessage); 	
+		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), serviceNumber, errorMessage);		
 	}
 	
 	// 10/25/18 -  this is different than verify that's done before order submit. this has extra field 'currentCarrier'.
@@ -485,7 +484,7 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(strArray[6].replace("Service Number ",""), newServiceNumber, "");
 	}
 	
-	// ************ KEEP **************************
+	// ************ KEEP **************************   // bladd comment after replacing all calls to this
 	public static void verifyAdditionalInformationBlock() throws Exception // use it for all tx types
 																				// see if there are missing options
 																				// **************************************	
@@ -663,7 +662,7 @@ public class OrderSubmittedPage extends BaseClass
 		
 	
 	}		
-	
+
 	public static void VerifyApprovals()  
 	{
 		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyApprovals";

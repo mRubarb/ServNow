@@ -9,7 +9,7 @@ public class HomePage extends BaseClass
 	
 	public static void WaitForPageToLoad() throws Exception
 	{
-		WaitForElementVisible(By.xpath("//div[text()='Order a New Device and Service']"), ExtremeTimeout);
+		WaitForElementVisible(By.xpath("//p/a[text()='Transfer my phone number']"), MainTimeout);
 		WaitForElementVisible(By.xpath("//p/a[text()='Create an order']"), MainTimeout);
 	}
 
