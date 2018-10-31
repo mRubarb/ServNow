@@ -103,13 +103,13 @@ public class ChoosePlanPage extends BaseClass
 		
 		// PlanOptionalFeatures.ShowOptionalFeaturesList(); // DEBUG
 		
-		if (optionalFeaturesList.size() > 0) {
+		if (optionalFeaturesList.size() > 0) 
+		{
 			return true;
-		} else {
+		} else 
+		{
 			return false;
 		}
-		
-		
 	}
 		
 	// 1) this verifies the device/plan names and cost are correct per the previous values that were stored off when the device and plan were added.
@@ -373,24 +373,24 @@ public class ChoosePlanPage extends BaseClass
 		
 		WaitForElementVisible(By.cssSelector("span.sn-flow__heading.ng-binding"), MediumTimeout);
 		
-		try {
-			
+		try 
+		{
 			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout);
 			return true;
-			
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			// If there are no plans for the selected device, click Back, and select a different device
-			
 			WaitForElementVisible(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message"), MediumTimeout);
 			String message = driver.findElement(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message")).getText();
 			
-			if (message.equals("No Plans Found")) {
+			if (message.equals("No Plans Found")) 
+			{
 				driver.findElement(By.xpath("//button[text()='Back']")).click();
 				WaitForElementVisible(By.xpath("//span[text()='Choose your new device.']"), MediumTimeout);
 			}
 			return false;
 		}
-		
 	}
 	
 	

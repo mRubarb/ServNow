@@ -46,7 +46,7 @@ public class TC0001NewActivation extends BaseClass
 
 		//CommonTestSteps.
 		
-		Pause("Freeze");
+		Pause("Freeze after run activation");
 		
 // /////////////////////////////////////////////////////////////////////////////////////////////
 		 // 2. On the left pane, under Tangoe Mobility, click Home. There are four sections displayed.

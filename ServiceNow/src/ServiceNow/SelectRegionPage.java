@@ -100,6 +100,12 @@ public class SelectRegionPage extends BaseClass
 		element.click();
 	}
 	
+	public static void VerifyPostalCodeError() throws Exception
+	{
+		WaitForElementVisible(By.xpath(mainErrorMessage), MediumTimeout);		
+		WaitForElementVisible(By.xpath("//li[text()='Please enter the Postal Code.']"), MediumTimeout);		
+	}
+	
 	public static void getErrorNoPostalCode()
 	{
 		element = errorNoPostalCode(driver);

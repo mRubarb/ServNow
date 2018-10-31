@@ -44,16 +44,14 @@ public class EnterShippingInfoPage extends BaseClass
 	
 	public static void VerifyCorrectData() throws Exception
 	{
-		Assert.assertEquals(new Select(driver.findElement(By.xpath("//select[@ng-model='shipping.selectedCountry']"))).getFirstSelectedOption().getText(),
-				            userCountry, "Pulldon should be set to 'United States'");
-		
-		Assert.assertEquals(driver.findElement(By.id("ADDRESS_FORMAT_NAME")).getAttribute("value"), userLimitedShorterName, "Name is wrong in 'VerifyCorrectData()'");
-		Assert.assertEquals(driver.findElement(By.id("ADDRESS_FORMAT_LINE_1")).getAttribute("value"), addressLineOneOrderActions , "Address is wrong in 'VerifyCorrectData()'.");	
-		
-		Assert.assertEquals(new Select(driver.findElement(By.id("ADDRESS_FORMAT_STATE"))).getFirstSelectedOption().getText(),
-	            userState, "Pulldon should be set to 'Massachusetts'");		
-		
-		Assert.assertEquals(driver.findElement(By.id("ADDRESS_FORMAT_POSTAL_CODE")).getAttribute("value"), userPostalCode, "Postal code is wrong in 'VerifyCorrectData()'.");		
+		String temp  = new Select(driver.findElement(By.xpath("(//tr/td/select)[1]"))).getFirstSelectedOption().getText();
+		Assert.assertEquals(temp, "United States" ,"");
+		Assert.assertEquals(driver.findElement(By.id("ADDRESS_FORMAT_NAME")).getAttribute("value"), userLimitedShorterName,"");
+		Assert.assertEquals(driver.findElement(By.id("ADDRESS_FORMAT_LINE_1")).getAttribute("value"), addressLineOneOrderActions , "");
+		Assert.assertEquals(driver.findElement(By.id("ADDRESS_FORMAT_CITY")).getAttribute("value"), cityOrderActions , "");		
+		temp  = new Select(driver.findElement(By.xpath("(//tr/td/select)[2]"))).getFirstSelectedOption().getText();
+		Assert.assertEquals(temp, userState ,"");		
+		Assert.assertEquals(driver.findElement(By.id("ADDRESS_FORMAT_POSTAL_CODE")).getAttribute("value"), zipCodeOrderActions,"");
 	}
 	
 	public static void VerifyCorrectDataDeviceAction() throws Exception
@@ -92,12 +90,14 @@ public class EnterShippingInfoPage extends BaseClass
 		element.sendKeys(germanStAddress);
 	}	
 	
+	// 10/31/18 - changed name.
 	// waiting for this error to be visible verifies it is visible.
 	public static void VerifyErrorsGermany() throws Exception
 	{
 		WaitForElementVisible(By.xpath(mainErrorMessage), MainTimeout);		
 		WaitForElementVisible(By.xpath("//li[text()='Line 1 is required.']"), MainTimeout);
 		WaitForElementVisible(By.xpath("//li[text()='City is required.']"), MainTimeout);		
+		WaitForElementVisible(By.xpath("//li[text()='State is required.']"), MainTimeout);		
 	}	
 	
 	public static void PopulateFieldsForGermany()

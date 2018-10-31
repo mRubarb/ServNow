@@ -369,7 +369,7 @@ public class ChooseDevicePage extends BaseClass
 		
 		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath(mainErrorMessage), MediumTimeout), 
 				          "Error message appears to be missing in 'ChooseDevicePage.VerifyNoDeviceSelected.");
-		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath(mainErrorMessage), MediumTimeout), 
+		Assert.assertTrue(WaitForElementVisibleNoThrow(By.xpath("//li[text()='Please select a device']"), MediumTimeout), 
 					       "Error message appears to be missing in 'ChooseDevicePage.VerifyNoDeviceSelected.");
 	}
 

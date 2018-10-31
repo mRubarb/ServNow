@@ -447,6 +447,40 @@ public class ProvideAdditionalInfoPage extends BaseClass
 	
 	}		
 	
+	public static void VerifyErrorsNewActivation() throws Exception
+	{
+		WaitForElementVisibleNoThrow(By.xpath(mainErrorMessage), MediumTimeout);
+		WaitForElementVisible(By.xpath("//li[text()='Preferred Area Code is required']"), MediumTimeout); 
+		WaitForElementVisible(By.xpath("//li[text()='Contact Phone Number is required']"), MediumTimeout);
+		WaitForElementVisible(By.xpath("//li[text()='Business Unit is required']"), MediumTimeout);
+		WaitForElementVisible(By.xpath("//li[text()='Reason is required']"), MediumTimeout);
+	}
+	
+	public static void EnterMissingInfoNewActivation() throws InterruptedException
+	{
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_PREFERRED_AREA_CODE")).sendKeys(preferredAreaCode);
+		
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER")).sendKeys(contactNumber);
+		
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_CONTACT_NUMBER_EXT")).sendKeys(extension);
+
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_ADDITIONAL_INSTRUCTIONS")).sendKeys(additionalInstructions);
+
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_BUSINESS_UNIT")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_BUSINESS_UNIT")).sendKeys(buisnessUnit);
+		
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_ALIAS")).clear();
+		driver.findElement(By.id("ORDER_PROPERTY_FIELD_SERVICE_ALIAS")).sendKeys(serviceNumberAlias);
+
+		new Select(driver.findElement(By.id("ORDER_PROPERTY_CHOICE_FIELD_Reason"))).selectByVisibleText(reasonOther);
+		
+		WaitForElementClickable(By.id("ORDER_PROPERTY_OTHER_CHOICE_FIELD_Reason"), ShortTimeout, "");
+		driver.findElement(By.id("ORDER_PROPERTY_OTHER_CHOICE_FIELD_Reason")).sendKeys(reasonOtherText);
+	}
 	
 	// this populates additional information when doing Transfer Service In action.   
 	public static void enterMissingInfoTransferServiceIn() throws InterruptedException
@@ -570,7 +604,11 @@ public class ProvideAdditionalInfoPage extends BaseClass
 	}
 	*/
 	
-	// TODO : do rest of errors.
+	
+
+	
+	
+	// TODO : do rest of errors. // 10/31/18 - replaced
 	public static void VerifyErrorsAndCompletePage() throws Exception
 	{
 		// verify number of errors under main error message.  -- COMMENTED SINCE SOMETIMES THE # OF REQUIRED FIELDS IS NOT 3 

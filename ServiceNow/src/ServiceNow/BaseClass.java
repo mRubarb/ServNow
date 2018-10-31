@@ -90,6 +90,7 @@ public class BaseClass
 	public static String preferredAreaCode = "781";
 	public static String contactNumber = "7812739306";	
 	public static String newServiceNumber = "5669879877";
+	public static String serviceNumberAlias = "1234565432";
 	public static String pinOrPassword = "1234";
 	public static String currentCarrier = "Verizon Wireless"; // this is used for Transfer Service In and Port orders
 	public static String newCarrier = "Sprint"; // this is used for Transfer Service In and Port orders
@@ -100,6 +101,8 @@ public class BaseClass
 	public static String businessUnit =  "Unit1";
 	public static String reasonAction = "Cancel service as employee is no longer with the company";
 	public static String reasonWarrantRepair = "warrant repair";	
+	public static String reasonOther = "Other";	
+	public static String reasonOtherText = "otherText";	
 	public static String additionalInstructions = "Test Additional Instructions";	
 	public static String buisnessUnit = "business unit";	
 	public static String userStateOrderDetails = "MA";
