@@ -28,7 +28,7 @@ public class Approvals extends BaseClass
 	
 	// this is common in many places. bob 7/27/18
 	public static String commonXpathForDescriptions = ".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/../div/following-sibling::input[1]"; 	
-										       
+	public static String commonXpathForDescriptionsSimple = "//input[@id='x_tango_mobility_tangoe_mobility_order_request.description']"; // 11/1/18
 	
 	// this waits for first check box at top of approvals list and the 'to' text at the bottom of the page.
 	public static void WaitForPageToLoad() throws Exception
@@ -45,7 +45,7 @@ public class Approvals extends BaseClass
 	
 
 		// Select order from list
-		openOrderDetails();
+		openOrderDetails(); // see internal comment.
 	
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
@@ -53,10 +53,10 @@ public class Approvals extends BaseClass
 		// If get to here the order to be approved has been found. do the approval and wait for main page to load. doing the approval brings user back to the main page.		
 		
 		// Select approver from dropdown list 
-		int approverIndex = selectApprover();
+		int approverIndex = selectApprover(); // bladd
 		 
 		// Approve order 
-		approveOrder(approverIndex);
+		approveOrder(approverIndex); // bladd
 
 		Thread.sleep(5000);  // ** Giving time for order to have status updated 
 		
@@ -103,7 +103,7 @@ public class Approvals extends BaseClass
 	private static void openOrderDetails() throws Exception {
 		
 		// added 8/9/2018 - modified 8/22/2018
-		refreshList();						
+		refreshList(); // bladd						
 		
 		boolean correctUserAndType = false;
 		boolean correctExternalOrderId = false;
@@ -417,7 +417,13 @@ public class Approvals extends BaseClass
 			{
 				VerifyTransferServiceOut();
 				break;
-			}						
+			}	
+			case newActivation:
+			{
+				VerifyNewActivation();
+				break;
+				
+			}
 			case none:
 			{
 				Assert.fail("Error in Approvals.VerifyApprovalPageData, reached an incorrect case value 'none'.");
@@ -599,7 +605,7 @@ public class Approvals extends BaseClass
 		
 		String additionalInfoServiceNumber = "";
 		
-		if((approvalActionType.equals(approvalActionType.portNumber))) // bladd
+		if((approvalActionType.equals(approvalActionType.portNumber))) 
 		{
 			additionalInfoServiceNumber = "Service Number:" + serviceNumber;
 		}
@@ -632,7 +638,7 @@ public class Approvals extends BaseClass
 		Assert.assertTrue(descriptionLines.contains(additionalInfoContactNumber), errMessage);
 		Assert.assertTrue(descriptionLines.contains(additionalInfoExt), errMessage);
 		Assert.assertTrue(descriptionLines.contains(additionalInfoAdditionalInstructions), errMessage);
-		Assert.assertTrue(descriptionLines.contains(additionalInfoServiceNumber), errMessage); // bladd
+		Assert.assertTrue(descriptionLines.contains(additionalInfoServiceNumber), errMessage);
 		Assert.assertTrue(descriptionLines.contains(shipTo), errMessage);
 		Assert.assertTrue(descriptionLines.contains(orderId), errMessage);
 		Assert.assertTrue(descriptionLines.contains(externalOrderNumber), errMessage);
@@ -760,6 +766,24 @@ public class Approvals extends BaseClass
 		// this covers the rest of the items.
 		VerifySubset(strArray);
 	}	
+	
+	public static void VerifyNewActivation() throws Exception
+	{
+		DebugTimeout(0, "Verify New Activation in approval page.");
+		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); 		
+		
+		for(String str: strArray)
+		{
+			ShowText(str);
+		}
+		
+		//Assert.assertEquals(strArray[2],"Additional Info:","");		
+		//Assert.assertEquals(strArray[6].replace("Reason:",""), reasonAction,"");	
+
+		// this covers the rest of the items.
+		//VerifySubset(strArray);
+	}	
+	
 	
 	public static void VerifySuspend() throws Exception
 	{

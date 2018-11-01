@@ -130,7 +130,7 @@ public class BaseClass
 	public static String stateOrderActions = "MA";	
 	public static String zipCodeOrderActions = "06125";  //"06234";	
 	public static String orderDetailTangoeOrderStatus  = "Awaiting Approval";
-	public static String extension = "781";
+	public static String extension = "8712";
 	
 	// command variables
 	public static String commandUserName = "tester.xx1";  // "bob.lichtenfels@tangoe.com XX1";
@@ -285,6 +285,12 @@ public class BaseClass
 		noChange		
 	}	
 
+	public static enum Country
+	{
+		UnitedStates,
+		Germany
+	}
+	
 	// ctor
 	public BaseClass()  
 	{

@@ -233,51 +233,6 @@ public class VerifyOrderPage extends BaseClass
 			Assert.assertEquals(feature, selectedOptionalFeatures.get(i), errMessage);
 			
 		}
-		
-		
-		
-		
-		
-		/*
-		0 Nationwide for Business Talk Share Plan
-		1 Price $58.67
-		2 Included Features
-		3 Total Equipment Coverage
-		4 VZ Navigator
-		5 Base Package
-		6 Optional Features
-		7 Voice Mail - $300.00 (Monthly)
-		8 1000 Messages - $10.00 (Monthly)
-		*/
-		
-		/*
-		----------------------
-		Name:Voice Mail
-		Cost:$300.00
-		Billing Interval:(Monthly)
-		----------------------
-		Name:Roadside Assistance
-		Cost:$200.00
-		Billing Interval:(Monthly)
-		----------------------
-		Name:Total Equipment Coverage (Advanced Devices)
-		Cost:$100.00
-		Billing Interval:(Monthly)
-		----------------------
-		Name:Visual Voice Mail
-		Cost:$2.99
-		Billing Interval:(Monthly)
-		----------------------
-		Name:Nationwide for Business Data Share 5GB
-		Cost:$43.00
-		Billing Interval:(Monthly)
-		----------------------
-		Name:1000 Messages
-		Cost:$10.00
-		Billing Interval:(Monthly)
-		Freeze
-		 */
-	
 	}	
 	
 	
@@ -319,8 +274,9 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(price, planInfoActions.planCostCompleteField.split("\\)")[1].trim(), errorMessage); 	
 		
 		// Included Features
-		
-		List<WebElement> includedFeaturesFound = driver.findElements(By.cssSelector("div#verify_plan>div.tg-display--inline-block>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>span>ul>li"));
+
+		//List<WebElement> includedFeaturesFound = driver.findElements(By.cssSelector("div#verify_plan>div.tg-display--inline-block>table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)>span>ul>li"));
+		List<WebElement> includedFeaturesFound = driver.findElements(By.cssSelector("ul.tg-space--eighth--top>li")); // bob 11/1/18		
 		
 		System.out.println("# Included Features: " + PlanInfoActions.includedFeatures.size());
 		
@@ -500,45 +456,6 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[0].replace("Vendor ", "") , DevicePortNumber.selectedDeviceVendor,  errMessage); // vendor		
 		Assert.assertEquals(strArray[1].replace("Price ", "") , DevicePortNumber.selectedDevicePrice,  errMessage); // price
 	}
-	
-	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	/*
-	public static void VerifyAdditionalInformation() throws Exception
-	{
-		String errorMessage = "Wrong information found in test for additional information in VerifyOrderPge.VerifyAdditionalInformation.";
-		
-		// this gets all of the string information for the additional information listed.
-		String [] additionalInformation = driver.findElement(By.xpath("//div[@id='verify_properties']/div[2]/table")).getText().split("\n");
-		
-		for (int i = 0; i < additionalInformation.length; i++)
-		{
-			if (additionalInformation[i].startsWith("Preferred Area Code")) {
-				
-				Assert.assertEquals(additionalInformation[i], "Preferred Area Code " + preferredAreaCode, errorMessage);
-			
-			} else if (additionalInformation[i].startsWith("Contact Phone Number")) {
-				
-				Assert.assertEquals(additionalInformation[i], "Contact Phone Number " + contactNumber, errorMessage);
-			
-			} else if (additionalInformation[i].startsWith("Additional Instructions")) {
-				
-				Assert.assertEquals(additionalInformation[i], "Additional Instructions " + additionalInstructions, errorMessage);
-					
-			} else if (additionalInformation[i].startsWith("Reason")) {
-				
-				Assert.assertEquals(additionalInformation[i], "Reason " + reasonAddDeviceAndService, errorMessage);
-				
-			} else if (additionalInformation[i].startsWith("Business Unit")) {
-				
-				Assert.assertEquals(additionalInformation[i], "Business Unit " + businessUnit, errorMessage);
-				
-			}					
-			
-		}
-		
-	}*/
-
 
 	// this verification is called when processing a deactivate. 
 	public static void VerifyAdditionalInformationDeactivate() throws Exception
@@ -777,7 +694,6 @@ public class VerifyOrderPage extends BaseClass
 	} 
 	
 
-	// bladd
 	public static void VerifyAdditionalInformationPortNumber() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationPortNumber.";		
@@ -811,7 +727,7 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[4].replace("Service Number ", ""), serviceNumber, errMessage);
 	}
 	
-	
+		
 	public static void VerifyShippingInformation() throws Exception
 	{
 		String errorMessage = "Wrong information found in test for shipping information in VerifyOrderPage.VerifyShippingInformation.";
@@ -857,6 +773,12 @@ public class VerifyOrderPage extends BaseClass
 		}
 	}
 
+	public static void VerifyShippingInformationExpediteSelected() throws Exception
+	{
+		WaitForElementVisible(By.xpath("//p[@class='tg-space--half--top ng-scope']"), ShortTimeout);
+		Assert.assertEquals(driver.findElement(By.xpath("//p[@class='tg-space--half--top ng-scope']")).getText(), expeditedOrderText);
+	}
+	
 	public static void VerifyShippingInformationOrderAccessoriesAction() throws Exception
 	{
 		String errMessage = "Wrong information found in test for shipping information in VerifyOrderPge.VerifyShippingInformationOrderAccessoriesAction.";
@@ -944,6 +866,20 @@ public class VerifyOrderPage extends BaseClass
 				              strArray[1].replace("Additional Instructions ", ""),
 							  strArray[2].replace("Service Number ", ""), 
 							  strArray[3].replace("Reason ", "")};
+	}
+	
+	public static void VerifyAdditionalInformationNewActivation()
+	{
+		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling ::div")).getText().split("\n");
+		//for(String str : strArray){ShowText(str);}
+
+		Assert.assertEquals(strArray[0].replace("Preferred Area Code ", ""), preferredAreaCode);
+		Assert.assertEquals(strArray[1].replace("Contact Phone Number ", ""), contactNumber);
+		Assert.assertEquals(strArray[2].replace("Ext ", ""), extension);
+		Assert.assertEquals(strArray[3].replace("Additional Instructions ", ""), additionalInstructions);
+		Assert.assertEquals(strArray[4].replace("Business Unit ", ""), buisnessUnit);
+		Assert.assertEquals(strArray[5].replace("Service Number Alias ", ""), serviceNumberAlias);
+		Assert.assertEquals(strArray[6].replace("Reason ", ""), reasonOtherText);
 	}
 	
 

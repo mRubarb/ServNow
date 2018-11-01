@@ -92,12 +92,22 @@ public class EnterShippingInfoPage extends BaseClass
 	
 	// 10/31/18 - changed name.
 	// waiting for this error to be visible verifies it is visible.
-	public static void VerifyErrorsGermany() throws Exception
+	public static void VerifyErrorsShippingInfo(Country country) throws Exception
 	{
 		WaitForElementVisible(By.xpath(mainErrorMessage), MainTimeout);		
-		WaitForElementVisible(By.xpath("//li[text()='Line 1 is required.']"), MainTimeout);
-		WaitForElementVisible(By.xpath("//li[text()='City is required.']"), MainTimeout);		
-		WaitForElementVisible(By.xpath("//li[text()='State is required.']"), MainTimeout);		
+		WaitForElementVisible(By.xpath("//li[text()='Line 1 is required.']"), MediumTimeout);
+		WaitForElementVisible(By.xpath("//li[text()='City is required.']"), MediumTimeout);
+		if(country.equals(Country.UnitedStates))
+		{
+			WaitForElementVisible(By.xpath("//li[text()='State is required.']"), MediumTimeout);			
+		}
+		else
+		{
+			if(WaitForElementVisibleNoThrow(By.xpath("//li[text()='State is required.']"), ShortTimeout))
+			{
+				Assert.fail("Found error message that shouldn't exist in 'VerifyErrorsShippingInfo");
+			}
+		}
 	}	
 	
 	public static void PopulateFieldsForGermany()

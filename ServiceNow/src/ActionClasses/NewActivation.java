@@ -1,6 +1,7 @@
 package ActionClasses;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import ActionsBaseClasses.ActionsBase;
 import ActionsBaseClasses.CommonTestSteps;
@@ -11,9 +12,11 @@ import ServiceNow.ChoosePlanPage;
 import ServiceNow.DevicePage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
+import ServiceNow.OrderSubmittedPage;
 import ServiceNow.ProvideAdditionalInfoPage;
 import ServiceNow.SelectRegionPage;
 import ServiceNow.SideBar;
+import ServiceNow.VerifyOrderPage;
 
 public class NewActivation extends ActionsBase
 {
@@ -116,12 +119,10 @@ public class NewActivation extends ActionsBase
 		
 		// Click Next. You are in the Choose Accessories step. The available accessories for the selected device are listed. 
 		ChoosePlanPage.clickNextButton();		
-		BaseClass.stepComplete("TC:0001", "TS:19");
 		ChooseAccessoriesPage.waitForPageToLoadAccessories();
 		
 		// Verify that you can click Next without adding any accessory.
 		ChooseAccessoriesPage.clickNextBtn();
-		BaseClass.stepComplete("TC:0001", "TS:20");
 		
 		// Go Back and make sure you can add (and remove) one or more accessories to/from the Shopping Cart. 
 		// Verify that as long as you add/remove accessories, the Cost item on the Shopping Cart gets updated.  
@@ -135,7 +136,8 @@ public class NewActivation extends ActionsBase
 			ChooseAccessoriesPage.VerifyAddRemoveItemsInAccessories();
 			ChooseAccessoriesPage.addAccessoriesToShoppingCart(false);
 		}
-	
+
+		/*
 		// Click Next. You are in the Provide Additional Info step. 
 		ChooseAccessoriesPage.clickNextBtn();
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
@@ -159,27 +161,76 @@ public class NewActivation extends ActionsBase
 		 //     Click Next leaving the address fields blank. There's an error message for the required fields.
 		EnterShippingInfoPage.selectGermanyDropDown();
 		EnterShippingInfoPage.clickNextBtn();
-		
-		EnterShippingInfoPage.VerifyErrorsGermany();
-		BaseClass.stepComplete("TC:0001", "TS:27");
-
-		 // 28.	Fill in required fields. 
-		EnterShippingInfoPage.PopulateFieldsForGermany();
-		
-		// ///////////////////////////////////////////////////////
-		// BELOW --- redo !!!!
-		// ///////////////////////////////////////////////////////
+		EnterShippingInfoPage.VerifyErrorsShippingInfo(Country.Germany);
 		EnterShippingInfoPage.SelectDropdownToUnitedStates();
 		EnterShippingInfoPage.WaitForPageLoad();
-		EnterShippingInfoPage.VerifyErrorsUnitedStates();
-		BaseClass.stepComplete("TC:0001", "TS:28");
-		
+
 		 // 29.	Check box "Please expedite order".  Click "Next". You are in the "Verify Order" step
 		EnterShippingInfoPage.checkExpediteOrder();
 		EnterShippingInfoPage.clickNextBtn();
-		BaseClass.stepComplete("TC:0001", "TS:29");
+		VerifyOrderPage.WaitForPageToLoad();
 
+		// create a helper object that stores details about a New Service order.
+		CreateOrderDetailsExpectedObject();
+		VerifyOrderPage.VerifySelectedDeviceDetails();
+		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
+		VerifyOrderPage.verifyAccessoriesDetails();
+		//VerifyOrderPage.verifyAdditionalInformationBlock();
+		VerifyOrderPage.VerifyAdditionalInformationNewActivation();
+		VerifyOrderPage.VerifyShippingInformation();
+		VerifyOrderPage.VerifyShippingInformationExpediteSelected();
+		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
-		
+		// 31. Click Submit Order.  You are in the Order Submitted step.  
+		VerifyOrderPage.clickSubmitBtn();
+		VerifyOrderPage.WaitForOrderComplete();
+		VerifyOrderPage.VerifyOrderSubmittedInfo();
+		DebugTimeout(2, ""); // wait for SN to hopefully sync with command.
+		OrderSubmittedPage.SelectViewOrder();		
+		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
+		OrderSubmittedPage.VerifyTopSection();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	// good to here
+		OrderSubmittedPage.VerifyAccountHolderInformation(); 
+		OrderSubmittedPage.VerifyApprovals();		
+		OrderSubmittedPage.VerifyShippingInformation();
+		OrderSubmittedPage.verifyOrderSegments();
+		*/
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////////////////////////////
+	//									Helper Methods Below
+	////////////////////////////////////////////////////////////////////////////////////////////////	
+	// //////////////////////////////////////////////////////////////////////////////////////////////	
+
+	// this loops on the test that checks the order block in the 'my orders' main page. it sometimes doesn't sync correctly 
+	// so it is looped on.
+	public static void VerifyLimitedUserOrderMyOrdersMainPage() throws Exception
+	{
+		if(!RunTimedCall_VerifyLimitedUserOrdersPage(loopTime))
+		{
+			Assert.fail("Failed to find correct users information in users order information in NewActivation.VerifyLimitedUserOrderMyOrdersMainPage.");			
+		}
+	}	
+	
+	public static void VerifyOrderDetailsPostApproval() throws Exception
+	{
+		ServiceNow.MyOrdersPage.WaitForPageToLoad(); // sanity check.
+		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
+		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
+		OrderSubmittedPage.VerifyTopSection();
+		OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		OrderSubmittedPage.VerifyAccountHolderInformation(); 
+		OrderSubmittedPage.VerifyApprovals();		
+		OrderSubmittedPage.VerifyShippingInformation();
+		OrderSubmittedPage.verifyOrderSegments();
+	}
+
+	public static void SetupOrderDetailsExpectedObject()
+	{
+		orderDetailsObjectExpected.orderType = "Order New Service"; 
+		orderDetailsObjectExpected.orderId = orderSubmittedPageOrderNumber;
+		orderDetailsObjectExpected.status = awaitingApprovalStatus;
 	}
 }
+

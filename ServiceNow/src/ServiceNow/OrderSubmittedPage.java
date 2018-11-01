@@ -469,6 +469,21 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), serviceNumber, errorMessage);		
 	}
 	
+	public static void VerifyAdditionalInformationNewActivation()
+	{
+		String [] strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling ::div")).getText().split("\n");
+		//for(String str : strArray){ShowText(str);}
+
+		Assert.assertEquals(strArray[0].replace("Preferred Area Code ", ""), preferredAreaCode);
+		Assert.assertEquals(strArray[1].replace("Contact Phone Number ", ""), contactNumber);
+		Assert.assertEquals(strArray[2].replace("Ext ", ""), extension);
+		Assert.assertEquals(strArray[3].replace("Additional Instructions ", ""), additionalInstructions);
+		Assert.assertEquals(strArray[4].replace("Business Unit ", ""), buisnessUnit);
+		Assert.assertEquals(strArray[5].replace("Service Number Alias ", ""), serviceNumberAlias);
+		Assert.assertEquals(strArray[6].replace("Reason ", ""), reasonOtherText);
+	}
+	
+	
 	// 10/25/18 -  this is different than verify that's done before order submit. this has extra field 'currentCarrier'.
 	public static void VerifyAdditionalInformationTransferServiceInAndPort()
 	{
