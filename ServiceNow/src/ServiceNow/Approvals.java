@@ -3,11 +3,13 @@ package ServiceNow;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.bcel.generic.BIPUSH;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import ActionClasses.NewActivation;
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
 import HelperObjects.DeviceInfoActions;
@@ -28,7 +30,7 @@ public class Approvals extends BaseClass
 	
 	// this is common in many places. bob 7/27/18
 	public static String commonXpathForDescriptions = ".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/../div/following-sibling::input[1]"; 	
-	public static String commonXpathForDescriptionsSimple = "//input[@id='x_tango_mobility_tangoe_mobility_order_request.description']"; // 11/1/18
+	public static String commonXpathForDescriptionsSimple = "//input[@id='x_tango_mobility_tangoe_mobility_order_request.description']"; // 11/1/18 
 	
 	// this waits for first check box at top of approvals list and the 'to' text at the bottom of the page.
 	public static void WaitForPageToLoad() throws Exception
@@ -45,7 +47,7 @@ public class Approvals extends BaseClass
 	
 
 		// Select order from list
-		openOrderDetails(); // see internal comment.
+		openOrderDetails(); 
 	
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
@@ -103,7 +105,7 @@ public class Approvals extends BaseClass
 	private static void openOrderDetails() throws Exception {
 		
 		// added 8/9/2018 - modified 8/22/2018
-		refreshList(); // bladd						
+		refreshList(); 					
 		
 		boolean correctUserAndType = false;
 		boolean correctExternalOrderId = false;
@@ -129,6 +131,10 @@ public class Approvals extends BaseClass
 
 			// Verify external order number and order id in full description
 			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n")); 			
+			
+			ShowText("------------------------------------------------------------------------");
+			System.out.println(correctUserAndType + " " + correctExternalOrderId);
+			ShowText("------------------------------------------------------------------------");
 			
 			if(correctUserAndType && correctExternalOrderId)
 			{
@@ -317,11 +323,28 @@ public class Approvals extends BaseClass
 	public static boolean isCorrectOrderTypeAndUser(String shortDescription)
 	{
 		
-		if(shortDescription.contains(userLimitedShorterName) && shortDescription.contains(orderDetailsObjectExpected.orderType))
+		if(approvalActionType.equals(approvalActionType.newActivation))
 		{
-			return true;
+			if(shortDescription.contains(userLimitedShorterName) && shortDescription.contains(orderDetailsObjectExpected.orderTypeNewActivation))
+			{
+				return true;
+			}
+			return false;			
 		}
-		return false;
+		else
+		{
+			if(shortDescription.contains(userLimitedShorterName) && shortDescription.contains(orderDetailsObjectExpected.orderType))
+			{
+				return true;
+			}
+			return false;			
+		}
+		
+		//if(shortDescription.contains(userLimitedShorterName) && shortDescription.contains(orderDetailsObjectExpected.orderType))
+		//{
+		//	return true;
+		//}
+		//return false;
 		
 	}	
 	
@@ -770,18 +793,38 @@ public class Approvals extends BaseClass
 	public static void VerifyNewActivation() throws Exception
 	{
 		DebugTimeout(0, "Verify New Activation in approval page.");
+		String strTemp = "";
+
+		WaitForElementVisible(By.xpath("//span[text()='Short description']"), MediumTimeout);
+		WaitForElementVisible(By.xpath("//span[text()='Description']"), ShortTimeout);		
+		
+		//span[text()='Short description']
+		//span[text()='Description']
 		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"); 		
 		
-		for(String str: strArray)
-		{
-			ShowText(str);
-		}
+		//for(String str: strArray){ShowText(str);}
 		
-		//Assert.assertEquals(strArray[2],"Additional Info:","");		
-		//Assert.assertEquals(strArray[6].replace("Reason:",""), reasonAction,"");	
+		Assert.assertEquals(strArray[0], "New Device Order for " + userLimitedShorterName + ".  ");
 
-		// this covers the rest of the items.
-		//VerifySubset(strArray);
+		strTemp = " Total Cost:" +  PlanInfoActions.costValueInShoppingCart + " Total Monthly Cost:" + PlanInfoActions.planCostCompleteField.split(" ")[1];
+		Assert.assertEquals(strArray[2], strTemp);
+		
+		Assert.assertEquals(strArray[4], "Items Ordered: ");		
+		Assert.assertEquals(strArray[5], "AT&T Unite MiFi " + PlanInfoActions.costValueInShoppingCart);
+		Assert.assertEquals(strArray[6], "AT&T 4GB Mobile Share Data Plan " + PlanInfoActions.planCostCompleteField.split(" ")[1] + " Monthly");		
+		Assert.assertEquals(strArray[8], "Additional Info:");
+		Assert.assertEquals(strArray[9], "Preferred Area Code:" + preferredAreaCode);
+		Assert.assertEquals(strArray[10], "Contact Phone Number:" + contactNumber);		
+		Assert.assertEquals(strArray[11], "Ext:" + extension);		
+		Assert.assertEquals(strArray[12], "Additional Instructions:" + additionalInstructions);
+		Assert.assertEquals(strArray[13], "Business Unit:" + buisnessUnit);		
+		Assert.assertEquals(strArray[14], "Service Number Alias:" + serviceNumberAlias);
+		Assert.assertEquals(strArray[15], "Reason:" + reasonOtherText);		
+		
+		strTemp = "  - please expedite this shipment.";
+		Assert.assertEquals(strArray[17], "Ship to: " + userLimitedShorterName + " " + userLineOne + " " + userCity + " " + userStateShort + " " + userPostalCode + strTemp);		
+		Assert.assertEquals(strArray[19], "Tangoe Order ID:" + orderDetailsObjectExpected.orderId);		
+		Assert.assertEquals(strArray[20], "External Order Number:" + orderDetailsObjectExpected.externalOrderId);
 	}	
 	
 	

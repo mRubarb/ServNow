@@ -24,7 +24,7 @@ import ServiceNow.SideBar;
 import ServiceNow.VerifyOrderPage;
 
 
-public class TC0001NewActivation extends BaseClass
+public class TC0001NewActivationReject extends BaseClass
 {
 	@BeforeClass
 	public static void setUp() throws Exception
@@ -45,18 +45,11 @@ public class TC0001NewActivation extends BaseClass
 		CommonTestSteps.LoginLimitedUser();
 		
 		NewActivation.RunNewActivation();
-
+		
+		//ShowText(orderDetailsObjectExpected.externalOrderId);
+		//ShowText(orderDetailsObjectExpected.orderId);		
+		
 		CommonTestSteps.Logout();
-		
-		CreateOrderDetailsExpectedObject();
-		
-		orderDetailsObjectExpected.orderId = "13295726";
-		orderDetailsObjectExpected.externalOrderId = "15410905595657b914c172c659ef3f06";
-		//orderDetailsObjectExpected.orderType = "Order New Service"; // New Device
-		orderDetailsObjectExpected.orderType = "New Device";
-		orderDetailsObjectExpected.status = "Awaiting Approval in ServiceNow";		
-
-		//New Device Order for Bob Limited.  
 		
 		// login as approver.
 		CommonTestSteps.LoginApproverBrowserOpen();		
@@ -67,21 +60,19 @@ public class TC0001NewActivation extends BaseClass
 		// this finds the approval entry for the deactivate order just placed by the limited user, approves it, and 
 		// verifies it's result in the approvals main page. it also sets the orderDetailsObjectExpected object 
 		// status to 'In Fulfillment' if everything goes OK.
-		Approvals.selectAndApproveOrder();
-		
-		
+		Approvals.selectAndRejectOrder();
+
 		CommonTestSteps.Logout();
 		
 		// login as limited user.
-		//CommonTestSteps.LoginLimitedUserBrowserOpen();
+		CommonTestSteps.LoginLimitedUserBrowserOpen();
 		
 		// go to 'my orders main page'
-		//CommonTestSteps.GoToMyOrders();		
+		CommonTestSteps.GoToMyOrders();		
 
-		//NewActivation.VerifyLimitedUserOrderMyOrdersMainPage();
+		NewActivation.VerifyLimitedUserOrderMyOrdersMainPage();
 		
-		//NewActivation.VerifyOrderDetailsPostApproval();
-		
+		NewActivation.VerifyOrderDetailsPostApproval(); // this includes verifying history.
 	}
 	
 	@AfterClass

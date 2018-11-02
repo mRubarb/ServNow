@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import ActionClasses.NewActivation;
 import HelperObjects.CalendarDateTimeObject;
 import ServiceNow.BaseClass;
 import ServiceNow.Frames;
@@ -234,7 +235,16 @@ public class ActionsBase extends BaseClass
 			{
 				WaitForElementVisible(By.xpath("(//label[text()='Event'])[5]"), MainTimeout);
 
-				historyDataArray = driver.findElement(By.xpath("(//table/tbody)[2]")).getText().split("\n");
+				if(approvalActionType.equals(ApprovalActionType.newActivation))
+				{
+					historyDataArray = driver.findElement(By.xpath("(//table/tbody)[3]")).getText().split("\n");					
+				}
+				else
+				{
+					historyDataArray = driver.findElement(By.xpath("(//table/tbody)[2]")).getText().split("\n");
+				}				
+				
+				//historyDataArray = driver.findElement(By.xpath("(//table/tbody)[2]")).getText().split("\n");
 				//for(String str : historyDataArray){DebugTimeout(0, str.trim());} // DEBUG
 				
 				Assert.assertTrue(historyDataArray[0].contains("Entered Order Processing"), errMessage); // row 1
@@ -279,7 +289,17 @@ public class ActionsBase extends BaseClass
 			case reject:
 			{
 				WaitForElementVisible(By.xpath("(//label[text()='Event'])[4]"), MediumTimeout);
-				historyDataArray = driver.findElement(By.xpath("(//table/tbody)[2]")).getText().split("\n");				
+				
+				if(approvalActionType.equals(ApprovalActionType.newActivation))
+				{
+					historyDataArray = driver.findElement(By.xpath("(//table/tbody)[3]")).getText().split("\n");					
+				}
+				else
+				{
+					historyDataArray = driver.findElement(By.xpath("(//table/tbody)[2]")).getText().split("\n");
+				}
+				
+				//historyDataArray = driver.findElement(By.xpath("(//table/tbody)[2]")).getText().split("\n");				
 				// for(String str : historyDataArray){DebugTimeout(0, str.trim());} // DEBUG
  
 				// Assert.assertTrue(strTempArray[0].contains(approverText), errMessage); // row 4 // THIS TEXT IS NOT IN CONSISTENT ORDER. TODO // row 1				

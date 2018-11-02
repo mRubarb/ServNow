@@ -108,13 +108,13 @@ public class NewActivation extends ActionsBase
 		//  this adds/removes all of the plan options and verifies everything in the shopping cart.
 		if (optionalFeaturesAvailable) 
 		{
-			ShowText("Optiions found");
+			ShowText("Options found");
 			ChoosePlanPage.VerifyAddRemoveCostMonthly();
 			ChoosePlanPage.addOptionalFeaturesToShoppingCart(); // this add the first and last optional features to be used at end of this test case.
 		}
 		else
 		{
-			ShowText("No Optiions found");			
+			ShowText("No Options found");			
 		}
 		
 		// Click Next. You are in the Choose Accessories step. The available accessories for the selected device are listed. 
@@ -137,7 +137,6 @@ public class NewActivation extends ActionsBase
 			ChooseAccessoriesPage.addAccessoriesToShoppingCart(false);
 		}
 
-		/*
 		// Click Next. You are in the Provide Additional Info step. 
 		ChooseAccessoriesPage.clickNextBtn();
 		ProvideAdditionalInfoPage.WaitForPageToLoad();
@@ -149,7 +148,7 @@ public class NewActivation extends ActionsBase
 		ProvideAdditionalInfoPage.VerifyErrorsNewActivation();
 		ProvideAdditionalInfoPage.EnterMissingInfoNewActivation();
 		ProvideAdditionalInfoPage.clickNextBtn();
-		
+
 		 // Name and Shipping Address info for the employee should be filled out by default. This info can be added/edited on CMD instance.
 		//Just need to click next on this step, will fail if info required info is not present.
 		EnterShippingInfoPage.WaitForPageLoad();
@@ -170,8 +169,6 @@ public class NewActivation extends ActionsBase
 		EnterShippingInfoPage.clickNextBtn();
 		VerifyOrderPage.WaitForPageToLoad();
 
-		// create a helper object that stores details about a New Service order.
-		CreateOrderDetailsExpectedObject();
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
@@ -184,17 +181,25 @@ public class NewActivation extends ActionsBase
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete();
+
+		// create and setup order details expected object with order type, order id, and expected status. 
+		CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service.
+		SetupOrderDetailsExpectedObject(); // this changes the object properties in the object created above for New Activation. 
+
+		StoreOrderNumberToVariable();
 		VerifyOrderPage.VerifyOrderSubmittedInfo();
+		
+		
 		DebugTimeout(2, ""); // wait for SN to hopefully sync with command.
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	// good to here
+		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
+		OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyOrderSegments();
-		*/
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////////////////////
@@ -224,6 +229,7 @@ public class NewActivation extends ActionsBase
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyOrderSegments();
+		VerifyOrderDetailsHistoryAfterApproval();
 	}
 
 	public static void SetupOrderDetailsExpectedObject()

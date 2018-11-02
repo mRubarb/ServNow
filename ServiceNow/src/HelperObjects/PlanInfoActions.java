@@ -9,7 +9,8 @@ public class PlanInfoActions
 {
 	public String costMonthlyTotal = ""; 
 	public String planSelectedName = "";
-	public String planCostCompleteField = ""; // this is set in ChoosePlanPage.StoreNameOfFirstPlanInList()
+	public static String planCostCompleteField = ""; // this is set in ChoosePlanPage.StoreNameOfFirstPlanInList()
+	public static String costValueInShoppingCart = ""; // this is used in new activation
 	//public static String planstartingCost = "";  // ** NOT USED - TO BE REMOVED	
 	public static String planVendor = "";
 	public static ArrayList<String> includedFeatures = new ArrayList<>(); // this holds the included features that are in plan page.

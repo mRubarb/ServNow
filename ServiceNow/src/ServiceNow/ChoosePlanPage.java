@@ -307,10 +307,11 @@ public class ChoosePlanPage extends BaseClass
 		
 		// Store the complete plan's price. E.g: '(Monthly) $114.99'
 		List<WebElement> tempWebElementList =  driver.findElements(By.cssSelector(".tg-valign--top.ng-binding")); 
-		planInfoActions.planCostCompleteField = tempWebElementList.get(1).getText();
+		
+		PlanInfoActions.planCostCompleteField = tempWebElementList.get(1).getText();
+		PlanInfoActions.costValueInShoppingCart = driver.findElement(By.xpath("//span[text()='Cost']/following-sibling:: span")).getText();
 		
 		System.out.println("Plan Name Selected: " + planInfoActions.planSelectedName);
-		
 	}
 
   

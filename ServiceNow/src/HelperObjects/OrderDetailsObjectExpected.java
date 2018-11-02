@@ -7,6 +7,7 @@ public class OrderDetailsObjectExpected
 	public String externalOrderId = "";	
 	public String departmentName = "";
 	public String orderType = "";	
+	public String orderTypeNewActivation = "New Device"; // order type for new activation is different in My Orders list when compared to title in approvals. 	
 	public String status = "";
 	public String orderDate = "";	
 	public String orderIdTwo = ""; // jnupp
