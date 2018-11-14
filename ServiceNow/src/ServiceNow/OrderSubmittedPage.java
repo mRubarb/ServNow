@@ -499,6 +499,21 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(strArray[6].replace("Service Number ",""), newServiceNumber, "");
 	}
 	
+	// TBD - 11/14/18
+	public static void VerifyAdditionalInformationTransferServiceIn()
+	{
+		String [] strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
+		//for(String str : strArray){ShowText(str);}
+
+		Assert.assertEquals(strArray[0].replace("Service Number ",""), newServiceNumber, "");		
+		Assert.assertEquals(strArray[1].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
+		Assert.assertEquals(strArray[2].replace("Name on Invoice ",""), userLimitedShorterName, "");
+		Assert.assertEquals(strArray[3].replace("Contact Phone Number ",""), contactNumber, "");
+		Assert.assertEquals(strArray[4].replace("Ext ",""), extension, "");
+		Assert.assertEquals(strArray[5].replace("Additional Instructions ",""), additionalInstructions, "");
+	}
+	
+	
 	// ************ KEEP **************************   // bladd comment after replacing all calls to this
 	public static void verifyAdditionalInformationBlock() throws Exception // use it for all tx types
 																				// see if there are missing options

@@ -83,7 +83,6 @@ public class TransferServiceIn extends BaseClass {
 		ChooseDevicePage.clickNextButton();
 		ChooseDevicePage.VerifyNoDeviceSelected(); 
 		
-		
 		// 9. Click on Add to Cart button for any of the devices listed. Verify that the device is added to Shopping cart, 
 		// and that the Add to Cart button, for the selected device, changes to Remove from Cart.
 		// 10. Click on Remove from Cart. Verify that the device is removed from Shopping cart. Add device back to shopping cart 
@@ -226,11 +225,12 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.verifyAdditionalInformationBlock();		
+
+		VerifyOrderPage.verifyAdditionalInformationBlock();	
+		VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
-		
-		
+
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete();
@@ -239,7 +239,8 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); 
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -279,9 +280,9 @@ public class TransferServiceIn extends BaseClass {
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
 		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn();
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
@@ -510,7 +511,7 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
 		VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort();
-		VerifyOrderPage.verifyAdditionalInformationBlock();		
+		VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
