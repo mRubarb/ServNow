@@ -45,6 +45,13 @@ public class TC0029UpdateFeaturesReject extends BaseClass
 		
 		CommonTestSteps.Logout();
 
+		//CreateOrderDetailsExpectedObject();
+
+		//orderDetailsObjectExpected.orderId = "13296161";
+		//orderDetailsObjectExpected.externalOrderId = "1542289163192d0c9bea6ae3d783fdb5";
+		//orderDetailsObjectExpected.orderType = "Update Features";		
+		//orderDetailsObjectExpected.status = "Awaiting Approval in ServiceNow";
+		
 		BaseClass.stepComplete("Run update features action complete. Now will reject the order.", "");
 		
 		// login as approver.

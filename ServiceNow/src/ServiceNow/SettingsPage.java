@@ -74,7 +74,7 @@ public class SettingsPage extends BaseClass
 	// 															HELPERS
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static void MoveToBottomOfPage() throws Exception // jnupp
+	public static void MoveToBottomOfPage() throws Exception
 	{
 		WebElement ele = driver.findElement(By.cssSelector(".container-fluid>button"));
 		new Actions(driver).moveToElement(ele).perform();
@@ -86,5 +86,6 @@ public class SettingsPage extends BaseClass
 		driver.findElement(By.cssSelector(".container-fluid>button")).click();		
 		Thread.sleep(1000); // wait for clicked element to go disabled. 
 		WaitForElementClickable(By.cssSelector(".container-fluid>button"), MediumTimeout, "");
+		WaitForElementVisible(By.xpath("//div[text()='Properties updated']"), ShortTimeout);		
 	}	
 }

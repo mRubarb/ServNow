@@ -309,7 +309,12 @@ public class ChoosePlanPage extends BaseClass
 		List<WebElement> tempWebElementList =  driver.findElements(By.cssSelector(".tg-valign--top.ng-binding")); 
 		
 		PlanInfoActions.planCostCompleteField = tempWebElementList.get(1).getText();
-		PlanInfoActions.costValueInShoppingCart = driver.findElement(By.xpath("//span[text()='Cost']/following-sibling:: span")).getText();
+		
+		// according to comments in 'PlanInfoActions' class this is only used in new activation.  won't use except for new activation.
+		if(approvalActionType.equals(ApprovalActionType.newActivation))
+		{
+			PlanInfoActions.costValueInShoppingCart = driver.findElement(By.xpath("//span[text()='Cost']/following-sibling:: span")).getText();			
+		}
 		
 		System.out.println("Plan Name Selected: " + planInfoActions.planSelectedName);
 	}

@@ -350,7 +350,7 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice(); // bladd
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();

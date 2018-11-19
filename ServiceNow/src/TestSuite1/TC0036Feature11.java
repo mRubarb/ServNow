@@ -69,7 +69,7 @@ public class TC0036Feature11 extends BaseClass
 		}
 		
 		System.out.println("Close Browser.");
-	    JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
+	    //JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
 	}

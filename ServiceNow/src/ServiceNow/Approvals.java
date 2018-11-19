@@ -55,10 +55,10 @@ public class Approvals extends BaseClass
 		// If get to here the order to be approved has been found. do the approval and wait for main page to load. doing the approval brings user back to the main page.		
 		
 		// Select approver from dropdown list 
-		int approverIndex = selectApprover(); // bladd
+		int approverIndex = selectApprover();
 		 
 		// Approve order 
-		approveOrder(approverIndex); // bladd
+		approveOrder(approverIndex); 
 
 		Thread.sleep(5000);  // ** Giving time for order to have status updated 
 		
@@ -68,7 +68,7 @@ public class Approvals extends BaseClass
 	private static void refreshList() throws InterruptedException {
 		
 		System.out.println(".. Giving time for the order to be added to the list ....");
-		Thread.sleep(30000); // sometimes it takes some time until the order is added to the list after is created. 
+		Thread.sleep(30000); // sometimes it takes some time until the order is added to the list after is created. // bladdxx 
 							// giving some time for the order to be added to the list
 		
 		driver.findElement(By.xpath("//button[@data-list_id='sysapproval_approver']")).click();
@@ -151,10 +151,9 @@ public class Approvals extends BaseClass
 		} while ((x <= 10) && !(correctUserAndType && correctExternalOrderId));
 		//} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
 		
-		
 		// verify order to approve was found. if the order action wasn't found within loop max rows it looks like it can't be found. 
-		Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
-		
+		//Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
+		Assert.assertTrue(x <= 10, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
 	}
 	
 	
@@ -994,11 +993,11 @@ public class Approvals extends BaseClass
 		
 		Assert.assertEquals(strArray[9].trim(), "Additional Info:", errMessage);
 		Assert.assertEquals(strArray[10].trim().replace("Contact Phone Number:", "").trim(), contactNumber, errMessage);
-		Assert.assertEquals(strArray[11].trim().replace("Ext:", ""), preferredAreaCode, errMessage);		
+		Assert.assertEquals(strArray[11].trim().replace("Ext:", ""), extension, errMessage);		
 		Assert.assertEquals(strArray[12].replace("Additional Instructions:", "").trim(), additionalInstructions, errMessage);
 		Assert.assertEquals(strArray[13].replace("Service Number:", "").trim(), serviceNumber, errMessage);
 		Assert.assertEquals(strArray[15].replace("Tangoe Order ID:", ""), orderDetailsObjectExpected.orderId.trim(), errMessage);		
-		Assert.assertEquals(strArray[16].replace("External Order Number:",""), orderDetailsObjectExpected.externalOrderId.trim(), errMessage);		
+		Assert.assertEquals(strArray[16].replace("External Order Number:",""), orderDetailsObjectExpected.externalOrderId.trim(), errMessage);
 	}
 	
 	public static void VerifyOrderAccessories() throws Exception

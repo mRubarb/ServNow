@@ -37,10 +37,10 @@ public class UpdateFeatures extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(updateServiceTitle);		
 		VerifyOrderPage.VerifyFeatures();	
-		// VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformationUpdateFeature();
+		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformationUpdateFeature();
 		VerifyOrderPage.VerifyAdditionalInformationUpdateFeature();
 		VerifyOrderPage.VerifyFeaturesCost();
-		
+
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		StoreOrderNumberToVariable(); 
@@ -60,7 +60,7 @@ public class UpdateFeatures extends ActionsBase
 		VerifyFullServiceNumber();
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 		OrderSubmittedPage.VerifyTopSectionLowerPart();
-		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();  	
+		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();  	
 		// OrderSubmittedPage.VerifyAdditionalInformationUpdateFeature();
 		OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
 		
