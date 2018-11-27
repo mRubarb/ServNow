@@ -4,10 +4,10 @@
 <suite name="Sample">
   <test name="Learn">
     <classes>
-      <class name="TestSuite1.TC0035Feature10"/>
+      <!-- <class name="TestSuite1.TC0035Feature10"/> -->
       <!-- <class name="TestSuite1.TC0036Feature11"/> --> 
       <class name="TestSuite1.TC9999_SmokeTest"/>       
-      <class name="TestSuite1.TC0037Feature12"/>
+      <!-- <class name="TestSuite1.TC0037Feature12"/> -->
       <!-- this is commented  -->      
    </classes>
  </test>

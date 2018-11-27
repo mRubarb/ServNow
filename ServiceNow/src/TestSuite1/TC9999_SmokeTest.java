@@ -1,17 +1,13 @@
 package TestSuite1;
 
-import javax.swing.JOptionPane;
-
+import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ActionClasses.UpgradeDevice;
 import ActionsBaseClasses.CommonTestSteps;
-import ServiceNow.Approvals;
 import ServiceNow.BaseClass;
-import ServiceNow.BaseClass.ApprovalActionType;
-import ServiceNow.BaseClass.ApproverAction;
+import ServiceNow.DevicePage;
 
 public class TC9999_SmokeTest extends BaseClass
 {
@@ -24,7 +20,7 @@ public class TC9999_SmokeTest extends BaseClass
 	}
 
 	@Test
-	public static void TC9999() throws Exception
+	public static void TC9999() throws Exception 
 	{
 		BaseClass.stepComplete("------------------ Starting Smoke Test. -----------------------", "");
 
@@ -35,12 +31,16 @@ public class TC9999_SmokeTest extends BaseClass
 		CommonTestSteps.GoToHomePage();
 
 		// got to the devices page through the home page. 
-		//CommonTestSteps.GoToDevicesPage();
+		CommonTestSteps.GoToDevicesPage();
+		WaitForElementVisible(By.xpath("(//button[text()='View Device'])[1]"), ExtremeTimeout - MainTimeout);
 		
-		//CommonTestSteps.goToServicesPage();
+		CommonTestSteps.goToServicesPage();
+		BaseClass.DebugTimeout(2, "");
 		
-		//CommonTestSteps.GoToMyOrders();
-
+		CommonTestSteps.GoToHomePage();
+		
+		CommonTestSteps.GoToMyOrders();
+		
 		CommonTestSteps.Logout();
 		
 
