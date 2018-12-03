@@ -2,15 +2,15 @@ package TestSuite1;
 
 import javax.swing.JOptionPane;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ActionClasses.ModifySelectionsTesting;
 import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.BaseClass;
 
-public class TC0050_TransferServiceOutModifyActions extends BaseClass 
+public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass 
 {
 
 	@BeforeClass
@@ -21,13 +21,17 @@ public class TC0050_TransferServiceOutModifyActions extends BaseClass
 	}
 
 	@Test
-	public static void TC9999() throws Exception 
+	public static void TC0051_TransferServiceInAndPortModifyActionsTest() throws Exception 
 	{
 		BaseClass.stepComplete("------------------ Starting Smoke Test. -----------------------", "");
 
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
-		CommonTestSteps.GoToHomePage();
+
+		ModifySelectionsTesting.VerifyModifySelections();
+		Pause("");
+		
+		
 		CommonTestSteps.Logout();
 		//BaseClass.stepComplete("Smoke Test Complete.", "");
 	}
