@@ -132,12 +132,13 @@ public class DeactivateService extends ActionsBase
 		VerifyOrderPage.WaitForOrderComplete();
 		
 		// StoreOrderNumberToVariable(); // in deactivate the order number is shown in the order submitted page. // 
-		StoreOrderNumberTwoObjectVariable(); // jnupp
+		StoreOrderNumberTwoObjectVariable();
 		
-		//ShowText(orderDetailsObjectExpected.orderId);
-		//ShowText(orderDetailsObjectExpected.orderIdTwo);
+		ShowText("RunDeactivateServiceSecondTime - both order Ids. ");
+		ShowText(orderDetailsObjectExpected.orderId);
+		ShowText(orderDetailsObjectExpected.orderIdTwo);
 		
-		//Pause("first order done");
+		ShowText("Second order done");
 		
 		Thread.sleep(2000); // wait two seconds before selecting to view the order.
 
@@ -145,16 +146,17 @@ public class DeactivateService extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 
 		// create and setup order details expected object with order type, order id, and expected status. 
-		//CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service. // jnupp
-		//SetupOrderDetailsExpectedObject(); // this changes the object properties in the object created above for deactivate service. // jnupp 
+		//CreateOrderDetailsExpectedObject(); // this is instantiated in base class. it is setup for Order new device and service. // out
+		//SetupOrderDetailsExpectedObject(); // this changes the object properties in the object created above for deactivate service. // out 
 		
 		// this verifies the order number in verify page matches the order number in order details 
 		// page and verifies the correct order type at the top of the order details (submitted) page.
-		//VerifyOrderNumberAndOrderTypeBetweenPages(); // jnupp
+		//VerifyOrderNumberAndOrderTypeBetweenPages(); // bladd
 		
 		// more verifications here.
-		OrderSubmittedPage.VerifyTopSectionSecondTime(); // jnupp this also sets external order id in orderDetailsObjectExpected object that was setup further above.
+		OrderSubmittedPage.VerifyTopSectionSecondTime(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
+		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -168,7 +170,7 @@ public class DeactivateService extends ActionsBase
 		
 		
 	}
-	// jnupp above.		
+	// bladd above.		
 		
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////

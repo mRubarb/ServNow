@@ -177,7 +177,7 @@ public class Approvals extends BaseClass
 			// wait for the short description and  description text areas to become visible. 
 			
 			By shortDescription = By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']");
-			By fullDescription = By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']");
+			By fullDescription = By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/..");
 			
 			WaitForElementVisible(shortDescription, MediumTimeout);		
 			WaitForElementVisible(fullDescription, MediumTimeout);

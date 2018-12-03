@@ -79,7 +79,7 @@ public class ActionsBase extends BaseClass
 		
 	}
 	
-	// jnupp below
+	// bladd below
 	//   
 	public static void StoreOrderNumberTwoObjectVariable() throws Exception
 	{
@@ -93,7 +93,7 @@ public class ActionsBase extends BaseClass
 		
 		orderDetailsObjectExpected.orderIdTwo = driver.findElement(By.xpath("//div[@class='sn-notifyBlock__body']/p")).getText().replace("Order #","");
 	}
-	// jnupp above
+	// bladd above
 		
 		
 	// this compares the order number on the verify order page to what is displayed on the order submitted page.

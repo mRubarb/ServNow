@@ -351,7 +351,7 @@ public class TransferServiceIn extends BaseClass {
 		SelectCurrentCarrier.selectNewCarrier(newCarrier);
 	
 		SelectCurrentCarrier.clickNextButton();
-		
+		Pause("MMM");
 		
 		// STEP 3 - SPECIAL INSTRUCTIONS
 		
@@ -514,6 +514,8 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
+		
+		Pause("Look at carrier");
 		
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();

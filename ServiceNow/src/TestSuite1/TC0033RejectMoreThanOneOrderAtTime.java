@@ -46,15 +46,12 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		// 2) setup order details expected object for correct values.
 		// 3) verify results in order-submitted/order-details page after su
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
-		DeactivateService.RunDeactivateService(true); // jnupp.
+		DeactivateService.RunDeactivateService(true);
 
-		// junpp below
 		// got to the devices page through the home page. 
 		//Pause("First device done.");
 		CommonTestSteps.GoToDevicesPage();
 		DeactivateService.RunDeactivateService(false);
-		
-		// jnupp above
 		
 		/* Oct 27 Ana
 		 * If you want to avoid adding more orders and want to use existing orders (that have been recently added so they show up on the first page; and are in 'Requested' state)
@@ -62,15 +59,15 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		 * --> Replace values for orderId and externalOrderId for 2 orders
 		 */
 		
-		/*CreateOrderDetailsExpectedObject();
+		/*
+		CreateOrderDetailsExpectedObject();
 		DeactivateService.SetupOrderDetailsExpectedObject();
 		
-		orderDetailsObjectExpected.orderId = "11571990";
-		orderDetailsObjectExpected.orderIdTwo = "11571992";
-		orderDetailsObjectExpected.externalOrderId = "1509042083909227ada780fdda399eba";
-		orderDetailsObjectExpected.externalOrderIdTwo = "15090421400612401178bfe3fa76b9c2";
+		orderDetailsObjectExpected.orderId = "13296568";
+		orderDetailsObjectExpected.orderIdTwo = "13296570";
+		orderDetailsObjectExpected.externalOrderId = "1543848402296456d36f8e62429b0099";
+		orderDetailsObjectExpected.externalOrderIdTwo = "1543848455845d9040ccae3c807f7de0";
 		*/
-		
 		
 		// Show orderId and externalOrderId for both orders. 
 		ShowText(BaseClass.orderDetailsObjectExpected.orderId);

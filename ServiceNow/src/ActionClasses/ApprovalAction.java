@@ -35,7 +35,7 @@ public class ApprovalAction extends BaseClass {
 		
 		System.out.println("rowOrder2: " + rowOrder2);
 		
-		// 3. Being on the list of orders click on checkboxes
+		// 3. Being on the list of orders click on check-boxes
 		
 		selectOrderCheckbox(rowOrder1);
 		selectOrderCheckbox(rowOrder2);
@@ -89,7 +89,7 @@ public class ApprovalAction extends BaseClass {
 	}
 	
 
-	private static void rejectOrdersSelected(int[] rowNumbers) throws InterruptedException {
+	private static void rejectOrdersSelected(int[] rowNumbers) throws Exception {
 		
 		// The 'Comments' textbox is not displayed anymore. Text for Comment is something like: 
 		// "Order was rejected in ServiceNow. Approvers: rejected:Bob Lichtenfels-Approver,

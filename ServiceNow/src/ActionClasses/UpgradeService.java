@@ -26,7 +26,6 @@ public class UpgradeService extends ActionsBase
 	// The helper methods are further below.
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	
 	public static void runUpgradeService() throws Exception
 	{
 		// Go through the Upgrade Device/Service pages.
