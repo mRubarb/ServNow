@@ -151,7 +151,7 @@ public class DeactivateService extends ActionsBase
 		
 		// this verifies the order number in verify page matches the order number in order details 
 		// page and verifies the correct order type at the top of the order details (submitted) page.
-		//VerifyOrderNumberAndOrderTypeBetweenPages(); // bladd
+		//VerifyOrderNumberAndOrderTypeBetweenPages(); 
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSectionSecondTime(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
@@ -170,7 +170,7 @@ public class DeactivateService extends ActionsBase
 		
 		
 	}
-	// bladd above.		
+	
 		
 	
 	// //////////////////////////////////////////////////////////////////////////////////////////////

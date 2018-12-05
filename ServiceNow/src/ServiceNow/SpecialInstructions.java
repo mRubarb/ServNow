@@ -7,7 +7,11 @@ import org.openqa.selenium.WebElement;
 
 public class SpecialInstructions extends BaseClass {
 
-	public static void checkAllOptions() {
+	public static void checkAllOptions() throws Exception {
+		
+		
+		//WaitForElementPresent(By.xpath("//input[@id='ACKNOWLEDGEMENT_FIELD_LIABILITY_TRANSFER']"), MediumTimeout);
+		WaitForElementPresent(By.xpath("//form[@id='acknowledgementsForm']/div/div/label/input"), MediumTimeout);		
 		
 		String xpath = "//form[@id='acknowledgementsForm']/div/div/label/input";
 		

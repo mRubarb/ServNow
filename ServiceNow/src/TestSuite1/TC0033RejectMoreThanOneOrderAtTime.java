@@ -49,7 +49,7 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		DeactivateService.RunDeactivateService(true);
 
 		// got to the devices page through the home page. 
-		//Pause("First device done.");
+		Pause("First device done.");
 		CommonTestSteps.GoToDevicesPage();
 		DeactivateService.RunDeactivateService(false);
 		
@@ -70,8 +70,10 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		*/
 		
 		// Show orderId and externalOrderId for both orders. 
+		ShowText("Order Ids:");
 		ShowText(BaseClass.orderDetailsObjectExpected.orderId);
 		ShowText(BaseClass.orderDetailsObjectExpected.orderIdTwo);
+		ShowText("External Order Ids:");
 		ShowText(BaseClass.orderDetailsObjectExpected.externalOrderId);
 		ShowText(BaseClass.orderDetailsObjectExpected.externalOrderIdTwo);
 	

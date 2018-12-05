@@ -28,9 +28,7 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
 
-		ModifySelectionsTesting.VerifyModifySelections();
-		Pause("");
-		
+		ModifySelectionsTesting.LoadDeviceData();
 		
 		CommonTestSteps.Logout();
 		//BaseClass.stepComplete("Smoke Test Complete.", "");

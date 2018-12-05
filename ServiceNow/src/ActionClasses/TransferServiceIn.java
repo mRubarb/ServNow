@@ -351,7 +351,6 @@ public class TransferServiceIn extends BaseClass {
 		SelectCurrentCarrier.selectNewCarrier(newCarrier);
 	
 		SelectCurrentCarrier.clickNextButton();
-		Pause("MMM");
 		
 		// STEP 3 - SPECIAL INSTRUCTIONS
 		

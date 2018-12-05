@@ -171,7 +171,7 @@ public class ChooseDevicePage extends BaseClass
 		
 		int index = i + 1;
 		
-		System.out.println("Device Selected: " + driver.findElement(By.cssSelector("div.tg-display--table.ng-scope:nth-of-type(" + index + ")>div>div>div")).getText());
+		//System.out.println("Device Selected: " + driver.findElement(By.cssSelector("div.tg-display--table.ng-scope:nth-of-type(" + index + ")>div>div>div")).getText());
 		//System.out.println("Vendor: " + driver.findElement(By.xpath("(//div/div/table/tbody/tr[1]/td[2])[" + index + "]")).getText());
 		//System.out.println("Cost: " + driver.findElement(By.xpath("(//div/div/table/tbody/tr[2]/td[2])[" + index + "]")).getText());
 		

@@ -381,7 +381,8 @@ public class ChoosePlanPage extends BaseClass
 		
 		try 
 		{
-			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout);
+			// WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout);
+			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), ShortTimeout); // 12/4/18 - try shorter timeout.			
 			return true;
 		} 
 		catch (Exception e) 
@@ -437,6 +438,22 @@ public class ChoosePlanPage extends BaseClass
 		WaitForElementClickable(By.xpath("//button[text()='Remove from Cart']"), MediumTimeout, "");
 		
 	}
+	
+	// this is for Modify selections test. this expects at least one plan to be there.  
+	static public void SelectFirstPlanIndexOne()
+	{
+		if(!WaitForElementClickableBoolean(By.xpath("//button[text()='Add to Cart']"), MediumTimeout))
+		{
+			Assert.fail("No plan found in plan list in method 'SelectFirstPlanIndexOne()'");			
+		}
+		
+		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[1]")).click();
+		
+		WaitForElementClickable(By.xpath("//button[text()='Remove from Cart']"), MediumTimeout, "");
+	}
+
+	
+	
 	
 	public static WebElement backButton() {
 		element = driver.findElement(By.xpath("//div[@id='_create_order_page_content_']/div[4]/button[2]"));
