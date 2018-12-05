@@ -48,55 +48,72 @@ public class TC0032ApproveMoreThanOneOrderAtTime extends BaseClass
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
 		DeactivateService.RunDeactivateService(true); // jnupp.
 
-		// junpp below
 		// got to the devices page through the home page. 
 		//Pause("First device done.");
 		CommonTestSteps.GoToDevicesPage();
 		DeactivateService.RunDeactivateService(false);
-		
-		// jnupp above
 		
 		/* Oct 27 Ana
 		 * If you want to avoid adding more orders and want to use existing orders (that have been recently added so they show up on the first page; and are in 'Requested' state)
 		 * Comment code above - from line CommonTestSteps.GoToDevicesPage() - and uncomment section below - 
 		 * --> Replace values for orderId and externalOrderId for 2 orders
 		 */
-		
+
 		/*
 		CreateOrderDetailsExpectedObject();
 		DeactivateService.SetupOrderDetailsExpectedObject();
-				
-		orderDetailsObjectExpected.orderId = "11572028";  
-		orderDetailsObjectExpected.orderIdTwo = "11572026";
-		orderDetailsObjectExpected.externalOrderId = "15091147846359ebc6b5e3382d0f3265";
-		orderDetailsObjectExpected.externalOrderIdTwo = "1509114721605677ee6cc33803cfe531";
-		*/
 		
+		orderDetailsObjectExpected.orderId = "13296612";
+		orderDetailsObjectExpected.orderIdTwo = "13296614";
+		orderDetailsObjectExpected.externalOrderId = "1544012378435c9158780c917a708dc6";
+		orderDetailsObjectExpected.externalOrderIdTwo = "1544012441177c02cfbae0815768cb2f";
+
+		fullServiceNumber = "+1 (111) 222-3333";
+		serviceNumber = "1112223333";
+		*/
+		//* end
 		
 		// Show orderId and externalOrderId for both orders. 
+		ShowText("Order Ids:");
 		ShowText(BaseClass.orderDetailsObjectExpected.orderId);
 		ShowText(BaseClass.orderDetailsObjectExpected.orderIdTwo);
+		ShowText("External Order Ids:");
 		ShowText(BaseClass.orderDetailsObjectExpected.externalOrderId);
 		ShowText(BaseClass.orderDetailsObjectExpected.externalOrderIdTwo);
 	
-		CommonTestSteps.Logout();
-
-		BaseClass.stepComplete("Run deactivate action complete. Now will approve the order.", "");
+		CommonTestSteps.Logout(); // **
 
 		// login as approver.
-		CommonTestSteps.LoginApproverBrowserOpen();		
+		CommonTestSteps.LoginApproverBrowserOpen(); // **		
 		
 		// go to approvals page.
-		CommonTestSteps.GoToMyApprovalsPage();
+		CommonTestSteps.GoToMyApprovalsPage(); // **
 		
-		// It approves the orders that were created on previous steps
-		ApprovalAction.approveOrRejectOrders(approverAction);
+		// It rejects the orders that were created on previous steps
+		ApprovalAction.approveOrRejectOrders(approverAction);  // **
 		
-		CommonTestSteps.Logout();
+		CommonTestSteps.Logout(); //**
 		
-		BaseClass.stepComplete("Approve more than one order complete.", "");
+		// login as limited user.
+		CommonTestSteps.LoginLimitedUserBrowserOpen(); // **
+		
+		// go to 'my orders main page'
+		CommonTestSteps.GoToMyOrders();		
 
-	}
+		orderDetailsObjectExpected.status = "In fulfillment"; // make sure this is set for last steps below		
+
+		// ---- verify first rejected transaction ----
+		// this verifies the order info in the 'my orders' page. this run's a loop on the 
+		// verification to allow  SN to sync with command. 
+		DeactivateService.VerifyLimitedUserOrderMyOrdersMainPage();
+		
+		orderDetailsObjectExpected.orderId = orderDetailsObjectExpected.orderIdTwo;
+		orderDetailsObjectExpected.externalOrderId = orderDetailsObjectExpected.externalOrderIdTwo;
+
+		// ---- verify second rejected transaction ---- 
+		// this verifies the order info in the 'my orders' page. this run's a loop on the 
+		// verification to allow  SN to sync with command. 
+		DeactivateService.VerifyLimitedUserOrderMyOrdersMainPage();	}
 	
 	
 	@AfterClass

@@ -381,8 +381,8 @@ public class ChoosePlanPage extends BaseClass
 		
 		try 
 		{
-			// WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout);
-			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), ShortTimeout); // 12/4/18 - try shorter timeout.			
+			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout - ShortTimeout);
+			// WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), ShortTimeout); // 12/4/18 - try shorter timeout.			
 			return true;
 		} 
 		catch (Exception e) 

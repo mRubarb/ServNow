@@ -3,7 +3,9 @@ package ActionClasses;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
@@ -27,9 +29,11 @@ public class ModifySelectionsTesting extends BaseClass
 	
 	public static String currentCarrierLocal = "Sprint";
 	public static String newCarrierLocal = "Verizon Wireless";
-	
-	public static List<Device> listOfDevices = new ArrayList<Device>();
-	
+	public static String xpathToOptionsList = "//h3[text()='Optional Features']/following-sibling::ul/li";
+
+	public static List<Device> listOfDevices = new ArrayList<Device>(); 
+	public static List<Device> finalListOfDevices = new ArrayList<Device>();
+
 	int deviceListSize = -1;
 	
 	// load the devices and their index that have plans.
@@ -52,7 +56,7 @@ public class ModifySelectionsTesting extends BaseClass
 		SelectCurrentCarrier.selectNewCarrier(newCarrierLocal); // Select a new carrier - service will be moved to a different carrier.
 		SelectCurrentCarrier.clickNextButton();
 		
-		SpecialInstructions.checkAllOptions();
+		SpecialInstructions.checkAllOptions(); // accept message 
 		SpecialInstructions.clickNextButton();
 		
 		ChooseDevicePage.WaitForPageToLoad();
@@ -71,57 +75,150 @@ public class ModifySelectionsTesting extends BaseClass
 			ChooseDevicePage.WaitForPageToLoad();
 		}
 		
-		ClearDeviceSelections();
-		FindDevicesWithAssessories();
+		ClearListSelection();
+		// for(Device dev : listOfDevices){dev.Show();} // show device list
+		
+		PopulatedDeviceList();
+		
+		CreateFinalDeviceList();
+		
+		// for(Device dev : finalListOfDevices){dev.Show();} // show final device list 
 	}
 	
-	public static void FindDevicesWithAssessories() throws Exception
+	public static void TestOne()
+	{
+		JumpToDevicesPage(); // expecting selected page to be past 
+		ClearListSelection();
+	}
+	
+	// /////////////////////////////////////////////////////////////////////////////////////////////////
+	// go through all device objects that have a plan in 'listOfDevices' and add items to the devices.
+	// /////////////////////////////////////////////////////////////////////////////////////////////////
+	public static void PopulatedDeviceList() throws Exception
 	{
 
 		ShowText(" *** Start FindDevicesWithAssessories()  \r\n");
 		for(Device dv : listOfDevices)
 		{
+			// select a device in list of devices.
 			WaitForElementClickable(By.xpath("(//button[text()='Add to Cart'])[" + (dv.index + 1) + "]"), MediumTimeout, "");
 			driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (dv.index + 1) + "]")).click();
 			System.out.println(dv.name  + " " + dv.index);
+			
+			// go through plan, accessory options, to accessories and mark each device that has each of these.   
 			ChooseDevicePage.clickNextButton(); 
+			
 			ChoosePlanPage.WaitForPageToLoadPlanOrig();
-			ChoosePlanPage.SelectFirstPlanIndexOne();
-			ChoosePlanPage.clickNextButton();	
+			ChoosePlanPage.SelectFirstPlanIndexOne(); // select first plan
 			ChoosePlanPage.clickNextButton();
-			Pause("Accessories");
+
+			if(WaitForPlanOptions() > 0)
+			{
+				dv.optionsList = driver.findElements(By.xpath(xpathToOptionsList));
+			}
+			
+			ChoosePlanPage.clickNextButton();
+			
+			if(WaitForAccessoriesPage()) // see if there are accessories
+			{
+				dv.accessoryList = driver.findElements(By.cssSelector(".sn-section-heading.ng-binding"));
+				// for(WebElement ele : dv.accessoryList){ShowText(ele.getText());}
+			}
+			
 			ChooseAccessoriesPage.clickBackBtn();
 			ChoosePlanPage.WaitForPageToLoadPlanSelected();
 			ChoosePlanPage.clickBackButton();
-			ClearDeviceSelections();
-			Pause("Where?");
-			WaitForElementClickable(By.xpath("//button[text()='OK']"), ShortTimeout, "");
-			driver.findElement(By.xpath("//button[text()='OK']")).click();
 
-			Pause("");
+			ClearListSelection();
+			
+			WaitForElementClickable(By.xpath("//button[text()='OK']"), MediumTimeout, "");
+			driver.findElement(By.xpath("//button[text()='OK']")).click();
+			
+			Thread.sleep(2000); // need pause here to allow pop-up to go away. if no pause, there is a click conflict. 
 		}
 	}
 	
-	public static void ClearDeviceSelections()
+	public static void CreateFinalDeviceList()
 	{
-		String buttonXpath = "//button[text()='Remove from Cart']";
-		WaitForElementClickable(By.xpath(buttonXpath), MediumTimeout, "");
-		driver.findElement(By.xpath(buttonXpath)).click();
+		for(Device dev : listOfDevices)
+		{
+			if (dev.accessoryList.size() > 0 && dev.optionsList.size() > 0)
+			{
+				finalListOfDevices.add(dev);
+			}
+		}
+		Assert.assertTrue("Final device list is incomplete. Test can not be run.", finalListOfDevices.size() > 1);
 	}
 	
+	public static void JumpToDevicesPage()
+	{
+		WaitForElementClickable(By.xpath("//div[text()='Choose a Device']"), MediumTimeout, "");
+		driver.findElement(By.xpath("//div[text()='Choose a Device']")).click();
+	}
+	
+	public static void ClearListSelection()
+	{
+		String buttonXpath = "//button[text()='Remove from Cart']";
+		try
+		{
+			WaitForElementClickable(By.xpath(buttonXpath), MediumTimeout, "");
+			driver.findElement(By.xpath(buttonXpath)).click();
+		}
+		catch(Exception e)
+		{
+			
+		}
+	}
+	
+	public static boolean WaitForAccessoriesPage()
+	{
+		try
+		{
+			WaitForElementClickable(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout - ShortTimeout, "");
+			return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+	}
+	
+	public static int WaitForPlanOptions()
+	{
+		try
+		{
+			List<WebElement> eleList = driver.findElements(By.xpath(xpathToOptionsList));			
+			return eleList.size();
+		}
+		catch (Exception e)
+		{
+			return 0;
+		}
+	}
+
+	// //////////////////////////////////////////////////////
+	// 						objects
+	// //////////////////////////////////////////////////////
 	public static class Device
 	{
 		public String name = "";
 		public int index = -1;
-		public boolean hasAccessory = false;
+		public List<WebElement> optionsList = new ArrayList<WebElement>();  
+		public List<WebElement> accessoryList = new ArrayList<WebElement>();
 		
 		Device(String nm, int ind)
 		{
 			name = nm;
 			index = ind;
 		}
+		
+		public void Show()
+		{
+			System.out.println("------------------------ ");
+			System.out.println("name =  " + name);
+			System.out.println("index =  " + index);
+			System.out.println("options list size =  " + optionsList.size());
+			System.out.println("accessory list size =  " + accessoryList.size());
+		}
 	}	
-	
-	
-	
 }

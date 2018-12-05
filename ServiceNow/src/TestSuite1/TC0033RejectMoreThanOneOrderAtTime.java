@@ -25,10 +25,9 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 	@Test
 	public static void tC0033RejectMoreThanOneOrderAtTime() throws Exception
 	{
-
 		BaseClass.stepComplete("------------------ Starting reject more than one order. -----------------------", "");
 
-		testCaseStatus = false;
+		//testCaseStatus = false;
 		
 		approverAction = ApproverAction.reject; // setup enum for indicating approval type. 
 		
@@ -37,7 +36,7 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
-		
+
 		// got to the devices page through the home page. 
 		CommonTestSteps.GoToDevicesPage();
 		
@@ -49,7 +48,6 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		DeactivateService.RunDeactivateService(true);
 
 		// got to the devices page through the home page. 
-		Pause("First device done.");
 		CommonTestSteps.GoToDevicesPage();
 		DeactivateService.RunDeactivateService(false);
 		
@@ -58,16 +56,20 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		 * Comment code above - from line CommonTestSteps.GoToDevicesPage() - and uncomment section below - 
 		 * --> Replace values for orderId and externalOrderId for 2 orders
 		 */
-		
+
 		/*
 		CreateOrderDetailsExpectedObject();
 		DeactivateService.SetupOrderDetailsExpectedObject();
 		
-		orderDetailsObjectExpected.orderId = "13296568";
-		orderDetailsObjectExpected.orderIdTwo = "13296570";
-		orderDetailsObjectExpected.externalOrderId = "1543848402296456d36f8e62429b0099";
-		orderDetailsObjectExpected.externalOrderIdTwo = "1543848455845d9040ccae3c807f7de0";
+		orderDetailsObjectExpected.orderId = "13296612";
+		orderDetailsObjectExpected.orderIdTwo = "13296614";
+		orderDetailsObjectExpected.externalOrderId = "1544012378435c9158780c917a708dc6";
+		orderDetailsObjectExpected.externalOrderIdTwo = "1544012441177c02cfbae0815768cb2f";
+
+		fullServiceNumber = "+1 (111) 222-3333";
+		serviceNumber = "1112223333";
 		*/
+		//* end
 		
 		// Show orderId and externalOrderId for both orders. 
 		ShowText("Order Ids:");
@@ -77,23 +79,39 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		ShowText(BaseClass.orderDetailsObjectExpected.externalOrderId);
 		ShowText(BaseClass.orderDetailsObjectExpected.externalOrderIdTwo);
 	
-		CommonTestSteps.Logout();
-
-		BaseClass.stepComplete("Run deactivate action complete. Now will reject the order.", "");
+		CommonTestSteps.Logout(); // **
 
 		// login as approver.
-		CommonTestSteps.LoginApproverBrowserOpen();		
+		CommonTestSteps.LoginApproverBrowserOpen(); // **		
 		
 		// go to approvals page.
-		CommonTestSteps.GoToMyApprovalsPage();
+		CommonTestSteps.GoToMyApprovalsPage(); // **
 		
 		// It rejects the orders that were created on previous steps
-		ApprovalAction.approveOrRejectOrders(approverAction);
+		ApprovalAction.approveOrRejectOrders(approverAction);  // **
 		
-		CommonTestSteps.Logout();
+		CommonTestSteps.Logout(); //**
 		
-		BaseClass.stepComplete("Reject more than one order complete.", "");
+		// login as limited user.
+		CommonTestSteps.LoginLimitedUserBrowserOpen(); // **
+		
+		// go to 'my orders main page'
+		CommonTestSteps.GoToMyOrders();		
 
+		orderDetailsObjectExpected.status = "Approval Rejected"; // make sure this is set for last steps below		
+		
+		// ---- verify first rejected transaction ----
+		// this verifies the order info in the 'my orders' page. this run's a loop on the 
+		// verification to allow  SN to sync with command. 
+		DeactivateService.VerifyLimitedUserOrderMyOrdersMainPage();
+		
+		orderDetailsObjectExpected.orderId = orderDetailsObjectExpected.orderIdTwo;
+		orderDetailsObjectExpected.externalOrderId = orderDetailsObjectExpected.externalOrderIdTwo;
+
+		// ---- verify second rejected transaction ---- 
+		// this verifies the order info in the 'my orders' page. this run's a loop on the 
+		// verification to allow  SN to sync with command. 
+		DeactivateService.VerifyLimitedUserOrderMyOrdersMainPage();
 	}
 	
 	
