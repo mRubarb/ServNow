@@ -1,5 +1,14 @@
 package ActionClasses;
 
+import static org.testng.Assert.fail;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +20,7 @@ import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
-import ServiceNow.Frames;
-import ServiceNow.HomePage;
-import ServiceNow.SelectCurrentCarrier;
-import ServiceNow.SelectRegionPage;
-import ServiceNow.SideBar;
-import ServiceNow.SpecialInstructions;
+import ServiceNow.ModifyOptions;
 
 public class ModifySelectionsTesting extends BaseClass 
 {
@@ -30,36 +34,22 @@ public class ModifySelectionsTesting extends BaseClass
 	public static String currentCarrierLocal = "Sprint";
 	public static String newCarrierLocal = "Verizon Wireless";
 	public static String xpathToOptionsList = "//h3[text()='Optional Features']/following-sibling::ul/li";
-
+    public static String lineFeed = "\r\n";
+    
 	public static List<Device> listOfDevices = new ArrayList<Device>(); 
 	public static List<Device> finalListOfDevices = new ArrayList<Device>();
 
 	int deviceListSize = -1;
 	
-	// load the devices and their index that have plans.
+	public static BufferedWriter output = null;
+	
+	// load the devices, that have plans, and their index onto a list
+	// add info about plan options, and accessories to each.
+	// create final list for testing.
 	public static void LoadDeviceData() throws Exception
 	{
-		// go to home page
-		Frames.switchToGsftNavFrame();		
-		SideBar.clickHomeButton();
-		
-		// Click 'Transfer my phone number'. You are in the first step of the process: Select Region.
-		Frames.switchToGsftMainFrame(); // switch frame so waits can work. 
-		HomePage.WaitForPageToLoad();
-		HomePage.clickTransferServiceInButton();
+		ModifyOptions.GoToDevicesPage(currentCarrierLocal, newCarrierLocal);
 
-		SelectRegionPage.selectCountryFromDropDown(); // setup postal code
-		SelectRegionPage.fillPostalCodeTextBox("01803");
-		SelectRegionPage.clickNextButtonSelectRegion(); // move to device select page.
-		
-		SelectCurrentCarrier.selectCurrentCarrier(currentCarrierLocal); // Select current carrier from drop-down list
-		SelectCurrentCarrier.selectNewCarrier(newCarrierLocal); // Select a new carrier - service will be moved to a different carrier.
-		SelectCurrentCarrier.clickNextButton();
-		
-		SpecialInstructions.checkAllOptions(); // accept message 
-		SpecialInstructions.clickNextButton();
-		
-		ChooseDevicePage.WaitForPageToLoad();
 		ChooseDevicePage.SetupForDeviceSelection(); // setup list of objects that hold information for each device.
 
 		// this goes through the list of devices and adds all devices that that have a plan to the local 'listOfDevices' list of device objects.
@@ -81,14 +71,20 @@ public class ModifySelectionsTesting extends BaseClass
 		PopulatedDeviceList();
 		
 		CreateFinalDeviceList();
+		// for(Device dev : finalListOfDevices){dev.Show();} // show final device list
 		
-		// for(Device dev : finalListOfDevices){dev.Show();} // show final device list 
+		// output final device list to file.
+		OutputFinalDeviceListToFile();
 	}
 	
-	public static void TestOne()
+	public static void TestOne() throws Exception 
 	{
-		JumpToDevicesPage(); // expecting selected page to be past 
-		ClearListSelection();
+		ModifyOptions.GoToDevicesPage(currentCarrierLocal, newCarrierLocal);
+		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(0).index + 1 ) + "]"));
+		ChooseDevicePage.clickNextButton();
+		ChoosePlanPage.WaitForPageToLoadPlanOrig();
+		ChoosePlanPage.SelectFirstPlan();
+		// at first - in plan select to modify plan options and verify the result in plan options page.
 	}
 	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,8 +92,9 @@ public class ModifySelectionsTesting extends BaseClass
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void PopulatedDeviceList() throws Exception
 	{
-
-		ShowText(" *** Start FindDevicesWithAssessories()  \r\n");
+		List<WebElement> tempWebList = new ArrayList<WebElement>();
+		
+		ShowText(" *** Start PopulatedDeviceList");
 		for(Device dv : listOfDevices)
 		{
 			// select a device in list of devices.
@@ -114,32 +111,106 @@ public class ModifySelectionsTesting extends BaseClass
 
 			if(WaitForPlanOptions() > 0)
 			{
-				dv.optionsList = driver.findElements(By.xpath(xpathToOptionsList));
+				tempWebList = driver.findElements(By.xpath(xpathToOptionsList));
+				for(WebElement ele : tempWebList)
+				{
+					dv.optionsList.add(ele.getText());
+				}
 			}
 			
 			ChoosePlanPage.clickNextButton();
 			
 			if(WaitForAccessoriesPage()) // see if there are accessories
 			{
-				dv.accessoryList = driver.findElements(By.cssSelector(".sn-section-heading.ng-binding"));
-				// for(WebElement ele : dv.accessoryList){ShowText(ele.getText());}
+				tempWebList = driver.findElements(By.cssSelector(".sn-section-heading.ng-binding"));
+				for(WebElement ele : tempWebList)
+				{
+					dv.accessoryList.add(ele.getText());
+				}
 			}
 			
+			// go back to devices page
 			ChooseAccessoriesPage.clickBackBtn();
 			ChoosePlanPage.WaitForPageToLoadPlanSelected();
 			ChoosePlanPage.clickBackButton();
-
+			
+			// clear device page and pop-up
 			ClearListSelection();
-			
-			WaitForElementClickable(By.xpath("//button[text()='OK']"), MediumTimeout, "");
-			driver.findElement(By.xpath("//button[text()='OK']")).click();
-			
+			CloseDevicePageWarningPopUp();
 			Thread.sleep(2000); // need pause here to allow pop-up to go away. if no pause, there is a click conflict. 
 		}
 	}
+
+	public static void PopulatedDeviceListFromFile() throws Exception
+	{
+		ReadInFinalDeviceList();
+	}
+	
+	public static void ReadInFinalDeviceList() throws IOException
+	{
+		String projFile = System.getProperty("user.dir");
+		projFile = projFile.replace("\\", "/");
+		String inputFile = projFile + "/DevicesOutFile.txt";
+		BufferedReader in = new BufferedReader(new FileReader(inputFile));
+		
+		String propertyName = "";
+		String tempName = "";
+		String tempOptions = "";
+		String tempAccessories = "";		
+        String str;
+        String [] strArray;
+		int tempIndex = -1;        
+        
+		finalListOfDevices.clear();
+
+		while ((str = in.readLine()) != null) 
+        {
+        	propertyName = str.split(":::")[0];
+        	
+        	switch(propertyName)
+        	{
+	        	case "name":
+	        		tempName = str.split(":::")[1];
+	        		break;
+	        	case "index":
+	        		tempIndex = Integer.parseInt(str.split(":::")[1]);
+	        		break;
+	        	case "OptionsList":
+	        		tempOptions = str.split(":::")[1];
+	        		break;
+	        	case "AccessoriesList": // this is the last item read in for one block of information for a device.
+	        		tempAccessories = str.split(":::")[1];
+	        		
+	        		Device tempDevice = new Device(tempName, tempIndex);
+	        		
+	        		// build list for plan options and put in Device object	
+	        		strArray = tempOptions.split(",");
+	        		for(String strLoop : strArray){tempDevice.optionsList.add(strLoop);}
+ 
+	        		// build list for accessories and put in Device object	
+	        		strArray = tempAccessories.split(",");
+	        		for(String strLoop : strArray){tempDevice.accessoryList.add(strLoop);}
+
+	        		finalListOfDevices.add(tempDevice); // add the device that was setup.
+	        		
+	        		break;	        		
+	        	default:
+	        		Assert.fail("Method 'ReadInFinalDeviceList' in 'ModifySelectionsTesting' class has bad input in input file.");
+        	}
+
+        }
+        in.close();
+        
+        for(Device de : finalListOfDevices)
+        {
+        	de.Show();
+        }
+	}
+	
 	
 	public static void CreateFinalDeviceList()
 	{
+		ShowText(" *** Start CreateFinalDeviceList");
 		for(Device dev : listOfDevices)
 		{
 			if (dev.accessoryList.size() > 0 && dev.optionsList.size() > 0)
@@ -148,6 +219,28 @@ public class ModifySelectionsTesting extends BaseClass
 			}
 		}
 		Assert.assertTrue("Final device list is incomplete. Test can not be run.", finalListOfDevices.size() > 1);
+	}
+
+	public static void OutputFinalDeviceListToFile() throws IOException
+	{
+		String projFile = System.getProperty("user.dir");
+		projFile = projFile.replace("\\", "/");
+		
+		File file = new File(projFile +   "/DevicesOutFile.txt");
+        output = new BufferedWriter(new FileWriter(file));
+		
+		for(Device dev : finalListOfDevices)
+		{
+			dev.OutputToFile(output);
+		}
+		output.close();		
+	}
+	
+	
+	public static void CloseDevicePageWarningPopUp()
+	{
+		WaitForElementClickable(By.xpath("//button[text()='OK']"), MediumTimeout, "");
+		driver.findElement(By.xpath("//button[text()='OK']")).click();
 	}
 	
 	public static void JumpToDevicesPage()
@@ -195,16 +288,18 @@ public class ModifySelectionsTesting extends BaseClass
 			return 0;
 		}
 	}
-
+	
 	// //////////////////////////////////////////////////////
 	// 						objects
 	// //////////////////////////////////////////////////////
 	public static class Device
 	{
 		public String name = "";
+		public String outFileName = ""; 
 		public int index = -1;
-		public List<WebElement> optionsList = new ArrayList<WebElement>();  
-		public List<WebElement> accessoryList = new ArrayList<WebElement>();
+		public boolean isFirstLoop = true;
+		public List<String> optionsList = new ArrayList<String>();  
+		public List<String> accessoryList = new ArrayList<String>();
 		
 		Device(String nm, int ind)
 		{
@@ -218,7 +313,47 @@ public class ModifySelectionsTesting extends BaseClass
 			System.out.println("name =  " + name);
 			System.out.println("index =  " + index);
 			System.out.println("options list size =  " + optionsList.size());
-			System.out.println("accessory list size =  " + accessoryList.size());
+			System.out.println(optionsList);
+			System.out.println(accessoryList);
+		}
+		
+		public void OutputToFile(BufferedWriter fileHandle) throws IOException
+		{
+		    String lineFeed = "\r\n";
+		    String strOptionsList = "";
+		    String strAccessoriesList = "";		    
+			fileHandle.write("name:::" + name + lineFeed);
+			fileHandle.write("index:::" + index + lineFeed);
+			for(String str : optionsList)
+			{
+				if(isFirstLoop)
+				{
+					strOptionsList += str.trim();					
+				}
+				else
+				{
+					strOptionsList += "," + str.trim();					
+				}
+				isFirstLoop = false;
+			}
+			
+			isFirstLoop = true;
+			for(String str : accessoryList)
+			{
+				if(isFirstLoop)
+				{
+					strAccessoriesList += str.trim();
+				}
+				else
+				{
+					strAccessoriesList += "," + str.trim();					
+				}
+				isFirstLoop = false;
+			}
+			
+			fileHandle.write("OptionsList:::" + strOptionsList + lineFeed);
+			fileHandle.write("AccessoriesList:::" + strAccessoriesList + lineFeed);
+			
 		}
 	}	
 }

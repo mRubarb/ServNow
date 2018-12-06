@@ -23,12 +23,13 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 	@Test
 	public static void TC0051_TransferServiceInAndPortModifyActionsTest() throws Exception 
 	{
-		BaseClass.stepComplete("------------------ Starting Smoke Test. -----------------------", "");
 
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
 
-		ModifySelectionsTesting.LoadDeviceData();
+		// create a list of device to be used for testing. all devices have at least one plan, plan option, and accessory.
+		//ModifySelectionsTesting.LoadDeviceData();   
+		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		ModifySelectionsTesting.TestOne();
 		
 		CommonTestSteps.Logout();
@@ -39,7 +40,7 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 	public static void closeDriver() throws Exception
 	{
 		System.out.println("Close Browser.");
-	    JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
+	    //JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
 	}		
