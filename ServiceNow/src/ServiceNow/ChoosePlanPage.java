@@ -371,6 +371,15 @@ public class ChoosePlanPage extends BaseClass
     	WaitForElementVisible(By.xpath("(//button[text()='Next'])[2]"), MediumTimeout);
     }
 	
+    public static void WaitForPageToLoadPlanAndOptionSelected() throws Exception
+    {
+    	//WaitForElementVisible(By.xpath("//div[text()='" + planSelectionText + "']"), MediumTimeout);
+    	WaitForElementVisible(By.xpath("//button[text()='Remove from Cart']"), MediumTimeout);    	
+    	WaitForElementVisible(By.xpath("(//button[text()='Next'])[1]"), MediumTimeout);    	
+    	WaitForElementVisible(By.xpath("(//button[text()='Next'])[2]"), MediumTimeout);
+    }
+    
+    
 	public static boolean waitForPageToLoadPlans() throws Exception
 	{
 		//WaitForElementVisible(By.xpath("//div[text()='" +  planSelectionText + "']"), MainTimeout);  // <-- commented by Ana 9/8/17

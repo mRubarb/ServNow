@@ -16,6 +16,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.google.common.base.Verify;
+
 import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
@@ -34,7 +36,9 @@ public class ModifySelectionsTesting extends BaseClass
 	public static String currentCarrierLocal = "Sprint";
 	public static String newCarrierLocal = "Verizon Wireless";
 	public static String xpathToOptionsList = "//h3[text()='Optional Features']/following-sibling::ul/li";
-    public static String lineFeed = "\r\n";
+	public static String xpathClickSecondModify = "(//a[text()='Modify'])[2]";
+	public static String xpathPlanOptionOne = "(" + xpathToOptionsList + ")[1]";
+	public static String lineFeed = "\r\n";
     
 	public static List<Device> listOfDevices = new ArrayList<Device>(); 
 	public static List<Device> finalListOfDevices = new ArrayList<Device>();
@@ -77,14 +81,45 @@ public class ModifySelectionsTesting extends BaseClass
 		OutputFinalDeviceListToFile();
 	}
 	
+	// select modify in choose your plan page, select the first option, go back to device page, and verify it shows up in the device page.
 	public static void TestOne() throws Exception 
 	{
+		String actual =  "";
+		String expected =  "";		
+		
+		// go to devices page, select first device in devices list and select the first plan.
 		ModifyOptions.GoToDevicesPage(currentCarrierLocal, newCarrierLocal);
-		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(0).index + 1 ) + "]"));
+		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(0).index + 1 ) + "]")).click();
 		ChooseDevicePage.clickNextButton();
 		ChoosePlanPage.WaitForPageToLoadPlanOrig();
 		ChoosePlanPage.SelectFirstPlan();
-		// at first - in plan select to modify plan options and verify the result in plan options page.
+		
+		// click modify for plan optional features, add the first option, and go back to main plan page.
+		WaitForElementClickable(By.xpath(xpathClickSecondModify), MediumTimeout, "");
+		driver.findElement(By.xpath(xpathClickSecondModify)).click(); // select modify
+		WaitForElementPresent(By.xpath(xpathPlanOptionOne), ShortTimeout);
+		driver.findElement(By.xpath(xpathPlanOptionOne)).click(); // select first option
+		ChoosePlanPage.clickBackButton(); // go back to plan page
+		ChoosePlanPage.WaitForPageToLoadPlanAndOptionSelected();
+		
+		// verify the proper plan optional feature selected through the modify selection is present in the Plan Features section.
+		// NOTE: the exact text is not tested for. the plan name is only verified to be in the text block of the  
+		WaitForElementPresent(By.xpath("//div[@ng-if='showPlanFeatures()']"), ShortTimeout);
+		actual = driver.findElement(By.xpath("//div[@ng-if='showPlanFeatures()']")).getText().replace("\n", "");
+		expected = finalListOfDevices.get(0).optionsList.get(0).split("-")[0].trim();
+		Assert.assertTrue("", actual.contains(expected));
+		
+		//Pause("");
+		
+		// TODO:
+		// select next and select 'Modify' on the device to change the device.
+		
+		// now select a different device and select its plan. 
+		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(0).index + 2 ) + "]")).click();
+		
+		//Pause("");
+	
+	
 	}
 	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,10 +236,7 @@ public class ModifySelectionsTesting extends BaseClass
         }
         in.close();
         
-        for(Device de : finalListOfDevices)
-        {
-        	de.Show();
-        }
+        //for(Device de : finalListOfDevices){de.Show();}
 	}
 	
 	

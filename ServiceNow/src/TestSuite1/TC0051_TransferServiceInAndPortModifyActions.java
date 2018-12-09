@@ -1,7 +1,5 @@
 package TestSuite1;
 
-import javax.swing.JOptionPane;
-
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -31,6 +29,8 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 		//ModifySelectionsTesting.LoadDeviceData();   
 		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		ModifySelectionsTesting.TestOne();
+		
+		//Pause("");
 		
 		CommonTestSteps.Logout();
 		//BaseClass.stepComplete("Smoke Test Complete.", "");
