@@ -29,6 +29,11 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 		//ModifySelectionsTesting.LoadDeviceData();   
 		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		ModifySelectionsTesting.TestOne();
+		ShowText("TestOne done.");
+		ModifySelectionsTesting.TestTwo();
+		ShowText("TestTwo done.");
+		
+		ModifySelectionsTesting.TestThree();
 		
 		//Pause("");
 		
