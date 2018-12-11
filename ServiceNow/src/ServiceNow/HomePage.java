@@ -9,8 +9,8 @@ public class HomePage extends BaseClass
 	
 	public static void WaitForPageToLoad() throws Exception
 	{
-		WaitForElementVisible(By.xpath("//p/a[text()='Transfer my phone number']"), MainTimeout);
-		WaitForElementVisible(By.xpath("//p/a[text()='Create an order']"), MainTimeout);
+		WaitForElementVisible(By.xpath("//p/a[text()='Transfer my Phone Number']"), MainTimeout);
+		WaitForElementVisible(By.xpath("//p/a[text()='Create an Order']"), MainTimeout);
 	}
 
 	public static void SelectViewDevices() throws Exception
@@ -62,7 +62,7 @@ public class HomePage extends BaseClass
 
 	public static void clickTransferServiceInButton() {
 		
-		String xpath = "//div/p/a[text()='Transfer my phone number']";
+		String xpath = "//div/p/a[text()='Transfer my Phone Number']";
 		
 		WaitForElementClickable(By.xpath(xpath), 10, "Button not clickable.");
 		driver.findElement(By.xpath(xpath)).click();

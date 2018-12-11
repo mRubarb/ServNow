@@ -33,7 +33,9 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 		ModifySelectionsTesting.TestTwo();
 		ShowText("TestTwo done.");
 		
+		//ModifySelectionsTesting.TestThreeAccessoryProblemWithRemove(); // -------------<<<<<<< needs work
 		ModifySelectionsTesting.TestThree();
+		ShowText("TestThree done.");
 		
 		//Pause("");
 		

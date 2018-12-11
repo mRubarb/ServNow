@@ -15,6 +15,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.NeedsLocalLogs;
 
 import com.google.common.base.Verify;
 import com.thoughtworks.selenium.webdriven.commands.WaitForPageToLoad;
@@ -24,6 +25,7 @@ import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
 import ServiceNow.ModifyOptions;
+import ServiceNow.ProvideAdditionalInfoPage;
 
 public class ModifySelectionsTesting extends BaseClass 
 {
@@ -118,7 +120,7 @@ public class ModifySelectionsTesting extends BaseClass
 		
 		// clear device list selection, verify warning message, select a new device,  
 		ClearListSelection(); 
-		VerifyRemoveDeviceWarnigIsPresentAndClose();
+		VerifyRemoveDeviceWarnigIsPresentAndClose(true);
 		Thread.sleep(2000); // need pause here to allow pop-up to go away. if no pause, there is a click conflict.
 		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(1).index + 1 ) + "]")).click(); // add new device
 		ChooseDevicePage.clickNextButton();
@@ -132,11 +134,11 @@ public class ModifySelectionsTesting extends BaseClass
 		Assert.assertTrue("", actual.contains(expected));
 	}
 
-	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// go to accessory page, remove option using modify, and verify in accessory page   
-	// go to accessory page, select plan using modify, remove plan, verify error on next, add plan, next, verify three modifies are present.
-	// go to devices page using Modify selection in accessory page, remove the device selection, verify and remove warning message.
-	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// go to accessory page,  option using modify, and verify in accessory page   
+	// go to accessory page, select plan using modify,  plan, verify error on next, add plan, next, verify three modifies are present.
+	// from accessory page, go to devices page using Modify selection in accessory page,  the device selection, verify and  warning message.
+	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void TestTwo() throws Exception 
 	{
 		String actual =  "";
@@ -146,7 +148,7 @@ public class ModifySelectionsTesting extends BaseClass
 		// click modify for plan optional features and add the first option.
 		PopulatedDevicePlanPages();
 		
-		// go to the accessories page, select modify for plan options to remove the option, remove the option, go forward to the
+		// go to the accessories page, select modify for plan options to  the option,  the option, go forward to the
 		// accessory page and verify there are no options. 
 		ChoosePlanPage.clickNextButton();
 		Assert.assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories()); // accessories page should have at least one accessory. 
@@ -181,44 +183,113 @@ public class ModifySelectionsTesting extends BaseClass
 		driver.findElement(By.xpath(xpathClickFirstModify)).click();
 		ChooseDevicePage.WaitForPageToLoad();
 		ClearListSelection();
-		VerifyRemoveDeviceWarnigIsPresentAndClose();
+		VerifyRemoveDeviceWarnigIsPresentAndClose(true);
 	}
 
 	// ////////////////////////////////////////////////////////////////////////
-	// get to the accessories page. verify modify selection for plan options.  
-	// get to the accessories page. verify modify selection for plans
-	// get to the accessories page. verify modify selection for devices
+	//    
+	// 
+	// 
 	// ////////////////////////////////////////////////////////////////////////
-	public static void TestThree() throws Exception 
+	public static void TestThree() throws Exception // bladd 
 	{
-		// get to additional info page ---------- // bladd make method to  
+		//String []  strArray;
+		String tempString = "";
+		
 		// go to devices page, select first device in devices list and select the first plan.
-		ModifyOptions.GoToDevicesPage(currentCarrierLocal, newCarrierLocal);
-		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(0).index + 1 ) + "]")).click();
-		ChooseDevicePage.clickNextButton();
-		ChoosePlanPage.WaitForPageToLoadPlanOrig();
-		ChoosePlanPage.SelectFirstPlan();
-		
 		// click modify for plan optional features and add the first option.
-		WaitForElementClickable(By.xpath(xpathClickSecondModify), MediumTimeout, "");
-		driver.findElement(By.xpath(xpathClickSecondModify)).click(); // select modify
-		WaitForElementPresent(By.xpath(xpathPlanOptionOne), ShortTimeout);
-		driver.findElement(By.xpath(xpathPlanOptionOne)).click(); // select first option
-		// ------------- method end
-		
+		PopulatedDevicePlanPages();
 		ChoosePlanPage.clickNextButton();
+
+		Assert.assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
+		driver.findElement(By.xpath(xpathAddToCartForIndexing + "[1]")).click(); // add accessory.
+		ChooseAccessoriesPage.clickNextBtn();
 		
+		// verify accessory is there in additional info. select 'Add More' accessory selection in additional info to go back and 
+		// remove accessory, then verify it's gone.
+		ProvideAdditionalInfoPage.WaitForPageToLoad();
+		WaitForElementClickable(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div/span/a[text()='Add More']"), ShortTimeout, "");
+		Assert.assertTrue(driver.findElement(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]/div")).getText().contains(tempString)); // accessory there
+		driver.findElement(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div/span/a[text()='Add More']")).click(); // go back using 'Add More'
+
+		// at accessory page remove accessory from list, go forward, and verify it is not present in additional info.  
+		WaitForElementClickable(By.xpath(xpathRemoveFromCart), MediumTimeout, "");
+		driver.findElement(By.xpath(xpathRemoveFromCart)).click(); 
+		ChooseAccessoriesPage.clickNextBtn();
+		ProvideAdditionalInfoPage.WaitForPageToLoad();
+		Thread.sleep(2000); // need wait time for accessory text to go away.
+		Assert.assertFalse(CatchFail("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]/div")); // not present.
+		
+		// click first modify to get back to device page, verify and cancel message after removing selection, go back to provide additional info.
+		driver.findElement(By.xpath(xpathClickFirstModify)).click();
+		ClearListSelection();
+		VerifyRemoveDeviceWarnigIsPresentAndClose(false);
+		Thread.sleep(1500); // wait for pop-up to go away
+		ChooseDevicePage.clickNextButton();
+		ChoosePlanPage.WaitForPageToLoadPlanSelected();
+		ChoosePlanPage.clickNextButton();
+		ChoosePlanPage.clickNextButton();
+		Assert.assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
+		ChooseAccessoriesPage.clickNextBtn();
+		ProvideAdditionalInfoPage.WaitForPageToLoad();		
+		
+		// click second modify to get back to plan page, verify and cancel message after removing selection, go back to provide additional info.  
+		//driver.findElement(By.xpath(xpathClickSecondModify)).click();
+		//ClearListSelection();
+	}
+	
+	
+	
+	// ////////////////////////////////////////////////////////////////////////
+	//    
+	// 
+	// 
+	// ////////////////////////////////////////////////////////////////////////
+	public static void TestThreeAccessoryProblemWithRemove() throws Exception  
+	{
+		//String []  strArray;
+		String tempString = "";
+		
+		
+  
+		
+		// go to devices page, select first device in devices list and select the first plan.
+		// click modify for plan optional features and add the first option.
+		PopulatedDevicePlanPages();
+	
+		ChoosePlanPage.clickNextButton();
+		Assert.assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
 		//Pause("");
 		
 		// add an accessory
 		// remove accessory with remove selection - verify 
+
+		// verify no accessories added, add accessory, and remove it using remove link.
+		//System.out.println(WaitForElementNotClickableNoThrow(By.xpath("//a[text()='Remove']"), ShortTimeout, ""));
+		Assert.assertTrue(driver.findElement(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]")).getText().contains("Cost Monthly")); // no accessories
+		
+		
+		driver.findElement(By.xpath(xpathAddToCartForIndexing + "[1]")).click(); // add
+		WaitForElementClickable(By.xpath("//span/a[text()='Remove']"), ShortTimeout, "");
+		tempString = finalListOfDevices.get(0).accessoryList.get(0);
+		Assert.assertTrue(driver.findElement(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]/div")).getText().contains(tempString)); // verify add
+		//System.out.println(WaitForElementNotClickableNoThrow(By.xpath("//a[text()='Remove']"), ShortTimeout, ""));		
+		Pause("ready remove");
+		driver.findElement(By.xpath("//span/a[text()='Remove']")).click(); // remove accessory
+		Pause("ready remove done ???");
+		DebugTimeout(2, "");
+		//System.out.println(WaitForElementNotClickableNoThrow(By.xpath("//a[text()='Remove']"), ShortTimeout, ""));
+		//Assert.assertTrue(driver.findElement(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]")).getText().contains("Cost Monthly")); // no accessories
+		//  ?? Assert.assertFalse(driver.findElement(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]/div")).getText().contains(tempString)); // verify add
+		Pause("");
+		ShowText(driver.findElement(By.xpath("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]/div")).getText());
 	}
 	
 	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
 	// go through all device objects that have a plan in 'listOfDevices' and add items to the devices.
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
-	public static void PopulatedDeviceList() throws Exception
+	public static void PopulatedDeviceList() throws Exception 
 	{
 		List<WebElement> tempWebList = new ArrayList<WebElement>();
 		
@@ -264,23 +335,49 @@ public class ModifySelectionsTesting extends BaseClass
 			
 			// clear device page and pop-up
 			ClearListSelection();
-			CloseDevicePageWarningPopUp();
+			CloseDevicePageWarningPopUp(true);
 			Thread.sleep(2000); // need pause here to allow pop-up to go away. if no pause, there is a click conflict. 
 		}
 	}
 
 	// verify test in remove device warning and close the warning
-	public static void VerifyRemoveDeviceWarnigIsPresentAndClose() throws Exception
+	public static void VerifyRemoveDeviceWarnigIsPresentAndClose(boolean trueClose) throws Exception
 	{
-		WaitForElementVisible(By.xpath("//p[text()='Removing device will empty your shopping cart.']"), ShortTimeout);
-		Assert.assertEquals(driver.findElement(By.xpath("//ul[@class='ng-scope']/li")).getText(), "Plan");	
-		CloseDevicePageWarningPopUp();
+		if(trueClose)
+		{
+			WaitForElementVisible(By.xpath("//p[text()='Removing device will empty your shopping cart.']"), ShortTimeout);
+			Assert.assertEquals(driver.findElement(By.xpath("//ul[@class='ng-scope']/li")).getText(), "Plan");	
+			CloseDevicePageWarningPopUp(true);
+		}
+		else
+		{
+			WaitForElementVisible(By.xpath("//p[text()='Removing device will empty your shopping cart.']"), ShortTimeout);
+			Assert.assertEquals(driver.findElement(By.xpath("//ul[@class='ng-scope']/li")).getText(), "Plan");	
+			CloseDevicePageWarningPopUp(false);
+		}
 	}
+	
+	
 	
 	public static void PopulatedDeviceListFromFile() throws Exception
 	{
 		ReadInFinalDeviceList();
 	}
+
+	public static boolean CatchFail(String xpath)
+	{
+		try
+		{
+			ShowText(driver.findElement(By.xpath(xpath)).getText());
+			return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+
+	}
+	
 	
 	// go to devices page, select first device in devices list and select the first plan.
 	// click modify for plan optional features and add the first option.
@@ -388,10 +485,18 @@ public class ModifySelectionsTesting extends BaseClass
 	}
 	
 	
-	public static void CloseDevicePageWarningPopUp()
+	public static void CloseDevicePageWarningPopUp(boolean trueOk) throws Exception
 	{
-		WaitForElementClickable(By.xpath("//button[text()='OK']"), MediumTimeout, "");
-		driver.findElement(By.xpath("//button[text()='OK']")).click();
+		if(trueOk)
+		{
+			WaitForElementClickable(By.xpath("//button[text()='OK']"), MediumTimeout, "");
+			driver.findElement(By.xpath("//button[text()='OK']")).click();
+		}
+		else
+		{
+			WaitForElementClickable(By.xpath("(//button[text()='Cancel'])[3]"), MediumTimeout, "");
+			driver.findElement(By.xpath("(//button[text()='Cancel'])[3]")).click();
+		}
 	}
 	
 	public static void JumpToDevicesPage()
@@ -402,7 +507,7 @@ public class ModifySelectionsTesting extends BaseClass
 	
 	public static void ClearListSelection()
 	{
-		String buttonXpath = "//button[text()='Remove from Cart']";
+		String buttonXpath =  xpathRemoveFromCart;   // "//button[text()='Remove from Cart']";
 		try
 		{
 			WaitForElementClickable(By.xpath(buttonXpath), MediumTimeout, "");

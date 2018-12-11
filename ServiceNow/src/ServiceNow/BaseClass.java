@@ -181,6 +181,7 @@ public class BaseClass
 	public static String shopCartAccessories = "//div[@data-qa='Accessories']";	
 	public static String shopCartCount = "//h3[text()='Shopping Cart']/following-sibling ::div"; // use this to see how many sections in shopping cart.	
 	//public static String chooseActionsPullDownServices  = "//select[@ng-model='device.selectedAction']"; // // this is the pull down on 'my devices' page.  	
+	public static String xpathRemoveFromCart = "//button[text()='Remove from Cart']";
 	
 	public static int indexMyDevices = 1;
 	public static int indexMyServices = 3;

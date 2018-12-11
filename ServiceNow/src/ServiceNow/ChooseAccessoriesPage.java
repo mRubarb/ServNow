@@ -51,6 +51,13 @@ public class ChooseAccessoriesPage extends BaseClass
 		
 	}
 	
+	public static void WaitForPageToLoadItemSelected() throws Exception
+	{
+		WaitForElementClickable(By.xpath(xpathRemoveFromCart), ExtremeTimeout, "failed in accessories page 'WaitForPageToOpen()'. Expected clickable button never showed up.");
+	}	
+	
+	
+	
 	// *** NOT USED -- TO BE REMOVED *** 
 	/*
 	public static void WaitForPageToOpenThreeItems() throws Exception
