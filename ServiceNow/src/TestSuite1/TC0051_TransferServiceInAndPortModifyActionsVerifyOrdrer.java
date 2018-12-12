@@ -8,7 +8,7 @@ import ActionClasses.ModifySelectionsTesting;
 import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.BaseClass;
 
-public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass 
+public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends BaseClass
 {
 
 	@BeforeClass
@@ -28,21 +28,7 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 		//ModifySelectionsTesting.LoadDeviceData();   
 		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		
-		ModifySelectionsTesting.TestOne();
-		ShowText("TestOne done.");
-		
-		ModifySelectionsTesting.TestTwo();
-		ShowText("TestTwo done.");
-		
-		//ModifySelectionsTesting.TestThreeAccessoryProblemWithRemove(); // -------------<<<<<<< needs work
-		
-		ModifySelectionsTesting.TestThree();
-		ShowText("TestThree done.");
-		
-		ModifySelectionsTesting.TestFour();
-		ShowText("TestFour done.");
-		
-		//Pause("");
+		ModifySelectionsTesting.TestFive();
 		
 		CommonTestSteps.Logout();
 		//BaseClass.stepComplete("Smoke Test Complete.", "");
@@ -55,5 +41,8 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 	    //JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
-	}		
+	}	
+	
+	
+	
 }
