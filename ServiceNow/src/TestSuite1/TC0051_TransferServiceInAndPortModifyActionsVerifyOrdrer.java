@@ -28,8 +28,8 @@ public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends Ba
 		//ModifySelectionsTesting.LoadDeviceData();   
 		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		
-		ModifySelectionsTesting.TestFive();
-		
+		//ModifySelectionsTesting.TestFiveDevice();
+		ModifySelectionsTesting.TestFivePlan();
 		CommonTestSteps.Logout();
 		//BaseClass.stepComplete("Smoke Test Complete.", "");
 	}

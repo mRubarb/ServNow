@@ -257,6 +257,16 @@ public class ChooseDevicePage extends BaseClass
 		WaitForElementPresent(By.xpath("(//div/button[text()='Add to Cart'])[1]"), MainTimeout); //		
 	}
 	
+	public static void WaitForPageToLoadDeviceSelected() throws Exception
+	{
+		errMessage = "Failed wait in ChooseDevicePage.WaitForPageToLoad";
+		
+		// wait for next button at bottom of page and wait for button #5.
+		WaitForElementClickable(By.xpath("(//div/button[text()='Next'])[2]"), ExtremeTimeout, errMessage);
+		WaitForElementPresent(By.xpath("(//div/button[text()='Remove from Cart'])[1]"), MainTimeout); //		
+	}
+
+	
 	
 	public static void WaitForPageToLoadUpgradeDevice() throws Exception
 	{

@@ -50,6 +50,7 @@ public class ModifySelectionsTesting extends BaseClass
 	public static String xpathAddToCartForIndexing = "(//button[text()='Add to Cart'])";
 	
 	public static String xpathClickFirstModifyVerify = "(//button[text()='Modify'])[1]";
+	public static String xpathClickSecondModifyVerify = "(//button[text()='Modify'])[2]";	
 	
 	//(//button[text()='Add to Cart'])[
 	public static String lineFeed = "\r\n";
@@ -57,17 +58,18 @@ public class ModifySelectionsTesting extends BaseClass
 	public static String actual = "";
 	public static String expected = "";
 	
-	
 	public static String [] messageArray = 
 	{
 		"Removing device will empty your shopping cart.", // device
-		"Removing your plan will also remove any related additional info you entered previously." // plan
+		"Removing your plan will also remove any related additional info you entered previously.", // plan
+		"Changing devices will empty your shopping cart." // change device		
 	};
     
 	public static List<Device> listOfDevices = new ArrayList<Device>(); 
 	public static List<Device> finalListOfDevices = new ArrayList<Device>();
 
-	int deviceListSize = -1;
+	public static int deviceListSize = -1;
+	public static int verifyPageDeviceIndex = -1;
 	
 	public static BufferedWriter output = null;
 	
@@ -138,7 +140,7 @@ public class ModifySelectionsTesting extends BaseClass
 		// clear device list selection, verify warning message, select a new device,  
 		ClearListSelection(); 
 		VerifyWarnigIsPresentAndClose(true, 0);
-		Thread.sleep(2000); // need pause here to allow pop-up to go away. if no pause, there is a click conflict.
+		Thread.sleep(1500); // need pause here to allow pop-up to go away. if no pause, there is a click conflict.
 		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(1).index + 1 ) + "]")).click(); // add new device
 		ChooseDevicePage.clickNextButton();
 		
@@ -194,7 +196,7 @@ public class ModifySelectionsTesting extends BaseClass
 
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// NOTE: removing accessory from 'remove selection had problems. see 'TestThreeAccessoryProblemWithRemove()'   
-	// Provide additional info
+	// Provide additional info -----
 	// TODO: something with accessories
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void TestThree() throws Exception 
@@ -316,9 +318,48 @@ public class ModifySelectionsTesting extends BaseClass
 		//Pause("passed.....");
 	}
 	
-	public static void TestFive() throws Exception // bladd
+	// get to verify order page. select to go back to device page. Depending upon the size of the finalListOfDevices size, select to change the device or delete 
+	// the existing one. verify error message. continue to the verify order page and verify correct device name is shown.   
+	public static void TestFiveDevice() throws Exception // bladd 
 	{
-		PopulatedDevicePlanPages();
+		SetupAllToVerifyOrder();
+		
+		// verify correct device name.
+		expected = finalListOfDevices.get(0).name;
+		actual = driver.findElement(By.xpath("//div[text()='Device']/following-sibling::div[2]/div")).getText();
+		Assert.assertEquals(actual, expected);
+		
+		driver.findElement(By.xpath(xpathClickFirstModifyVerify)).click();
+		ChooseDevicePage.WaitForPageToLoadDeviceSelected();
+		
+		// if the final device list has more than one device select the second device in the list to be the device for the Verify Order page.
+		if(finalListOfDevices.size() > 1)
+		{
+			driver.findElement(By.xpath(xpathAddToCartForIndexing + "[1]")).click(); // this will select the second device. the first is already selected.
+			VerifyWarnigIsPresentAndClose(true, 2); // verify pop-up and select OK.
+			Thread.sleep(1500); // wait for pop-up to go away. 
+			verifyPageDeviceIndex = 1; 
+		}
+		else
+		{
+			driver.findElement(By.xpath(xpathRemoveFromCart)).click(); // this will select the second device. the first is already selected.
+			VerifyWarnigIsPresentAndClose(false, 0); // verify and cancel pop-up.
+			Thread.sleep(1500); // wait for pop-up to go away.
+			verifyPageDeviceIndex = 0;
+		}
+		
+		ChooseDevicePage.clickNextButton();
+		
+		if(verifyPageDeviceIndex > 0) // need to re-add plan if new device was selected.
+		{
+			ChoosePlanPage.WaitForPageToLoadNoPlanSelected();
+			driver.findElement(By.xpath(xpathAddToCartForIndexing + "[1]")).click();			
+		}
+		else // no new device added, plan is already there.
+		{
+			ChoosePlanPage.WaitForPageToLoadPlanAndOptionSelected();
+		}
+		ChoosePlanPage.clickNextButton();
 		ChoosePlanPage.clickNextButton();
 		assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
 		ChooseAccessoriesPage.clickNextBtn();
@@ -330,17 +371,38 @@ public class ModifySelectionsTesting extends BaseClass
 		VerifyOrderPage.WaitForPageToLoad();
 		WaitForElementVisible(By.xpath("//div[text()='Device']/following-sibling::div[2]/div"), MediumTimeout);
 		
-		expected = finalListOfDevices.get(0).name;
+		// verify correct device name.
+		expected = finalListOfDevices.get(verifyPageDeviceIndex).name;
 		actual = driver.findElement(By.xpath("//div[text()='Device']/following-sibling::div[2]/div")).getText();
 		Assert.assertEquals(actual, expected);
+	}
+	
+	// get to verify order page. select to go back to plan page. Select to delete the plan and verify/close basic error message.  
+	// the existing one. verify error message. continue to the verify order page and verify correct device name is shown.   
+	public static void TestFivePlan() throws Exception // bladd 
+	{
+		SetupAllToVerifyOrder();
 		
-		VerifyRemoveMessage(xpathClickFirstModifyVerify, 0);
+		// go back to plan modify, select to delete plan, and verify basic message. 
+		VerifyRemoveMessage(xpathClickSecondModifyVerify, 1);
 		
-		//driver.findElement(By.xpath("//div[text()='Device']/following-sibling::div[2]/div")).getText();
 		
-		//div[text()='Device']/following-sibling::div[2]/div
+		
+		//ClearListSelection();
+		//VerifyWarnigIsPresentAndClose(false, 1);
+		
+		
+		//if(finalListOfDevices.get(0).accessoryList.size() > 1)
+		//{
+		//}
+		
 		Pause("");
 	}
+	
+	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 											TEST BLOCKS/CALLS ABOVE
+	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////
 	// go through all device objects that have a plan in 'listOfDevices' and add items to the devices.
@@ -411,7 +473,25 @@ public class ModifySelectionsTesting extends BaseClass
 		}
 	}
 
-	// click first modify to get back to device page, verify and cancel message after removing selection, go back to provide additional info.	
+	// this starts at home page and sets up everything to verify orders.   
+	public static void SetupAllToVerifyOrder() throws Exception
+	{
+		PopulatedDevicePlanPages();
+		ChoosePlanPage.clickNextButton();
+		assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
+		driver.findElement(By.xpath(xpathAddToCartForIndexing + "[1]")).click(); // select an accessory.
+		ChooseAccessoriesPage.clickNextBtn();
+		ProvideAdditionalInfoPage.WaitForPageToLoad();
+		ProvideAdditionalInfoPage.enterMissingInfoTransferServiceIn();
+		ProvideAdditionalInfoPage.clickNextBtn();
+		EnterShippingInfoPage.WaitForPageLoad();
+		EnterShippingInfoPage.clickNextBtn();
+		VerifyOrderPage.WaitForPageToLoad();
+		WaitForElementVisible(By.xpath("//div[text()='Device']/following-sibling::div[2]/div"), MediumTimeout);
+	}
+	
+	// click modify, defined by xpath passed in, to get back to selected page. select to click the selected item in the 
+	// page list, verify and cancel message pop-up.	
 	public static void VerifyRemoveMessage(String modifyXpath, int errorMessageIndex) throws Exception
 	{
 		driver.findElement(By.xpath(modifyXpath)).click();
