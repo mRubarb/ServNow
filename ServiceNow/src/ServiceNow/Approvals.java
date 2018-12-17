@@ -48,6 +48,8 @@ public class Approvals extends BaseClass
 
 		// Select order from list
 		openOrderDetails(); 
+		
+		//Pause("");
 	
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
@@ -68,7 +70,7 @@ public class Approvals extends BaseClass
 	private static void refreshList() throws InterruptedException {
 		
 		System.out.println(".. Giving time for the order to be added to the list ....");
-		Thread.sleep(30000); // sometimes it takes some time until the order is added to the list after is created. // bladdxx 
+		Thread.sleep(30000); // sometimes it takes some time until the order is added to the list after is created.
 							// giving some time for the order to be added to the list
 		
 		driver.findElement(By.xpath("//button[@data-list_id='sysapproval_approver']")).click();
@@ -100,7 +102,7 @@ public class Approvals extends BaseClass
 		Thread.sleep(5000);  // ** Giving time for order to have status updated
 	}
 	
-	
+	//tbody[@class='list2_body']/tr[1]/td[3]/a // 12/16/18 - for WebElement orderNumLink
 	
 	private static void openOrderDetails() throws Exception {
 		
@@ -155,6 +157,66 @@ public class Approvals extends BaseClass
 		//Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
 		Assert.assertTrue(x <= 10, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
 	}
+	
+	// 12/16/18 - to be used if this not fixed - TNGMOB-9 - Service Now Submitted Order Can’t Be Approved/Rejected From Pulldown Selection.
+	private static void OpenOrderDetailsTwo() throws Exception  
+	{
+		
+		// added 8/9/2018 - modified 8/22/2018
+		// refreshList(); bladd uncomment 					
+		
+		boolean correctUserAndType = false;
+		boolean correctExternalOrderId = false;
+		int x = 1;
+		
+		do {	
+			
+			WaitForElementClickable(By.cssSelector("tbody.list2_body>tr>td>span>input.checkbox:nth-of-type(1)"), MediumTimeout, "Failed waiting for row in Approvals.ApprovalAction");
+			
+			// select row
+			System.out.println(" *** Click on order listed # " + x + " ***");
+			
+			//tbody[@class='list2_body']/tr[1]/td[3]/a // 12/16/18 - for WebElement orderNumLink
+			
+			WebElement orderNumLink = driver.findElement(By.xpath("tbody[@class='list2_body']/tr[1]/td[3]/a")); // new to select second column
+			//WebElement orderNumLink = driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + x + "]/td[7]/a[@class='linked']"));
+			orderNumLink.click(); 
+			
+			// wait for the short description and  description text areas to become visible. 
+			WaitForElementVisible(By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']"), MediumTimeout);		
+			WaitForElementVisible(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/.."), MediumTimeout); 			
+			
+			// Verify order type and user name in short description
+			// **** UNCOMMENT LINE BELOW when defect 114917 is fixed *** Defect fixed
+			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value"));			
+
+			// Verify external order number and order id in full description
+			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n")); 			
+			
+			ShowText("------------------------------------------------------------------------");
+			System.out.println(correctUserAndType + " " + correctExternalOrderId);
+			ShowText("------------------------------------------------------------------------");
+			
+			if(correctUserAndType && correctExternalOrderId)
+			{
+				rowNumContainingOrder = 1;  //x;
+				
+			} else { // If any of the expected values is not correct, then click 'Back' button
+				
+				driver.findElement(By.xpath("//span[text()='Back']/..")).click();
+				WaitForPageToLoad();		
+				
+				x++;
+			}
+		
+		} while ((x <= 10) && !(correctUserAndType && correctExternalOrderId));
+		//} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
+		
+		// verify order to approve was found. if the order action wasn't found within loop max rows it looks like it can't be found. 
+		//Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
+		Assert.assertTrue(x <= 10, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
+	}
+	
 	
 	
 	
