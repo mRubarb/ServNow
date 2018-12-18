@@ -28,18 +28,21 @@ public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends Ba
 		//ModifySelectionsTesting.LoadDeviceData();   
 		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		
-		//ModifySelectionsTesting.TestFiveDevice();
-		//ShowText("TestFiveDevice complete.");
+		ModifySelectionsTesting.TestFiveDevice();
+		ShowText("TestFiveDevice complete.");
 		
-		//ModifySelectionsTesting.TestFivePlan();
-		//ShowText("TestFivePlan complete.");
+		ModifySelectionsTesting.TestFivePlan();
+		ShowText("TestFivePlan complete.");
 		
-		//ModifySelectionsTesting.TestFiveAccessories();
-		//ShowText("TestFiveAccessories complete.");
+		ModifySelectionsTesting.TestFiveAccessories();
+		ShowText("TestFiveAccessories complete.");
 		
 		ModifySelectionsTesting.TestFiveProvideAddiionalInfo();
-		ShowText("TestFiveProvideAddiionalInfo complete.");
+		ShowText("TestFiveProvideAdditonalInfo complete.");
 	
+		ModifySelectionsTesting.TestFiveShippingInformation();
+		ShowText("TestFiveShippingInformation complete.");
+
 		CommonTestSteps.Logout();
 	}
 	

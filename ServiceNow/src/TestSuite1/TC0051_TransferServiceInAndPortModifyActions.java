@@ -42,8 +42,6 @@ public class TC0051_TransferServiceInAndPortModifyActions extends BaseClass
 		ModifySelectionsTesting.TestFour();
 		ShowText("TestFour done.");
 		
-		//Pause("");
-		
 		CommonTestSteps.Logout();
 		//BaseClass.stepComplete("Smoke Test Complete.", "");
 	}
