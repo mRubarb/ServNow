@@ -30,18 +30,18 @@ public class ChooseAccessoriesPage extends BaseClass
 	{
 		// try - catch added by Ana 9/11/17
 				
-		WaitForElementVisible(By.cssSelector("span.sn-flow__heading.ng-binding"), MediumTimeout);
+		WaitForElementVisible(By.cssSelector("span.sn-flow__heading.ng-binding"), MainTimeout); // 12/19/18 - timeout to main timeout on all 3 waits.
 		
 		try {
 			
-			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout);
+			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MainTimeout);
 			return true;
 			
 		} catch (Exception e) {
 			
 			// If there are no accessories for the selected device, a message stating 'No Accessories Found' will be displayed
 						
-			WaitForElementVisible(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message"), MediumTimeout);
+			WaitForElementVisible(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message"), MainTimeout);
 			String message = driver.findElement(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message")).getText();
 			
 			Assert.assertTrue(message.equals("No Accessories Found"));

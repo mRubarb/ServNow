@@ -8,7 +8,7 @@ import ActionClasses.ModifySelectionsTesting;
 import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.BaseClass;
 
-public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends BaseClass
+public class TC0051_TransferServiceInAndPortModifyActionsDetailedErrors extends BaseClass 
 {
 
 	@BeforeClass
@@ -19,7 +19,7 @@ public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends Ba
 	}
 
 	@Test
-	public static void TC0051_TransferServiceInAndPortModifyActionsVerifyOrderTest() throws Exception 
+	public static void TC0051_TransferServiceInAndPortModifyActionsDetailedErrorsTest() throws Exception 
 	{
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
@@ -28,21 +28,15 @@ public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends Ba
 		//ModifySelectionsTesting.LoadDeviceData();   
 		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		
-		ModifySelectionsTesting.TestFiveDevice();
-		ShowText("TestFiveDevice complete.");
-		
-		ModifySelectionsTesting.TestFivePlan();
-		ShowText("TestFivePlan complete.");
-		
-		ModifySelectionsTesting.TestFiveAccessories();
-		ShowText("TestFiveAccessories complete.");
-		
-		ModifySelectionsTesting.TestFiveProvideAddiionalInfo();
-		ShowText("TestFiveProvideAdditonalInfo complete.");
-	
-		ModifySelectionsTesting.TestFiveShippingInformation();
-		ShowText("TestFiveShippingInformation complete.");
+		ModifySelectionsTesting.DetailedErrorsOne();
+		ShowText("DetailedErrorsOne complete.");
 
+		ModifySelectionsTesting.DetailedErrorsTwo();
+		ShowText("DetailedErrorsTwo complete.");
+
+		ModifySelectionsTesting.DetailedErrorsThree();
+		ShowText("DetailedErrorsThree complete.");
+		
 		CommonTestSteps.Logout();
 	}
 	
@@ -53,7 +47,7 @@ public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends Ba
 	    //JOptionPane.showMessageDialog(frame, "Select OK to stop the webdriver and browser.");
 		driver.close();
 		driver.quit();
-	}	
+	}		
 	
 	
 	
