@@ -25,55 +25,26 @@ import ServiceNow.VerifyOrderPage;
 public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting 
 {
 
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// NOTE !!! - the carrier variables below are for this test only. This combination makes a large list of devices that can be added.
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// NOTE !!! - the two carrier variables directly below are for this test only. This combination makes a large list of devices that can be added.
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static String currentCarrierLocal = "Sprint";
 	public static String newCarrierLocal = "Verizon Wireless";
-	public static String xpathToOptionsList = "//h3[text()='Optional Features']/following-sibling::ul/li";
-	public static String xpathClickFirstModify = "(//a[text()='Modify'])[1]";
-	public static String xpathClickSecondModify = "(//a[text()='Modify'])[2]";
-	public static String xpathClickThirdModify = "(//a[text()='Modify'])[3]";
-	public static String xpathPlanOptionOne = "(" + xpathToOptionsList + ")[1]";
-	public static String xpathPlanOptionTwo = "(" + xpathToOptionsList + ")[2]";
-	public static String lineOne = "Line One";
-	public static String lineTwo = "Line Two";
-	public static String lineThree = "Line Three";	
 	
-	public static String xpathAddToCartForIndexing = "(//button[text()='Add to Cart'])";
-	
-	public static String xpathClickFirstModifyVerify = "(//button[text()='Modify'])[1]";
-	public static String xpathClickSecondModifyVerify = "(//button[text()='Modify'])[2]";	
-	public static String xpathClickThirddModifyVerify = "(//button[text()='Modify'])[3]";
-	public static String xpathClickFourthdModifyVerify = "(//button[text()='Modify'])[4]";
-	public static String xpathClickFivedModifyVerify = "(//button[text()='Modify'])[5]";
-	
-	//(//button[text()='Add to Cart'])[
 	public static String lineFeed = "\r\n";
 	public static String noOptionalFeaturesOptionsPage = "No optional features have been selected";
 	public static String actual = "";
 	public static String expected = "";
 	
-	/*
-	public static String [] messageArray = 
-	{
-		"Removing device will empty your shopping cart.", // device
-		"Removing your plan will also remove any related additional info you entered previously.", // plan
-		"Changing devices will empty your shopping cart.", // change device
-		"Choosing a different plan will also remove any related additional info you entered previously." // remove and add plan back.
-	};
-    */
-	
 	public static List<Device> listOfDevices = new ArrayList<Device>(); 
-	public static List<Device> finalListOfDevices = new ArrayList<Device>();
+	// public static List<Device> finalListOfDevices = new ArrayList<Device>();
 
 	public static int deviceListSize = -1;
 	//public static int verifyPageDeviceIndex = -1;
 	//public static int verifyPagePlanOptionIndex = -1;	
-	public static int verifyPageTempIndex = -1;
+	//public static int verifyPageTempIndex = -1;
 	
 	public static BufferedWriter output = null;
 	
@@ -329,33 +300,36 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 		expected = finalListOfDevices.get(0).optionsList.get(0).split("-")[0].trim();
 		Assert.assertTrue("", actual.contains(noOptionalFeaturesOptionsPage));
 		
-		// problem - with accessory gone at bottom of commented section- get text still shows the accessory text ???????
+		// go back to accessories and remove select accessory.
+		driver.findElement(By.xpath("//a[text()='Add More']")).click();
+		Assert.assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
+		driver.findElement(By.xpath(xpathRemoveFromCart)).click();
+		//driver.findElement(By.xpath(xpathAddToCartForIndexing + "[2]")).click(); // different accessory.
 		
+		ChooseAccessoriesPage.clickNextBtn();
+		ProvideAdditionalInfoPage.WaitForPageToLoad(); 
+		ProvideAdditionalInfoPage.clickNextBtn();
+		EnterShippingInfoPage.WaitForPageLoad();
+		Thread.sleep(1500); // need wait time for accessory text to go away.
+		Assert.assertFalse(CatchFail("//h3[@class='sn-h3']/following-sibling::div[4]/div[2]/div")); // not present.
 
-		//localEleList = driver.findElements(By.xpath("//div[@ng-if='catalogs.accessory.selectedItems']/div[2]"));
-		//ShowText(driver.findElement(By.xpath("//div[@ng-if='catalogs.accessory.selectedItems']/div[2]/div/div[1]")).getText());
-		
-		/*
+		// select second accessory if the device from 'finalDeviceList' being used has more than one accessory.
 		if(finalListOfDevices.get(0).accessoryList.size() > 1)
 		{
-			// go back to accessories and select different accessory.
+			// go back to accessories and select second accessory.
 			driver.findElement(By.xpath("//a[text()='Add More']")).click();
 			Assert.assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
-			driver.findElement(By.xpath(xpathRemoveFromCart)).click();
-			driver.findElement(By.xpath(xpathAddToCartForIndexing + "[2]")).click();
-			
-			Pause("");
+			driver.findElement(By.xpath(xpathAddToCartForIndexing + "[2]")).click(); // second accessory.
 			
 			ChooseAccessoriesPage.clickNextBtn();
 			ProvideAdditionalInfoPage.WaitForPageToLoad(); 
 			ProvideAdditionalInfoPage.clickNextBtn();
 			EnterShippingInfoPage.WaitForPageLoad();
-			ShowText(driver.findElement(By.xpath("//div[@ng-if='catalogs.accessory.selectedItems']/div[2]/div/div[1]")).getText());
 
-			Pause("");
-			
+			actual = driver.findElement(By.xpath("//div[@ng-if='catalogs.accessory.selectedItems']/div[2]/div/div[1]")).getText();
+			ShowText(actual);
+			Assert.assertEquals(finalListOfDevices.get(0).accessoryList.get(1), actual);
 		}
-		*/
 	}
 	
 	// get to verify order page. select to go back to device page. Depending upon the size of the finalListOfDevices size, select to change the device or delete 
@@ -688,14 +662,6 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 		}
 	}
 
-	// verify actual and expected sent in are equal, after filtering out labels. 
-	// example 'actual' input - "Address Line1 Line One". use split to get actual from this
-	public static void VerifyShippingInfo(String actual, String expected)
-	{
-		actual =  actual.split(" ")[2] + " " + actual.split(" ")[3];    
-		Assert.assertEquals("Failed compare in 'VerifyShippingInfo' method.", expected, actual);
-	}
-	
 	// this starts at home page and sets up everything to verify orders.   
 	public static void SetupAllToVerifyOrder() throws Exception
 	{
@@ -714,40 +680,12 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 		WaitForElementVisible(By.xpath("//div[text()='Additional Information']"), MainTimeout);
 		WaitForElementVisible(By.xpath("//div[text()='Shipping Information']"), MediumTimeout);
 	}
-	
-	// click modify, defined by xpath passed in, to get back to selected page. select to click the selected item in the 
-	// page list, verify and cancel message pop-up.	
-	public static void VerifyRemoveMessage(String modifyXpath, int errorMessageIndex) throws Exception
-	{
-		driver.findElement(By.xpath(modifyXpath)).click();
-		ClearListSelection();
-		VerifyWarnigIsPresentAndClose(false, errorMessageIndex);
-		Thread.sleep(1500); // wait for pop-up to go away to avoid click conflict 
-	}
-	
+
 	public static void PopulatedDeviceListFromFile() throws Exception
 	{
 		ReadInFinalDeviceList();
 	}
 
-	// go to devices page, select first device in devices list and select the first plan.
-	// click modify for plan optional features and add the first option.
-	public static void PopulatedDevicePlanPages() throws Exception
-	{
-		// go to devices page, select first device in devices list and select the first plan.
-		ModifyOptions.GoToDevicesPage(currentCarrierLocal, newCarrierLocal);
-		driver.findElement(By.xpath("(//button[text()='Add to Cart'])[" + (finalListOfDevices.get(0).index + 1 ) + "]")).click();
-		ChooseDevicePage.clickNextButton();
-		ChoosePlanPage.WaitForPageToLoadPlanOrig();
-		ChoosePlanPage.SelectFirstPlan();
-		
-		// click modify for plan optional features and add the first option.
-		WaitForElementClickable(By.xpath(xpathClickSecondModify), MediumTimeout, "");
-		driver.findElement(By.xpath(xpathClickSecondModify)).click(); // select modify
-		WaitForElementPresent(By.xpath(xpathPlanOptionOne), ShortTimeout);
-		driver.findElement(By.xpath(xpathPlanOptionOne)).click(); // select first option
-	}
-	
 	public static void ReadInFinalDeviceList() throws IOException
 	{
 		String projFile = System.getProperty("user.dir");
