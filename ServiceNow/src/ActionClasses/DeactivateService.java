@@ -7,6 +7,7 @@ import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.OrderSubmittedPage;
 import ServiceNow.VerifyOrderPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
  
 
 public class DeactivateService extends ActionsBase
@@ -34,7 +35,8 @@ public class DeactivateService extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
 		// VerifyOrderPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationDeactivate();  // **** TEST *****
-		VerifyOrderPage.VerifyAdditionalInformationDeactivate();
+		//VerifyOrderPage.VerifyAdditionalInformationDeactivate();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		
@@ -56,7 +58,8 @@ public class DeactivateService extends ActionsBase
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
-		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
+		//OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -155,8 +158,9 @@ public class DeactivateService extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSectionSecondTime(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
-		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
+		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
+		//OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -198,6 +202,7 @@ public class DeactivateService extends ActionsBase
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		ServiceNow.OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();
 		ServiceNow.OrderSubmittedPage.VerifyApprovals();		
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
@@ -213,7 +218,8 @@ public class DeactivateService extends ActionsBase
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		//ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
-		OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
+		//OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();
 		
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    

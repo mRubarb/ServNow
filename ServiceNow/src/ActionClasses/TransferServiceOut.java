@@ -6,6 +6,7 @@ import org.testng.Assert;
 import ActionsBaseClasses.ActionsBase;
 import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.BaseClass;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.OrderSubmittedPage;
 import ServiceNow.VerifyOrderPage;
@@ -46,7 +47,8 @@ public class TransferServiceOut extends ActionsBase
 		// verify additional information in verify order page. 
 		VerifyOrderPage.WaitForPageToLoad();
 		//VerifyOrderPage.verifyAdditionalInformationBlock();
-		VerifyOrderPage.VerifyAdditionalInformationTransferServiceOut();
+		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceOut();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceOut();
 		
 		// SUBMIT
 		VerifyOrderPage.clickSubmitBtn();
@@ -69,7 +71,8 @@ public class TransferServiceOut extends ActionsBase
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 		OrderSubmittedPage.VerifyTopSectionLowerPart();
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceOut();
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceOut();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceOut();
 		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // ana's new method
 		
 		// go to 'my orders' main page to setup for the loop test below.
@@ -96,7 +99,8 @@ public class TransferServiceOut extends ActionsBase
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		ServiceNow.OrderSubmittedPage.VerifyTopSectionLowerPart();
-		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationTransferServiceOut();
+		// ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationTransferServiceOut();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceOut();
 		//ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock();		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		

@@ -8,7 +8,8 @@
       <!-- <class name="TestSuite1.TC0036Feature11"/> --> 
       <class name="TestSuite1.TC9999_SmokeTest"/>  
       <class name="TestSuite1.TC0051_TransferServiceInAndPortModifyActions"/>
-      <class name="TestSuite1.TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer"/>           
+      <class name="TestSuite1.TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer"/>
+      <class name="TestSuite1.TC0051_TransferServiceInAndPortModifyActionsDetailedErrors"/>
       <!-- <class name="TestSuite1.TC0037Feature12"/> -->
       <!-- this is commented  -->      
    </classes>

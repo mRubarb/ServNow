@@ -457,19 +457,6 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[1].replace("Price ", "") , DevicePortNumber.selectedDevicePrice,  errMessage); // price
 	}
 
-	// this verification is called when processing a deactivate. 
-	public static void VerifyAdditionalInformationDeactivate() throws Exception
-	{
-		String errorMessage = "Failure in checking additional information for Deactivate Service action in DeactivateService.VerifyAdditionalInformationDeactivate.";		
-		
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[0], contactNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[1], additionalInstructions, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[2], serviceNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[3], reasonAction, errorMessage);
-
-	}
-	
-	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing an update action. 
 
@@ -858,16 +845,6 @@ public class VerifyOrderPage extends BaseClass
 							 strArray[4].replace("User ","")};
 	}	
 	
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoDeactivate()
-	{
-		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
-		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
-				              strArray[1].replace("Additional Instructions ", ""),
-							  strArray[2].replace("Service Number ", ""), 
-							  strArray[3].replace("Reason ", "")};
-	}
-	
 	public static void VerifyAdditionalInformationNewActivation()
 	{
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling ::div")).getText().split("\n");
@@ -911,58 +888,6 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[5].replace("Additional Instructions ",""), additionalInstructions, "");
 
 	}	
-	
-	
-	
-	// 9/27/18
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoTransferServiceOut()
-	{
-		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
-		return new String [] {strArray[0].replace("Additional Instructions ", ""),
-				  			  strArray[1].replace("Date of Birth ", ""),				
-							  strArray[2].replace("Contact Phone Number ", ""),
-				              strArray[3].replace("Ext ", ""),
-							  strArray[4].replace("Personal E-mail Address ", ""), 
-							  strArray[5].replace("Social Security Number ", ""),							  
-							  strArray[6].replace("Driver's License Number ", ""),							  
-							  strArray[7].replace("Driver's License Exp. Date ", ""),							  
-							  strArray[8].replace("Driver's License State/ Province ", ""),							  
-							  strArray[9].replace("Service Number ", "")};
-	}
-	
-	// 9/27/18
-	// this verification is called when processing a transfer service out. 
-	public static void VerifyAdditionalInformationTransferServiceOut() throws Exception
-	{
-		String errorMessage = "Failure in checking additional information for Transfer Service Out action in VerifyOrderPage.VerifyAdditionalInformationServiceOut.";		
-		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
-		ActionsBase.VerifyDates(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], contactNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], extension, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], approverAdminMail, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[5], socialSecurityNumber, errorMessage);		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[6], licenseNumber, errorMessage);		
-		ActionsBase.VerifyDates(licenseExpire, GetAdditionalInfoTransferServiceOut()[7]);		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[8], userStateShort, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[9], serviceNumber, errorMessage);
-	}
-	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	/*public static String [] getAdditionalInfoSwapDevice()
-	{
-		strArray = driver.findElement(By.xpath("(//tbody)[3]")).getText().split("\n");
-		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
-							  strArray[1].replace("Ext ", ""),
-							  strArray[2].replace("Additional Instructions ", ""),
-							  strArray[3].replace("Preferred Area Code ", ""),							  
-							  strArray[4].replace("Service Number ", "") }; // removed 9/16 -- ** Uncommented since it's present - 9/15/17 - Ana 
-	}*/	
-	
-	
-	
 	
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
 	public static String [] getExistingDeviceSwapDevice()

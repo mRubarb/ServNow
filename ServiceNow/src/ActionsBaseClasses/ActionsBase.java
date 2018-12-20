@@ -1,12 +1,10 @@
 package ActionsBaseClasses;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-import ActionClasses.NewActivation;
 import HelperObjects.CalendarDateTimeObject;
 import ServiceNow.BaseClass;
 import ServiceNow.Frames;
@@ -40,7 +38,7 @@ public class ActionsBase extends BaseClass
 	public static String upgradeService = "Upgrade a Service";	
 	public static String updateServiceTitle = "Update Service Features for Device";
 	public static String portNumberTitle = "Port your Number";
-	public static String transferServiceOutActionTitle = "Transfer Service for your Device to be personal"; // transfer service out.	
+	public static String transferServiceOutActionTitle = "Transfer Service for your Device from Business to Personal Ownership"; // transfer service out.	
 	
 	// this holds the monthly cost after doing the 'VerifyAddFeatures' method.
 	public static String costMonthlyAfterAddingFeatures = "0";
