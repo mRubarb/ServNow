@@ -352,9 +352,8 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[1].replace("Ext ", ""), extension, errMessage);		
 		Assert.assertEquals(tmpStringArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
 		Assert.assertEquals(tmpStringArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
-	}		
-	
-	
+	}
+
 	public static void verifyAdditionalInformationUpgradeService() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.verifyAdditionalInformationUpgradeService.";		

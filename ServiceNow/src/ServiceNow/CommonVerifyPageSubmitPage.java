@@ -3,6 +3,7 @@ package ServiceNow;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import ActionClasses.UpgradeDevice;
 import ActionsBaseClasses.ActionsBase;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,10 +60,28 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[3].replace("Reason ",""), reasonAction, errorMessage);		
 	}	
 	
+	public static void VerifyAdditionalInformationOrderAccessories() 
+	{
+		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOrderAccessories.";		
+
+		String [] tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
+		
+		Assert.assertEquals(tmpStringArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
+		Assert.assertEquals(tmpStringArray[1].replace("Ext ", ""), extension, errMessage);		
+		Assert.assertEquals(tmpStringArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(tmpStringArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
+	}	
 	
 	
-	
-	
+	public static void VerifyAdditionalInformationUpgradeDevice() throws Exception  // bladd
+	{
+		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
+		String [] strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
+		
+		//VerifyAdditionalInformationCommon(strArray, errMessage);
+		VerifyAdditionalInformationOrderAccessories();
+		Assert.assertEquals(strArray[4].replace("Reason ", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);		
+	} 	
 	
 	
 	

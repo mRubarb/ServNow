@@ -8,6 +8,7 @@ import HelperObjects.ShoppingCart;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.MyOrdersPage;
@@ -74,7 +75,8 @@ public class UpgradeDevice extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
 		//VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
-		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice();
+		//VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
 		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
 		VerifyOrderPage.verifyUpgradeDeviceAccessoriesAction();	// accessory section	
 		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
@@ -100,8 +102,9 @@ public class UpgradeDevice extends ActionsBase
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
-		
+		//OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
+
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
 		
@@ -230,8 +233,9 @@ public class UpgradeDevice extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // if things are mising, this won't find it.
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice(); 
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // if things are missing, this won't find it.
+		//OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice(); 
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyShippingInformation();  // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
