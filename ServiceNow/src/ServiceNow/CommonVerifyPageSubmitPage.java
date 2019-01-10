@@ -22,16 +22,15 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 		String errorMessage = "Failure in checking additional information for Transfer Service Out"; 		
 
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
-		ActionsBase.VerifyDates(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
+		ActionsBase.VerifyDatesWithDifferentFormatsAreEqual(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], contactNumber, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], extension, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], approverAdminMail, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[5], socialSecurityNumber, errorMessage);		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[6], licenseNumber, errorMessage);		
-		ActionsBase.VerifyDates(licenseExpire, GetAdditionalInfoTransferServiceOut()[7]);		
+		ActionsBase.VerifyDatesWithDifferentFormatsAreEqual(licenseExpire, GetAdditionalInfoTransferServiceOut()[7]);		
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[8], userStateShort, errorMessage);
 		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[9], serviceNumber, errorMessage);
-
 	}	
 
 	public static String [] GetAdditionalInfoTransferServiceOut()
@@ -59,7 +58,7 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[2].replace("Service Number ",""), serviceNumber, errorMessage);		
 		Assert.assertEquals(tmpStringArray[3].replace("Reason ",""), reasonAction, errorMessage);		
 	}	
-	
+
 	public static void VerifyAdditionalInformationOrderAccessories() 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOrderAccessories.";		
@@ -71,7 +70,6 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
 		Assert.assertEquals(tmpStringArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
 	}	
-	
 	
 	public static void VerifyAdditionalInformationUpgradeDevice() throws Exception  // bladd
 	{

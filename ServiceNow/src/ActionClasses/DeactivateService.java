@@ -31,7 +31,7 @@ public class DeactivateService extends ActionsBase
 		VerifyPageTitle(deactivateActionTitle);
 		ServiceNow.ProvideAdditionalInfoPage.EnterMissingInfo();
 		ServiceNow.ProvideAdditionalInfoPage.clickNextBtn();
-		
+
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
 		// VerifyOrderPage.verifyAdditionalInformationBlock();   //VerifyAdditionalInformationDeactivate();  // **** TEST *****
@@ -70,7 +70,6 @@ public class DeactivateService extends ActionsBase
 		
 		CommonTestSteps.GoToMyOrders();
 		VerifyOrderDetailsPagePreApproval();
-		
 	}
 
 	// //////////////////////////////////////////////////////////////////////
@@ -92,6 +91,7 @@ public class DeactivateService extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
 		VerifyOrderPage.verifyAdditionalInformationBlock();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();		
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		
@@ -131,6 +131,7 @@ public class DeactivateService extends ActionsBase
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
 		VerifyOrderPage.verifyAdditionalInformationBlock();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();		
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		

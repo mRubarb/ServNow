@@ -1,6 +1,9 @@
 package ActionsBaseClasses;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -424,4 +427,29 @@ public class ActionsBase extends BaseClass
 		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[2]));
 	}	
 
+	// Formats:
+	// VerifyDatesWithDifferentFormatesAreEqual("2018-09-22", "September 22nd 2018");
+    public static void VerifyDatesWithDifferentFormatsAreEqual(String expectedDate, String actualDate) 
+    {
+    	String temp = actualDate.split(" ")[1].replaceAll("-?[^\\d]", ""); // remove chars from day
+
+    	if(Integer.parseInt(temp) < 10) // may need leading zero for day
+    	{
+    		temp = "0" + temp;
+    	}
+    	
+    	String [] actualDateArray = actualDate.split(" "); // create array from actualDate string and rebuild actualDate for needed format
+    	actualDateArray[1]= temp; // make sure day is correct if leading aero needed.
+    	
+    	actualDate = "";
+    	actualDate = actualDate + actualDateArray[0] + " ";
+    	actualDate = actualDate + actualDateArray[1] + ", ";
+    	actualDate = actualDate + actualDateArray[2];
+    	
+    	Locale l = Locale.US ;
+    	DateTimeFormatter f = DateTimeFormatter.ofPattern( "MMMM dd, uuuu" , l );
+    	LocalDate ld = LocalDate.parse( actualDate , f );
+    	
+    	Assert.assertEquals(ld.toString(), expectedDate);
+    }	
 }

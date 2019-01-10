@@ -240,13 +240,12 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); 
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn();
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
 		
 		orderDetailsObjectExpected.orderType = "Transfer Service In Order";
-		
 	}
 
 	public static void setOrderTypeForPostApproval(boolean txAndPort) {
@@ -282,14 +281,39 @@ public class TransferServiceIn extends BaseClass {
 		
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
 		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn();
+		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // BAD 1/9/19
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort(); // 1/10/19 - don't know why this works, there are only 6 items displayed.
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19		
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
 		OrderSubmittedPage.verifyOrderSegmentPlan();  // -- TBD - Order Segment section not included in Order's details
 		// SFD 114900
-		
 	}
+	
+	public static void verifyOrderDetailsPagePostApprovalPort() throws Exception {
+
+		ServiceNow.MyOrdersPage.WaitForPageToLoad(); // sanity check.
+		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
+		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
+		ServiceNow.OrderSubmittedPage.VerifyTopSection();
+		
+		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
+		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
+		
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); 
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19		
+		OrderSubmittedPage.VerifyShippingInformation();
+		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
+		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
+		OrderSubmittedPage.verifyOrderSegmentPlan();  // -- TBD - Order Segment section not included in Order's details
+		// SFD 114900
+	}
+	
+	
 
 	public static void verifyOrderDetailsHistoryPostApproval(ApproverAction appAction) throws Exception {
 
@@ -510,11 +534,10 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
 		VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();		
 		VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
-		
-		Pause("Look at carrier");
 		
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
@@ -525,13 +548,13 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); 
-		
 		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();	
 		// OrderSubmittedPage.VerifyAdditionalInformation(); // useless	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
-
+		
 		orderDetailsObjectExpected.orderType = "Port Number Order";
 	}
 	

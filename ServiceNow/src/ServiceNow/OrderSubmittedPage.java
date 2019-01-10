@@ -334,26 +334,13 @@ public class OrderSubmittedPage extends BaseClass
 	// ///////////////////////////////////////////////////////////////////////		
 	public static void VerifyAdditionalInformationUpgradeDevice() 
 	{
-		VerifyAdditionalInformationOrderAccessories(); // use existing for most of the items.
+		// line below: 1/10/19 change to 'CommonVerifyPageSubmitPage'
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories(); // use existing for most of the items. 
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Reason']/../following ::td[1]")).getText(), DeviceInfoActions.reasonUpgradeAction,
 				            "Failed to find correct reason in OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice");
 	}
+
 	
-	// ///////////////////////////////////////////////////////////////////////
-	// verify additional information section for order accessories action.
-	// ///////////////////////////////////////////////////////////////////////		
-	public static void VerifyAdditionalInformationOrderAccessories() 
-	{
-		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOrderAccessories.";		
-
-		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
-		
-		Assert.assertEquals(tmpStringArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[1].replace("Ext ", ""), extension, errMessage);		
-		Assert.assertEquals(tmpStringArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
-		Assert.assertEquals(tmpStringArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
-	}
-
 	public static void verifyAdditionalInformationUpgradeService() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.verifyAdditionalInformationUpgradeService.";		
@@ -375,7 +362,6 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(tmpStringArray[8].replace("Reason", "").trim(), UpgradeDevice.reasonUpgradeDevice, errMessage);
 		
 	}	
-	
 	
 	// /////////////////////////////////////////////////////////////////////////////
 	// verify additional information section for suspend  and un-suspend actions.

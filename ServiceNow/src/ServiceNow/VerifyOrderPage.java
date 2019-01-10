@@ -657,7 +657,6 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(GetAdditionalInfoUnsuspend()[4], userLimitedFullNameExtended, errMessage);
 	}	
 	
-	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/3/17 -- Ana
 
 	public static void VerifyAdditionalInformationOderAccessories() throws Exception 
@@ -864,8 +863,7 @@ public class VerifyOrderPage extends BaseClass
 	public static void VerifyAdditionalInformationTransferServiceInAndPort()
 	{
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
-		//for(String str : strArray){ShowText(str);}
-
+		for(String str : strArray){ShowText(str);}
 		Assert.assertEquals(strArray[0].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
 		Assert.assertEquals(strArray[1].replace("Name on Invoice ",""), userLimitedShorterName, "");
 		Assert.assertEquals(strArray[2].replace("Contact Phone Number ",""), contactNumber, "");

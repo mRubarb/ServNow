@@ -171,7 +171,8 @@ public class PortNumber extends ActionsBase
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		OrderSubmittedPage.VerifyApprovals();	
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber(); // bladd missing
+		VerifyOrderPage.VerifyAdditionalInformationPortNumber();		
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();

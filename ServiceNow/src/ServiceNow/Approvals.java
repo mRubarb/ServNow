@@ -70,11 +70,10 @@ public class Approvals extends BaseClass
 	private static void refreshList() throws InterruptedException {
 		
 		System.out.println(".. Giving time for the order to be added to the list ....");
-		Thread.sleep(30000); // sometimes it takes some time until the order is added to the list after is created.
+		Thread.sleep(30000); // sometimes it takes some time until the order is added to the list after is created. // bladdzzz
 							// giving some time for the order to be added to the list
 		
 		driver.findElement(By.xpath("//button[@data-list_id='sysapproval_approver']")).click();
-		
 		driver.findElement(By.xpath("//div[text()='Refresh List']")).click();
 		
 		Thread.sleep(2000);

@@ -32,7 +32,7 @@ public class NewActivation extends ActionsBase
 		CommonTestSteps.GoToHomePage();
 		
 		// select to create a new order. //a[text()='Create an order']
-		driver.findElement(By.xpath("//a[text()='Create an order']")).click();
+		driver.findElement(By.xpath("//a[text()='Create an Order']")).click();
 		
 		// There’s a drop down list to select a country. Click “Next” without choosing Country. – There’s an error message for the required postal code.
 		SelectRegionPage.selectCountryFromDropDown();
