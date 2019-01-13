@@ -545,9 +545,6 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
-		ShowText("LEAVE EARLY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
-		Pause("bb");
-		
 		// SUBMIT 
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();

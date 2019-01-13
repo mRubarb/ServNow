@@ -38,7 +38,7 @@ public class TC0047TransferServiceInAndPortReject extends BaseClass {
 		TransferServiceIn.runTransferServiceInAndPortPhoneNumber();
 		
 		CommonTestSteps.Logout();
-		/*
+
 		BaseClass.stepComplete("Run Transfer Service In And Port action complete. Now will reject the order.", "");
 
 		// login as approver.
@@ -53,16 +53,16 @@ public class TC0047TransferServiceInAndPortReject extends BaseClass {
 		Approvals.selectAndRejectOrder();
 		
 		CommonTestSteps.Logout();
-		*/
+
 		BaseClass.stepComplete("Order has been rejected. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-		//TransferServiceIn.setOrderTypeForPostApproval(true);
+		TransferServiceIn.setOrderTypeForPostApproval(true);
 
-		CreateOrderDetailsExpectedObject();
-		orderDetailsObjectExpected.orderId = "13297286";
-		orderDetailsObjectExpected.externalOrderId = "1547333508789934ee1d8a203c45ac3d";
-		orderDetailsObjectExpected.orderType = "Port Number";		
-		orderDetailsObjectExpected.status = "In Fulfillment";
+		//CreateOrderDetailsExpectedObject();
+		//orderDetailsObjectExpected.orderId = "13297286";
+		//orderDetailsObjectExpected.externalOrderId = "1547333508789934ee1d8a203c45ac3d";
+		//orderDetailsObjectExpected.orderType = "Port Number";		
+		//orderDetailsObjectExpected.status = "In Fulfillment";
 		
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUserBrowserOpen();
