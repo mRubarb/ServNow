@@ -4,6 +4,7 @@ import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
 import ServiceNow.HomePage;
@@ -227,7 +228,8 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.verifyAccessoriesDetails();
 
 		VerifyOrderPage.verifyAdditionalInformationBlock();	
-		VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();
+		// VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceIn();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 
@@ -240,7 +242,8 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn();
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceIn();		
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -283,7 +286,8 @@ public class TransferServiceIn extends BaseClass {
 		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
 		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // BAD 1/9/19
 		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort(); // 1/10/19 - don't know why this works, there are only 6 items displayed.
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19		
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19		
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceIn();
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
@@ -302,10 +306,11 @@ public class TransferServiceIn extends BaseClass {
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
-		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
-		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); 
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
-		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19		
+		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // nope - not close  
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort(); // --------------------- 1/12 maybe good with test broken apart.
+		//CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceInAndPort(); // nope/
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber(); // nope - trouble with current carrier
+		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19	-- nope	 
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
@@ -533,12 +538,17 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceInAndPort();
 		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();		
 		VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
+		ShowText("LEAVE EARLY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
+		Pause("bb");
+		
+		// SUBMIT 
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete();
@@ -547,8 +557,10 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); 
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		OrderSubmittedPage.verifyAdditionalInformationBlock();
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber(); // this fails here
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort(); // worked 1/12 - with test broken apart
+		//CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceInAndPort();
 		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();	
 		// OrderSubmittedPage.VerifyAdditionalInformation(); // useless	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
@@ -556,6 +568,8 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.VerifyShippingInformation();
 		
 		orderDetailsObjectExpected.orderType = "Port Number Order";
+		Pause("bb");
+
 	}
 	
 	

@@ -5,6 +5,7 @@ import org.testng.Assert;
 
 import ActionClasses.UpgradeDevice;
 import ActionsBaseClasses.ActionsBase;
+import HelperObjects.PlanInfoActions;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -16,6 +17,8 @@ import ActionsBaseClasses.ActionsBase;
 public class CommonVerifyPageSubmitPage extends BaseClass 
 {
 
+	public static String [] strArray;
+	
 	// this verification is called when processing a transfer service out. 
 	public static void VerifyAdditionalInformationTransferServiceOut() throws Exception
 	{
@@ -35,7 +38,7 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 
 	public static String [] GetAdditionalInfoTransferServiceOut()
 	{
-		String [] strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
+		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
 		return new String [] {strArray[0].replace("Additional Instructions ", ""),
 				  			  strArray[1].replace("Date of Birth ", ""),				
 							  strArray[2].replace("Contact Phone Number ", ""),
@@ -51,45 +54,61 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 	public static void VerifyAdditionalInformationDeactivate() throws Exception
 	{
 		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyAdditionalInformationDeactivate.";
-		String [] tmpStringArray = driver.findElement(By.xpath("(//table/tbody)[1]")).getText().split("\n");
+		strArray = driver.findElement(By.xpath("(//table/tbody)[1]")).getText().split("\n");
 
-		Assert.assertEquals(tmpStringArray[0].replace("Contact Phone Number ", ""), contactNumber, errorMessage);
-		Assert.assertEquals(tmpStringArray[1].replace("Additional Instructions ",""), additionalInstructions, errorMessage);		
-		Assert.assertEquals(tmpStringArray[2].replace("Service Number ",""), serviceNumber, errorMessage);		
-		Assert.assertEquals(tmpStringArray[3].replace("Reason ",""), reasonAction, errorMessage);		
+		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errorMessage);
+		Assert.assertEquals(strArray[1].replace("Additional Instructions ",""), additionalInstructions, errorMessage);		
+		Assert.assertEquals(strArray[2].replace("Service Number ",""), serviceNumber, errorMessage);		
+		Assert.assertEquals(strArray[3].replace("Reason ",""), reasonAction, errorMessage);		
 	}	
 
 	public static void VerifyAdditionalInformationOrderAccessories() 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOrderAccessories.";		
 
-		String [] tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
+		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
-		Assert.assertEquals(tmpStringArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
-		Assert.assertEquals(tmpStringArray[1].replace("Ext ", ""), extension, errMessage);		
-		Assert.assertEquals(tmpStringArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
-		Assert.assertEquals(tmpStringArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
+		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
+		Assert.assertEquals(strArray[1].replace("Ext ", ""), extension, errMessage);		
+		Assert.assertEquals(strArray[2].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(strArray[3].replace("Service Number ", ""), serviceNumber, errMessage);
 	}	
 	
-	public static void VerifyAdditionalInformationUpgradeDevice() throws Exception  // bladd
+	public static void VerifyAdditionalInformationUpgradeDevice() throws Exception  
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
-		String [] strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
+		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
 		//VerifyAdditionalInformationCommon(strArray, errMessage);
 		VerifyAdditionalInformationOrderAccessories();
 		Assert.assertEquals(strArray[4].replace("Reason ", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);		
 	} 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public static void VerifyAdditionalInformationTransferServiceIn()
+	{
+		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
+		//for(String str : strArray){ShowText(str);}
+
+		Assert.assertEquals(strArray[0].replace("Service Number ",""), newServiceNumber, "");
+		Assert.assertEquals(strArray[1].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
+		Assert.assertEquals(strArray[2].replace("Name on Invoice ",""), userLimitedShorterName, "");
+		Assert.assertEquals(strArray[3].replace("Contact Phone Number ",""), contactNumber, "");
+		Assert.assertEquals(strArray[4].replace("Ext ",""), extension, "");
+		Assert.assertEquals(strArray[5].replace("Additional Instructions ",""), additionalInstructions, "");
+
+	}	
+
+	public static void VerifyAdditionalInformationTransferServiceInAndPort()
+	{
+		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
+		//for(String str : strArray){ShowText(str);}
+		
+		Assert.assertEquals(strArray[0].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
+		Assert.assertEquals(strArray[1].replace("Name on Invoice ",""), userLimitedShorterName, "");
+		Assert.assertEquals(strArray[2].replace("Contact Phone Number ",""), contactNumber, "");
+		Assert.assertEquals(strArray[3].replace("Ext ",""), extension, "");
+		Assert.assertEquals(strArray[4].replace("Additional Instructions ",""), additionalInstructions, "");
+		Assert.assertEquals(strArray[5].replace("Service Number ",""), newServiceNumber, "");
+	}
 	
 }
