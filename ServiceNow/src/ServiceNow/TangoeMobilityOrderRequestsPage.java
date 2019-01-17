@@ -267,7 +267,7 @@ public class TangoeMobilityOrderRequestsPage extends ActionsBase
 		
 		for(WebElement ele : columnList)
 		{
-			// ShowText(ele.getText());
+			ShowText(ele.getText());
 			returnList.add(ele.getText());
 		}
 		return returnList;

@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import com.gargoylesoftware.htmlunit.javascript.host.dom.ShadowRoot;
+
 import ActionClasses.NewActivation;
 import HelperObjects.AccessoriesDetailsExpected;
 import HelperObjects.CalendarDateTimeObject;
@@ -85,8 +87,16 @@ public class Approvals extends BaseClass
 	// new method to replace ApprovalAction() method - reject part .... - 10/25/2017 - Ana
 	public static void selectAndRejectOrder() throws Exception {
 		
-		// Select order from list
-		openOrderDetails();
+		// Select order from list using 'openOrderDetails()' method. in this method there is a wait 
+		// time before searching through the approval page for the submitted order to approve. 
+		// if first attempt to find the submitted order fails, call 'openOrderDetails()' again.
+		if(!openOrderDetails())  
+		{
+			if(!openOrderDetails())
+			{
+				Assert.fail("Failed to find the submitted order in the approval page.");
+			}
+		}
 	
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
@@ -104,7 +114,7 @@ public class Approvals extends BaseClass
 	
 	//tbody[@class='list2_body']/tr[1]/td[3]/a // 12/16/18 - for WebElement orderNumLink
 	
-	private static void openOrderDetails() throws Exception {
+	private static boolean openOrderDetails() throws Exception {
 		
 		// added 8/9/2018 - modified 8/22/2018
 		refreshList(); 					
@@ -112,6 +122,7 @@ public class Approvals extends BaseClass
 		boolean correctUserAndType = false;
 		boolean correctExternalOrderId = false;
 		int x = 1;
+		int numAttempts = 7;
 		
 		do {	
 			
@@ -150,12 +161,21 @@ public class Approvals extends BaseClass
 				x++;
 			}
 		
-		} while ((x <= 10) && !(correctUserAndType && correctExternalOrderId));
+		} while ((x <= numAttempts) && !(correctUserAndType && correctExternalOrderId));
 		//} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
 		
+		// 1/17/19 - removed assert below.
 		// verify order to approve was found. if the order action wasn't found within loop max rows it looks like it can't be found. 
 		//Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
-		Assert.assertTrue(x <= 10, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
+		//Assert.assertTrue(x <= 10, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
+		
+		// added 1/17/19
+		if(x > numAttempts)
+		{
+			ShowText("Have not found expected approval record in 'openOrderDetails()' method..." );
+			return false;
+		}
+		return true;
 	}
 	
 	// 12/16/18 - to be used if this not fixed - TNGMOB-9 - Service Now Submitted Order Can’t Be Approved/Rejected From Pulldown Selection.
