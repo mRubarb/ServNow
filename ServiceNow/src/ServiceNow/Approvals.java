@@ -547,7 +547,7 @@ public class Approvals extends BaseClass
 		// Lines found in 'Description'
 		//strArray = driver.findElement(By.name("x_tango_mobility_tangoe_mobility_order_request.description")).getAttribute("value").split("\n");
 		
-		WaitForElementPresent(By.name("x_tango_mobility_tangoe_mobility_order_request.description"), 5);
+		WaitForElementPresent(By.name("x_tango_mobility_tangoe_mobility_order_request.description"), MediumTimeout);
 		//WaitForElementPresent(By.xpath(commonXpathForDescriptions), 5);
 		
 		strArray = driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n");

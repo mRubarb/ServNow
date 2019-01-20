@@ -377,22 +377,6 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(tmpStringArray[3]), errorMessage);		
 	}		
 
-	public static void VerifyAdditionalInformationPortNumber() 
-	{
-	
-		String errorMessage = "Incorrect information found in Order Details page in OrderSubmittedPage.VerifyAdditionalInformationPortNumber.";
-		tmpStringArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");
-		//ShowArray(tmpStringArray);
-		
-		Assert.assertEquals(tmpStringArray[0].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, errorMessage);		
-		Assert.assertEquals(tmpStringArray[1].replace("Name on Invoice ",""), userLimitedShorterName, errorMessage);		
-		Assert.assertEquals(tmpStringArray[2].replace("Contact Phone Number ",""), contactNumber, errorMessage);		
-		Assert.assertEquals(tmpStringArray[3].replace("Ext ",""), extension, errorMessage);		
-		Assert.assertEquals(tmpStringArray[4].replace("Additional Instructions ",""), additionalInstructions, errorMessage);		
-		Assert.assertEquals(tmpStringArray[5].replace("Current Carrier ",""), DeviceInfoActions.currentVendorPortNumber, errorMessage); 	
-		Assert.assertEquals(tmpStringArray[6].replace("Service Number ",""), serviceNumber, errorMessage);		
-	}
-	
 	public static void VerifyAdditionalInformationNewActivation()
 	{
 		String [] strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling ::div")).getText().split("\n");
@@ -422,21 +406,6 @@ public class OrderSubmittedPage extends BaseClass
 		Assert.assertEquals(strArray[5].replace("Current Carrier ",""), currentCarrier, "");
 		Assert.assertEquals(strArray[6].replace("Service Number ",""), newServiceNumber, "");
 	}
-	
-	// TBD - 11/14/18
-	public static void VerifyAdditionalInformationTransferServiceIn()
-	{
-		String [] strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
-		//for(String str : strArray){ShowText(str);}
-
-		Assert.assertEquals(strArray[0].replace("Service Number ",""), newServiceNumber, "");		
-		Assert.assertEquals(strArray[1].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
-		Assert.assertEquals(strArray[2].replace("Name on Invoice ",""), userLimitedShorterName, "");
-		Assert.assertEquals(strArray[3].replace("Contact Phone Number ",""), contactNumber, "");
-		Assert.assertEquals(strArray[4].replace("Ext ",""), extension, "");
-		Assert.assertEquals(strArray[5].replace("Additional Instructions ",""), additionalInstructions, "");
-	}
-	
 	
 	// ************ KEEP **************************   // bladd comment after replacing all calls to this
 	public static void verifyAdditionalInformationBlock() throws Exception // use it for all tx types

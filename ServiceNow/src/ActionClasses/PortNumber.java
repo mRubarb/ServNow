@@ -11,6 +11,7 @@ import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseCarrierPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.DevicePage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.MyDevicesPage;
@@ -101,7 +102,8 @@ public class PortNumber extends ActionsBase
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails(); 
 		VerifyOrderPage.verifyAccessoriesDetails();
 		// VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformation();
-		VerifyOrderPage.VerifyAdditionalInformationPortNumber();
+		//VerifyOrderPage.VerifyAdditionalInformationPortNumber();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationPortNumber();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		BaseClass.stepComplete("TC:0001", "TS:30");
@@ -120,7 +122,8 @@ public class PortNumber extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();	
-		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationPortNumber();		
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -171,8 +174,9 @@ public class PortNumber extends ActionsBase
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		OrderSubmittedPage.VerifyApprovals();	
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber(); // bladd missing
-		VerifyOrderPage.VerifyAdditionalInformationPortNumber();		
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber(); 
+		// VerifyOrderPage.VerifyAdditionalInformationPortNumber();		
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationPortNumber();
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();
@@ -195,7 +199,8 @@ public class PortNumber extends ActionsBase
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
 		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationPortNumber();
-		OrderSubmittedPage.VerifyAdditionalInformationPortNumber();		
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationPortNumber();
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
 		OrderSubmittedPage.verifyOrderSegmentDevice();
@@ -204,7 +209,6 @@ public class PortNumber extends ActionsBase
 		// the order details page is open. it has synced with command so now the history section can be verified. 
 		VerifyOrderDetailsHistoryAccessoriesAfterApproval(action);
 	}
-	
 
 	
 	public static void VerifyOrderDetailsHistoryPostApproval(ApproverAction appAction) throws Exception

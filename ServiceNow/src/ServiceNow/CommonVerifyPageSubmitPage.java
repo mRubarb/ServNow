@@ -5,6 +5,7 @@ import org.testng.Assert;
 
 import ActionClasses.UpgradeDevice;
 import ActionsBaseClasses.ActionsBase;
+import HelperObjects.DeviceInfoActions;
 import HelperObjects.PlanInfoActions;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,5 +111,19 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 		Assert.assertEquals(strArray[4].replace("Additional Instructions ",""), additionalInstructions, "");
 		Assert.assertEquals(strArray[5].replace("Service Number ",""), newServiceNumber, "");
 	}
+	
+	public static void VerifyAdditionalInformationPortNumber() throws Exception 
+	{
+		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationPortNumber.";		
+		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
+		
+		Assert.assertEquals(strArray[0].replace("Carrier Account Number ", ""), PlanInfoActions.carrierAccountNumber, errMessage);
+		Assert.assertEquals(strArray[1].replace("Name on Invoice ", ""), userLimitedShorterName, errMessage);		
+		Assert.assertEquals(strArray[2].replace("Contact Phone Number ", ""), contactNumber, errMessage);
+		Assert.assertEquals(strArray[3].replace("Ext ", ""), extension, errMessage);
+		Assert.assertEquals(strArray[4].replace("Additional Instructions ", ""), additionalInstructions, errMessage);		
+		Assert.assertEquals(strArray[5].replace("Current Carrier ", ""), DeviceInfoActions.currentVendorPortNumber, errMessage);
+		Assert.assertEquals(strArray[6].replace("Service Number ", ""), serviceNumber, errMessage);
+	}	
 	
 }
