@@ -373,7 +373,7 @@ public class Approvals extends BaseClass
 	
 
 	
-	private static void approveOrder(int approverIndex) {
+	private static void approveOrder(int approverIndex) throws Exception {
 		
 		// The 'Approve' button is not listed anymore. --> So the Approve action must be selected from a dropdown list 
 		
@@ -382,6 +382,8 @@ public class Approvals extends BaseClass
 		new Select(driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"))).selectByVisibleText("Approve");
 		
 		// 4. Verify that the State changes to 'Approved'
+		
+		Pause("Verify that the State changes to 'Approved");
 		
 		Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[3]")).getText(), "Approved", "Failed. State is not Approved.");	
 		

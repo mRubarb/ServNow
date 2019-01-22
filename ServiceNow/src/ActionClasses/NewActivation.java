@@ -9,6 +9,7 @@ import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.DevicePage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
@@ -172,8 +173,9 @@ public class NewActivation extends ActionsBase
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
-		//VerifyOrderPage.verifyAdditionalInformationBlock();
-		VerifyOrderPage.VerifyAdditionalInformationNewActivation();
+		// VerifyOrderPage.verifyAdditionalInformationBlock(); // problems with reason.
+		// VerifyOrderPage.VerifyAdditionalInformationNewActivation();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationNewActivation();
 		VerifyOrderPage.VerifyShippingInformation();
 		VerifyOrderPage.VerifyShippingInformationExpediteSelected();
 		VerifyOrderPage.VerifyCostAndCostMonthly();
@@ -194,8 +196,9 @@ public class NewActivation extends ActionsBase
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
-		OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		// OrderSubmittedPage.verifyAdditionalInformationBlock();  // problems with reason. 	
+		// OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationNewActivation();		
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -224,7 +227,8 @@ public class NewActivation extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		//OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationNewActivation();		
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();

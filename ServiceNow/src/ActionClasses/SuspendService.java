@@ -34,9 +34,9 @@ public class SuspendService extends ActionsBase
 
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(suspendActionTitle);		
-		// VerifyOrderPage.verifyAdditionalInformationBlock();  
+		VerifyOrderPage.verifyAdditionalInformationBlock();  
 		VerifyOrderPage.VerifyAdditionalInformationSuspend();
-		Pause("verify page");
+		// SUBMIT 
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		StoreOrderNumberToVariable(); // in suspend the order number is shown in the order submitted page.
@@ -59,7 +59,6 @@ public class SuspendService extends ActionsBase
 		
 		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
 		OrderSubmittedPage.VerifyAdditionalInformationBothSuspends();
-		Pause("Order Submitted");
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();

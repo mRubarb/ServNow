@@ -565,8 +565,6 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.VerifyShippingInformation();
 		
 		orderDetailsObjectExpected.orderType = "Port Number Order";
-		Pause("bb");
-
 	}
 	
 	

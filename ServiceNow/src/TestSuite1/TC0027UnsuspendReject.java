@@ -43,13 +43,12 @@ public class TC0027UnsuspendReject extends BaseClass
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
 		UnsuspendService.RunUnsuspendService();
 		
-		driver.close();
-		driver.quit();
+		CommonTestSteps.Logout();
 		
 		BaseClass.stepComplete("Run unsuspend action complete. Now will reject the order.", "");
 		
 		// login as approver.
-		CommonTestSteps.LoginApprover();		
+		CommonTestSteps.LoginApproverBrowserOpen();		
 		
 		// go to approvals page.
 		CommonTestSteps.GoToMyApprovalsPage();
@@ -59,13 +58,12 @@ public class TC0027UnsuspendReject extends BaseClass
 		// status to 'In Fulfillment' if everything goes OK.
 		Approvals.selectAndRejectOrder();
 		
-		driver.close();
-		driver.quit();
-
+		CommonTestSteps.Logout();
+		
 		BaseClass.stepComplete("Order has been rejected. Now will verify limited user's details in 'my orders' page and order details page.", "");
 		
 		// login as limited user.
-		CommonTestSteps.LoginLimitedUser();
+		CommonTestSteps.LoginLimitedUserBrowserOpen();
 		
 		// go to 'my orders main page'
 		CommonTestSteps.GoToMyOrders();		

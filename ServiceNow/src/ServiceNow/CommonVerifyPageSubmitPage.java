@@ -80,7 +80,6 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
 		
-		//VerifyAdditionalInformationCommon(strArray, errMessage);
 		VerifyAdditionalInformationOrderAccessories();
 		Assert.assertEquals(strArray[4].replace("Reason ", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);		
 	} 	
@@ -125,5 +124,20 @@ public class CommonVerifyPageSubmitPage extends BaseClass
 		Assert.assertEquals(strArray[5].replace("Current Carrier ", ""), DeviceInfoActions.currentVendorPortNumber, errMessage);
 		Assert.assertEquals(strArray[6].replace("Service Number ", ""), serviceNumber, errMessage);
 	}	
+	
+	public static void VerifyAdditionalInformationNewActivation()
+	{
+		String [] strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling ::div")).getText().split("\n");
+		//for(String str : strArray){ShowText(str);}
+
+		Assert.assertEquals(strArray[0].replace("Preferred Area Code ", ""), preferredAreaCode);
+		Assert.assertEquals(strArray[1].replace("Contact Phone Number ", ""), contactNumber);
+		Assert.assertEquals(strArray[2].replace("Ext ", ""), extension);
+		Assert.assertEquals(strArray[3].replace("Additional Instructions ", ""), additionalInstructions);
+		Assert.assertEquals(strArray[4].replace("Business Unit ", ""), buisnessUnit);
+		Assert.assertEquals(strArray[5].replace("Service Number Alias ", ""), serviceNumberAlias);
+		Assert.assertEquals(strArray[6].replace("Reason ", ""), reasonOtherText);
+	}	
+	
 	
 }
