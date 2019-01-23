@@ -180,6 +180,7 @@ public class NewActivation extends ActionsBase
 		VerifyOrderPage.VerifyShippingInformationExpediteSelected();
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
+		// submit 
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete();
