@@ -39,7 +39,7 @@ public class TC0016DeactivateApprove extends BaseClass
 
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
-		
+
 		// got to the devices page through the home page. 
 		CommonTestSteps.GoToDevicesPage();
 		
@@ -49,7 +49,7 @@ public class TC0016DeactivateApprove extends BaseClass
 		// 3) verify results in order-submitted/order-details page after su
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
 		DeactivateService.RunDeactivateService();
-		
+
 		CommonTestSteps.Logout();
 
 		BaseClass.stepComplete("Run deactivate action complete. Now will approve the order.", "");

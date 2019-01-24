@@ -32,7 +32,9 @@ public class Approvals extends BaseClass
 	
 	// this is common in many places. bob 7/27/18
 	public static String commonXpathForDescriptions = ".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/../div/following-sibling::input[1]"; 	
-	public static String commonXpathForDescriptionsSimple = "//input[@id='x_tango_mobility_tangoe_mobility_order_request.description']"; // 11/1/18 
+	public static String commonXpathForDescriptionsSimple = "//input[@id='x_tango_mobility_tangoe_mobility_order_request.description']"; // 11/1/18
+	
+	public static boolean firstCallToOpenOrderDetails = true;
 	
 	// this waits for first check box at top of approvals list and the 'to' text at the bottom of the page.
 	public static void WaitForPageToLoad() throws Exception
@@ -46,13 +48,21 @@ public class Approvals extends BaseClass
 	
 	// new method to replace ApprovalAction() method - approval part .... - 10/25/2017 - Ana 
 	public static void selectAndApproveOrder() throws Exception {
-	
-
-		// Select order from list
-		openOrderDetails(); 
 		
-		//Pause("");
-	
+		OpenOrderDetailsTwoTries();
+		/*
+		// 1/16/19
+		// Select order from list using 'openOrderDetails()' method. in this method there is a wait 
+		// time before searching through the approval page for the submitted order to approve. 
+		// if first attempt to find the submitted order fails, call 'openOrderDetails()' again.
+		if(!openOrderDetails())  
+		{
+			if(!openOrderDetails())
+			{
+				Assert.fail("Failed to find the submitted order in the approval page.");
+			}
+		}
+		*/
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
 		
@@ -68,6 +78,37 @@ public class Approvals extends BaseClass
 		
 	}
 	
+	// 1/16/19
+	// Select order from list using 'openOrderDetails()' method. in this method there is a wait 
+	// time before searching through the approval page for the submitted order to approve. 
+	// if first attempt to find the submitted order fails, call 'openOrderDetails()' again.
+	private static void OpenOrderDetailsTwoTries() throws Exception 
+	{
+		if(!openOrderDetails())  
+		{
+			if(!openOrderDetails())
+			{
+				Assert.fail("Failed to find the submitted order in the approval page.");
+			}
+		}
+	}
+	
+	private static boolean LookForFirstOrderAtRequestedState() throws InterruptedException // bladd
+	{
+		ShowText("Wating to see if quick check can be made.");
+		long currentTime= System.currentTimeMillis();
+		long endTime = currentTime+10000;
+		int x = 0;
+		while(System.currentTimeMillis() < endTime) 
+		{
+			  Thread.sleep(1000);
+			  if(driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(1)>td:nth-of-type(4)")).getText().equals("Requested"))
+			  {
+				  return true;
+			  }
+		}
+		return false;
+	}
 	
 	private static void refreshList() throws InterruptedException {
 		
@@ -87,6 +128,9 @@ public class Approvals extends BaseClass
 	// new method to replace ApprovalAction() method - reject part .... - 10/25/2017 - Ana
 	public static void selectAndRejectOrder() throws Exception {
 		
+		OpenOrderDetailsTwoTries();
+		/*
+		// 1/16/19
 		// Select order from list using 'openOrderDetails()' method. in this method there is a wait 
 		// time before searching through the approval page for the submitted order to approve. 
 		// if first attempt to find the submitted order fails, call 'openOrderDetails()' again.
@@ -97,7 +141,8 @@ public class Approvals extends BaseClass
 				Assert.fail("Failed to find the submitted order in the approval page.");
 			}
 		}
-	
+		*/
+		
 		// Verify the items in the short and full description.
 		verifyApprovalPageData();
 		
@@ -116,8 +161,21 @@ public class Approvals extends BaseClass
 	
 	private static boolean openOrderDetails() throws Exception {
 		
+		if(firstCallToOpenOrderDetails) 
+		{
+			firstCallToOpenOrderDetails = false;
+			// this waits for the word "Requested" in the first row 'State' column in approvals page
+			if(LookForFirstOrderAtRequestedState()) 
+			{
+				ShowText("Trying quick test because first row in approvals page says 'Requested'");
+				// if found, temporarily shorten the wait time for 'refreshList()' method. 
+				timeOutBeforeLookingInApprovalList = 10000;
+			}
+		}
+		
 		// added 8/9/2018 - modified 8/22/2018
 		refreshList(); 					
+		timeOutBeforeLookingInApprovalList = 60000;
 		
 		boolean correctUserAndType = false;
 		boolean correctExternalOrderId = false;
@@ -177,68 +235,6 @@ public class Approvals extends BaseClass
 		}
 		return true;
 	}
-	
-	// 12/16/18 - to be used if this not fixed - TNGMOB-9 - Service Now Submitted Order Can’t Be Approved/Rejected From Pulldown Selection.
-	private static void OpenOrderDetailsTwo() throws Exception  
-	{
-		
-		// added 8/9/2018 - modified 8/22/2018
-		// refreshList(); bladd uncomment 					
-		
-		boolean correctUserAndType = false;
-		boolean correctExternalOrderId = false;
-		int x = 1;
-		
-		do {	
-			
-			WaitForElementClickable(By.cssSelector("tbody.list2_body>tr>td>span>input.checkbox:nth-of-type(1)"), MediumTimeout, "Failed waiting for row in Approvals.ApprovalAction");
-			
-			// select row
-			System.out.println(" *** Click on order listed # " + x + " ***");
-			
-			//tbody[@class='list2_body']/tr[1]/td[3]/a // 12/16/18 - for WebElement orderNumLink
-			
-			WebElement orderNumLink = driver.findElement(By.xpath("tbody[@class='list2_body']/tr[1]/td[3]/a")); // new to select second column
-			//WebElement orderNumLink = driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + x + "]/td[7]/a[@class='linked']"));
-			orderNumLink.click(); 
-			
-			// wait for the short description and  description text areas to become visible. 
-			WaitForElementVisible(By.xpath(".//*[@id='sys_readonly.x_tango_mobility_tangoe_mobility_order_request.short_description']"), MediumTimeout);		
-			WaitForElementVisible(By.xpath(".//*[@id='x_tango_mobility_tangoe_mobility_order_request.description']/.."), MediumTimeout); 			
-			
-			// Verify order type and user name in short description
-			// **** UNCOMMENT LINE BELOW when defect 114917 is fixed *** Defect fixed
-			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value"));			
-
-			// Verify external order number and order id in full description
-			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n")); 			
-			
-			ShowText("------------------------------------------------------------------------");
-			System.out.println(correctUserAndType + " " + correctExternalOrderId);
-			ShowText("------------------------------------------------------------------------");
-			
-			if(correctUserAndType && correctExternalOrderId)
-			{
-				rowNumContainingOrder = 1;  //x;
-				
-			} else { // If any of the expected values is not correct, then click 'Back' button
-				
-				driver.findElement(By.xpath("//span[text()='Back']/..")).click();
-				WaitForPageToLoad();		
-				
-				x++;
-			}
-		
-		} while ((x <= 10) && !(correctUserAndType && correctExternalOrderId));
-		//} while ((x <= loopMax) && !(correctUserAndType && correctExternalOrderId));
-		
-		// verify order to approve was found. if the order action wasn't found within loop max rows it looks like it can't be found. 
-		//Assert.assertTrue(x <= loopMax, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
-		Assert.assertTrue(x <= 10, "Failed to find user with correct Order Type, External Order Id, or Order Id in  Approvals.FindApprovalAndApprove.");
-	}
-	
-	
-	
 	
 	public static void openOrderDetails(String orderId, String externalOrderId) throws Exception {
 		
@@ -379,12 +375,14 @@ public class Approvals extends BaseClass
 		
 		// 3. The action ('Approve' in this case) must be selected from a dropdown list located below 
 		
+		WaitForElementClickable(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"), ShortTimeout, "");
 		new Select(driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"))).selectByVisibleText("Approve");
 		
 		// 4. Verify that the State changes to 'Approved'
 		
-		Pause("Verify that the State changes to 'Approved");
+		System.out.println("Approve index to use for looking for 'Approved' text" + approverIndex);
 		
+		Thread.sleep(2000); // 1/24/19 - saw intermittent problems with finding this approved text below.
 		Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[3]")).getText(), "Approved", "Failed. State is not Approved.");	
 		
 		
@@ -396,8 +394,6 @@ public class Approvals extends BaseClass
 		//				"Item that was approved in Row " + rowNumContainingOrder + " does not show as approved in the main Approvals list in Approvals.FindApprovalAndApprove.");	
 		
 		System.out.println("Order has been approved.");
-		
-		
 	}
 	
 	
