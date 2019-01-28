@@ -121,8 +121,26 @@ public class UpgradeDevice extends ActionsBase
 	}
 
 	
-	public static void Practice()
+	public static void Practice() throws Exception
 	{
+		MyDevicesPage.WaitForPageToLoad();
+		//MyDevicesPage.StoreServiceNumberFormats();
+		MyDevicesPage.SelectUpgradeDeviceAction();
+		
+		ChooseDevicePage.WaitForPageToLoadUpgradeDevice();
+		ChooseDevicePage.SetupForDeviceSelection();
+		VerifyPageTitle(upgradeDevice);
+	
+		ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
+		ChooseDevicePage.clickNextButton();
+		
+		ChoosePlanPage.WaitForPageToLoadNoPlanSelected();
+		VerifyPageTitle(upgradeDevice);		
+		ChoosePlanPage.StoreNameOfFirstPlanInList();
+		ChoosePlanPage.clickAddToCartButtonPlan();
+		ChoosePlanPage.clickNextButton();
+		Pause("Freeze");
+		ChooseDevicePage.TestMethod();
 		
 	}
 

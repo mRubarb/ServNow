@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -110,22 +111,36 @@ public class ChooseDevicePage extends BaseClass
 	// bladd test method
 	public static void TestMethod() throws Exception 
 	{
-		
+		// https://stackoverflow.com/questions/20796053/want-to-move-down-using-scrollbar-selenium-webdriver TRY !!!!!!!!!!!!!!!!!
 		JavascriptExecutor jse = (JavascriptExecutor)driver;
 
-		jse.executeScript("window.height");
+		// System.out.println(jse.executeScript("window.innerHeight")); // nope
+
+		Object obj =  jse.executeScript("window.innerHeight");
+
+		System.out.println(obj);
+
+		//The display resolution or display modes of a digital television, computer monitor or display device is 
+		//the number of distinct pixels in each dimension that can be displayed ... "1024 × 768" 
+		//means the width is 1024 pixels and the height is 768 pixels		
 		
-		int offset = 0;
+	    Dimension initial_size = driver.manage().window().getSize();
+	    int height = initial_size.getHeight();
+	    int width = initial_size.getWidth();
+		
+	    System.out.println("height = " + height + " width = " + width);
+	    
+		int section = height/5;
 		
 		//go through the list that was populated in the SetupForDeviceSelection() method further above.
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < 5; i++)
 		{
 
-			jse.executeScript("window.scrollBy(0, " + offset + ")", "");
+			jse.executeScript("window.scrollBy(0, " + section + ")", "");
 			
 			Pause("look");
 			
-			offset = i * 100;
+			section = section + section;
 		
 			
 		}
@@ -134,8 +149,8 @@ public class ChooseDevicePage extends BaseClass
 		System.out.println("Selected Device Cost: " + deviceInfoActions.cost);
 		ShoppingCart.costOneTime = deviceInfoActions.cost;
 		
-		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		
-		
+		jse.executeScript("window.scrollBy(0, " + (-section) + ")", "");		
+		Pause("look top");
 	}
 
 	
