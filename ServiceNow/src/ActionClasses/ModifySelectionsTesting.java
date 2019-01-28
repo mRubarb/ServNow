@@ -38,6 +38,8 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 	public static String actual = "";
 	public static String expected = "";
 	
+	public static String commonXpathPlanFeatures = "//div[@ng-if='showPlanFeatures()']";
+	
 	public static List<Device> listOfDevices = new ArrayList<Device>(); 
 	// public static List<Device> finalListOfDevices = new ArrayList<Device>();
 
@@ -101,8 +103,8 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 		
 		// verify the proper plan optional feature selected through the modify selection above is present in the Plan Features section of device page.
 		// NOTE: the exact text is not tested for. the plan name is only verified to be in the text block of the  
-		WaitForElementPresent(By.xpath("//div[@ng-if='showPlanFeatures()']"), ShortTimeout);
-		actual = driver.findElement(By.xpath("//div[@ng-if='showPlanFeatures()']")).getText().replace("\n", "");
+		WaitForElementPresent(By.xpath(commonXpathPlanFeatures), ShortTimeout); 		
+		actual = driver.findElement(By.xpath(commonXpathPlanFeatures)).getText().replace("\n", ""); 
 		expected = finalListOfDevices.get(0).optionsList.get(0).split("-")[0].trim();
 		Assert.assertTrue("", actual.contains(expected));
 		
@@ -148,8 +150,8 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 		
 		// verify the proper plan optional feature is un-selected through the modify selection is not present in the Plan Features section.
 		// NOTE: the exact text is not tested for. this only verifies a no plan message to be in the text block of the plan options section.  
-		WaitForElementPresent(By.xpath("//div[@ng-if='showPlanFeatures()']"), ShortTimeout);
-		actual = driver.findElement(By.xpath("//div[@ng-if='showPlanFeatures()']")).getText().replace("\n", "");
+		WaitForElementPresent(By.xpath(commonXpathPlanFeatures), ShortTimeout); 
+		actual = driver.findElement(By.xpath(commonXpathPlanFeatures)).getText().replace("\n", "");
 		expected = "No optional features have been selected";
 		Assert.assertTrue("", actual.contains(expected));
 		
@@ -233,8 +235,8 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 		Assert.assertTrue(ChooseAccessoriesPage.waitForPageToLoadAccessories());
 		ChooseAccessoriesPage.clickNextBtn();
 		ProvideAdditionalInfoPage.WaitForPageToLoad(); // get to additional info page and verify no options shown. 	
-		WaitForElementPresent(By.xpath("//div[@ng-if='showPlanFeatures()']"), ShortTimeout);
-		actual = driver.findElement(By.xpath("//div[@ng-if='showPlanFeatures()']")).getText().replace("\n", "");
+		WaitForElementPresent(By.xpath(commonXpathPlanFeatures), ShortTimeout); 
+		actual = driver.findElement(By.xpath(commonXpathPlanFeatures)).getText().replace("\n", "");
 		expected = finalListOfDevices.get(0).optionsList.get(0).split("-")[0].trim();
 		Assert.assertTrue("", actual.contains(noOptionalFeaturesOptionsPage));
 	}
@@ -295,8 +297,8 @@ public class ModifySelectionsTesting extends ServiceNow.ModifySelectionsTesting
 		ProvideAdditionalInfoPage.clickNextBtn();
 		EnterShippingInfoPage.WaitForPageLoad();
 		
-		WaitForElementPresent(By.xpath("//div[@ng-if='showPlanFeatures()']"), ShortTimeout); // TODO: xpath variable
-		actual = driver.findElement(By.xpath("//div[@ng-if='showPlanFeatures()']")).getText().replace("\n", "");
+		WaitForElementPresent(By.xpath(commonXpathPlanFeatures), ShortTimeout); 
+		actual = driver.findElement(By.xpath(commonXpathPlanFeatures)).getText().replace("\n", "");		
 		expected = finalListOfDevices.get(0).optionsList.get(0).split("-")[0].trim();
 		Assert.assertTrue("", actual.contains(noOptionalFeaturesOptionsPage));
 		

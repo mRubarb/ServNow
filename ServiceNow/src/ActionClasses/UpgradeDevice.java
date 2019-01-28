@@ -121,6 +121,10 @@ public class UpgradeDevice extends ActionsBase
 	}
 
 	
+	public static void Practice()
+	{
+		
+	}
 
 	public static void runUpgradeDeviceAndService() throws Exception
 	{

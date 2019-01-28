@@ -106,7 +106,42 @@ public class ChooseDevicePage extends BaseClass
 		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		
 		
 	}
+	
+	// bladd test method
+	public static void TestMethod() throws Exception 
+	{
 		
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+
+		jse.executeScript("window.height");
+		
+		int offset = 0;
+		
+		//go through the list that was populated in the SetupForDeviceSelection() method further above.
+		for(int i = 0; i < 20; i++)
+		{
+
+			jse.executeScript("window.scrollBy(0, " + offset + ")", "");
+			
+			Pause("look");
+			
+			offset = i * 100;
+		
+			
+		}
+		
+		
+		System.out.println("Selected Device Cost: " + deviceInfoActions.cost);
+		ShoppingCart.costOneTime = deviceInfoActions.cost;
+		
+		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		
+		
+	}
+
+	
+	
+	
+	
 	// this adds and removes each device. it verifies the device and cost in shopping cart is added and removed. 
 	// then it adds the test device to the shopping cart.
 	public static void AddRemoveAllDevices() throws Exception 

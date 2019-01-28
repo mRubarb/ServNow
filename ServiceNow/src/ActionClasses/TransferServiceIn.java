@@ -45,9 +45,10 @@ public class TransferServiceIn extends BaseClass {
 		// 4. There’s a drop down list to select a country. Click “Next” without choosing Country. – There’s an error message for the required field (“Country”).
 		// 5. Set Country to ‘United States’. – There’s a field displayed to enter Postal Code.
 	
-		// TODO -----------------------------------------------  Click “Next” without choosing Country.
+		SelectRegionPage.clickNextButtonSelectRegion();
+		SelectRegionPage.VerifyPostalCodeError();
 		SelectRegionPage.selectCountryFromDropDown();
-			
+
 		// 6. Click Next leaving Postal Code blank (or fill it using an incorrect format). There's an error message for the required field Postal Code.
 	
 		SelectRegionPage.clickNextButtonSelectRegion(); // added waitPresent
@@ -356,7 +357,6 @@ public class TransferServiceIn extends BaseClass {
 		// 4. There’s a drop down list to select a country. Click “Next” without choosing Country. – There’s an error message for the required field (“Country”).
 		// 5. Set Country to ‘United States’. – There’s a field displayed to enter Postal Code.
 	
-		// TODO -----------------------------------------------  Click “Next” without choosing Country.
 		SelectRegionPage.selectCountryFromDropDown();
 			
 		// 6. Click Next leaving Postal Code blank (or fill it using an incorrect format). There's an error message for the required field Postal Code.
@@ -369,8 +369,7 @@ public class TransferServiceIn extends BaseClass {
 	
 		SelectRegionPage.fillPostalCodeTextBox("02451");
 		SelectRegionPage.clickNextButtonSelectRegion(); // move to device select page.
-		
-		
+
 		// STEP 2 - SELECT YOUR CURRENT CARRIER
 		
 		// Select current carrier from dropdown list
