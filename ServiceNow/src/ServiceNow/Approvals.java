@@ -93,12 +93,11 @@ public class Approvals extends BaseClass
 		}
 	}
 	
-	private static boolean LookForFirstOrderAtRequestedState() throws InterruptedException // bladd
+	private static boolean LookForFirstOrderAtRequestedState() throws InterruptedException
 	{
 		ShowText("Wating to see if quick check can be made.");
 		long currentTime= System.currentTimeMillis();
 		long endTime = currentTime+10000;
-		int x = 0;
 		while(System.currentTimeMillis() < endTime) 
 		{
 			  Thread.sleep(1000);
@@ -106,6 +105,27 @@ public class Approvals extends BaseClass
 			  {
 				  return true;
 			  }
+		}
+		return false;
+	}
+
+	// used by test for rejecting two orders.
+	public static boolean LookForFirstOrderAtRequestedStateTwoOrders(int waitTime) throws InterruptedException // bladd
+	{
+		ShowText("Checking for two orders for reject two orders at the same time.");
+		timeOutBeforeLookingInApprovalList = 1000; // make  wait in refresh list real short.
+		long currentTime= System.currentTimeMillis();
+		long endTime = currentTime+waitTime;
+		while(System.currentTimeMillis() < endTime) 
+		{
+			  Thread.sleep(1000);
+			  if(driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(1)>td:nth-of-type(4)")).getText().equals("Requested") && 
+				driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(2)>td:nth-of-type(4)")).getText().equals("Requested"))
+			  {
+				  return true;
+			  }
+			  refreshList();
+			  
 		}
 		return false;
 	}
@@ -236,6 +256,7 @@ public class Approvals extends BaseClass
 		return true;
 	}
 	
+	// this is for two orders at the same time.
 	public static void openOrderDetails(String orderId, String externalOrderId) throws Exception {
 		
 		boolean correctUserAndType = false;

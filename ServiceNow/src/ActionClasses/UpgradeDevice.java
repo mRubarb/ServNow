@@ -139,7 +139,7 @@ public class UpgradeDevice extends ActionsBase
 		ChoosePlanPage.StoreNameOfFirstPlanInList();
 		ChoosePlanPage.clickAddToCartButtonPlan();
 		ChoosePlanPage.clickNextButton();
-		Pause("Freeze");
+
 		ChooseDevicePage.TestMethod();
 		
 	}

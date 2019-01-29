@@ -130,7 +130,7 @@ public class DeactivateService extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(deactivateActionTitle);
-		VerifyOrderPage.verifyAdditionalInformationBlock();
+		// VerifyOrderPage.verifyAdditionalInformationBlock();
 		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();		
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
@@ -159,7 +159,7 @@ public class DeactivateService extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSectionSecondTime(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationDeactivate();
 		//OrderSubmittedPage.VerifyAdditionalInformationDeactivate();
 		CommonVerifyPageSubmitPage.VerifyAdditionalInformationDeactivate();
 		
@@ -170,8 +170,8 @@ public class DeactivateService extends ActionsBase
 		// the 'orderActionBlock' variable is set here.
 		VerifyLimitedUserOrderMyOrdersMainPage();
 		
-		CommonTestSteps.GoToMyOrders();
-		VerifyOrderDetailsPagePreApproval();
+		//CommonTestSteps.GoToMyOrders();
+		//VerifyOrderDetailsPagePreApproval();
 		
 		
 	}

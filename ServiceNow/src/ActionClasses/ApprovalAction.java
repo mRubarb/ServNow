@@ -16,9 +16,26 @@ public class ApprovalAction extends BaseClass {
 	
 	// List<OrderDetailsObjectExpected> orders
 	
+	// this is for rejecting two orders. 
 	public static void approveOrRejectOrders(ApproverAction approverAction) throws Exception {
 	
+		boolean foundTwoOrders = true;
+		
+		if(!Approvals.LookForFirstOrderAtRequestedStateTwoOrders(30000)) // parameter in milliseconds.
+		{
+			if(!Approvals.LookForFirstOrderAtRequestedStateTwoOrders(70000))
+			{
+				foundTwoOrders = false;
+			}
+		}
 
+		System.out.println(foundTwoOrders);
+		
+		if(!foundTwoOrders)
+		{
+			Pause("Stop. Didn't find orders marked requested !!!!");
+		}
+		
 		// 1. Search for first order and store row order number 
 				
 		Approvals.openOrderDetails(orderDetailsObjectExpected.orderId, orderDetailsObjectExpected.externalOrderId);
@@ -39,6 +56,8 @@ public class ApprovalAction extends BaseClass {
 		
 		selectOrderCheckbox(rowOrder1);
 		selectOrderCheckbox(rowOrder2);
+		
+		Pause("Freeze");
 		
 		// 4. Go to the bottom of the list and select either Approve or Reject, from the dropdown list. 
 		
