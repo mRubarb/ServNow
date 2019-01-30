@@ -45,6 +45,13 @@ public class Approvals extends BaseClass
 		WaitForElementPresent(By.xpath("(//span[contains(text(),'to')])[3]"), MediumTimeout);		
 	}
 	
+	public static void SelectRefreshPageWithWait() throws InterruptedException
+	{
+		ShowText("Doing Page Refresh");
+		driver.findElement(By.xpath("//button[@data-list_id='sysapproval_approver']")).click();
+		driver.findElement(By.xpath("//div[text()='Refresh List']")).click();
+		Thread.sleep(3000);
+	}
 	
 	// new method to replace ApprovalAction() method - approval part .... - 10/25/2017 - Ana 
 	public static void selectAndApproveOrder() throws Exception {
@@ -100,18 +107,20 @@ public class Approvals extends BaseClass
 		long endTime = currentTime+10000;
 		while(System.currentTimeMillis() < endTime) 
 		{
-			  Thread.sleep(1000);
 			  if(driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(1)>td:nth-of-type(4)")).getText().equals("Requested"))
 			  {
 				  return true;
 			  }
+			  SelectRefreshPageWithWait();
 		}
 		return false;
 	}
 
-	// used by test for rejecting two orders.
-	public static boolean LookForFirstOrderAtRequestedStateTwoOrders(int waitTime) throws InterruptedException // bladd
+	// used by test for rejecting two orders. 
+	// NOTE!!! - see keyWord variable for doing debug.
+	public static boolean LookForOrdersAtRequestedStateTwoOrders(int waitTime) throws InterruptedException 
 	{
+		String keyWord = "Requested"; // this is the text (state) that will be looked for in the first two rows.    
 		ShowText("Checking for two orders for reject two orders at the same time.");
 		timeOutBeforeLookingInApprovalList = 1000; // make  wait in refresh list real short.
 		long currentTime= System.currentTimeMillis();
@@ -119,13 +128,12 @@ public class Approvals extends BaseClass
 		while(System.currentTimeMillis() < endTime) 
 		{
 			  Thread.sleep(1000);
-			  if(driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(1)>td:nth-of-type(4)")).getText().equals("Requested") && 
-				driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(2)>td:nth-of-type(4)")).getText().equals("Requested"))
+			  if(driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(1)>td:nth-of-type(4)")).getText().equals(keyWord) && 
+				driver.findElement(By.cssSelector(".list2_body>tr:nth-of-type(2)>td:nth-of-type(4)")).getText().equals(keyWord))
 			  {
 				  return true;
 			  }
 			  refreshList();
-			  
 		}
 		return false;
 	}
@@ -256,7 +264,9 @@ public class Approvals extends BaseClass
 		return true;
 	}
 	
-	// this is for two orders at the same time.
+	// //////////////////////////////////////////////////////////////////////////
+	// this is for two orders at the same time. one order is done on each call
+	// //////////////////////////////////////////////////////////////////////////
 	public static void openOrderDetails(String orderId, String externalOrderId) throws Exception {
 		
 		boolean correctUserAndType = false;
@@ -285,7 +295,11 @@ public class Approvals extends BaseClass
 			correctUserAndType = isCorrectOrderTypeAndUser(driver.findElement(shortDescription).getAttribute("value"));
 
 			// Verify external order number and order id in full description
-			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(fullDescription).getText().split("\n"), orderId, externalOrderId);
+			
+			//correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(fullDescription).getText().split("\n"), orderId, externalOrderId);
+			correctExternalOrderId = containsCorrectExternalOrderIdAndOrderId(driver.findElement(By.xpath(commonXpathForDescriptions)).getAttribute("value").split("\n"), orderId, externalOrderId);			
+			
+			
 			
 			if(correctUserAndType && correctExternalOrderId)
 			{

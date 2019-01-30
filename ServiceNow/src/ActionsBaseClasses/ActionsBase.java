@@ -25,8 +25,8 @@ public class ActionsBase extends BaseClass
 	// this is set in the order submitted page. it holds the order id. it is used to populate the orderDetailsObjectExpected object at a later time.
 	public static String orderSubmittedPageOrderNumber = ""; 
 	
-	// this is the amount of time for test loops. 
-	public static int loopTime = 660;
+	// this is the amount of time for test loops in minutes. 
+	public static int loopTime = 240; // 1/30/19  - 660 to 240 (4 minutes)  
 	
 	// this is how many of the items in the update features page should be stored into a list of items.
 	public static int numUpdateFeaturesToLoad = 10;

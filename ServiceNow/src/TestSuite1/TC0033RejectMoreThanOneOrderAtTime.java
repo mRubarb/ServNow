@@ -50,10 +50,10 @@ public class TC0033RejectMoreThanOneOrderAtTime extends BaseClass
 		CreateOrderDetailsExpectedObject();
 		DeactivateService.SetupOrderDetailsExpectedObject();
 		
-		orderDetailsObjectExpected.orderId = "13297758";
-		orderDetailsObjectExpected.orderIdTwo = "13297756";
-		orderDetailsObjectExpected.externalOrderId = "154878541472557eaa5223442f2ee1bb";
-		orderDetailsObjectExpected.externalOrderIdTwo = "1548785245622eb8a7c22d1292a56095";
+		orderDetailsObjectExpected.orderId = "13297772";
+		orderDetailsObjectExpected.orderIdTwo = "13297770";
+		orderDetailsObjectExpected.externalOrderId = "1548799655829acea109b5e02b80ef2b";
+		orderDetailsObjectExpected.externalOrderIdTwo = "1548799594666f698fa45dd6913276a8";
 
 		fullServiceNumber = "+1 (111) 222-3333";
 		serviceNumber = "1112223333";

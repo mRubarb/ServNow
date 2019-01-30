@@ -21,9 +21,10 @@ public class ApprovalAction extends BaseClass {
 	
 		boolean foundTwoOrders = true;
 		
-		if(!Approvals.LookForFirstOrderAtRequestedStateTwoOrders(30000)) // parameter in milliseconds.
+		// see if both orders are at requested state.
+		if(!Approvals.LookForOrdersAtRequestedStateTwoOrders(30000)) // parameter in milliseconds.
 		{
-			if(!Approvals.LookForFirstOrderAtRequestedStateTwoOrders(70000))
+			if(!Approvals.LookForOrdersAtRequestedStateTwoOrders(70000))
 			{
 				foundTwoOrders = false;
 			}
@@ -33,33 +34,27 @@ public class ApprovalAction extends BaseClass {
 		
 		if(!foundTwoOrders)
 		{
-			Pause("Stop. Didn't find orders marked requested !!!!");
+			Pause("Didn't find two orders marked requested !!!! Select OK and program will fail.");
+			Assert.fail("expected orders in approval page not found.");
 		}
 		
 		// 1. Search for first order and store row order number 
-				
 		Approvals.openOrderDetails(orderDetailsObjectExpected.orderId, orderDetailsObjectExpected.externalOrderId);
-		
 		int rowOrder1 = Approvals.rowNumContainingOrder;
-		
 		System.out.println("rowOrder1: " + rowOrder1);
 		
 		// 2. Search for second order and store row order number
-		
 		Approvals.openOrderDetails(orderDetailsObjectExpected.orderIdTwo, orderDetailsObjectExpected.externalOrderIdTwo);
-		
 		int rowOrder2 = Approvals.rowNumContainingOrder;
-		
 		System.out.println("rowOrder2: " + rowOrder2);
 		
 		// 3. Being on the list of orders click on check-boxes
-		
 		selectOrderCheckbox(rowOrder1);
 		selectOrderCheckbox(rowOrder2);
 		
-		Pause("Freeze");
+		Pause("The two orders have been found. Select a selection in the pulldoen at bottom of this page = approve/reject");
 		
-		// 4. Go to the bottom of the list and select either Approve or Reject, from the dropdown list. 
+		// 4. Go to the bottom of the list and select either Approve or Reject, from the drop-down list. 
 		
 		int[] rowNumbers = {rowOrder1, rowOrder2};
 		
@@ -107,25 +102,25 @@ public class ApprovalAction extends BaseClass {
 		
 	}
 	
-
+	// bladd this is used by the test that deleting more than one 
 	private static void rejectOrdersSelected(int[] rowNumbers) throws Exception {
 		
-		// The 'Comments' textbox is not displayed anymore. Text for Comment is something like: 
-		// "Order was rejected in ServiceNow. Approvers: rejected:Bob Lichtenfels-Approver,
-		//  not_required:Mike McPadden, not_required:ServiceNow Certifier - Admin, not_required:ServiceNow Certifier - Approver ."
-		// The 'Reject' button is not listed anymore. --> So the Reject action must be selected from a dropdown list 			
-		
-		
-		// 3. The action ('Reject' in this case) must be selected from a dropdown list located below 
-		
-		//driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select")).click();
-		
-		//Thread.sleep(5000);
+		//
 		
 		List<WebElement> options = driver.findElements(By.xpath("//span[@id='sysapproval_approver_choice_actions']/select/option"));  //cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select>option")
+
+		ShowText("---------------------------");
+		
+		for(WebElement ele : options)
+		{
+			ShowText(ele.getText());
+		}
+		
+		ShowText("---------------------------");
 		
 		int indexReject = 0;
 		
+		// below should be the third one
 		for (int i = 0; i < options.size(); i++) {
 			
 			if (options.get(i).getText().trim().equals("Reject")) {
@@ -134,10 +129,18 @@ public class ApprovalAction extends BaseClass {
 			
 		}
 		
+		System.out.println("Index for delete is " + indexReject);
+		
 		//driver.findElement(By.xpath("//select/option[text()='Reject']")).click(); // <-- it doesn't work, replaced by line below
 		
+		
+		Pause("Time for pulldown.");
+		
 		//new Select(driver.findElement(By.cssSelector("div.custom-form-group>div>table>tbody>tr>td>span>select"))).selectByIndex(indexReject);
-		/* TEST ---> */  new Select(driver.findElement(By.xpath("//span[@id='sysapproval_approver_choice_actions']/select"))).selectByIndex(indexReject);
+		///* TEST ---> */  new Select(driver.findElement(By.xpath("//span[@id='sysapproval_approver_choice_actions']/select"))).selectByIndex(indexReject);
+		new Select(driver.findElement(By.xpath("//span[@id='sysapproval_approver_choice_actions']/select"))).selectByVisibleText("Reject");
+		
+		Pause("Result?");
 		
 		
 		Thread.sleep(3000);
