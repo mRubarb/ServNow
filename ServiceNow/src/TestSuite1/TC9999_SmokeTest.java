@@ -22,7 +22,7 @@ public class TC9999_SmokeTest extends BaseClass
 	@Test
 	public static void TC9999() throws Exception 
 	{
-		BaseClass.stepComplete("------------------ Starting Smoke Test. -----------------------", "");
+		BaseClass.stepComplete("------------------ Starting Smoke Test. -------------------------", "");
 
 
 		// login as limited user.
