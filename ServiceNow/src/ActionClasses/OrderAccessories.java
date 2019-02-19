@@ -5,6 +5,7 @@ import org.testng.Assert;
 import ActionsBaseClasses.ActionsBase;
 import ActionsBaseClasses.CommonTestSteps;
 import ServiceNow.ChooseAccessoriesPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.MyOrdersPage;
@@ -41,7 +42,9 @@ public class OrderAccessories extends ActionsBase
 
 			VerifyOrderPage.WaitForPageToLoad();
 			//VerifyOrderPage.verifyAdditionalInformationBlock(); 
-			VerifyOrderPage.VerifyAdditionalInformationOderAccessories();
+			//VerifyOrderPage.VerifyAdditionalInformationOderAccessories();
+			CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories();
+
 			VerifyOrderPage.VerifyOrderAccessoriesAction(); 
 			VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction();	
 			VerifyCostOrderAccessoriesAction();
@@ -67,7 +70,8 @@ public class OrderAccessories extends ActionsBase
 			VerifyFullServiceNumber();
 			OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 			//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();  	
-			OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
+			//OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
+			CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories();
 			
 			// go to 'my orders' main page to setup for the loop test below.
 			CommonTestSteps.GoToMyOrders();
@@ -120,6 +124,8 @@ public class OrderAccessories extends ActionsBase
 
 			VerifyOrderPage.WaitForPageToLoad();
 			VerifyOrderPage.verifyAdditionalInformationBlock(); 
+			CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories(); // 1/10/19
+			
 			VerifyOrderPage.VerifyOrderAccessoriesAction(); 
 			VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction();	
 			VerifyCostOrderAccessoriesAction();
@@ -144,6 +150,7 @@ public class OrderAccessories extends ActionsBase
 			VerifyFullServiceNumber();
 			OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 			OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();  	
+			CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories(); // 1/10/19
 			
 			// go to 'my orders' main page to setup for the loop test below.
 			CommonTestSteps.GoToMyOrders();
@@ -195,7 +202,8 @@ public class OrderAccessories extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories(); 
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories(); // 1/10/19		
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation(); // VerifyShippingInformationOrderAccessoriesPreApproval();
 		OrderSubmittedPage.VerifyOrderSegmentAccessoriesOrderAction();
@@ -213,8 +221,9 @@ public class OrderAccessories extends ActionsBase
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		ServiceNow.OrderSubmittedPage.VerifyTopSectionLowerPart();
-		// ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();
-		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
+		//ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();
+		//ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories();
 		OrderSubmittedPage.VerifyShippingInformation();  //VerifyShippingInformationOrderAccessoriesPostApproval();
 		OrderSubmittedPage.VerifyOrderSegmentAccessoriesOrderAction();
 		

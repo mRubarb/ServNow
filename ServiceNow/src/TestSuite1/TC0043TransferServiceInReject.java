@@ -38,7 +38,7 @@ public class TC0043TransferServiceInReject extends BaseClass {
 		TransferServiceIn.runTransferServiceInPhoneNumber();
 		
 		CommonTestSteps.Logout();
-		
+
 		BaseClass.stepComplete("Run Transfer Service In action complete. Now will reject the order.", "");
 
 		// login as approver.
@@ -75,8 +75,6 @@ public class TC0043TransferServiceInReject extends BaseClass {
 		TransferServiceIn.verifyOrderDetailsHistoryPostApproval(ApproverAction.reject);
 
 		BaseClass.stepComplete("Transfer Service In Test Complete.", "");
-		
-		
 	}
 	
 	@AfterClass

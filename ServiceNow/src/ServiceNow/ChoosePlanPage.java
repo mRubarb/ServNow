@@ -360,7 +360,6 @@ public class ChoosePlanPage extends BaseClass
 		
 		planInfoActions.planSelectedName = driver.findElement(By.cssSelector("div.sn-section-heading.ng-binding")).getText();
 		System.out.println("Plan Name Selected: " + planInfoActions.planSelectedName);
-		
 	}
 	
     public static void WaitForPageToLoadPlanSelected() throws Exception

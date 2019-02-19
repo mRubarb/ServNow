@@ -1,12 +1,13 @@
 package ActionsBaseClasses;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-import ActionClasses.NewActivation;
 import HelperObjects.CalendarDateTimeObject;
 import ServiceNow.BaseClass;
 import ServiceNow.Frames;
@@ -24,8 +25,8 @@ public class ActionsBase extends BaseClass
 	// this is set in the order submitted page. it holds the order id. it is used to populate the orderDetailsObjectExpected object at a later time.
 	public static String orderSubmittedPageOrderNumber = ""; 
 	
-	// this is the amount of time for test loops. 
-	public static int loopTime = 660;
+	// this is the amount of time for test loops in minutes. 
+	public static int loopTime = 240; // 1/30/19  - 660 to 240 (4 minutes)  
 	
 	// this is how many of the items in the update features page should be stored into a list of items.
 	public static int numUpdateFeaturesToLoad = 10;
@@ -40,7 +41,7 @@ public class ActionsBase extends BaseClass
 	public static String upgradeService = "Upgrade a Service";	
 	public static String updateServiceTitle = "Update Service Features for Device";
 	public static String portNumberTitle = "Port your Number";
-	public static String transferServiceOutActionTitle = "Transfer Service for your Device to be personal"; // transfer service out.	
+	public static String transferServiceOutActionTitle = "Transfer Service for your Device from Business to Personal Ownership"; // transfer service out.	
 	
 	// this holds the monthly cost after doing the 'VerifyAddFeatures' method.
 	public static String costMonthlyAfterAddingFeatures = "0";
@@ -426,4 +427,29 @@ public class ActionsBase extends BaseClass
 		Assert.assertTrue(actualDate.contains(expectedDate.split("-")[2]));
 	}	
 
+	// Formats:
+	// VerifyDatesWithDifferentFormatesAreEqual("2018-09-22", "September 22nd 2018");
+    public static void VerifyDatesWithDifferentFormatsAreEqual(String expectedDate, String actualDate) 
+    {
+    	String temp = actualDate.split(" ")[1].replaceAll("-?[^\\d]", ""); // remove chars from day
+
+    	if(Integer.parseInt(temp) < 10) // may need leading zero for day
+    	{
+    		temp = "0" + temp;
+    	}
+    	
+    	String [] actualDateArray = actualDate.split(" "); // create array from actualDate string and rebuild actualDate for needed format
+    	actualDateArray[1]= temp; // make sure day is correct if leading aero needed.
+    	
+    	actualDate = "";
+    	actualDate = actualDate + actualDateArray[0] + " ";
+    	actualDate = actualDate + actualDateArray[1] + ", ";
+    	actualDate = actualDate + actualDateArray[2];
+    	
+    	Locale l = Locale.US ;
+    	DateTimeFormatter f = DateTimeFormatter.ofPattern( "MMMM dd, uuuu" , l );
+    	LocalDate ld = LocalDate.parse( actualDate , f );
+    	
+    	Assert.assertEquals(ld.toString(), expectedDate);
+    }	
 }

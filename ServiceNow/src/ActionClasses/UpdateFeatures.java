@@ -4,6 +4,7 @@ import org.testng.Assert;
 
 import ActionsBaseClasses.ActionsBase;
 import ActionsBaseClasses.CommonTestSteps;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.MyOrdersPage;
 import ServiceNow.OrderSubmittedPage;
@@ -38,7 +39,8 @@ public class UpdateFeatures extends ActionsBase
 		VerifyPageTitle(updateServiceTitle);		
 		VerifyOrderPage.VerifyFeatures();	
 		VerifyOrderPage.verifyAdditionalInformationBlock();  //VerifyAdditionalInformationUpdateFeature();
-		VerifyOrderPage.VerifyAdditionalInformationUpdateFeature();
+		//VerifyOrderPage.VerifyAdditionalInformationUpdateFeature();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories();
 		VerifyOrderPage.VerifyFeaturesCost();
 
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
@@ -62,7 +64,8 @@ public class UpdateFeatures extends ActionsBase
 		OrderSubmittedPage.VerifyTopSectionLowerPart();
 		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories();  	
 		// OrderSubmittedPage.VerifyAdditionalInformationUpdateFeature();
-		OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
+		//OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories();		
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -106,6 +109,7 @@ public class UpdateFeatures extends ActionsBase
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories(); // this works for update features.
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories();
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyUpdateFeatures();	
 		
@@ -122,7 +126,8 @@ public class UpdateFeatures extends ActionsBase
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		ServiceNow.OrderSubmittedPage.VerifyTopSectionLowerPart();
 		// ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationOrderAccessories(); // this works for update features.
-		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories(); // this works for update features.
+		// ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationOrderAccessories(); // this works for update features.
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationOrderAccessories(); 
 		
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    

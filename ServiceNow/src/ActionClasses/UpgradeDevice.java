@@ -8,6 +8,7 @@ import HelperObjects.ShoppingCart;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.MyDevicesPage;
 import ServiceNow.MyOrdersPage;
@@ -73,8 +74,9 @@ public class UpgradeDevice extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
-		//VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
-		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice();
+		VerifyOrderPage.verifyAdditionalInformationBlock();
+		//VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
 		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
 		VerifyOrderPage.verifyUpgradeDeviceAccessoriesAction();	// accessory section	
 		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
@@ -99,9 +101,10 @@ public class UpgradeDevice extends ActionsBase
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
 		OrderSubmittedPage.VerifyTopSectionLowerPart();
-		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
-		
+		OrderSubmittedPage.verifyAdditionalInformationBlock();
+		//OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
+
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
 		
@@ -118,6 +121,28 @@ public class UpgradeDevice extends ActionsBase
 	}
 
 	
+	public static void Practice() throws Exception
+	{
+		MyDevicesPage.WaitForPageToLoad();
+		//MyDevicesPage.StoreServiceNumberFormats();
+		MyDevicesPage.SelectUpgradeDeviceAction();
+		
+		ChooseDevicePage.WaitForPageToLoadUpgradeDevice();
+		ChooseDevicePage.SetupForDeviceSelection();
+		VerifyPageTitle(upgradeDevice);
+	
+		ChooseDevicePage.SelectUpgradeDeviceAndStoreDeviceInfoIndex();   
+		ChooseDevicePage.clickNextButton();
+		
+		ChoosePlanPage.WaitForPageToLoadNoPlanSelected();
+		VerifyPageTitle(upgradeDevice);		
+		ChoosePlanPage.StoreNameOfFirstPlanInList();
+		ChoosePlanPage.clickAddToCartButtonPlan();
+		ChoosePlanPage.clickNextButton();
+
+		ChooseDevicePage.TestMethod();
+		
+	}
 
 	public static void runUpgradeDeviceAndService() throws Exception
 	{
@@ -160,8 +185,9 @@ public class UpgradeDevice extends ActionsBase
 		
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyOrderPage.VerifyShippingInformationOrderAccessoriesAction(); // shipping info section - reuse order accessories. this has the same data organized the same way.
-		//VerifyOrderPage.verifyAdditionalInformationBlock();  // VerifyAdditionalInformationUpgradeDevice(); // additional info section
-		VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice(); 
+		VerifyOrderPage.verifyAdditionalInformationBlock();
+		//VerifyOrderPage.VerifyAdditionalInformationUpgradeDevice(); 
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
 		VerifyOrderPage.VerifySelectedDeviceDetailsUpgradeDevice(); // device section
 		VerifyOrderPage.VerifyPlanInfoUpgradeDevice(); // plan section
 		
@@ -169,6 +195,7 @@ public class UpgradeDevice extends ActionsBase
 		VerifyOrderPage.verifyCostUpgradeDevice(); // cost 
 		VerifyOrderPage.verifyCostMonthlyUpgradeDevice(); // cost monthly
 				
+		// SUBMIT 
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 
@@ -188,8 +215,8 @@ public class UpgradeDevice extends ActionsBase
 		
 		// more verifications here.
 		OrderSubmittedPage.VerifyTopSection(); // this also sets external order id in orderDetailsObjectExpected object that was setup further above.
-		//OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); 
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
 		
 		// go to 'my orders' main page to setup for the loop test below.
 		CommonTestSteps.GoToMyOrders();
@@ -230,8 +257,9 @@ public class UpgradeDevice extends ActionsBase
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); // if things are mising, this won't find it.
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice(); 
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // if things are missing, this won't find it.
+		//OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice(); 
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyApprovals();	
 		OrderSubmittedPage.VerifyShippingInformation();  // VerifyShippingInformationOrderAccessoriesPostApproval();	// re-use accessories method.
 		OrderSubmittedPage.verifyStatusAndVendor();
@@ -254,8 +282,8 @@ public class UpgradeDevice extends ActionsBase
 		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
 		
-		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
-		OrderSubmittedPage.VerifyAdditionalInformationUpgradeDevice();
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationUpgradeDevice();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationUpgradeDevice();
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.VerifyTopSectionLowerPart();

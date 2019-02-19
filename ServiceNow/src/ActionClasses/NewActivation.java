@@ -9,6 +9,7 @@ import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.DevicePage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
@@ -32,7 +33,7 @@ public class NewActivation extends ActionsBase
 		CommonTestSteps.GoToHomePage();
 		
 		// select to create a new order. //a[text()='Create an order']
-		driver.findElement(By.xpath("//a[text()='Create an order']")).click();
+		driver.findElement(By.xpath("//a[text()='Create an Order']")).click();
 		
 		// There’s a drop down list to select a country. Click “Next” without choosing Country. – There’s an error message for the required postal code.
 		SelectRegionPage.selectCountryFromDropDown();
@@ -172,12 +173,14 @@ public class NewActivation extends ActionsBase
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
-		//VerifyOrderPage.verifyAdditionalInformationBlock();
-		VerifyOrderPage.VerifyAdditionalInformationNewActivation();
+		// VerifyOrderPage.verifyAdditionalInformationBlock(); // problems with reason.
+		// VerifyOrderPage.VerifyAdditionalInformationNewActivation();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationNewActivation();
 		VerifyOrderPage.VerifyShippingInformation();
 		VerifyOrderPage.VerifyShippingInformationExpediteSelected();
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
+		// submit 
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete();
@@ -194,8 +197,9 @@ public class NewActivation extends ActionsBase
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		// OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();	
-		OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		// OrderSubmittedPage.verifyAdditionalInformationBlock();  // problems with reason. 	
+		// OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationNewActivation();		
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
@@ -224,7 +228,8 @@ public class NewActivation extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		//OrderSubmittedPage.VerifyAdditionalInformationNewActivation();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationNewActivation();		
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();

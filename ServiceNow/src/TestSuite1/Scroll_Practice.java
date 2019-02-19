@@ -44,8 +44,9 @@ public class Scroll_Practice extends BaseClass
 		// 2) setup order details expected object for correct values.
 		// 3) verify results in order-submitted/order-details page
 		// 4) verify the rest of the in user's info using 'my orders' order-submitted/order-details page. 
-		  // UpgradeDevice.Practice(); // broken commented 2/18/19 
-		
+
+		UpgradeDevice.Practice();
+
 		CommonTestSteps.Logout();
 		/*
 		BaseClass.stepComplete("Run upgrade device action complete. Now will approve the order.", "");

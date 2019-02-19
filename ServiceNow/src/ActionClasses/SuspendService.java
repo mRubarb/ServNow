@@ -34,8 +34,9 @@ public class SuspendService extends ActionsBase
 
 		VerifyOrderPage.WaitForPageToLoad();
 		VerifyPageTitle(suspendActionTitle);		
-		// VerifyOrderPage.verifyAdditionalInformationBlock();  
+		VerifyOrderPage.verifyAdditionalInformationBlock();  
 		VerifyOrderPage.VerifyAdditionalInformationSuspend();
+		// SUBMIT 
 		VerifyOrderPage.clickSubmitBtn(); // submit order.
 		VerifyOrderPage.WaitForOrderComplete();
 		StoreOrderNumberToVariable(); // in suspend the order number is shown in the order submitted page.

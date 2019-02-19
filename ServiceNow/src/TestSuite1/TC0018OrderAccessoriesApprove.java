@@ -66,8 +66,8 @@ public class TC0018OrderAccessoriesApprove extends BaseClass
 			
 			BaseClass.stepComplete("Order has been approved. Now will verify limited user's details in 'my orders' page and order details page.", "");
 
-			OrderAccessories.SetOrderTypeForPostApproval();	// set order type is wording back to normal.	
-
+			OrderAccessories.SetOrderTypeForPostApproval();	// set order type is wording back to normal.
+			
 			// login as limited user.
 			CommonTestSteps.LoginLimitedUserBrowserOpen();
 			
@@ -90,7 +90,6 @@ public class TC0018OrderAccessoriesApprove extends BaseClass
 			
 			JOptionPane.showMessageDialog(frame, "No accessories available for selected device. Order could not be placed. ");
 		}
-		
 	}
 	
 	@AfterClass

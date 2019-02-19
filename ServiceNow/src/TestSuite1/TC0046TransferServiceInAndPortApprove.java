@@ -69,7 +69,7 @@ public class TC0046TransferServiceInAndPortApprove extends BaseClass {
 		TransferServiceIn.verifyLimitedUserOrderMyOrdersMainPage();
 		
 		// this verifies the order details under the order that was verified in 'my orders' page. 
-		TransferServiceIn.verifyOrderDetailsPagePostApproval();
+		TransferServiceIn.verifyOrderDetailsPagePostApprovalPort();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
 		TransferServiceIn.verifyOrderDetailsHistoryPostApproval(ApproverAction.approve);

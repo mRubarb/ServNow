@@ -5,9 +5,11 @@ import org.openqa.selenium.support.ui.Select;
 
 public class SelectCurrentCarrier extends BaseClass {
 
-	public static void selectCurrentCarrier(String carrier) {
+	public static void selectCurrentCarrier(String carrier) throws Exception {
 		
-		WaitForElementClickable(By.id("currentXferInCurrentCarrier"), 5, "Dropdown not clickable");
+		WaitForElementClickable(By.id("currentXferInCurrentCarrier"), MainTimeout, "Dropdown not clickable");
+		
+		Thread.sleep(500); // 12/20/18 - getting errors below sometimes  -'Cannot locate element with text: Sprint'
 		
 		new Select(driver.findElement(By.id("currentXferInCurrentCarrier"))).selectByVisibleText(carrier);
 		

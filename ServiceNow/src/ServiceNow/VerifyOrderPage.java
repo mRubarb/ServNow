@@ -30,13 +30,14 @@ public class VerifyOrderPage extends BaseClass
 
 	public static String errMessage = "";
 	
-	
-	// ** NOT USED **
+	/*
+	// ** NOT USED ** // 1/21/19 - commented - remove later
 	public static void VerifyDeactivateTopSection() throws Exception
 	{
 		String orderNumber = driver.findElement(By.xpath("//h1[contains(text(),'Order')]")).getText().split(":")[0].replace("#","");
 		Assert.assertEquals(driver.findElement(By.xpath("//h1[contains(text(),'Order')]")).getText().split(":")[0].replace("#",""), "","");
 	}
+	*/
 	
 	public static void WaitForPageToLoad() throws Exception
 	{
@@ -44,7 +45,8 @@ public class VerifyOrderPage extends BaseClass
 		WaitForElementClickable(By.xpath("(//button[text()='Back'])[2]"), MainTimeout, "Page open for VerifyOrderPage.WaitForPageToLoad() failed looking for button.");		
 	}
 	
-	// ** NOT USED **
+	// ** NOT USED ** // 1/21/19 - commented - remove later
+	/*
 	public static void WaitForPageToLoadDeactivate() throws Exception
 	{
 		WaitForElementVisible(By.xpath("(//button[text()='Submit Order'])[1]"), MainTimeout);
@@ -52,7 +54,7 @@ public class VerifyOrderPage extends BaseClass
 		WaitForElementClickable(By.xpath("(//button[text()='Back'])[1]"), MainTimeout, "Page open for VerifyOrderPage.WaitForPageToLoad() failed looking for button.");		
 		WaitForElementClickable(By.xpath("(//button[text()='Back'])[2]"), MainTimeout, "Page open for VerifyOrderPage.WaitForPageToLoad() failed looking for button.");		
 	}	
-	
+	*/
 	public static void clickSubmitBtn()
 	{
 		driver.findElement(By.xpath("(//button[text()='Submit Order'])[1]")).click();
@@ -457,19 +459,6 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[1].replace("Price ", "") , DevicePortNumber.selectedDevicePrice,  errMessage); // price
 	}
 
-	// this verification is called when processing a deactivate. 
-	public static void VerifyAdditionalInformationDeactivate() throws Exception
-	{
-		String errorMessage = "Failure in checking additional information for Deactivate Service action in DeactivateService.VerifyAdditionalInformationDeactivate.";		
-		
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[0], contactNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[1], additionalInstructions, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[2], serviceNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoDeactivate()[3], reasonAction, errorMessage);
-
-	}
-	
-	
 	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
 	// this verification is called when processing an update action. 
 
@@ -612,8 +601,6 @@ public class VerifyOrderPage extends BaseClass
 		
 	}	
 	
-	
-	
 	// 9/22/17 Ana - Adding **GENERIC** method to obtain Additional Information into a HashMap
 	public static HashMap<String, String> getAdditionalInformationData() {
 		
@@ -636,54 +623,34 @@ public class VerifyOrderPage extends BaseClass
 		return additionalInfoMap;
 		
 	}
-		
 	
-	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	// this verification is called when processing a suspend.
-	// NOTE: 'Hold Service' has defect DE# 107772.
-
 	public static void VerifyAdditionalInformationSuspend() throws Exception
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationSuspend.";
-		Assert.assertEquals(GetAdditionalInfoSuspend()[0], contactNumber, errMessage);
-		Assert.assertEquals(GetAdditionalInfoSuspend()[1], additionalInstructions, errMessage);
-		Assert.assertEquals(GetAdditionalInfoSuspend()[2], serviceNumber, errMessage);
-		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(GetAdditionalInfoSuspend()[3]));		
+		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");		
 		
+		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);		
+		Assert.assertEquals(strArray[1].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(strArray[2].replace("Service Number ", ""), serviceNumber, errMessage);		
+		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(strArray[3].replace("Preferred Suspension Date ", "")));		
 		String holdServiceFound = driver.findElement(By.xpath("//td/label[text()='Hold Service']/../following-sibling::td/span")).getText(); 
-		Assert.assertEquals(holdServiceFound, limitedUserPulldownSelection, errMessage); // <-- UNCOMMENT WHEN SFD 112978 IS FIXED
+		Assert.assertEquals(holdServiceFound, limitedUserPulldownSelection, errMessage); 
 	}
-	
-	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
+
 	// this verification is called when processing a suspend.
 	// NOTE: 'Hold Service' has defect DE# 107772.
 	public static void VerifyAdditionalInformationUnsuspend() throws Exception
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationSuspend.";
-     
-		Assert.assertEquals(GetAdditionalInfoUnsuspend()[0], contactNumber, errMessage);
-		Assert.assertEquals(GetAdditionalInfoUnsuspend()[1], additionalInstructions, errMessage);
-		Assert.assertEquals(GetAdditionalInfoUnsuspend()[2], serviceNumber, errMessage);
-		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(GetAdditionalInfoSuspend()[3]));	
-		Assert.assertEquals(GetAdditionalInfoUnsuspend()[4], userLimitedFullNameExtended, errMessage);
+		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
+
+		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
+		Assert.assertEquals(strArray[1].replace("Additional Instructions ", ""), additionalInstructions, errMessage);
+		Assert.assertEquals(strArray[2].replace("Service Number ", ""), serviceNumber, errMessage);
+		Assert.assertTrue(CalendarDateTimeObject.VerifyMonthAndYear(strArray[3].replace("Preferred Suspension Date ", "")));
+		Assert.assertEquals(strArray[4].replace("User ",""), userLimitedFullNameExtended, errMessage);
 	}	
 	
-	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/3/17 -- Ana
-
-	public static void VerifyAdditionalInformationOderAccessories() throws Exception 
-	{
-		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
-
-		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
-
-		VerifyAdditionalInformationCommon(strArray, errMessage);
-	}
-
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-
 	public static void VerifyAdditionalInformationUpgradeDevice() throws Exception 
 	{
 		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationOderAccessories.";		
@@ -692,23 +659,7 @@ public class VerifyOrderPage extends BaseClass
 		VerifyAdditionalInformationCommon(strArray, errMessage);
 		Assert.assertEquals(strArray[4].replace("Reason ", ""), UpgradeDevice.reasonUpgradeDevice, errMessage);		
 	} 
-	
 
-	public static void VerifyAdditionalInformationPortNumber() throws Exception 
-	{
-		String errMessage = "Failure in verify Additional Information in VerifyOrderPage.VerifyAdditionalInformationPortNumber.";		
-		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div[1]")).getText().split("\n");		
-		
-		Assert.assertEquals(strArray[0].replace("Carrier Account Number ", ""), PlanInfoActions.carrierAccountNumber, errMessage);
-		Assert.assertEquals(strArray[1].replace("Name on Invoice ", ""), userLimitedShorterName, errMessage);		
-		Assert.assertEquals(strArray[2].replace("Contact Phone Number ", ""), contactNumber, errMessage);
-		Assert.assertEquals(strArray[3].replace("Ext ", ""), extension, errMessage);
-		Assert.assertEquals(strArray[4].replace("Additional Instructions ", ""), additionalInstructions, errMessage);		
-		Assert.assertEquals(strArray[5].replace("Current Carrier ", ""), DeviceInfoActions.currentVendorPortNumber, errMessage);
-		Assert.assertEquals(strArray[6].replace("Service Number ", ""), serviceNumber, errMessage);
-	}
-	
-	
 	public static void VerifyAdditionalInformationCommon(String [] strArray, String errMessage)
 	{
 		Assert.assertEquals(strArray[0].replace("Contact Phone Number ", ""), contactNumber, errMessage);
@@ -838,36 +789,6 @@ public class VerifyOrderPage extends BaseClass
 	// 												HELPER METHOD
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoSuspend()
-	{
- 
-		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
-		return new String [] {strArray[0].replace("Contact Phone Number ", ""), strArray[1].replace("Additional Instructions ", ""),
-							 strArray[2].replace("Service Number ", ""), strArray[3].replace("Preferred Suspension Date ", ""),
-							 strArray[4].replace("Hold Service ","")};
-	}
-	
-	
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoUnsuspend()
-	{
-		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
-		return new String [] {strArray[0].replace("Contact Phone Number ", ""), strArray[1].replace("Additional Instructions ", ""),
-							 strArray[2].replace("Service Number ", ""), strArray[3].replace("Preferred Suspension Date ", ""),
-							 strArray[4].replace("User ","")};
-	}	
-	
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoDeactivate()
-	{
-		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
-		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
-				              strArray[1].replace("Additional Instructions ", ""),
-							  strArray[2].replace("Service Number ", ""), 
-							  strArray[3].replace("Reason ", "")};
-	}
-	
 	public static void VerifyAdditionalInformationNewActivation()
 	{
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following-sibling ::div")).getText().split("\n");
@@ -881,14 +802,12 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[5].replace("Service Number Alias ", ""), serviceNumberAlias);
 		Assert.assertEquals(strArray[6].replace("Reason ", ""), reasonOtherText);
 	}
-	
 
 	// use this in addition to block test. 10/25/18
 	public static void VerifyAdditionalInformationTransferServiceInAndPort()
 	{
 		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
-		//for(String str : strArray){ShowText(str);}
-
+		for(String str : strArray){ShowText(str);}
 		Assert.assertEquals(strArray[0].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
 		Assert.assertEquals(strArray[1].replace("Name on Invoice ",""), userLimitedShorterName, "");
 		Assert.assertEquals(strArray[2].replace("Contact Phone Number ",""), contactNumber, "");
@@ -896,73 +815,6 @@ public class VerifyOrderPage extends BaseClass
 		Assert.assertEquals(strArray[4].replace("Additional Instructions ",""), additionalInstructions, "");
 		Assert.assertEquals(strArray[5].replace("Service Number ",""), newServiceNumber, "");
 	}
-	
-	// use this in addition to block test. 10/25/18
-	public static void VerifyAdditionalInformationTransferServiceIn()
-	{
-		strArray = driver.findElement(By.xpath("//div[text()='Additional Information']/following ::div/table/tbody")).getText().split("\n");
-		//for(String str : strArray){ShowText(str);}
-
-		Assert.assertEquals(strArray[0].replace("Service Number ",""), newServiceNumber, "");
-		Assert.assertEquals(strArray[1].replace("Carrier Account Number ",""), PlanInfoActions.carrierAccountNumber, "");
-		Assert.assertEquals(strArray[2].replace("Name on Invoice ",""), userLimitedShorterName, "");
-		Assert.assertEquals(strArray[3].replace("Contact Phone Number ",""), contactNumber, "");
-		Assert.assertEquals(strArray[4].replace("Ext ",""), extension, "");
-		Assert.assertEquals(strArray[5].replace("Additional Instructions ",""), additionalInstructions, "");
-
-	}	
-	
-	
-	
-	// 9/27/18
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	public static String [] GetAdditionalInfoTransferServiceOut()
-	{
-		strArray = driver.findElement(By.xpath("//tbody")).getText().split("\n");
-		return new String [] {strArray[0].replace("Additional Instructions ", ""),
-				  			  strArray[1].replace("Date of Birth ", ""),				
-							  strArray[2].replace("Contact Phone Number ", ""),
-				              strArray[3].replace("Ext ", ""),
-							  strArray[4].replace("Personal E-mail Address ", ""), 
-							  strArray[5].replace("Social Security Number ", ""),							  
-							  strArray[6].replace("Driver's License Number ", ""),							  
-							  strArray[7].replace("Driver's License Exp. Date ", ""),							  
-							  strArray[8].replace("Driver's License State/ Province ", ""),							  
-							  strArray[9].replace("Service Number ", "")};
-	}
-	
-	// 9/27/18
-	// this verification is called when processing a transfer service out. 
-	public static void VerifyAdditionalInformationTransferServiceOut() throws Exception
-	{
-		String errorMessage = "Failure in checking additional information for Transfer Service Out action in VerifyOrderPage.VerifyAdditionalInformationServiceOut.";		
-		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[0], additionalInstructions, errorMessage);
-		ActionsBase.VerifyDates(birthDate, GetAdditionalInfoTransferServiceOut()[1]);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[2], contactNumber, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[3], extension, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[4], approverAdminMail, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[5], socialSecurityNumber, errorMessage);		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[6], licenseNumber, errorMessage);		
-		ActionsBase.VerifyDates(licenseExpire, GetAdditionalInfoTransferServiceOut()[7]);		
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[8], userStateShort, errorMessage);
-		Assert.assertEquals(GetAdditionalInfoTransferServiceOut()[9], serviceNumber, errorMessage);
-	}
-	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	/*public static String [] getAdditionalInfoSwapDevice()
-	{
-		strArray = driver.findElement(By.xpath("(//tbody)[3]")).getText().split("\n");
-		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
-							  strArray[1].replace("Ext ", ""),
-							  strArray[2].replace("Additional Instructions ", ""),
-							  strArray[3].replace("Preferred Area Code ", ""),							  
-							  strArray[4].replace("Service Number ", "") }; // removed 9/16 -- ** Uncommented since it's present - 9/15/17 - Ana 
-	}*/	
-	
-	
-	
 	
 	// return all items in additional info block. this is a certain format. it isn't global for everything.
 	public static String [] getExistingDeviceSwapDevice()
@@ -986,17 +838,7 @@ public class VerifyOrderPage extends BaseClass
 							  strArray[3].replace("Serial Number ", "")};
 	}		
 	
-	// ********* NOT USED ******* TO BE REMOVED ****************** 10/4/17 -- Ana
-	// return all items in additional info block. this is a certain format. it isn't global for everything.
-	/*public static String [] GetAdditionalInfoOrderAccessories()
-	{
- 
-		strArray = driver.findElement(By.xpath("(//tbody)[2]")).getText().split("\n");
-		return new String [] {strArray[0].replace("Contact Phone Number ", ""), 
-				              strArray[1].replace("Additional Instructions ", ""),
-							  strArray[2].replace("Service Number ", "")}; 
-	}*/	
-	
+	/*
 	// this is for SFD112978_Suspend. bob 10/20/17
 	public static void VerifyHoldServiceHasData()
 	{
@@ -1006,4 +848,5 @@ public class VerifyOrderPage extends BaseClass
 		
 		//Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Hold Service']/../following-sibling::td")).getText(), limitedUserPulldownSelection, "");
 	}
+	*/
 }

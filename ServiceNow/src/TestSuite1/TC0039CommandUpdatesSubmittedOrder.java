@@ -36,7 +36,7 @@ public class TC0039CommandUpdatesSubmittedOrder extends BaseClass
 		// got to the devices page through the home page. 
 		CommonTestSteps.GoToDevicesPage();
 		
-		DeactivateService.RunDeactivateServiceSubmitOnly();
+		DeactivateService.RunDeactivateServiceSubmitOnly(); // bladd !!!!!!!!!!!!!!!!
 		
 		CommonTestSteps.Logout();
 		
@@ -50,10 +50,7 @@ public class TC0039CommandUpdatesSubmittedOrder extends BaseClass
 		TangoeMobilityOrderRequestsPage.ObserveStartingStates();
 
 		TangoeMobilityOrderRequestsPage.StartPolling();
-		//Pause("Test Passed.");
-		
-
-		
+		Pause("Test Passed - Be Sure To Approve Or Reject The Order.");
 	}
 	
 	

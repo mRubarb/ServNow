@@ -28,27 +28,52 @@ public class ChooseAccessoriesPage extends BaseClass
 	
 	public static boolean waitForPageToLoadAccessories() throws Exception
 	{
+
+		WaitForElementVisible(By.cssSelector("span.sn-flow__heading.ng-binding"), MainTimeout); // this waits for the heading. 
+
+		// do short wait for 'No Accessories Found'. // added if statement and method called 1/23/19 
+		if(WaitForNoAccessoriesFound(MediumTimeout))
+		{
+			ShowText("Found no accessories in short method for Accessories Page");
+			return false;
+		}
+
 		// try - catch added by Ana 9/11/17
-				
-		WaitForElementVisible(By.cssSelector("span.sn-flow__heading.ng-binding"), MediumTimeout);
-		
 		try {
 			
-			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MediumTimeout);
+			WaitForElementVisible(By.xpath("(//button[text()='Add to Cart'])[1]"), MainTimeout - MediumTimeout);
 			return true;
 			
 		} catch (Exception e) {
 			
 			// If there are no accessories for the selected device, a message stating 'No Accessories Found' will be displayed
-						
-			WaitForElementVisible(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message"), MediumTimeout);
+			WaitForElementVisible(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message"), MainTimeout);
 			String message = driver.findElement(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message")).getText();
-			
 			Assert.assertTrue(message.equals("No Accessories Found"));
 			
 			return false;
 		}
+	}
+	
+	// this is called to make a short wait for "No Accessories Found" message. other checks are made after this is the message is not found.  
+	// see if 'No Accessories Found' block is visible.
+	// * if not- return false
+	// * if it's there - verify (assert) the "No Accessories Found" message and return true.
+	public  static boolean WaitForNoAccessoriesFound(int timeOut) throws Exception
+	{
+		try
+		{
+			WaitForElementVisible(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message"), timeOut);			
+		}
+		catch (Exception e)
+		{
+			return false; // message block not found.
+		}
 		
+		// if get here message block has been found. verify message.
+		String message = driver.findElement(By.cssSelector("span.sn-notifyBlock.sn-notifyBlock--message")).getText();
+		Assert.assertTrue(message.equals("No Accessories Found"));
+		return true;
 	}
 	
 	public static void WaitForPageToLoadItemSelected() throws Exception

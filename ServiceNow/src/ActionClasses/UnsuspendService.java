@@ -92,7 +92,8 @@ public class UnsuspendService extends ActionsBase
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
 		ServiceNow.OrderSubmittedPage.VerifyTopSectionActionsAfterCommandSync();		
-		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
+		// ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock();
+		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationBothSuspends();
 		ServiceNow.OrderSubmittedPage.VerifyApprovals();		
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 
@@ -106,7 +107,8 @@ public class UnsuspendService extends ActionsBase
 		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
 		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		ServiceNow.OrderSubmittedPage.VerifyTopSection();
-		ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformationBothSuspends();
+		// ServiceNow.OrderSubmittedPage.verifyAdditionalInformationBlock(); 
+		ServiceNow.OrderSubmittedPage.VerifyAdditionalInformationBothSuspends();
 		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();
 		
 		// the order details page is open. it has synced with command so now the history section can be verified. 

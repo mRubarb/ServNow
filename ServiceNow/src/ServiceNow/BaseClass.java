@@ -68,7 +68,8 @@ public class BaseClass
 	public static int ShortTimeout = 5;
 	public static int MiniTimeout = 3;	
 	public static int TinyTimeout = 2;
-	public static int TeenyTinyTimeout = 1;	
+	public static int TeenyTinyTimeout = 1;
+	public static int timeOutBeforeLookingInApprovalList = 60000; // milliseconds
 	
 	// main text that shows up in many pages that have error messages. 
 	public static String mainErrorMessage = "//span[text()='Please fix the following validation errors:']";

@@ -1,13 +1,21 @@
 package ServiceNow;
 
+import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import java.awt.event.KeyEvent;
 
 import HelperObjects.DeviceInfoActions;
 import HelperObjects.DevicePortNumber;
@@ -106,7 +114,60 @@ public class ChooseDevicePage extends BaseClass
 		jse.executeScript("window.scrollBy(0, " + (-offset) + ")", "");		
 		
 	}
+	
+	// bladd test method
+	public static void TestMethod() throws Exception 
+	{
+		// https://stackoverflow.com/questions/20796053/want-to-move-down-using-scrollbar-selenium-webdriver TRY !!!!!!!!!!!!!!!!!
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+
+        //This will scroll the web page till end. -- this works       
+        // jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 		
+		// System.out.println(jse.executeScript("window.innerHeight")); // nope
+
+		// below nope
+		//Object obj =  jse.executeScript("window.innerHeight");
+		//System.out.println(obj);
+
+		//The display resolution or display modes of a digital television, computer monitor or display device is 
+		//the number of distinct pixels in each dimension that can be displayed ... "1024 × 768" 
+		//means the width is 1024 pixels and the height is 768 pixels		
+		
+	    Dimension initial_size = driver.manage().window().getSize();
+	    int height = initial_size.getHeight();
+	    int width = initial_size.getWidth();
+	    System.out.println("height = " + height + " width = " + width);
+		int section = height/5;
+        
+		// this moves focus to WebElement element -- works.  
+		//WebElement element = driver.findElement(By.xpath("(//li/label/input)[12]"));
+		//WebElement element = driver.findElement(By.xpath("//li/label[contains(text(),'Unlimited International Text Messaging - $10.00 (Monthly)')]"));		
+		WebElement element = driver.findElement(By.xpath("//h3[text()='Optional Features']"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+		
+		
+		/*// good
+		// use down key to move down.
+		Robot rb = new Robot();
+		for(int i = 0; i < 35; i++)
+		{
+	        rb.keyPress(KeyEvent.VK_DOWN);
+		}
+		*/
+		
+		//(//li/label/input)[12]
+		
+		
+		
+		Pause("Where");
+		
+	}
+
+	
+	
+	
+	
 	// this adds and removes each device. it verifies the device and cost in shopping cart is added and removed. 
 	// then it adds the test device to the shopping cart.
 	public static void AddRemoveAllDevices() throws Exception 

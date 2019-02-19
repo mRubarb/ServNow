@@ -19,7 +19,7 @@ public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends Ba
 	}
 
 	@Test
-	public static void TC0051_TransferServiceInAndPortModifyActionsTest() throws Exception 
+	public static void TC0051_TransferServiceInAndPortModifyActionsVerifyOrderTest() throws Exception 
 	{
 		// login as limited user.
 		CommonTestSteps.LoginLimitedUser();
@@ -28,10 +28,22 @@ public class TC0051_TransferServiceInAndPortModifyActionsVerifyOrdrer extends Ba
 		//ModifySelectionsTesting.LoadDeviceData();   
 		ModifySelectionsTesting.PopulatedDeviceListFromFile();
 		
-		//ModifySelectionsTesting.TestFiveDevice();
+		ModifySelectionsTesting.TestFiveDevice();
+		ShowText("TestFiveDevice complete.");
+		
 		ModifySelectionsTesting.TestFivePlan();
+		ShowText("TestFivePlan complete.");
+		
+		ModifySelectionsTesting.TestFiveAccessories();
+		ShowText("TestFiveAccessories complete.");
+		
+		ModifySelectionsTesting.TestFiveProvideAddiionalInfo();
+		ShowText("TestFiveProvideAdditonalInfo complete.");
+	
+		ModifySelectionsTesting.TestFiveShippingInformation();
+		ShowText("TestFiveShippingInformation complete.");
+
 		CommonTestSteps.Logout();
-		//BaseClass.stepComplete("Smoke Test Complete.", "");
 	}
 	
 	@AfterClass

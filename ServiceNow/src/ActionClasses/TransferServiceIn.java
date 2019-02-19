@@ -4,6 +4,7 @@ import ServiceNow.BaseClass;
 import ServiceNow.ChooseAccessoriesPage;
 import ServiceNow.ChooseDevicePage;
 import ServiceNow.ChoosePlanPage;
+import ServiceNow.CommonVerifyPageSubmitPage;
 import ServiceNow.EnterShippingInfoPage;
 import ServiceNow.Frames;
 import ServiceNow.HomePage;
@@ -44,9 +45,10 @@ public class TransferServiceIn extends BaseClass {
 		// 4. There’s a drop down list to select a country. Click “Next” without choosing Country. – There’s an error message for the required field (“Country”).
 		// 5. Set Country to ‘United States’. – There’s a field displayed to enter Postal Code.
 	
-		// TODO -----------------------------------------------  Click “Next” without choosing Country.
+		SelectRegionPage.clickNextButtonSelectRegion();
+		SelectRegionPage.VerifyPostalCodeError();
 		SelectRegionPage.selectCountryFromDropDown();
-			
+
 		// 6. Click Next leaving Postal Code blank (or fill it using an incorrect format). There's an error message for the required field Postal Code.
 	
 		SelectRegionPage.clickNextButtonSelectRegion(); // added waitPresent
@@ -227,7 +229,8 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.verifyAccessoriesDetails();
 
 		VerifyOrderPage.verifyAdditionalInformationBlock();	
-		VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();
+		// VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceIn();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 
@@ -240,13 +243,13 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); 
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceIn();		
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
 		
 		orderDetailsObjectExpected.orderType = "Transfer Service In Order";
-		
 	}
 
 	public static void setOrderTypeForPostApproval(boolean txAndPort) {
@@ -282,14 +285,41 @@ public class TransferServiceIn extends BaseClass {
 		
 		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
 		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber();
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn();
+		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // BAD 1/9/19
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort(); // 1/10/19 - don't know why this works, there are only 6 items displayed.
+		//OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19		
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceIn();
 		OrderSubmittedPage.VerifyShippingInformation();
 		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
 		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
 		OrderSubmittedPage.verifyOrderSegmentPlan();  // -- TBD - Order Segment section not included in Order's details
 		// SFD 114900
-		
 	}
+	
+	public static void verifyOrderDetailsPagePostApprovalPort() throws Exception {
+
+		ServiceNow.MyOrdersPage.WaitForPageToLoad(); // sanity check.
+		ServiceNow.MyOrdersPage.SelectOrderActionBlock();	
+		ServiceNow.OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
+		ServiceNow.OrderSubmittedPage.VerifyTopSection();
+		
+		// need this here because post approval order details page can't be checked with 'VerifyTopSectionActionsAfterCommandSync()'. the top section is different in post approval order.		
+		ServiceNow.OrderSubmittedPage.VerifyOrderStatus();    
+		
+		OrderSubmittedPage.verifyAdditionalInformationBlock(); // VerifyAdditionalInformation();
+		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // nope - not close  
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort(); // --------------------- 1/12 maybe good with test broken apart.
+		//CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceInAndPort(); // nope/
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber(); // nope - trouble with current carrier
+		// OrderSubmittedPage.VerifyAdditionalInformationTransferServiceIn(); // use this  1/10/19	-- nope	 
+		OrderSubmittedPage.VerifyShippingInformation();
+		OrderSubmittedPage.verifyStatusAndVendor();  // -- TBD - Order Segment section not included in Order's details
+		OrderSubmittedPage.verifyOrderSegmentDevice(); //DeviceSectionTransferServiceIn();  // -- TBD - Order Segment section not included in Order's details 
+		OrderSubmittedPage.verifyOrderSegmentPlan();  // -- TBD - Order Segment section not included in Order's details
+		// SFD 114900
+	}
+	
+	
 
 	public static void verifyOrderDetailsHistoryPostApproval(ApproverAction appAction) throws Exception {
 
@@ -327,7 +357,6 @@ public class TransferServiceIn extends BaseClass {
 		// 4. There’s a drop down list to select a country. Click “Next” without choosing Country. – There’s an error message for the required field (“Country”).
 		// 5. Set Country to ‘United States’. – There’s a field displayed to enter Postal Code.
 	
-		// TODO -----------------------------------------------  Click “Next” without choosing Country.
 		SelectRegionPage.selectCountryFromDropDown();
 			
 		// 6. Click Next leaving Postal Code blank (or fill it using an incorrect format). There's an error message for the required field Postal Code.
@@ -340,8 +369,7 @@ public class TransferServiceIn extends BaseClass {
 	
 		SelectRegionPage.fillPostalCodeTextBox("02451");
 		SelectRegionPage.clickNextButtonSelectRegion(); // move to device select page.
-		
-		
+
 		// STEP 2 - SELECT YOUR CURRENT CARRIER
 		
 		// Select current carrier from dropdown list
@@ -509,13 +537,14 @@ public class TransferServiceIn extends BaseClass {
 		VerifyOrderPage.VerifySelectedDeviceDetails();
 		VerifyOrderPage.verifySelectedPlanAndOptionalFeaturesDetails();
 		VerifyOrderPage.verifyAccessoriesDetails();
-		VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();		
 		VerifyOrderPage.verifyAdditionalInformationBlock();
 		VerifyOrderPage.VerifyShippingInformation();		
 		VerifyOrderPage.VerifyCostAndCostMonthly();
 		
-		Pause("Look at carrier");
-		
+		// SUBMIT 
 		// 31. Click Submit Order.  You are in the Order Submitted step.  
 		VerifyOrderPage.clickSubmitBtn();
 		VerifyOrderPage.WaitForOrderComplete();
@@ -524,14 +553,16 @@ public class TransferServiceIn extends BaseClass {
 		OrderSubmittedPage.SelectViewOrder();		
 		OrderSubmittedPage.WaitForOrderDetailsPageToLoad();
 		OrderSubmittedPage.VerifyTopSection();
-		OrderSubmittedPage.verifyAdditionalInformationBlock(); 
-		
-		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		OrderSubmittedPage.verifyAdditionalInformationBlock();
+		// OrderSubmittedPage.VerifyAdditionalInformationPortNumber(); // this fails here
+		OrderSubmittedPage.VerifyAdditionalInformationTransferServiceInAndPort(); // worked 1/12 - with test broken apart
+		//CommonVerifyPageSubmitPage.VerifyAdditionalInformationTransferServiceInAndPort();
+		//VerifyOrderPage.VerifyAdditionalInformationTransferServiceIn();	
 		// OrderSubmittedPage.VerifyAdditionalInformation(); // useless	
 		OrderSubmittedPage.VerifyAccountHolderInformation(); 
 		OrderSubmittedPage.VerifyApprovals();		
 		OrderSubmittedPage.VerifyShippingInformation();
-
+		
 		orderDetailsObjectExpected.orderType = "Port Number Order";
 	}
 	

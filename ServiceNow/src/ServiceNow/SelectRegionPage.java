@@ -26,7 +26,10 @@ public class SelectRegionPage extends BaseClass
 	//SelectRegion Next Button
 		public static WebElement nextButtonSelectRegion() throws Exception
 		{
-			WaitForElementPresent(By.cssSelector(".tg-button.tg-button--primary.ng-binding.ng-scope"), MainTimeout); 
+			WaitForElementClickable(By.cssSelector(".tg-button.tg-button--primary.ng-binding.ng-scope"), MainTimeout, ""); // 1/28/19
+			//WaitForElementVisible(By.cssSelector(".tg-button.tg-button--primary.ng-binding.ng-scope"), MainTimeout);
+			//WaitForElementPresent(By.cssSelector(".tg-button.tg-button--primary.ng-binding.ng-scope"), MainTimeout); 
+			
 			// DebugTimeout(0, "Wait OK In 'nextButtonSelectRegion'");
 			element = driver.findElement(By.cssSelector(".tg-button.tg-button--primary.ng-binding.ng-scope"));
 			return element;
