@@ -148,6 +148,7 @@ public class BaseClass
 	public static String userLimitedFullName = "Bob Lichtenfels (Limited)";
 	public static String userLimitedShorterName = "Bob Limited";
 	public static String userApproverShorterName = "Bob Approver";
+	public static String userApproverShorterNameFrank = "Frank Bertuca Jr";	
 	public static String userLimitedFullNameOrderHistory = "Bob Lichtenfels (Limited) (Development),";
 	public static String userLimitedShorterNameOrderHistory = "Bob Limited (Development),";
 	public static String userLimitedFullNameExtended = "bob.lichtenfels.xx1.limited";

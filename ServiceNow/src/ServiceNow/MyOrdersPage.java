@@ -135,15 +135,4 @@ public class MyOrdersPage extends BaseClass
 		strTempArray = driver.findElement(By.xpath("(.//*[@id='externalOrderNumber'])[" + orderBlockIndex + "]/../preceding ::div[3]")).getText().split(":");
 		return new String [] {strTempArray[0].replace("#", ""), strTempArray[1].trim()};
 	}
-
-
-
-
-
-
-
-
-
-
-
 }
