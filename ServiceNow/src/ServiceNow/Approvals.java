@@ -352,9 +352,6 @@ public class Approvals extends BaseClass
 		
 	}
 	
-	
-
-	
 	private static void rejectOrder(int approverIndex) throws InterruptedException {
 		
 		// The 'Comments' textbox is not displayed anymore. Text for Comment is something like: 
