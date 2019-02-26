@@ -28,7 +28,7 @@ public class TC0035Feature10 extends BaseClass
 	{
 		// login as admin user.
 		CommonTestSteps.LoginAdmin();
-		/*
+
 		CommonTestSteps.GoToAdminSettings();
 
 		// make sure check-boxes are all checked for feature 10 to 13.
@@ -40,7 +40,7 @@ public class TC0035Feature10 extends BaseClass
 		Features.RunFeature10(Features.checkBoxState.checked);
 		CommonTestSteps.Logout();
 		
-		// uncheck feature 10 check-box.
+		// un-check feature 10 check-box.
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
 		SettingsPage.SelectFeature10();
@@ -56,9 +56,10 @@ public class TC0035Feature10 extends BaseClass
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
 		SettingsPage.SetCheckboxesTrue();
-		*/
+
 		CommonTestSteps.Logout(); // remove - should not be here.
 		testPassed =  true;
+
 	}
 	
 	

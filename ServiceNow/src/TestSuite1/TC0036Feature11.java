@@ -26,7 +26,7 @@ public class TC0036Feature11 extends BaseClass
 	@Test
 	public static void tc0036Feature11()throws Exception
 	{
-		// login as admin user.
+		// login as administrator user.
 		CommonTestSteps.LoginAdmin();
 		CommonTestSteps.GoToAdminSettings();
 
@@ -39,7 +39,7 @@ public class TC0036Feature11 extends BaseClass
 		Features.RunFeature11(Features.checkBoxState.checked);
 		CommonTestSteps.Logout();
 		
-		// uncheck feature 11 check-box.
+		// un-check feature 11 check-box.
 		CommonTestSteps.LoginAdminBrowserOpen();
 		CommonTestSteps.GoToAdminSettings();
 		SettingsPage.SelectFeature11();

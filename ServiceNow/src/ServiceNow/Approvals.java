@@ -355,7 +355,7 @@ public class Approvals extends BaseClass
 	
 
 	
-	private static void rejectOrder(int approverIndex) {
+	private static void rejectOrder(int approverIndex) throws InterruptedException {
 		
 		// The 'Comments' textbox is not displayed anymore. Text for Comment is something like: 
 		// "Order was rejected in ServiceNow. Approvers: rejected:Bob Lichtenfels-Approver,
@@ -386,6 +386,7 @@ public class Approvals extends BaseClass
 		
 		// 4. Verify that the State changes to 'Rejected'
 		
+		Thread.sleep(3000); // had problem where text didn't go to 'rejected' right away. 
 		Assert.assertEquals(driver.findElement(By.xpath("//tbody[@class='list2_body']/tr[" + approverIndex + "]/td[3]")).getText(), "Rejected", "Failed. State is not Rejected.");	
 		
 		// now set the order details expected status to 'Approval Rejected'

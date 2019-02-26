@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -150,10 +151,22 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		WaitForElementClickable(By.xpath("//th[@ng-click='next()']"), ShortTimeout, "");
 		driver.findElement(By.xpath("//th[@ng-click='next()']")).click();
 
-		// click today to close picker
-		WaitForElementClickable(By.xpath("//span[text()='" + currentDay + "']"), ShortTimeout, "");
-		driver.findElement(By.xpath("//span[text()='" + currentDay + "']")).click();
-
+		// get all dates that are 'currentDay'. sometimes there can be two of them if near the end of the month.
+		List<WebElement> eleList = driver.findElements(By.xpath("//span[text()='" + currentDay + "']"));
+		
+		if(eleList.size() > 1) // if more than one 'currentDay', need to select the second one.
+		{
+			// click today to close picker
+			WaitForElementClickable(By.xpath("(//span[text()='" + currentDay + "'])[2]"), ShortTimeout, "");
+			driver.findElement(By.xpath("(//span[text()='" + currentDay + "'])[2]")).click();
+		}
+		else
+		{
+			// click today to close picker
+			WaitForElementClickable(By.xpath("//span[text()='" + currentDay + "']"), ShortTimeout, "");
+			driver.findElement(By.xpath("//span[text()='" + currentDay + "']")).click();
+		}
+		
 		// license number
 		WaitForElementClickable(By.cssSelector("#ORDER_PROPERTY_FIELD_DRIVER_LICENSE_NUMBER"), ShortTimeout, "");
 		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_DRIVER_LICENSE_NUMBER")).sendKeys(licenseNumber);
