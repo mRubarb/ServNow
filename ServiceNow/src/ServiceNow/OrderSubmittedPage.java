@@ -610,7 +610,7 @@ public class OrderSubmittedPage extends BaseClass
 			
 			Assert.assertEquals(driver.findElement(By.xpath("//*[@id='panel-approvals']/div/div[2]/div/table/tbody/tr[1]/td[2]/span/div[1]")).getText(), approverAdmin, errorMessage);
 			Assert.assertEquals(driver.findElement(By.xpath("//*[@id='panel-approvals']/div/div[2]/div/table/tbody/tr[2]/td[2]/span/div[1]")).getText(), userApproverShorterName, errorMessage);
-			// below 2/21/19
+			// below 2/21/19 - changed 3/12/19
 			//Assert.assertEquals(driver.findElement(By.xpath("//*[@id='panel-approvals']/div/div[2]/div/table/tbody/tr[2]/td[2]/span/div[1]")).getText(), userApproverShorterNameFrank, errorMessage);			
 		}
 		
