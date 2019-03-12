@@ -1,0 +1,383 @@
+import groovy.json.JsonSlurper 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context ); 
+def testCase = context.testCase; 
+def testStep = testCase.getTestStepByName("GetOrderById") 
+
+//  need for external call.
+testRunner = new com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner(testCase, null); 
+testStepContext = new com.eviware.soapui.impl.wsdl.testcase.WsdlTestRunContext(testStep); 
+
+// get response of last test step run.
+def response = testStep.testRequest.messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+
+/* Define variables to use on the Expected Values  */
+def firstName = testRunner.testCase.getPropertyValue("FirstName")
+def lastName = testRunner.testCase.getPropertyValue("LastName")
+def employeeId = testRunner.testCase.getPropertyValue("EmployeeId")
+def companyEmployeeId = testRunner.testCase.getPropertyValue("CompanyEmployeeId")
+def departmentId = testRunner.testCase.getPropertyValue("DepartmentId")
+def departmentName = testRunner.testCase.getPropertyValue("DepartmentName")
+def officePhone = testRunner.testCase.getPropertyValue("OfficePhone")
+def email = testRunner.testCase.getPropertyValue("Email")
+def instructions = testRunner.testCase.getPropertyValue( "additionalInstructions")
+def logoUrl = testRunner.testCase.getPropertyValue("LogoUrl")
+def mainUrl = testRunner.testCase.getPropertyValue("URL")
+def serviceNumber = testRunner.testCase.getPropertyValue("svcNumber")
+
+def orderId = testRunner.testCase.getPropertyValue("OrderId")
+def externalOrderNumber = testRunner.testCase.getPropertyValue("extOrderNumber")
+def orderDate = getCurrentDate()
+
+
+
+/* Expected Values */
+
+String ordersMetaHref = mainUrl +  "/orders/" + orderId
+String ordersMetaHrefShipments = mainUrl +   "/orders/" + orderId + "/shipments"
+String ordersMetaHrefHistory = mainUrl +  "/orders/" + orderId + "/history"
+String ordersOrderId = orderId
+String ordersDateSubmitted = orderDate   
+String ordersExternalOrderNumber = externalOrderNumber
+String ordersServiceNumber = serviceNumber
+String ordersStatus = "ORDER_SUBMITTED"
+String ordersTransactionType = "SWAP_DEVICES"
+
+
+/* Account Holder */   // <-- read from Ana USER file 
+String ordersAccountHolderMetaHref = mainUrl +  "/employees/" + employeeId
+String ordersAccountHolderId = employeeId
+String ordersAccountHolderCompanyEmployeeId = companyEmployeeId
+String ordersAccountHolderFirstName = firstName
+String ordersAccountHolderLastName = lastName
+String ordersAccountHolderStatus = "ACTIVE"
+String ordersAccountHolderEmail = email
+String ordersAccountHolderOfficePhone = officePhone
+String ordersAccountHolderDepartmentId = departmentId
+String ordersAccountHolderDepartmentName = departmentName
+
+
+/* Requested By */
+String ordersRequestedById = testRunner.testCase.getPropertyValue("AdminId")
+String ordersRequestedByMetaHref = mainUrl + "/employees/" + ordersRequestedById
+String ordersRequestedByCompanyEmployeeId = testRunner.testCase.getPropertyValue("AdminCompanyEmployeeId")
+String ordersRequestedByFirstName = testRunner.testCase.getPropertyValue("AdminFirstName")
+String ordersRequestedByLastName = testRunner.testCase.getPropertyValue("AdminLastName")
+String ordersRequestedByStatus = testRunner.testCase.getPropertyValue("AdminStatus")
+String ordersRequestedByEmail = testRunner.testCase.getPropertyValue("AdminEmail")
+String ordersRequestedByDepartmentId = testRunner.testCase.getPropertyValue("AdminDepartmentId")
+String ordersRequestedByDepartmentName = testRunner.testCase.getPropertyValue("AdminDepartmentName")
+
+
+/* Order Segments */
+/* Order Segment Id is always Order Id plus "1" */
+String ordersOrderSegmentsItemsOrderSegmentId = (Integer.parseInt(orderId) + 1)
+String ordersOrderSegmentsItemsMetaHrefHistory = mainUrl +   "/orders/" + orderId + "/history?orderSegment=" + ordersOrderSegmentsItemsOrderSegmentId
+String ordersOrderSegmentsItemsMetaHrefShipments =  mainUrl +   "/orders/" + orderId + "/shipments?orderSegment=" + ordersOrderSegmentsItemsOrderSegmentId
+String ordersOrderSegmentsItemsStatus = "ORDER_SUBMITTED"
+
+String ordersOrderSegmentsItemsVendorId = testRunner.testCase.getPropertyValue("CatalogDeviceVendorId")
+String ordersOrderSegmentsItemsVendorMetaHref = testRunner.testCase.getPropertyValue("CatalogDeviceVendorMetaHref")
+String ordersOrderSegmentsItemsVendorName = testRunner.testCase.getPropertyValue("CatalogDeviceVendorName")
+String ordersOrderSegmentsItemsVendorLogoUrl = testRunner.testCase.getPropertyValue("CatalogDeviceVendorLogoUrl")
+
+// For completed orders only
+String ordersOrderSegmentsItemsVendorOrderReferenceValue = "1"
+String ordersOrderSegmentsItemsVendorOrderReferenceType = "OTHER"
+
+//String ordersorderSegmentsItemsAccessories =    --- empty on JSON response and not listed on spreadsheet
+//String ordersorderSegmentsItemsFeatures =    --- empty on JSON response and not listed on spreadsheet
+//String ordersorderSegmentsItemsPlanOptionalFeatures =    --- empty on JSON response and not listed on spreadsheet
+//String ordersShipToAddress    --- empty on JSON response and not listed on spreadsheet
+
+
+/* Properties */
+String ordersPropertiesGroupId = "MISCELLANEOUS"
+
+/* property 1 */
+String ordersPropertiesFields1Id = "CURRENT_DEVICE_MAKE"
+String ordersPropertiesFields1Label = "Current Device Make"
+String ordersPropertiesFields1Text = testRunner.testCase.getPropertyValue("CurrentDeviceMake")
+String ordersPropertiesFields1Type = "TEXT"
+
+/* property 2 */
+String ordersPropertiesFields2Id = "NEW_DEVICE_MAKE"
+String ordersPropertiesFields2Label = "New Device Make"
+String ordersPropertiesFields2Text = testRunner.testCase.getPropertyValue("NewDeviceMake")
+String ordersPropertiesFields2Type = "TEXT"
+
+/* property 3 */
+String ordersPropertiesFields3Id = "CURRENT_DEVICE_MODEL"
+String ordersPropertiesFields3Label = "Current Device Model"
+String ordersPropertiesFields3Text = testRunner.testCase.getPropertyValue("CurrentDeviceModel")
+String ordersPropertiesFields3Type = "TEXT"
+
+/* property 4 */
+String ordersPropertiesFields4Id = "NEW_DEVICE_MODEL"
+String ordersPropertiesFields4Label = "New Device Model"
+String ordersPropertiesFields4Text = testRunner.testCase.getPropertyValue("NewDeviceModel")
+String ordersPropertiesFields4Type = "TEXT"
+   
+/* property 5 */
+String ordersPropertiesFields5Id = "CURRENT_DEVICE_SERIAL_NUMBER"
+String ordersPropertiesFields5Label = "Current Device Serial Number"
+String ordersPropertiesFields5Text = testRunner.testCase.getPropertyValue("CurrentDeviceSerialNumberValue")
+String ordersPropertiesFields5Type = "TEXT"
+
+/* property 6 */
+String ordersPropertiesFields6Id = "CURRENT_DEVICE_SERIAL_NUMBER_TYPE"
+String ordersPropertiesFields6Label = "Current Device Serial Number Type"
+String ordersPropertiesFields6Text = testRunner.testCase.getPropertyValue("CurrentDeviceSerialNumberType")
+String ordersPropertiesFields6Type = "TEXT"
+
+/* property 7 */
+String ordersPropertiesFields7Id = "SIM_ID_ICCID"
+String ordersPropertiesFields7Label = "SIM ID / ICCID"
+String ordersPropertiesFields7Text = testRunner.testCase.getPropertyValue("DeviceSimId")
+String ordersPropertiesFields7Type = "TEXT"
+
+/* property 8 */
+String ordersPropertiesFields8Id = "NEW_DEVICE_SERIAL_NUMBER"
+String ordersPropertiesFields8Label = "New Device Serial Number"
+String ordersPropertiesFields8Text = testRunner.testCase.getPropertyValue("NewDeviceSerialNumber")
+String ordersPropertiesFields8Type = "TEXT"
+
+/* property 9 */
+String ordersPropertiesFields9Id = "NEW_DEVICE_SERIAL_NUMBER_TYPE"
+String ordersPropertiesFields9Label = "New Device Serial Number Type"
+String ordersPropertiesFields9Text = testRunner.testCase.getPropertyValue("NewDeviceSerialNumberType")
+String ordersPropertiesFields9Type = "TEXT"
+
+/* property 10 */
+String ordersPropertiesFields10Id = "CONTACT_NUMBER"
+String ordersPropertiesFields10Label = "Contact Phone Number"
+String ordersPropertiesFields10Text = ordersServiceNumber
+String ordersPropertiesFields10Type = "TEXT"
+
+/* property 11 */
+String ordersPropertiesFields11Id = "ADDITIONAL_INSTRUCTIONS"
+String ordersPropertiesFields11Label = "Additional Instructions"
+String ordersPropertiesFields11Text = "Please confirm serial number for new device"
+String ordersPropertiesFields11Type = "TEXT"
+
+/* property 12 */
+//String ordersPropertiesFields12Id = "PREFERRED_AREA_CODE"
+//String ordersPropertiesFields12Label = "Preferred Area Code"
+//String ordersPropertiesFields12Text = "203"
+//String ordersPropertiesFields12Type = "TEXT"
+
+/* property 12 */
+String ordersPropertiesFields12Id = "SERVICE_NUMBER"
+String ordersPropertiesFields12Label = "Service Number"
+String ordersPropertiesFields12Text = ordersServiceNumber
+String ordersPropertiesFields12Type = "TEXT"
+
+
+/* Approval */
+String approvalPendingLevel = "Approver 1"
+String approvalApproversId = testRunner.testCase.getPropertyValue("AdminId")
+String approvalApproversMetaHref = mainUrl + "/employees/" + approvalApproversId 
+String approvalApproversFirstName = testRunner.testCase.getPropertyValue("AdminFirstName")
+String approvalApproversLastName = testRunner.testCase.getPropertyValue("AdminLastName")
+String approvalApproversEmail = ordersRequestedByEmail
+
+
+
+
+/* Compare JSON with expected values */
+
+CompareItemsTwo(json._meta.href, ordersMetaHref)
+CompareItemsTwo(json._meta.hrefHistory, ordersMetaHrefHistory)
+CompareItemsTwo(json._meta.hrefShipments, ordersMetaHrefShipments)
+CompareItemsTwo(convertDateToShortFormat(json.dateSubmitted), ordersDateSubmitted)
+CompareItemsTwo(json.externalOrderNumber, ordersExternalOrderNumber)
+CompareItemsTwo(json.orderId, ordersOrderId)
+CompareItemsTwo(json.transactionType, ordersTransactionType)
+//CompareItemsTwo(json.status, ordersStatus)
+CompareItemsTwo(json.serviceNumber, ordersServiceNumber)
+
+
+/* Account Holder */
+CompareItemsTwo(json.accountHolder._meta.href, ordersAccountHolderMetaHref)
+CompareItemsTwo(json.accountHolder.id, ordersAccountHolderId)
+CompareItemsTwo(json.accountHolder.companyEmployeeId, ordersAccountHolderCompanyEmployeeId)
+CompareItemsTwo(json.accountHolder.firstName, ordersAccountHolderFirstName)
+CompareItemsTwo(json.accountHolder.lastName, ordersAccountHolderLastName)
+CompareItemsTwo(json.accountHolder.status, ordersAccountHolderStatus)
+CompareItemsTwo(json.accountHolder.email, ordersAccountHolderEmail)
+CompareItemsTwo(json.accountHolder.officePhone, ordersAccountHolderOfficePhone) 
+CompareItemsTwo(json.accountHolder.department.id, ordersAccountHolderDepartmentId)
+CompareItemsTwo(json.accountHolder.department.name, ordersAccountHolderDepartmentName)
+
+/* Requested By */
+CompareItemsTwo(json.requestedBy._meta.href, ordersRequestedByMetaHref)
+CompareItemsTwo(json.requestedBy.id, ordersRequestedById)
+CompareItemsTwo(json.requestedBy.companyEmployeeId, ordersRequestedByCompanyEmployeeId)
+CompareItemsTwo(json.requestedBy.firstName, ordersRequestedByFirstName)
+CompareItemsTwo(json.requestedBy.lastName, ordersRequestedByLastName)
+CompareItemsTwo(json.requestedBy.status, ordersRequestedByStatus)
+CompareItemsTwo(json.requestedBy.email, ordersRequestedByEmail)
+CompareItemsTwo(json.requestedBy.department.id, ordersRequestedByDepartmentId)
+CompareItemsTwo(json.requestedBy.department.name, ordersRequestedByDepartmentName)
+
+/* Properties */
+CompareItemsTwo(json.properties[0].groupId, ordersPropertiesGroupId)
+
+/* property 1 */ // 0
+CompareItemsTwo(json.properties[0].fields[0].id, ordersPropertiesFields1Id)
+CompareItemsTwo(json.properties[0].fields[0].label, ordersPropertiesFields1Label)
+CompareItemsTwo(json.properties[0].fields[0].text, ordersPropertiesFields1Text)
+CompareItemsTwo(json.properties[0].fields[0].type, ordersPropertiesFields1Type)
+
+/* property 2 */ // 1
+CompareItemsTwo(json.properties[0].fields[1].id, ordersPropertiesFields2Id)
+CompareItemsTwo(json.properties[0].fields[1].label,ordersPropertiesFields2Label)
+CompareItemsTwo(json.properties[0].fields[1].text, ordersPropertiesFields2Text)
+CompareItemsTwo(json.properties[0].fields[1].type, ordersPropertiesFields2Type)
+
+/* property 3 */ //2
+CompareItemsTwo(json.properties[0].fields[2].id, ordersPropertiesFields3Id)
+CompareItemsTwo(json.properties[0].fields[2].label, ordersPropertiesFields3Label)
+CompareItemsTwo(json.properties[0].fields[2].text, ordersPropertiesFields3Text)
+CompareItemsTwo(json.properties[0].fields[2].type, ordersPropertiesFields3Type)
+
+/* property 4 */ //3
+CompareItemsTwo(json.properties[0].fields[3].id, ordersPropertiesFields4Id)
+CompareItemsTwo(json.properties[0].fields[3].label, ordersPropertiesFields4Label)
+CompareItemsTwo(json.properties[0].fields[3].text, ordersPropertiesFields4Text)
+CompareItemsTwo(json.properties[0].fields[3].type, ordersPropertiesFields4Type)
+
+/* property 5 */ // 4
+CompareItemsTwo(json.properties[0].fields[4].id, ordersPropertiesFields5Id)
+CompareItemsTwo(json.properties[0].fields[4].label, ordersPropertiesFields5Label)
+CompareItemsTwo(json.properties[0].fields[4].text, ordersPropertiesFields5Text)
+CompareItemsTwo(json.properties[0].fields[4].type, ordersPropertiesFields5Type)
+
+
+
+
+/* property 6 */ // 5
+//CompareItemsTwo(json.properties[0].fields[5].id, ordersPropertiesFields6Id)
+//CompareItemsTwo(json.properties[0].fields[5].label, ordersPropertiesFields6Label)
+//CompareItemsTwo(json.properties[0].fields[5].text, ordersPropertiesFields6Text)
+//CompareItemsTwo(json.properties[0].fields[5].type, ordersPropertiesFields6Type)
+
+
+/* property 6 */ //  5
+CompareItemsTwo(json.properties[0].fields[5].id, ordersPropertiesFields6Id)
+CompareItemsTwo(json.properties[0].fields[5].label, ordersPropertiesFields6Label)
+CompareItemsTwo(json.properties[0].fields[5].text, ordersPropertiesFields6Text)
+CompareItemsTwo(json.properties[0].fields[5].type, ordersPropertiesFields6Type)
+
+CompareItemsTwo(json.properties[0].fields[6].id, ordersPropertiesFields8Id)
+CompareItemsTwo(json.properties[0].fields[6].label, ordersPropertiesFields8Label)
+CompareItemsTwo(json.properties[0].fields[6].text, ordersPropertiesFields8Text)
+CompareItemsTwo(json.properties[0].fields[6].type, ordersPropertiesFields8Type)
+
+/* property 9 */ // 8
+CompareItemsTwo(json.properties[0].fields[8].id, ordersPropertiesFields9Id)
+CompareItemsTwo(json.properties[0].fields[8].label, ordersPropertiesFields9Label)
+CompareItemsTwo(json.properties[0].fields[8].text, ordersPropertiesFields9Text)
+CompareItemsTwo(json.properties[0].fields[8].type, ordersPropertiesFields9Type)
+
+/* property 10 */ // 9
+CompareItemsTwo(json.properties[0].fields[9].id, ordersPropertiesFields10Id)
+CompareItemsTwo(json.properties[0].fields[9].label, ordersPropertiesFields10Label)
+CompareItemsTwo(json.properties[0].fields[9].text, ordersPropertiesFields10Text)
+CompareItemsTwo(json.properties[0].fields[9].type, ordersPropertiesFields10Type)
+
+
+json.properties[0].fields[11].id
+
+/* property 11 */
+CompareItemsTwo(json.properties[0].fields[10].id, ordersPropertiesFields11Id)
+CompareItemsTwo(json.properties[0].fields[10].label, ordersPropertiesFields11Label)
+CompareItemsTwo(json.properties[0].fields[10].text, ordersPropertiesFields11Text)
+CompareItemsTwo(json.properties[0].fields[10].type, ordersPropertiesFields11Type)
+
+/* property 12 */
+CompareItemsTwo(json.properties[0].fields[12].id, ordersPropertiesFields12Id)
+CompareItemsTwo(json.properties[0].fields[12].label, ordersPropertiesFields12Label)
+CompareItemsTwo(json.properties[0].fields[12].text, ordersPropertiesFields12Text)
+CompareItemsTwo(json.properties[0].fields[12].type, ordersPropertiesFields12Type)
+
+/* property 13 */
+//CompareItemsTwo(json.properties[0].fields[12].id, ordersPropertiesFields13Id)
+//CompareItemsTwo(json.properties[0].fields[12].label, ordersPropertiesFields13Label)
+//CompareItemsTwo(json.properties[0].fields[12].text, ordersPropertiesFields13Text)
+//CompareItemsTwo(json.properties[0].fields[12].type, ordersPropertiesFields13Type)
+
+/* Order Segments */
+CompareItemsTwo(json.orderSegments.items[0]._meta.hrefShipments, ordersOrderSegmentsItemsMetaHrefShipments)
+CompareItemsTwo(json.orderSegments.items[0]._meta.hrefHistory, ordersOrderSegmentsItemsMetaHrefHistory)
+CompareItemsTwo(json.orderSegments.items[0].orderSegmentId, ordersOrderSegmentsItemsOrderSegmentId)
+CompareItemsTwo(json.orderSegments.items[0].status, ordersOrderSegmentsItemsStatus)
+
+CompareItemsTwo(json.orderSegments.items[0].vendor._meta.href, ordersOrderSegmentsItemsVendorMetaHref)
+CompareItemsTwo(json.orderSegments.items[0].vendor.id, ordersOrderSegmentsItemsVendorId) 
+CompareItemsTwo(json.orderSegments.items[0].vendor.name, ordersOrderSegmentsItemsVendorName)
+CompareItemsTwo(json.orderSegments.items[0].vendor.logoUrl, ordersOrderSegmentsItemsVendorLogoUrl)
+
+
+/* ------------------------ */
+/* -------- METHODS ------- */
+/* ------------------------ */
+
+
+// Method to compare JSON with expected values
+void CompareItemsTwo(json, expectedValueString)
+{
+	String jsonString = json
+	
+	// this will show each compare being made - DEBUG ONLY 
+	//log.info "  JSON: " + jsonString + ", Expected value: " + expectedValueString 
+	assert(jsonString == expectedValueString)
+}
+
+/* Converts date 
+ *  from: YYYY-MM-DDThh:mm:ssZ 
+ *  to: MM/DD/YYYY  */
+String convertDateToShortFormat(fullDate)
+{
+	def dateNoHour = fullDate.split("T")
+	def dateParts = dateNoHour[0].split("-")
+	def month 
+	def day
+	def year
+
+	/* Set year */
+	year = dateParts[0]
+
+	/* Set month */
+	if(Integer.parseInt(dateParts[1]) < 10){
+		month = dateParts[1].substring(1,2) 
+	}else{
+		month = dateParts[1]
+	}
+	
+	/* Set day */
+	if(Integer.parseInt(dateParts[2]) < 10){
+		day = dateParts[2].substring(1,2) 
+	}else{
+		day = dateParts[2]
+	}
+	
+	//String shortDate = month + "/" + day + "/" + year
+	String shortDate = year + "-" + month + "-" + day
+	
+	return shortDate  
+}
+
+
+String getCurrentDate()
+{
+	//e.g. "2015-11-26T18:28:10Z"
+	def date = new Date()
+	sdf = new SimpleDateFormat("yyyy-M-d")  // It was "yyyy-MM-dd"
+	return sdf.format(date)
+}
