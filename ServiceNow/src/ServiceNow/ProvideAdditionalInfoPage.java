@@ -184,6 +184,9 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		ShowText("1 " + licenseExpire);
 		ShowText("2 " + birthDate);
 		
+		// service number
+		
+		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_TRANSFER_OUT_CARRIER_FORM")).sendKeys("File1.txt");
 	}	
 	
 	

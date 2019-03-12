@@ -159,12 +159,8 @@ public class Features extends BaseClass
 			expected = "This request contains errors. Please note that making corrections to one part of the order could affect subsequent steps in the order process."; 
 			Assert.assertEquals(actual, expected, "");
 			
-			//Pause("b4 click");
-
 			driver.findElement(By.xpath("//button[text()='Begin Fixing Errors']")).click();
 			
-			// Pause("after click");
-
 			String expectedText = "";
 			String errMess = "Expected text " +  expectedText + "is not present";
 			
