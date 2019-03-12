@@ -1,0 +1,36 @@
+name:::Apple 12.9-inch iPad Pro (2nd Gen) Wi-Fi + Cellular 256GB - Gold
+index:::0
+OptionsList:::Total Equipment Coverage (Advanced Devices) - $7.99 (Monthly),Detailed Billing - $1.99 (Monthly),Total Equipment Coverage - $5.99 (Monthly),Global Data (Pay Per Use) - $0.00 (Monthly),Global Data B2B - 50MB - $30.00 (Monthly),Global Data B2B 4G - 50MB - $30.00 (Monthly),Global Data B2B - 150MB - $75.00 (Monthly),Global Data B2B 4G - 150MB - $75.00 (Monthly),Global Data B2B - 300MB - $125.00 (Monthly),Global Data B2B 4G - 300MB - $125.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Belkin 10W Swivel Charger with Apple Data Cable (F8J001TT04),Belkin 2.1A VPC Bullet with Apple Cable (F8J056TT04)
+name:::Apple iPhone 6 Plus (128GB) - Silver
+index:::1
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Apple AppleCare+
+name:::Apple iPhone 6 Plus (64GB) - Gold
+index:::2
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Apple AppleCare+
+name:::Apple iPhone 8 (256GB) - Space Gray
+index:::3
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Apple AppleCare+
+name:::Apple iPhone SE (32GB) - Gold
+index:::4
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Apple AppleCare+,Apple High Gloss Silicone Cover - Black (WTLC5HGSILBK),Belkin 10W Swivel Charger with Apple Data Cable (F8J001TT04),Belkin 2.1A VPC Bullet with Apple Cable (F8J056TT04)
+name:::Apple iPhone SE (32GB) - Rose Gold
+index:::5
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Apple AppleCare+,Apple High Gloss Silicone Cover - Black (WTLC5HGSILBK),Belkin 10W Swivel Charger with Apple Data Cable (F8J001TT04),Belkin 2.1A VPC Bullet with Apple Cable (F8J056TT04)
+name:::Apple iPhone SE (32GB) - Silver
+index:::6
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Apple AppleCare+,Apple High Gloss Silicone Cover - Black (WTLC5HGSILBK),Belkin 10W Swivel Charger with Apple Data Cable (F8J001TT04),Belkin 2.1A VPC Bullet with Apple Cable (F8J056TT04)
+name:::Apple iPhone SE (32GB) - Space Gray
+index:::7
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::Apple 5W USB Power Adapter (MD810LL/A),Apple AppleCare+,Apple High Gloss Silicone Cover - Black (WTLC5HGSILBK),Belkin 10W Swivel Charger with Apple Data Cable (F8J001TT04),Belkin 2.1A VPC Bullet with Apple Cable (F8J056TT04)
+name:::BlackBerry Z10 - Black
+index:::9
+OptionsList:::Unlimited Push to Talk - $300.00 (Monthly),Extended Warranty - $200.00 (Monthly),Visual Voice Mail - $2.99 (Monthly),International Text Messaging - $400.00 (Monthly),Wireless Phone Protection (Advanced Devices) - $100.00 (Monthly),Nationwide for Business Data Share 5GB - $43.00 (Monthly),1000 Messages - $10.00 (Monthly)
+AccessoriesList:::BlackBerry Leather Swivel Pouch (RIMBB10CAS),Verizon Wireless Rapid Wall Charger with 6ft Cable for Micro USB (EMICUSBDTVL-F),Verizon Wireless Vehicle Charger with Dual Output (MICRDUALVPC-F)
