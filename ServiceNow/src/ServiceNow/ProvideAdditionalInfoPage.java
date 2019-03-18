@@ -186,7 +186,7 @@ public class ProvideAdditionalInfoPage extends BaseClass
 		
 		// service number
 		
-		driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_TRANSFER_OUT_CARRIER_FORM")).sendKeys("File1.txt");
+		//driver.findElement(By.cssSelector("#ORDER_PROPERTY_FIELD_TRANSFER_OUT_CARRIER_FORM")).sendKeys("File1.txt"); // SN can't do file.
 	}	
 	
 	
